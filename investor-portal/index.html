@@ -452,16 +452,22 @@
       </div>
     </div>
 
-    <!-- Print Button -->
-    <button onclick="window.print()" class="fixed top-20 right-4 z-50 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors font-medium shadow-lg" title="Print this page">
-        <svg class="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
-        </svg>
-        Print/PDF
-    </button>
+    <!-- Action Buttons -->
+    <div class="fixed bottom-4 right-4 z-50 flex gap-2">
+        <button onclick="window.print()" class="bg-slate-700/90 backdrop-blur-sm text-white p-2 rounded-lg hover:bg-slate-600 transition-colors shadow-lg flex items-center" title="Print this page">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
+            </svg>
+        </button>
+        <button onclick="scrollToTop()" class="bg-slate-700/90 backdrop-blur-sm text-white p-2 rounded-lg hover:bg-slate-600 transition-colors shadow-lg flex items-center" title="Scroll to top">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+            </svg>
+        </button>
+    </div>
 
     <!-- Left Sidebar Navigation -->
-    <nav class="fixed left-0 top-16 h-full w-64 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 shadow-lg z-40 transform -translate-x-full lg:translate-x-0 transition-transform duration-300" id="sidebar">
+    <nav class="fixed left-0 top-16 h-[calc(100vh-4rem)] w-52 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 shadow-lg z-40 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 overflow-y-auto" id="sidebar">
         <div class="p-6">
             <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-4">Quick Navigation</h3>
             
@@ -502,7 +508,7 @@
     </button>
     
     <!-- Main Content -->
-    <main class="min-h-screen lg:ml-64">
+    <main class="min-h-[calc(100vh-4rem)] lg:ml-52 pb-24">
         <!-- Hero Section -->
         <section class="bg-gradient-to-br from-emerald-50 via-white to-blue-50 dark:from-emerald-900/10 dark:via-slate-900 dark:to-blue-900/10 py-20">
             <div class="max-w-7xl mx-auto px-6 text-center">
@@ -539,7 +545,7 @@
                 
                 <!-- Ready to Dive Deeper Navigation -->
                 <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6">🎯 Ready to Dive Deeper?</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
                     <a href="committee/index.html" class="bg-blue-600 text-white px-6 py-4 rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm text-center">
                         📋 Committee Documents
                     </a>
@@ -695,17 +701,17 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-white dark:bg-slate-900 text-slate-600 dark:text-white py-12 lg:ml-64">
+    <footer class="bg-white dark:bg-slate-900 text-slate-600 dark:text-white py-8 lg:ml-52 border-t border-slate-200 dark:border-slate-700">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center">
-                <div class="flex items-center justify-center gap-2 mb-4">
+                <div class="flex items-center justify-center gap-2 mb-3">
                     <div class="w-8 h-8 flex items-center justify-center">
                         <img src="../assets/images/Sirsi_Logo_300ppi_cguiyg.png" alt="Sirsi Logo" class="w-8 h-8 object-contain dark:hidden">
                         <img src="../assets/images/Sirsi_Logo_300ppi_Inverted_lt7asx.png" alt="Sirsi Logo" class="w-8 h-8 object-contain hidden dark:block">
                     </div>
                     <span class="text-xl font-semibold">SirsiNexus</span>
                 </div>
-                <p class="text-slate-600 dark:text-slate-400 mb-4">Agent-embedded infrastructure platform for enterprise cloud operations.</p>
+                <p class="text-sm text-slate-600 dark:text-slate-400 mb-3">Agent-embedded infrastructure platform for enterprise cloud operations.</p>
                 <div class="border-t border-slate-200 dark:border-slate-800 pt-8 text-center text-slate-600 dark:text-slate-400">
                     <p>&copy; 2025 Sirsi Technologies Inc. All rights reserved.</p>
                     <p class="text-sm mt-2">SirsiNexus is a product of Sirsi Technologies Inc.</p>
@@ -865,6 +871,13 @@
         });
         }
       
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
         function initTheme() {
           try {
             const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
