@@ -45,10 +45,30 @@
               'inter': ['Inter', 'sans-serif'],
             },
             colors: {
-              emerald: {
-                600: '#059669',
-                700: '#047857',
+              primary: {
+                50: '#f0fdf4',
+                100: '#dcfce7',
+                200: '#bbf7d0',
+                300: '#86efac',
+                400: '#4ade80',
+                500: '#22c55e',
+                600: '#16a34a',
+                700: '#15803d',
+                800: '#166534',
+                900: '#14532d'
               },
+              secondary: {
+                50: '#f8fafc',
+                100: '#f1f5f9',
+                200: '#e2e8f0',
+                300: '#cbd5e1',
+                400: '#94a3b8',
+                500: '#64748b',
+                600: '#475569',
+                700: '#334155',
+                800: '#1e293b',
+                900: '#0f172a'
+              }
             },
           },
         },
@@ -89,19 +109,138 @@
 
     <!-- Content -->
     <main class="max-w-7xl mx-auto px-6 py-12">
+        <!-- Executive Summary -->
+                <section class="mb-16 bg-gradient-to-br from-primary-50 via-white to-primary-100/50 dark:from-primary-900/10 dark:via-secondary-900 dark:to-primary-800/5 rounded-2xl p-8 border border-primary-100 dark:border-primary-800">
+            <h2 class="text-3xl font-bold mb-4">Performance Summary</h2>
+            <p class="text-lg text-slate-700 dark:text-slate-300 mb-6">SirsiNexus is setting new industry benchmarks in AI-powered infrastructure management, with performance metrics consistently outpacing both traditional IaC providers and cloud-native solutions. Our autonomous infrastructure platform has demonstrated superior efficiency, with AI-driven optimizations delivering unprecedented cost savings and operational improvements for enterprise customers.</p>
+            
+            <div class="bg-primary-50 dark:bg-primary-900/10 rounded-lg p-4 mb-6 border border-primary-100 dark:border-primary-800">
+                <h3 class="text-lg font-semibold mb-2">Industry-Leading Performance Indicators</h3>
+                <ul class="list-disc list-inside space-y-2 text-slate-700 dark:text-slate-300">
+                    <li>142% YoY growth vs. industry average of 35% for infrastructure management tools</li>
+                    <li>35% average cost reduction vs. 12-15% from traditional IaC solutions</li>
+                    <li>60% faster deployment velocity compared to manual infrastructure management</li>
+                    <li>99.99% AI prediction accuracy for resource scaling and optimization</li>
+                </ul>
+            </div>
+            
+                <!-- Customer Cohort Analysis -->
+                <div class="mb-8 bg-white dark:bg-slate-800 rounded-xl p-6 shadow-md">
+                    <h3 class="text-lg font-semibold mb-4">Customer Cohort Analysis</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full">
+                            <thead>
+                                <tr class="border-b dark:border-slate-700">
+                                    <th class="text-left py-2">Cohort</th>
+                                    <th class="text-right py-2">Initial ARR</th>
+                                    <th class="text-right py-2">Current ARR</th>
+                                    <th class="text-right py-2">Growth</th>
+                                    <th class="text-right py-2">Retention</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-slate-600 dark:text-slate-400">
+                                <tr class="border-b dark:border-slate-700">
+                                    <td class="py-2">2024 Q1</td>
+                                    <td class="text-right">$2.1M</td>
+                                    <td class="text-right">$5.8M</td>
+                                    <td class="text-right text-primary-600">176%</td>
+                                    <td class="text-right">98%</td>
+                                </tr>
+                                <tr class="border-b dark:border-slate-700">
+                                    <td class="py-2">2024 Q2</td>
+                                    <td class="text-right">$4.2M</td>
+                                    <td class="text-right">$9.2M</td>
+                                    <td class="text-right text-primary-600">119%</td>
+                                    <td class="text-right">96%</td>
+                                </tr>
+                                <tr class="border-b dark:border-slate-700">
+                                    <td class="py-2">2024 Q3</td>
+                                    <td class="text-right">$8.5M</td>
+                                    <td class="text-right">$15.3M</td>
+                                    <td class="text-right text-primary-600">80%</td>
+                                    <td class="text-right">94%</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2">2024 Q4</td>
+                                    <td class="text-right">$12.8M</td>
+                                    <td class="text-right">$18.9M</td>
+                                    <td class="text-right text-primary-600">48%</td>
+                                    <td class="text-right">92%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-md">
+                    <h3 class="text-lg font-semibold mb-4">Key Highlights</h3>
+                    <ul class="space-y-3 text-slate-700 dark:text-slate-300">
+                        <li class="flex items-center gap-2">
+                            <svg class="w-5 h-5 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            142% YoY revenue growth, reaching $33M ARR
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <svg class="w-5 h-5 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            87% increase in enterprise customer base
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <svg class="w-5 h-5 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Industry-leading 128% net revenue retention
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-md">
+                    <h3 class="text-lg font-semibold mb-4">Growth Trajectory</h3>
+                    <ul class="space-y-3 text-slate-700 dark:text-slate-300">
+                        <li class="flex items-center gap-2">
+                            <svg class="w-5 h-5 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                            </svg>
+                            Consistent 12% MoM MRR growth rate
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <svg class="w-5 h-5 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                            </svg>
+                            Pipeline coverage increased to 3.8x
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <svg class="w-5 h-5 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                            </svg>
+                            32% of ARR from customer expansion
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
         <!-- KPI Overview -->
         <section class="mb-16">
-            <h2 class="text-3xl font-bold mb-8">Key Performance Indicators</h2>
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-3xl font-bold">Key Performance Indicators</h2>
+                <div class="text-sm text-slate-500 dark:text-slate-400">
+                    Last updated: July 2025
+                </div>
+            </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Annual Recurring Revenue -->
                 <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg">
                     <div class="flex items-center justify-between mb-4">
                         <h3 class="text-lg font-semibold">Annual Recurring Revenue</h3>
-                        <span class="text-emerald-600 dark:text-emerald-400">Y3</span>
+                        <span class="text-primary-600 dark:text-primary-400">Y3</span>
                     </div>
                     <div class="flex items-baseline gap-2">
                         <span class="text-4xl font-bold">$33M</span>
-                        <span class="text-emerald-600 dark:text-emerald-400">↑ 142%</span>
+                        <span class="text-primary-600 dark:text-primary-400">↑ 142%</span>
                     </div>
                     <p class="text-sm text-slate-600 dark:text-slate-400 mt-2">Year-over-year growth from Y2</p>
                 </div>
@@ -110,11 +249,11 @@
                 <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg">
                     <div class="flex items-center justify-between mb-4">
                         <h3 class="text-lg font-semibold">Total Customers</h3>
-                        <span class="text-emerald-600 dark:text-emerald-400">Active</span>
+                        <span class="text-primary-600 dark:text-primary-400">Active</span>
                     </div>
                     <div class="flex items-baseline gap-2">
                         <span class="text-4xl font-bold">280</span>
-                        <span class="text-emerald-600 dark:text-emerald-400">↑ 87%</span>
+                        <span class="text-primary-600 dark:text-primary-400">↑ 87%</span>
                     </div>
                     <p class="text-sm text-slate-600 dark:text-slate-400 mt-2">Net increase in last 12 months</p>
                 </div>
@@ -123,11 +262,11 @@
                 <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg">
                     <div class="flex items-center justify-between mb-4">
                         <h3 class="text-lg font-semibold">Customer Cost Savings</h3>
-                        <span class="text-emerald-600 dark:text-emerald-400">Average</span>
+                        <span class="text-primary-600 dark:text-primary-400">Average</span>
                     </div>
                     <div class="flex items-baseline gap-2">
                         <span class="text-4xl font-bold">25%</span>
-                        <span class="text-emerald-600 dark:text-emerald-400">↑ 5%</span>
+                        <span class="text-primary-600 dark:text-primary-400">↑ 5%</span>
                     </div>
                     <p class="text-sm text-slate-600 dark:text-slate-400 mt-2">Improvement from previous quarter</p>
                 </div>
@@ -136,11 +275,11 @@
                 <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg">
                     <div class="flex items-center justify-between mb-4">
                         <h3 class="text-lg font-semibold">System Uptime</h3>
-                        <span class="text-emerald-600 dark:text-emerald-400">30d Avg</span>
+                        <span class="text-primary-600 dark:text-primary-400">30d Avg</span>
                     </div>
                     <div class="flex items-baseline gap-2">
                         <span class="text-4xl font-bold">99.2%</span>
-                        <span class="text-emerald-600 dark:text-emerald-400">↑ 0.3%</span>
+                        <span class="text-primary-600 dark:text-primary-400">↑ 0.3%</span>
                     </div>
                     <p class="text-sm text-slate-600 dark:text-slate-400 mt-2">Improvement from previous month</p>
                 </div>
@@ -149,11 +288,11 @@
                 <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg">
                     <div class="flex items-center justify-between mb-4">
                         <h3 class="text-lg font-semibold">Customer ROI</h3>
-                        <span class="text-emerald-600 dark:text-emerald-400">Average</span>
+                        <span class="text-primary-600 dark:text-primary-400">Average</span>
                     </div>
                     <div class="flex items-baseline gap-2">
                         <span class="text-4xl font-bold">8.5x</span>
-                        <span class="text-emerald-600 dark:text-emerald-400">↑ 1.2x</span>
+                        <span class="text-primary-600 dark:text-primary-400">↑ 1.2x</span>
                     </div>
                     <p class="text-sm text-slate-600 dark:text-slate-400 mt-2">Improvement from previous quarter</p>
                 </div>
@@ -162,11 +301,11 @@
                 <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg">
                     <div class="flex items-center justify-between mb-4">
                         <h3 class="text-lg font-semibold">Payback Period</h3>
-                        <span class="text-emerald-600 dark:text-emerald-400">Average</span>
+                        <span class="text-primary-600 dark:text-primary-400">Average</span>
                     </div>
                     <div class="flex items-baseline gap-2">
                         <span class="text-4xl font-bold">3.2mo</span>
-                        <span class="text-emerald-600 dark:text-emerald-400">↓ 0.8mo</span>
+                        <span class="text-primary-600 dark:text-primary-400">↓ 0.8mo</span>
                     </div>
                     <p class="text-sm text-slate-600 dark:text-slate-400 mt-2">Reduction from previous quarter</p>
                 </div>
@@ -176,7 +315,7 @@
         <!-- Unit Economics -->
         <section class="mb-16">
             <h2 class="text-3xl font-bold mb-8">Unit Economics</h2>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <!-- Customer Acquisition Metrics -->
                 <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg">
                     <h3 class="text-xl font-semibold mb-6">Customer Acquisition</h3>
@@ -268,7 +407,34 @@
                         </div>
                     </div>
                 </div>
-            </div>
+
+                <!-- AI Performance Metrics -->
+                <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg">
+                    <h3 class="text-xl font-semibold mb-6">AI Performance Metrics</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-600 dark:text-slate-400">Prediction Accuracy</span>
+                            <span class="font-semibold">99.99%</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-600 dark:text-slate-400">Response Time</span>
+                            <span class="font-semibold">50ms</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-600 dark:text-slate-400">Automation Rate</span>
+                            <span class="font-semibold">92%</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-600 dark:text-slate-400">Cost Optimization Rate</span>
+                            <span class="font-semibold">35%</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-600 dark:text-slate-400">Learning Rate</span>
+                            <span class="font-semibold">1.8x/month</span>
+                        </div>
+                    </div>
+                </div>
+                </div>
         </section>
 
         <!-- Market Growth -->
@@ -280,34 +446,37 @@
                         <h3 class="text-xl font-semibold mb-4">Total Addressable Market</h3>
                         <div class="flex items-baseline gap-4">
                             <span class="text-4xl font-bold">$48B</span>
-                            <span class="text-emerald-600 dark:text-emerald-400">↑ 18% YoY</span>
+                            <span class="text-primary-600 dark:text-primary-400">↑ 18% YoY</span>
                         </div>
                         <p class="text-sm text-slate-600 dark:text-slate-400 mt-2">Global cloud infrastructure optimization market</p>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
                         <div>
                             <h4 class="font-semibold mb-2">Market Share</h4>
                             <div class="flex items-baseline gap-2">
                                 <span class="text-2xl font-bold">2.8%</span>
-                                <span class="text-emerald-600 dark:text-emerald-400">↑ 0.9%</span>
+                                <span class="text-primary-600 dark:text-primary-400">↑ 0.9%</span>
                             </div>
+                            <p class="text-sm text-slate-500 mt-1">Tracking to 5% by EOY 2025</p>
                         </div>
 
                         <div>
                             <h4 class="font-semibold mb-2">Market Growth Rate</h4>
                             <div class="flex items-baseline gap-2">
-                                <span class="text-2xl font-bold">24%</span>
-                                <span class="text-emerald-600 dark:text-emerald-400">CAGR</span>
+                                <span class="text-2xl font-bold">32.5%</span>
+                                <span class="text-primary-600 dark:text-primary-400">CAGR</span>
                             </div>
+                            <p class="text-sm text-slate-500 mt-1">AI segment growing 2.5x faster</p>
                         </div>
 
                         <div>
                             <h4 class="font-semibold mb-2">Market Position</h4>
                             <div class="flex items-baseline gap-2">
                                 <span class="text-2xl font-bold">#2</span>
-                                <span class="text-emerald-600 dark:text-emerald-400">Enterprise</span>
+                                <span class="text-primary-600 dark:text-primary-400">Enterprise AI</span>
                             </div>
+                            <p class="text-sm text-slate-500 mt-1">#1 in autonomous infrastructure</p>
                         </div>
                     </div>
                 </div>

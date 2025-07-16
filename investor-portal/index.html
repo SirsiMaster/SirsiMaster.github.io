@@ -15,10 +15,30 @@
               'inter': ['Inter', 'sans-serif'],
             },
             colors: {
-              emerald: {
-                600: '#059669',
-                700: '#047857',
+              primary: {
+                50: '#f0fdf4',
+                100: '#dcfce7',
+                200: '#bbf7d0',
+                300: '#86efac',
+                400: '#4ade80',
+                500: '#22c55e',
+                600: '#16a34a',
+                700: '#15803d',
+                800: '#166534',
+                900: '#14532d'
               },
+              secondary: {
+                50: '#f8fafc',
+                100: '#f1f5f9',
+                200: '#e2e8f0',
+                300: '#cbd5e1',
+                400: '#94a3b8',
+                500: '#64748b',
+                600: '#475569',
+                700: '#334155',
+                800: '#1e293b',
+                900: '#0f172a'
+              }
             },
           },
         },
@@ -364,7 +384,7 @@
                   SirsiNexus
                 </h1>
                 <div class="flex items-center gap-2">
-                  <span class="text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded">
+<span class="text-xs text-secondary-500 dark:text-secondary-400 bg-secondary-100 dark:bg-secondary-800 px-2 py-0.5 rounded">
                     v0.7.9-alpha
                   </span>
                   <div class="flex items-center gap-1">
@@ -410,7 +430,7 @@
     </header>
     
     <!-- Live KPI Banner -->
-    <div class="bg-gradient-to-r from-emerald-50 to-blue-50 dark:from-emerald-900/20 dark:to-blue-900/20 border-b border-slate-200 dark:border-slate-700">
+    <div class="bg-gradient-to-r from-primary-50 to-primary-100/50 dark:from-primary-900/10 dark:to-primary-800/5 border-b border-secondary-200 dark:border-secondary-700">
       <div class="max-w-7xl mx-auto px-6 py-3">
         <div class="flex items-center justify-between overflow-x-auto">
           <div class="flex items-center gap-8 min-w-0">
@@ -486,9 +506,6 @@
                         <a href="committee/index.html" class="block px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors text-sm text-slate-700 dark:text-slate-300">
                             📋 Overview
                         </a>
-                        <a href="committee/business-case.html" class="block px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors text-sm text-slate-700 dark:text-slate-300">
-                            💼 Business Case
-                        </a>
                         <a href="committee/market-analysis.html" class="block px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors text-sm text-slate-700 dark:text-slate-300">
                             📈 Market Analysis
                         </a>
@@ -515,13 +532,13 @@
                 <div class="mb-6">
                     <h4 class="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-2 px-3 uppercase">On This Page</h4>
                     <div class="space-y-1">
-                        <button onclick="scrollToSection('executive-summary')" class="w-full text-left px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors text-sm text-slate-600 dark:text-slate-400">
+        <button onclick="scrollToSection(sectionId)" class="w-full text-left px-3 py-2 rounded-lg hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-colors text-sm text-secondary-600 dark:text-secondary-400">
                             Executive Summary
                         </button>
-                        <button onclick="scrollToSection('market-opportunity')" class="w-full text-left px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors text-sm text-slate-600 dark:text-slate-400">
+                        <button onclick="scrollToSection('market-opportunity')" class="w-full text-left px-3 py-2 rounded-lg hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-colors text-sm text-secondary-600 dark:text-secondary-400">
                             Market Opportunity
                         </button>
-                        <button onclick="scrollToSection('data-room')" class="w-full text-left px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors text-sm text-slate-600 dark:text-slate-400">
+                        <button onclick="scrollToSection('data-room')" class="w-full text-left px-3 py-2 rounded-lg hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-colors text-sm text-secondary-600 dark:text-secondary-400">
                             Data Room
                         </button>
                     </div>
@@ -552,7 +569,7 @@
     <!-- Main Content -->
     <main class="min-h-[calc(100vh-8rem)] lg:pl-52 pb-16 w-full overflow-x-hidden">
         <!-- Hero Section -->
-        <section class="bg-gradient-to-br from-emerald-50 via-white to-blue-50 dark:from-emerald-900/10 dark:via-slate-900 dark:to-blue-900/10 py-20">
+        <section class="bg-gradient-to-br from-primary-50 via-white to-primary-100/50 dark:from-primary-900/10 dark:via-secondary-900 dark:to-primary-800/5 py-20">
             <div class="max-w-7xl mx-auto px-6 text-center">
                 <h1 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-slate-100 mb-4">
                     SirsiNexus <span class="text-emerald-600">Investor</span> Dashboard
@@ -588,14 +605,14 @@
                 <!-- Ready to Dive Deeper Navigation -->
                 <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6">🎯 Ready to Dive Deeper?</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
-                    <a href="committee/index.html" class="bg-blue-600 text-white px-6 py-4 rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm text-center">
-                        📋 Committee Documents
+                    <a href="committee/index.html" class="bg-primary-600 text-white px-6 py-4 rounded-lg hover:bg-primary-700 transition-colors font-medium text-sm text-center shadow-sm hover:shadow-md">
+                        Committee Documents
                     </a>
-                    <a href="data-room.html" class="bg-purple-600 text-white px-6 py-4 rounded-lg hover:bg-purple-700 transition-colors font-medium text-sm text-center">
-                        🏛️ Data Room
+                    <a href="data-room.html" class="bg-primary-600 text-white px-6 py-4 rounded-lg hover:bg-primary-700 transition-colors font-medium text-sm text-center shadow-sm hover:shadow-md">
+                        Data Room
                     </a>
-                    <a href="kpi-unit-metrics.html" class="bg-emerald-600 text-white px-6 py-4 rounded-lg hover:bg-emerald-700 transition-colors font-medium text-sm text-center">
-                        📊 KPI/Unit Metrics
+                    <a href="kpi-unit-metrics.html" class="bg-primary-600 text-white px-6 py-4 rounded-lg hover:bg-primary-700 transition-colors font-medium text-sm text-center shadow-sm hover:shadow-md">
+                        KPI/Unit Metrics
                     </a>
                 </div>
             </div>
@@ -802,7 +819,6 @@
               'financial-reports': {
                 title: 'Financial Reports',
                 files: [
-                  { name: 'Business Case Analysis', path: 'committee/business-case.html', description: 'Comprehensive business case for SirsiNexus AI platform', date: 'January 2025' }
                 ]
               },
               'business-metrics': {
@@ -1133,14 +1149,6 @@
               path: 'committee/market-analysis.html',
               section: 'Committee Documents',
               searchTerms: 'market analysis competitive landscape strategic positioning opportunity'.toLowerCase()
-            },
-            {
-              type: 'committee',
-              title: 'Business Case',
-              description: 'Financial projections, investment requirements, and return on investment analysis',
-              path: 'committee/business-case.html',
-              section: 'Committee Documents',
-              searchTerms: 'business case financial projections investment requirements roi analysis'.toLowerCase()
             },
             {
               type: 'committee',

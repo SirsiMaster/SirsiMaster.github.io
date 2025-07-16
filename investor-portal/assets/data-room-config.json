@@ -2,14 +2,7 @@
   "sections": {
     "financial-reports": {
       "title": "Financial Reports",
-      "files": [
-        {
-          "name": "Business Case Analysis",
-          "path": "committee/business-case.html",
-          "description": "Comprehensive business case for SirsiNexus AI platform",
-          "date": "January 2025"
-        }
-      ]
+      "files": []
     },
     "business-metrics": {
       "title": "Business Metrics",
