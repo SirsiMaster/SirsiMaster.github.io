@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SirsiNexus - Committee Access</title>
+    <title>SirsiNexus - Investment Committee Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       // Authentication check - redirect if not authenticated
       (function() {
         const auth = sessionStorage.getItem('investorAuth');
         if (!auth) {
-          window.location.href = 'investor-login.html';
+          window.location.href = '../../investor-login.html';
           return;
         }
         
@@ -23,20 +24,19 @@
           // Check if session expired (24 hours)
           if (hoursSinceLogin > 24) {
             sessionStorage.removeItem('investorAuth');
-            window.location.href = 'investor-login.html';
+            window.location.href = '../../investor-login.html';
             return;
           }
           
-          console.log('✅ Authentication verified for committee bridge:', authData.id);
+          console.log('✅ Authentication verified for committee dashboard:', authData.id);
         } catch (error) {
           console.error('❌ Authentication error:', error);
           sessionStorage.removeItem('investorAuth');
-          window.location.href = 'investor-login.html';
+          window.location.href = '../../investor-login.html';
           return;
         }
       })();
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script>
       tailwind.config = {
         darkMode: 'class',
@@ -76,6 +76,140 @@
         }
       })();
     </script>
+    
+    <style>
+      /* Professional Investment Committee Styling */
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+      
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1, 'ss01' 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      
+      /* Dark mode support */
+      .dark body {
+        background-color: #0f172a;
+        color: #e2e8f0;
+      }
+      
+      /* Professional Card Styling */
+      .committee-card {
+        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 2rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .committee-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #059669 0%, #047857 100%);
+      }
+      
+      .committee-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        border-color: #059669;
+      }
+      
+      .dark .committee-card {
+        background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+        border-color: #334155;
+      }
+      
+      .dark .committee-card:hover {
+        border-color: #059669;
+      }
+      
+      /* Professional Button Styling */
+      .committee-button {
+        background: linear-gradient(135deg, #059669 0%, #047857 100%);
+        color: white;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3);
+      }
+      
+      .committee-button:hover {
+        background: linear-gradient(135deg, #047857 0%, #065f46 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(5, 150, 105, 0.4);
+      }
+      
+      /* Metrics Grid */
+      .metrics-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin: 3rem 0;
+      }
+      
+      .metric-card {
+        background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+        border: 1px solid #0ea5e9;
+        border-radius: 16px;
+        padding: 2rem;
+        text-align: center;
+        transition: all 0.3s ease;
+      }
+      
+      .metric-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 30px rgba(14, 165, 233, 0.2);
+      }
+      
+      .dark .metric-card {
+        background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+        border-color: #3b82f6;
+      }
+      
+      .metric-value {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: #0ea5e9;
+        margin-bottom: 0.5rem;
+      }
+      
+      .dark .metric-value {
+        color: #93c5fd;
+      }
+      
+      .metric-label {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: #1e40af;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      
+      .dark .metric-label {
+        color: #dbeafe;
+      }
+    </style>
 </head>
 <body class="h-full bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
     <!-- Header -->
@@ -90,8 +224,8 @@
             <h1 class="text-lg font-semibold text-slate-900 dark:text-slate-100">Committee Access</h1>
           </div>
           <nav class="flex items-center gap-6">
-            <a href="index.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">Home</a>
-            <a href="investor-portal.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">Investor Portal</a>
+            <a href="../../index.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">← Back to Home</a>
+            <a href="../index.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">← Back to Portal</a>
             <button onclick="toggleTheme()" class="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
@@ -128,7 +262,7 @@
                     🚀 Product Roadmap
                 </a>
                 
-                <a href="investor-portal.html" 
+                <a href="../index.html" 
                    class="group relative w-full flex justify-center py-4 px-6 border border-emerald-600 text-sm font-medium rounded-lg text-emerald-600 bg-transparent hover:bg-emerald-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-all duration-200">
                     ← Back to Investor Portal
                 </a>
