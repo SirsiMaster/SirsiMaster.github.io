@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KPI & Unit Metrics - SirsiNexus</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      // Authentication check - redirect if not authenticated
+      (function() {
+        const auth = sessionStorage.getItem('investorAuth');
+        if (!auth) {
+          window.location.href = '../investor-login.html';
+          return;
+        }
+        
+        try {
+          const authData = JSON.parse(auth);
+          const loginTime = new Date(authData.loginTime);
+          const now = new Date();
+          const hoursSinceLogin = (now - loginTime) / (1000 * 60 * 60);
+          
+          if (hoursSinceLogin > 24) {
+            sessionStorage.removeItem('investorAuth');
+            window.location.href = '../investor-login.html';
+            return;
+          }
+          
+          console.log('✅ Authentication verified:', authData.id);
+        } catch (error) {
+          console.error('❌ Authentication error:', error);
+          sessionStorage.removeItem('investorAuth');
+          window.location.href = '../investor-login.html';
+          return;
+        }
+      })();
+    </script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              'inter': ['Inter', 'sans-serif'],
+            },
+            colors: {
+              emerald: {
+                600: '#059669',
+                700: '#047857',
+              },
+            },
+          },
+        },
+      }
+    </script>
+</head>
+<body class="font-inter bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100">
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800/95 sticky top-0 z-50 border-b border-slate-200 dark:border-slate-700 backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex h-16 items-center justify-between">
+                <div class="flex items-center gap-6">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 flex items-center justify-center">
+                            <img src="../assets/images/Sirsi_Logo_300ppi_cguiyg.png" alt="Sirsi Logo" class="w-12 h-12 object-contain dark:hidden">
+                            <img src="../assets/images/Sirsi_Logo_300ppi_Inverted_lt7asx.png" alt="Sirsi Logo" class="w-12 h-12 object-contain hidden dark:block">
+                        </div>
+                        <div>
+                            <h1 class="text-lg font-semibold text-slate-900 dark:text-slate-100">SirsiNexus</h1>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded">KPI & Metrics</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <nav class="flex items-center gap-6">
+                    <a href="../index.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">← Back to Home</a>
+                    <a href="data-room.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">← Back to Data Room</a>
+                    <button onclick="toggleTheme()" class="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Content -->
+    <main class="max-w-7xl mx-auto px-6 py-12">
+        <!-- KPI Overview -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-8">Key Performance Indicators</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Annual Recurring Revenue -->
+                <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold">Annual Recurring Revenue</h3>
+                        <span class="text-emerald-600 dark:text-emerald-400">Y3</span>
+                    </div>
+                    <div class="flex items-baseline gap-2">
+                        <span class="text-4xl font-bold">$33M</span>
+                        <span class="text-emerald-600 dark:text-emerald-400">↑ 142%</span>
+                    </div>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 mt-2">Year-over-year growth from Y2</p>
+                </div>
+
+                <!-- Total Customers -->
+                <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold">Total Customers</h3>
+                        <span class="text-emerald-600 dark:text-emerald-400">Active</span>
+                    </div>
+                    <div class="flex items-baseline gap-2">
+                        <span class="text-4xl font-bold">280</span>
+                        <span class="text-emerald-600 dark:text-emerald-400">↑ 87%</span>
+                    </div>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 mt-2">Net increase in last 12 months</p>
+                </div>
+
+                <!-- Cost Savings -->
+                <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold">Customer Cost Savings</h3>
+                        <span class="text-emerald-600 dark:text-emerald-400">Average</span>
+                    </div>
+                    <div class="flex items-baseline gap-2">
+                        <span class="text-4xl font-bold">25%</span>
+                        <span class="text-emerald-600 dark:text-emerald-400">↑ 5%</span>
+                    </div>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 mt-2">Improvement from previous quarter</p>
+                </div>
+
+                <!-- System Uptime -->
+                <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold">System Uptime</h3>
+                        <span class="text-emerald-600 dark:text-emerald-400">30d Avg</span>
+                    </div>
+                    <div class="flex items-baseline gap-2">
+                        <span class="text-4xl font-bold">99.2%</span>
+                        <span class="text-emerald-600 dark:text-emerald-400">↑ 0.3%</span>
+                    </div>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 mt-2">Improvement from previous month</p>
+                </div>
+
+                <!-- Customer ROI -->
+                <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold">Customer ROI</h3>
+                        <span class="text-emerald-600 dark:text-emerald-400">Average</span>
+                    </div>
+                    <div class="flex items-baseline gap-2">
+                        <span class="text-4xl font-bold">8.5x</span>
+                        <span class="text-emerald-600 dark:text-emerald-400">↑ 1.2x</span>
+                    </div>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 mt-2">Improvement from previous quarter</p>
+                </div>
+
+                <!-- Payback Period -->
+                <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold">Payback Period</h3>
+                        <span class="text-emerald-600 dark:text-emerald-400">Average</span>
+                    </div>
+                    <div class="flex items-baseline gap-2">
+                        <span class="text-4xl font-bold">3.2mo</span>
+                        <span class="text-emerald-600 dark:text-emerald-400">↓ 0.8mo</span>
+                    </div>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 mt-2">Reduction from previous quarter</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Unit Economics -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-8">Unit Economics</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Customer Acquisition Metrics -->
+                <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg">
+                    <h3 class="text-xl font-semibold mb-6">Customer Acquisition</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-600 dark:text-slate-400">CAC</span>
+                            <span class="font-semibold">$12,500</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-600 dark:text-slate-400">Sales Cycle</span>
+                            <span class="font-semibold">45 days</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-600 dark:text-slate-400">Lead-to-Close Rate</span>
+                            <span class="font-semibold">18%</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-600 dark:text-slate-400">CAC Payback</span>
+                            <span class="font-semibold">6 months</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Customer Value Metrics -->
+                <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg">
+                    <h3 class="text-xl font-semibold mb-6">Customer Value</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-600 dark:text-slate-400">ARR per Customer</span>
+                            <span class="font-semibold">$117,857</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-600 dark:text-slate-400">Gross Margin</span>
+                            <span class="font-semibold">82%</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-600 dark:text-slate-400">Net Revenue Retention</span>
+                            <span class="font-semibold">128%</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-600 dark:text-slate-400">Customer Lifetime Value</span>
+                            <span class="font-semibold">$706,250</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Operational Metrics -->
+                <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg">
+                    <h3 class="text-xl font-semibold mb-6">Operational Metrics</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-600 dark:text-slate-400">Average Contract Value</span>
+                            <span class="font-semibold">$125,000</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-600 dark:text-slate-400">Support Response Time</span>
+                            <span class="font-semibold">< 1 hour</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-600 dark:text-slate-400">Implementation Time</span>
+                            <span class="font-semibold">21 days</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-600 dark:text-slate-400">Customer Health Score</span>
+                            <span class="font-semibold">8.7/10</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Growth Metrics -->
+                <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg">
+                    <h3 class="text-xl font-semibold mb-6">Growth Metrics</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-600 dark:text-slate-400">MRR Growth Rate</span>
+                            <span class="font-semibold">12% MoM</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-600 dark:text-slate-400">Logo Retention</span>
+                            <span class="font-semibold">96%</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-600 dark:text-slate-400">Expansion Revenue</span>
+                            <span class="font-semibold">32% of ARR</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-600 dark:text-slate-400">Pipeline Coverage</span>
+                            <span class="font-semibold">3.8x</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Market Growth -->
+        <section>
+            <h2 class="text-3xl font-bold mb-8">Market Growth</h2>
+            <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg">
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-xl font-semibold mb-4">Total Addressable Market</h3>
+                        <div class="flex items-baseline gap-4">
+                            <span class="text-4xl font-bold">$48B</span>
+                            <span class="text-emerald-600 dark:text-emerald-400">↑ 18% YoY</span>
+                        </div>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 mt-2">Global cloud infrastructure optimization market</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                        <div>
+                            <h4 class="font-semibold mb-2">Market Share</h4>
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-2xl font-bold">2.8%</span>
+                                <span class="text-emerald-600 dark:text-emerald-400">↑ 0.9%</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h4 class="font-semibold mb-2">Market Growth Rate</h4>
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-2xl font-bold">24%</span>
+                                <span class="text-emerald-600 dark:text-emerald-400">CAGR</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h4 class="font-semibold mb-2">Market Position</h4>
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-2xl font-bold">#2</span>
+                                <span class="text-emerald-600 dark:text-emerald-400">Enterprise</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-white py-12 mt-16">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <img src="../assets/images/Sirsi_Logo_300ppi_Inverted_lt7asx.png" alt="Sirsi Logo" class="w-10 h-10 object-contain">
+                        <div>
+                            <h3 class="text-lg font-semibold">SirsiNexus</h3>
+                            <p class="text-sm text-slate-400">AI-Powered Cloud Infrastructure</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Revolutionizing cloud infrastructure management with cutting-edge AI technology and enterprise-grade solutions.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Investor Resources</h4>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li><a href="index.html" class="hover:text-white transition-colors">Investor Portal</a></li>
+                        <li><a href="data-room.html" class="hover:text-white transition-colors">Data Room</a></li>
+                        <li><a href="committee/market-analysis.html" class="hover:text-white transition-colors">Market Analysis</a></li>
+                        <li><a href="committee/product-roadmap.html" class="hover:text-white transition-colors">Product Roadmap</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Committee Access</h4>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li><a href="committee/index.html" class="hover:text-white transition-colors">Committee Dashboard</a></li>
+                        <li><a href="../contact.html" class="hover:text-white transition-colors">Contact Support</a></li>
+                        <li><a href="../privacy.html" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="../terms.html" class="hover:text-white transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-slate-800 mt-8 pt-8 text-center text-sm text-slate-400">
+                <p>&copy; 2025 Sirsi Technologies Inc. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const isDark = html.classList.contains('dark');
+            
+            if (isDark) {
+                html.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+        
+        function initTheme() {
+            const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            document.documentElement.classList.toggle('dark', theme === 'dark');
+        }
+        
+        // Initialize immediately
+        initTheme();
+        
+        // Make toggleTheme available globally
+        window.toggleTheme = toggleTheme;
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            initTheme();
+        });
+    </script>
+</body>
+</html>

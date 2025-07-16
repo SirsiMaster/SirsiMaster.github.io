@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Case - SirsiNexus</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      // Authentication check - redirect if not authenticated
+      (function() {
+        const auth = sessionStorage.getItem('investorAuth');
+        if (!auth) {
+          window.location.href = '../investor-login.html';
+          return;
+        }
+        
+        try {
+          const authData = JSON.parse(auth);
+          const loginTime = new Date(authData.loginTime);
+          const now = new Date();
+          const hoursSinceLogin = (now - loginTime) / (1000 * 60 * 60);
+          
+          if (hoursSinceLogin > 24) {
+            sessionStorage.removeItem('investorAuth');
+            window.location.href = '../investor-login.html';
+            return;
+          }
+          
+          console.log('✅ Authentication verified:', authData.id);
+        } catch (error) {
+          console.error('❌ Authentication error:', error);
+          sessionStorage.removeItem('investorAuth');
+          window.location.href = '../investor-login.html';
+          return;
+        }
+      })();
+    </script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              'inter': ['Inter', 'sans-serif'],
+            },
+            colors: {
+              emerald: {
+                600: '#059669',
+                700: '#047857',
+              },
+            },
+          },
+        },
+      }
+    </script>
+</head>
+<body class="font-inter bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100">
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800/95 sticky top-0 z-50 border-b border-slate-200 dark:border-slate-700 backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex h-16 items-center justify-between">
+                <div class="flex items-center gap-6">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 flex items-center justify-center">
+                            <img src="../assets/images/Sirsi_Logo_300ppi_cguiyg.png" alt="Sirsi Logo" class="w-12 h-12 object-contain dark:hidden">
+                            <img src="../assets/images/Sirsi_Logo_300ppi_Inverted_lt7asx.png" alt="Sirsi Logo" class="w-12 h-12 object-contain hidden dark:block">
+                        </div>
+                        <div>
+                            <h1 class="text-lg font-semibold text-slate-900 dark:text-slate-100">SirsiNexus</h1>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded">Business Case</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <nav class="flex items-center gap-6">
+                    <a href="../index.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">← Back to Home</a>
+                    <a href="data-room.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">← Back to Data Room</a>
+                    <button onclick="toggleTheme()" class="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Content -->
+    <main class="max-w-7xl mx-auto px-6 py-12">
+        <!-- Executive Summary -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-8">Executive Summary</h2>
+            <div class="bg-white dark:bg-slate-800 rounded-xl p-8 shadow-lg">
+                <div class="prose dark:prose-invert max-w-none">
+                    <p class="text-lg text-slate-600 dark:text-slate-400 mb-6">
+                        SirsiNexus is revolutionizing cloud infrastructure management through advanced AI technology, delivering unprecedented cost savings and operational efficiency for enterprise customers. Our platform has demonstrated exceptional market traction and is positioned for explosive growth in the rapidly expanding cloud optimization market.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+                        <div class="p-6 bg-slate-50 dark:bg-slate-700 rounded-lg">
+                            <h3 class="font-semibold mb-2">Investment Opportunity</h3>
+                            <p class="text-slate-600 dark:text-slate-400">Series B funding round of $45M to accelerate growth and capture market leadership position.</p>
+                        </div>
+                        <div class="p-6 bg-slate-50 dark:bg-slate-700 rounded-lg">
+                            <h3 class="font-semibold mb-2">Use of Funds</h3>
+                            <p class="text-slate-600 dark:text-slate-400">Product development, enterprise sales expansion, and international market entry.</p>
+                        </div>
+                        <div class="p-6 bg-slate-50 dark:bg-slate-700 rounded-lg">
+                            <h3 class="font-semibold mb-2">Target Return</h3>
+                            <p class="text-slate-600 dark:text-slate-400">10x return potential within 5 years through strategic exit or IPO.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Financial Projections -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-8">Financial Projections</h2>
+            <div class="bg-white dark:bg-slate-800 rounded-xl p-8 shadow-lg">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b border-slate-200 dark:border-slate-700">
+                                <th class="text-left py-4 font-semibold">Metric</th>
+                                <th class="text-right py-4 font-semibold">Y1 (2023)</th>
+                                <th class="text-right py-4 font-semibold">Y2 (2024)</th>
+                                <th class="text-right py-4 font-semibold">Y3 (2025)</th>
+                                <th class="text-right py-4 font-semibold">Y4 (2026)</th>
+                                <th class="text-right py-4 font-semibold">Y5 (2027)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-slate-200 dark:border-slate-700">
+                                <td class="py-4">Revenue</td>
+                                <td class="text-right py-4">$5.6M</td>
+                                <td class="text-right py-4">$13.6M</td>
+                                <td class="text-right py-4">$33.0M</td>
+                                <td class="text-right py-4">$79.2M</td>
+                                <td class="text-right py-4">$190.1M</td>
+                            </tr>
+                            <tr class="border-b border-slate-200 dark:border-slate-700">
+                                <td class="py-4">Gross Margin</td>
+                                <td class="text-right py-4">78%</td>
+                                <td class="text-right py-4">80%</td>
+                                <td class="text-right py-4">82%</td>
+                                <td class="text-right py-4">83%</td>
+                                <td class="text-right py-4">84%</td>
+                            </tr>
+                            <tr class="border-b border-slate-200 dark:border-slate-700">
+                                <td class="py-4">EBITDA</td>
+                                <td class="text-right py-4">-$8.4M</td>
+                                <td class="text-right py-4">-$6.8M</td>
+                                <td class="text-right py-4">$3.3M</td>
+                                <td class="text-right py-4">$15.8M</td>
+                                <td class="text-right py-4">$47.5M</td>
+                            </tr>
+                            <tr class="border-b border-slate-200 dark:border-slate-700">
+                                <td class="py-4">Cash Balance</td>
+                                <td class="text-right py-4">$31.5M</td>
+                                <td class="text-right py-4">$24.7M</td>
+                                <td class="text-right py-4">$28.0M</td>
+                                <td class="text-right py-4">$43.8M</td>
+                                <td class="text-right py-4">$91.3M</td>
+                            </tr>
+                            <tr>
+                                <td class="py-4">Enterprise Customers</td>
+                                <td class="text-right py-4">80</td>
+                                <td class="text-right py-4">150</td>
+                                <td class="text-right py-4">280</td>
+                                <td class="text-right py-4">520</td>
+                                <td class="text-right py-4">960</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Investment Rationale -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-8">Investment Rationale</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Market Opportunity -->
+                <div class="bg-white dark:bg-slate-800 rounded-xl p-8 shadow-lg">
+                    <h3 class="text-xl font-semibold mb-6">Market Opportunity</h3>
+                    <ul class="space-y-4">
+                        <li class="flex gap-4">
+                            <div class="flex-shrink-0 w-6 h-6 text-emerald-600">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold mb-1">$48B TAM</h4>
+                                <p class="text-slate-600 dark:text-slate-400">Growing cloud infrastructure optimization market</p>
+                            </div>
+                        </li>
+                        <li class="flex gap-4">
+                            <div class="flex-shrink-0 w-6 h-6 text-emerald-600">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold mb-1">24% CAGR</h4>
+                                <p class="text-slate-600 dark:text-slate-400">Rapid market expansion driven by cloud adoption</p>
+                            </div>
+                        </li>
+                        <li class="flex gap-4">
+                            <div class="flex-shrink-0 w-6 h-6 text-emerald-600">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold mb-1">Enterprise Focus</h4>
+                                <p class="text-slate-600 dark:text-slate-400">Targeting high-value enterprise customers</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Competitive Advantage -->
+                <div class="bg-white dark:bg-slate-800 rounded-xl p-8 shadow-lg">
+                    <h3 class="text-xl font-semibold mb-6">Competitive Advantage</h3>
+                    <ul class="space-y-4">
+                        <li class="flex gap-4">
+                            <div class="flex-shrink-0 w-6 h-6 text-emerald-600">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold mb-1">Proprietary AI</h4>
+                                <p class="text-slate-600 dark:text-slate-400">Advanced machine learning algorithms for optimization</p>
+                            </div>
+                        </li>
+                        <li class="flex gap-4">
+                            <div class="flex-shrink-0 w-6 h-6 text-emerald-600">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold mb-1">25% Cost Savings</h4>
+                                <p class="text-slate-600 dark:text-slate-400">Industry-leading customer cost reduction</p>
+                            </div>
+                        </li>
+                        <li class="flex gap-4">
+                            <div class="flex-shrink-0 w-6 h-6 text-emerald-600">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold mb-1">Enterprise Integration</h4>
+                                <p class="text-slate-600 dark:text-slate-400">Seamless integration with existing systems</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Use of Funds -->
+        <section>
+            <h2 class="text-3xl font-bold mb-8">Use of Funds</h2>
+            <div class="bg-white dark:bg-slate-800 rounded-xl p-8 shadow-lg">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="text-center">
+                        <div class="w-24 h-24 mx-auto mb-4 rounded-full bg-emerald-100 dark:bg-emerald-900 flex items-center justify-center">
+                            <span class="text-2xl font-bold text-emerald-600 dark:text-emerald-400">40%</span>
+                        </div>
+                        <h3 class="font-semibold mb-2">Product Development</h3>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">Expanding AI capabilities and feature set</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-24 h-24 mx-auto mb-4 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center">
+                            <span class="text-2xl font-bold text-blue-600 dark:text-blue-400">35%</span>
+                        </div>
+                        <h3 class="font-semibold mb-2">Sales & Marketing</h3>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">Enterprise sales team expansion</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-24 h-24 mx-auto mb-4 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center">
+                            <span class="text-2xl font-bold text-purple-600 dark:text-purple-400">15%</span>
+                        </div>
+                        <h3 class="font-semibold mb-2">International Expansion</h3>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">New market entry and operations</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-24 h-24 mx-auto mb-4 rounded-full bg-amber-100 dark:bg-amber-900 flex items-center justify-center">
+                            <span class="text-2xl font-bold text-amber-600 dark:text-amber-400">10%</span>
+                        </div>
+                        <h3 class="font-semibold mb-2">Working Capital</h3>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">Operations and team growth</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-white py-12 mt-16">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <img src="../assets/images/Sirsi_Logo_300ppi_Inverted_lt7asx.png" alt="Sirsi Logo" class="w-10 h-10 object-contain">
+                        <div>
+                            <h3 class="text-lg font-semibold">SirsiNexus</h3>
+                            <p class="text-sm text-slate-400">AI-Powered Cloud Infrastructure</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Revolutionizing cloud infrastructure management with cutting-edge AI technology and enterprise-grade solutions.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Investor Resources</h4>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li><a href="index.html" class="hover:text-white transition-colors">Investor Portal</a></li>
+                        <li><a href="data-room.html" class="hover:text-white transition-colors">Data Room</a></li>
+                        <li><a href="committee/market-analysis.html" class="hover:text-white transition-colors">Market Analysis</a></li>
+                        <li><a href="committee/product-roadmap.html" class="hover:text-white transition-colors">Product Roadmap</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Committee Access</h4>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li><a href="committee/index.html" class="hover:text-white transition-colors">Committee Dashboard</a></li>
+                        <li><a href="../contact.html" class="hover:text-white transition-colors">Contact Support</a></li>
+                        <li><a href="../privacy.html" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="../terms.html" class="hover:text-white transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-slate-800 mt-8 pt-8 text-center text-sm text-slate-400">
+                <p>&copy; 2025 Sirsi Technologies Inc. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const isDark = html.classList.contains('dark');
+            
+            if (isDark) {
+                html.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+        
+        function initTheme() {
+            const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            document.documentElement.classList.toggle('dark', theme === 'dark');
+        }
+        
+        // Initialize immediately
+        initTheme();
+        
+        // Make toggleTheme available globally
+        window.toggleTheme = toggleTheme;
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            initTheme();
+        });
+    </script>
+</body>
+</html>

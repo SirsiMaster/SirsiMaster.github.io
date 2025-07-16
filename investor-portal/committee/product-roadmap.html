@@ -11,7 +11,7 @@
       (function() {
         const auth = sessionStorage.getItem('investorAuth');
         if (!auth) {
-          window.location.href = 'investor-login.html';
+          window.location.href = '../../investor-login.html';
           return;
         }
         
@@ -24,7 +24,7 @@
           // Check if session expired (24 hours)
           if (hoursSinceLogin > 24) {
             sessionStorage.removeItem('investorAuth');
-            window.location.href = 'investor-login.html';
+            window.location.href = '../../investor-login.html';
             return;
           }
           
@@ -32,7 +32,7 @@
         } catch (error) {
           console.error('❌ Authentication error:', error);
           sessionStorage.removeItem('investorAuth');
-          window.location.href = 'investor-login.html';
+          window.location.href = '../../investor-login.html';
           return;
         }
       })();
@@ -112,8 +112,8 @@
                 <div class="flex items-center gap-6">
                     <div class="flex items-center gap-3">
                         <div class="w-12 h-12 flex items-center justify-center">
-                            <img src="assets/images/Sirsi_Logo_300ppi_cguiyg.png" alt="Sirsi Logo" class="w-12 h-12 object-contain dark:hidden">
-                            <img src="assets/images/Sirsi_Logo_300ppi_Inverted_lt7asx.png" alt="Sirsi Logo" class="w-12 h-12 object-contain hidden dark:block">
+                            <img src="../../assets/images/Sirsi_Logo_300ppi_cguiyg.png" alt="Sirsi Logo" class="w-12 h-12 object-contain dark:hidden">
+                            <img src="../../assets/images/Sirsi_Logo_300ppi_Inverted_lt7asx.png" alt="Sirsi Logo" class="w-12 h-12 object-contain hidden dark:block">
                         </div>
                         <div>
                             <h1 class="text-lg font-semibold text-slate-900 dark:text-slate-100">SirsiNexus</h1>
