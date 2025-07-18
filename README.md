@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# SirsiNexus
-=======
 # SirsiNexus GitHub Pages
 
 This repository contains the GitHub Pages content for SirsiNexus platform documentation and public-facing content.
@@ -12,10 +9,13 @@ This repository contains the GitHub Pages content for SirsiNexus platform docume
 - User guides
 
 ## Repository Details
-- Remote: git@github.com:SirsiMaster/SirsiMaster.github.io.git
+- Remote: https://github.com/SirsiMaster/SirsiMaster.github.io.git
 - Branch: main
 - Live URL: https://sirsimaster.github.io/SirsiNexus/
 - Last Updated: $(date +"%Y-%m-%d %H:%M:%S")
+
+## Quick Start
+For detailed setup information, maintenance procedures, and troubleshooting, see [MAINTENANCE.md](MAINTENANCE.md).
 
 ## Deployment Process
 1. Changes should be tested locally first
@@ -25,4 +25,8 @@ This repository contains the GitHub Pages content for SirsiNexus platform docume
 
 ## Related Repositories
 - Main Application: https://github.com/SirsiMaster/SirsiNexus
->>>>>>> temp_sirsinexus/main
+
+## Documentation
+- [MAINTENANCE.md](MAINTENANCE.md) - Complete setup and maintenance guide
+- [VERSION_SYSTEM.md](VERSION_SYSTEM.md) - Version control documentation
+- [WARP_TEAM_SETUP.md](WARP_TEAM_SETUP.md) - Team setup instructions
