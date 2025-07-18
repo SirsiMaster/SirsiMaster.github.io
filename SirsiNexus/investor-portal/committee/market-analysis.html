@@ -140,6 +140,15 @@
         opacity: 1;
         transform: translateX(0);
       }
+      
+      /* Force table header to respect theme */
+      .competitive-matrix-header {
+        background-color: #ffffff !important;
+      }
+      
+      .dark .competitive-matrix-header {
+        background-color: #334155 !important;
+      }
     </style>
 </head>
 <body class="font-inter bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100">
@@ -512,7 +521,7 @@
                     <div class="bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
                         <table class="min-w-full">
                             <thead>
-                                <tr class="bg-white dark:bg-slate-700 border-b-2 border-emerald-200 dark:border-emerald-700">
+                                <tr class="competitive-matrix-header border-b-2 border-emerald-200 dark:border-emerald-700">
                                     <th class="text-left px-6 py-4 text-slate-900 dark:text-slate-100 font-bold border-b-2 border-emerald-200 dark:border-emerald-700">Feature</th>
                                     <th class="text-center px-6 py-4 text-emerald-700 dark:text-emerald-300 font-bold border-b-2 border-emerald-200 dark:border-emerald-700">SIRSINEXUS</th>
                                     <th class="text-center px-6 py-4 text-slate-700 dark:text-slate-200 font-bold border-b-2 border-emerald-200 dark:border-emerald-700">TERRAFORM</th>
