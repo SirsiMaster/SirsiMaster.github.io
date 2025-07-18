@@ -644,7 +644,7 @@
                             </div>
                             <div class="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-100 dark:border-blue-800">
                                 <h4 class="font-semibold text-blue-700 dark:text-blue-400 mb-2">Use of Funds</h4>
-                                <p class="text-sm text-slate-600 dark:text-slate-400">40% Graph of Thought AI development, 35% enterprise sales expansion, 15% international market entry, and 10% working capital.</p>
+                                <p class="text-sm text-slate-600 dark:text-slate-400">40% Graph of Thought AI development including Hedera integration, 35% enterprise sales expansion, 15% Fortune 100 acceptance and adoption, and 10% working capital.</p>
                             </div>
                             <div class="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-100 dark:border-purple-800">
                                 <h4 class="font-semibold text-purple-700 dark:text-purple-400 mb-2">Target Return</h4>
@@ -772,8 +772,8 @@
                         <div class="w-24 h-24 mx-auto mb-4 rounded-full bg-emerald-100 dark:bg-emerald-900 flex items-center justify-center">
                             <span class="text-2xl font-bold text-emerald-600 dark:text-emerald-400">40%</span>
                         </div>
-                        <h3 class="font-semibold mb-2">Product Development</h3>
-                        <p class="text-sm text-slate-600 dark:text-slate-400">Expanding AI capabilities and feature set</p>
+                        <h3 class="font-semibold mb-2">AI Development</h3>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">Graph of Thought AI development and Hedera Hashgraph integration</p>
                     </div>
                     <div class="text-center">
                         <div class="w-24 h-24 mx-auto mb-4 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center">
@@ -786,8 +786,8 @@
                         <div class="w-24 h-24 mx-auto mb-4 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center">
                             <span class="text-2xl font-bold text-purple-600 dark:text-purple-400">15%</span>
                         </div>
-                        <h3 class="font-semibold mb-2">International Expansion</h3>
-                        <p class="text-sm text-slate-600 dark:text-slate-400">New market entry and operations</p>
+                        <h3 class="font-semibold mb-2">Fortune 100 Expansion</h3>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">Broad Fortune 100 enterprise acceptance and adoption</p>
                     </div>
                     <div class="text-center">
                         <div class="w-24 h-24 mx-auto mb-4 rounded-full bg-amber-100 dark:bg-amber-900 flex items-center justify-center">
@@ -954,6 +954,9 @@
         const container = document.getElementById('dataRoomSections');
         container.innerHTML = '';
         
+        const authData = JSON.parse(sessionStorage.getItem('investorAuth') || '{}');
+        const isAdmin = authData.role === 'admin';
+        
         Object.entries(dataRoomConfig.sections).forEach(([sectionId, section]) => {
           const iconConfig = sectionIcons[sectionId] || sectionIcons['financial-reports'];
           
@@ -969,6 +972,17 @@
               <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100 mb-2">${section.title}</h3>
               <div class="text-sm text-slate-500 dark:text-slate-400 mb-4">${section.files.length} document${section.files.length === 1 ? '' : 's'}</div>
             </div>
+            
+            ${isAdmin ? `
+              <div class="mb-4 pb-4 border-b border-slate-200 dark:border-slate-700">
+                <button onclick="showUploadModal('${sectionId}', '${section.title}')" class="w-full bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors font-medium text-sm flex items-center justify-center gap-2">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                  </svg>
+                  Upload File
+                </button>
+              </div>
+            ` : ''}
             
             <div class="space-y-3">
               <div class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">File Types Available:</div>
@@ -998,6 +1012,13 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                           </svg>
                         </button>
+                        ${isAdmin ? `
+                          <button onclick="deleteFile('${sectionId}', '${file.name}')" class="p-1 text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-200" title="Delete File">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                            </svg>
+                          </button>
+                        ` : ''}
                       </div>
                     </div>
                   `).join('')}
@@ -1132,6 +1153,9 @@
         
         // Section details modal
         function showSectionDetails(sectionId, section) {
+            const authData = JSON.parse(sessionStorage.getItem('investorAuth') || '{}');
+            const isAdmin = authData.role === 'admin';
+            
             const modal = document.createElement('div');
             modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
             modal.innerHTML = `
@@ -1144,6 +1168,16 @@
                             </svg>
                         </button>
                     </div>
+                    ${isAdmin ? `
+                        <div class="mb-4 pb-4 border-b border-slate-200 dark:border-slate-700">
+                            <button onclick="showUploadModal('${sectionId}', '${section.title}')" class="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors font-medium text-sm flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                                </svg>
+                                Add New File
+                            </button>
+                        </div>
+                    ` : ''}
                     <div class="space-y-4">
                         ${section.files.map(file => `
                             <div class="border border-slate-200 dark:border-slate-700 rounded-lg p-4">
@@ -1170,6 +1204,13 @@
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
                                             </svg>
                                         </a>
+                                        ${isAdmin ? `
+                                            <button onclick="deleteFile('${sectionId}', '${file.name}')" class="p-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-800/50" title="Delete File">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                                </svg>
+                                            </button>
+                                        ` : ''}
                                     </div>
                                 </div>
                             </div>
@@ -1347,6 +1388,221 @@
         
         // Make toggleSidebar available globally
         window.toggleSidebar = toggleSidebar;
+        
+        // File management functions for admin
+        const fileTypes = {
+          'financial-reports': {
+            'Annual Report': 'annual-report',
+            'Quarterly Report': 'quarterly-report',
+            'Income Statement': 'income-statement',
+            'Balance Sheet': 'balance-sheet',
+            'Cash Flow Statement': 'cash-flow',
+            'Audit Report': 'audit-report'
+          },
+          'legal-documents': {
+            'Articles of Incorporation': 'incorporation-doc',
+            'EIN Certificate': 'ein',
+            'Operating Agreement': 'operating-agreement',
+            'Board Resolutions': 'board-resolutions',
+            'IP Documentation': 'ip-documentation',
+            'Compliance Certificates': 'compliance-cert'
+          },
+          'business-metrics': {
+            'KPI Dashboard': 'kpi-dashboard',
+            'Unit Economics': 'unit-economics',
+            'Market Analysis': 'market-analysis',
+            'Customer Metrics': 'customer-metrics',
+            'Growth Analysis': 'growth-analysis'
+          },
+          'strategic-plans': {
+            'Business Plan': 'business-plan',
+            'Strategic Roadmap': 'strategic-roadmap',
+            'Market Entry Strategy': 'market-entry',
+            'Product Roadmap': 'product-roadmap',
+            'Competitive Analysis': 'competitive-analysis'
+          },
+          'communications': {
+            'Board Minutes': 'board-minutes',
+            'Investor Updates': 'investor-updates',
+            'Press Releases': 'press-releases',
+            'Management Presentations': 'mgmt-presentations'
+          },
+          'investment-terms': {
+            'Term Sheet': 'term-sheet',
+            'Shareholders Agreement': 'shareholders-agreement',
+            'Stock Purchase Agreement': 'stock-purchase',
+            'Subscription Agreement': 'subscription-agreement',
+            'Cap Table': 'cap-table'
+          }
+        };
+        
+        function showUploadModal(sectionId, sectionTitle) {
+          const modal = document.createElement('div');
+          modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+          
+          const availableTypes = fileTypes[sectionId] || {};
+          const typeOptions = Object.entries(availableTypes).map(([name, value]) => 
+            `<option value="${value}">${name}</option>`
+          ).join('');
+          
+          modal.innerHTML = `
+            <div class="bg-white dark:bg-slate-800 rounded-xl p-6 max-w-md w-full mx-4">
+              <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100">Upload File to ${sectionTitle}</h3>
+                <button onclick="closeUploadModal()" class="text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                  </svg>
+                </button>
+              </div>
+              
+              <form id="uploadForm" class="space-y-4">
+                <div>
+                  <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Document Type</label>
+                  <select id="fileType" class="w-full p-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100" required>
+                    <option value="">Select document type...</option>
+                    ${typeOptions}
+                  </select>
+                </div>
+                
+                <div>
+                  <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">File Name</label>
+                  <input type="text" id="fileName" class="w-full p-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100" placeholder="Enter file name..." required>
+                </div>
+                
+                <div>
+                  <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Description</label>
+                  <textarea id="fileDescription" rows="3" class="w-full p-3 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100" placeholder="Brief description of the document..." required></textarea>
+                </div>
+                
+                <div>
+                  <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Upload File</label>
+                  <div class="border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-lg p-6 text-center">
+                    <input type="file" id="fileUpload" class="hidden" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx" onchange="handleFileSelect(event)">
+                    <button type="button" onclick="document.getElementById('fileUpload').click()" class="bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 px-4 py-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">
+                      Choose File
+                    </button>
+                    <div id="selectedFile" class="mt-2 text-sm text-slate-600 dark:text-slate-400"></div>
+                  </div>
+                </div>
+                
+                <div class="flex gap-3 pt-4">
+                  <button type="submit" class="flex-1 bg-emerald-600 text-white py-3 rounded-lg hover:bg-emerald-700 transition-colors font-medium">
+                    Upload Document
+                  </button>
+                  <button type="button" onclick="closeUploadModal()" class="flex-1 bg-slate-300 text-slate-700 py-3 rounded-lg hover:bg-slate-400 transition-colors font-medium">
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </div>
+          `;
+          
+          document.body.appendChild(modal);
+          window.currentUploadModal = modal;
+          
+          // Handle form submission
+          document.getElementById('uploadForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            handleFileUpload(sectionId);
+          });
+        }
+        
+        function handleFileSelect(event) {
+          const file = event.target.files[0];
+          const selectedFileDiv = document.getElementById('selectedFile');
+          if (file) {
+            selectedFileDiv.textContent = `Selected: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`;
+          } else {
+            selectedFileDiv.textContent = '';
+          }
+        }
+        
+        function handleFileUpload(sectionId) {
+          const fileType = document.getElementById('fileType').value;
+          const fileName = document.getElementById('fileName').value;
+          const fileDescription = document.getElementById('fileDescription').value;
+          const fileUpload = document.getElementById('fileUpload').files[0];
+          
+          if (!fileType || !fileName || !fileDescription || !fileUpload) {
+            alert('Please fill in all fields and select a file.');
+            return;
+          }
+          
+          // Here you would implement the actual file upload logic
+          // For now, we'll simulate adding it to the local config
+          const newFile = {
+            name: fileName,
+            path: `uploaded/${fileType}_${Date.now()}.pdf`, // Simulated path
+            description: fileDescription,
+            date: new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' }),
+            type: fileType
+          };
+          
+          // Add to dataRoomConfig
+          if (!dataRoomConfig.sections[sectionId]) {
+            dataRoomConfig.sections[sectionId] = { title: '', files: [] };
+          }
+          dataRoomConfig.sections[sectionId].files.push(newFile);
+          
+          // Re-render the data room sections
+          renderDataRoomSections();
+          buildSearchIndex();
+          
+          // Close modal and show success message
+          closeUploadModal();
+          showNotification(`Successfully uploaded "${fileName}" to ${dataRoomConfig.sections[sectionId].title}`, 'success');
+        }
+        
+        function deleteFile(sectionId, fileName) {
+          if (confirm(`Are you sure you want to delete "${fileName}"? This action cannot be undone.`)) {
+            // Remove from dataRoomConfig
+            const section = dataRoomConfig.sections[sectionId];
+            section.files = section.files.filter(file => file.name !== fileName);
+            
+            // Re-render the data room sections
+            renderDataRoomSections();
+            buildSearchIndex();
+            
+            // Close any open modals and show success message
+            if (window.currentSectionModal) closeSectionDetails();
+            showNotification(`Successfully deleted "${fileName}"`, 'success');
+          }
+        }
+        
+        function closeUploadModal() {
+          if (window.currentUploadModal) {
+            document.body.removeChild(window.currentUploadModal);
+            window.currentUploadModal = null;
+          }
+        }
+        
+        function showNotification(message, type = 'info') {
+          const notification = document.createElement('div');
+          notification.className = `fixed top-4 right-4 z-50 px-6 py-3 rounded-lg shadow-lg text-white ${
+            type === 'success' ? 'bg-emerald-600' : 
+            type === 'error' ? 'bg-red-600' : 
+            'bg-blue-600'
+          } transform translate-x-full opacity-0 transition-all duration-300`;
+          notification.textContent = message;
+          
+          document.body.appendChild(notification);
+          
+          // Animate in
+          setTimeout(() => {
+            notification.classList.remove('translate-x-full', 'opacity-0');
+          }, 100);
+          
+          // Animate out and remove
+          setTimeout(() => {
+            notification.classList.add('translate-x-full', 'opacity-0');
+            setTimeout(() => {
+              if (notification.parentNode) {
+                document.body.removeChild(notification);
+              }
+            }, 300);
+          }, 3000);
+        }
         
         // Check authentication when page loads
         async function initPageChecks() {

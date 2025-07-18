@@ -508,8 +508,50 @@ ul li::before {
                 <option value="architect">Solutions Architect</option>
                 <option value="manager">Engineering Manager</option>
                 <option value="cto">CTO</option>
+                <option value="investor">Investor</option>
                 <option value="other">Other</option>
               </select>
+            </div>
+            
+            <!-- Investor-specific fields (shown conditionally) -->
+            <div id="investorFields" class="hidden space-y-6">
+              <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+                <div class="flex items-center mb-2">
+                  <svg class="w-5 h-5 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                  <h4 class="text-sm font-medium text-blue-900 dark:text-blue-100">Investor Information</h4>
+                </div>
+                <p class="text-sm text-blue-700 dark:text-blue-300">Please provide your professional profiles for verification purposes.</p>
+              </div>
+              
+              <div>
+                <label for="linkedinUrl" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                  LinkedIn Profile URL <span class="text-red-500">*</span>
+                </label>
+                <input 
+                  type="url" 
+                  id="linkedinUrl" 
+                  name="linkedinUrl" 
+                  class="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-slate-700 dark:text-white"
+                  placeholder="https://www.linkedin.com/in/your-profile"
+                />
+                <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Your professional LinkedIn profile for verification</p>
+              </div>
+              
+              <div>
+                <label for="businessUrl" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                  Business Website or Company LinkedIn <span class="text-red-500">*</span>
+                </label>
+                <input 
+                  type="url" 
+                  id="businessUrl" 
+                  name="businessUrl" 
+                  class="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-slate-700 dark:text-white"
+                  placeholder="https://www.yourcompany.com or https://www.linkedin.com/company/..."
+                />
+                <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Your business website or company LinkedIn page</p>
+              </div>
             </div>
             
             <div class="flex items-center">
@@ -603,8 +645,73 @@ Already signed up? <a href="https://sirsimaster.github.io/SirsiNexus/" class="te
       // Make sure toggleTheme is available globally
       window.toggleTheme = toggleTheme;
 
+      // Role change handler to show/hide investor fields
+      document.getElementById('role').addEventListener('change', function(e) {
+        const investorFields = document.getElementById('investorFields');
+        const linkedinUrl = document.getElementById('linkedinUrl');
+        const businessUrl = document.getElementById('businessUrl');
+        
+        if (e.target.value === 'investor') {
+          investorFields.classList.remove('hidden');
+          linkedinUrl.setAttribute('required', 'true');
+          businessUrl.setAttribute('required', 'true');
+        } else {
+          investorFields.classList.add('hidden');
+          linkedinUrl.removeAttribute('required');
+          businessUrl.removeAttribute('required');
+          linkedinUrl.value = '';
+          businessUrl.value = '';
+        }
+      });
+      
+      // URL validation function
+      function isValidURL(string) {
+        try {
+          const url = new URL(string);
+          return url.protocol === 'http:' || url.protocol === 'https:';
+        } catch (_) {
+          return false;
+        }
+      }
+      
+      // LinkedIn URL validation
+      function isValidLinkedInURL(url) {
+        const linkedinPattern = /^https?:\/\/(www\.)?linkedin\.com\/(in|company)\/.+/;
+        return linkedinPattern.test(url);
+      }
+      
       document.getElementById('signupForm').addEventListener('submit', function(e) {
         e.preventDefault();
+        
+        const role = document.getElementById('role').value;
+        const linkedinUrl = document.getElementById('linkedinUrl').value.trim();
+        const businessUrl = document.getElementById('businessUrl').value.trim();
+        
+        // Validate investor fields if role is investor
+        if (role === 'investor') {
+          if (!linkedinUrl || !businessUrl) {
+            alert('Please fill in both LinkedIn profile URL and business website URL for investor registration.');
+            return;
+          }
+          
+          if (!isValidURL(linkedinUrl)) {
+            alert('Please enter a valid LinkedIn profile URL.');
+            document.getElementById('linkedinUrl').focus();
+            return;
+          }
+          
+          if (!isValidLinkedInURL(linkedinUrl)) {
+            alert('Please enter a valid LinkedIn profile URL (should contain linkedin.com/in/ or linkedin.com/company/).');
+            document.getElementById('linkedinUrl').focus();
+            return;
+          }
+          
+          if (!isValidURL(businessUrl)) {
+            alert('Please enter a valid business website URL.');
+            document.getElementById('businessUrl').focus();
+            return;
+          }
+        }
         
         // Show success message
         const successMessage = document.getElementById('successMessage');
@@ -615,18 +722,30 @@ Already signed up? <a href="https://sirsimaster.github.io/SirsiNexus/" class="te
           successMessage.classList.add('translate-x-full');
         }, 5000);
         
-        // Here you would typically send the form data to your backend
-        console.log('Form submitted:', {
+        // Prepare form data
+        const formData = {
           name: document.getElementById('name').value,
           email: document.getElementById('email').value,
           company: document.getElementById('company').value,
           role: document.getElementById('role').value,
           newsletter: document.getElementById('newsletter').checked,
           beta: document.getElementById('beta').checked
-        });
+        };
+        
+        // Add investor-specific fields if role is investor
+        if (role === 'investor') {
+          formData.linkedinUrl = linkedinUrl;
+          formData.businessUrl = businessUrl;
+        }
+        
+        // Here you would typically send the form data to your backend
+        console.log('Form submitted:', formData);
         
         // Reset form
         this.reset();
+        
+        // Hide investor fields after reset
+        document.getElementById('investorFields').classList.add('hidden');
       });
       
       function toggleMobileMenu() {
