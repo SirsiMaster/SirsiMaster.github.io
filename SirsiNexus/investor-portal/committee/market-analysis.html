@@ -221,10 +221,39 @@
         </div>
     </section>
 
+    <!-- Table of Contents -->
+    <div class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 sticky top-16 z-40">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="py-4">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-sm font-semibold text-slate-900 dark:text-slate-100">Table of Contents</h3>
+                    <button id="tocToggle" class="lg:hidden p-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+                <nav id="tocNav" class="hidden lg:block mt-2">
+                    <ul class="flex flex-wrap gap-x-6 gap-y-2 text-sm">
+                        <li><a href="#executive-summary" class="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Executive Summary</a></li>
+                        <li><a href="#competitive-landscape" class="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Competitive Analysis</a></li>
+                        <li><a href="#market-segments" class="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Market Segments</a></li>
+                        <li><a href="#ai-infrastructure" class="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">AI Infrastructure</a></li>
+                        <li><a href="#market-dynamics" class="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Market Dynamics</a></li>
+                        <li><a href="#competitive-matrix" class="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Competitive Matrix</a></li>
+                        <li><a href="#strategic-advantages" class="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Strategic Advantages</a></li>
+                        <li><a href="#pain-points" class="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Customer Analysis</a></li>
+                        <li><a href="#penetration-strategy" class="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Market Strategy</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
     <div class="max-w-7xl mx-auto px-6 py-12">
 
         <div class="space-y-8">
-            <section class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm">
+            <section id="executive-summary" class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm">
                 <h2 class="text-xl font-semibold mb-4 text-emerald-600">Executive Summary</h2>
                 <p class="text-slate-600 dark:text-slate-400 mb-4">
                     SirsiNexus represents a paradigm shift in cloud infrastructure management, leveraging advanced AI to fundamentally transform traditional Infrastructure as Code (IaC) approaches. Our breakthrough comes at a critical inflection point: enterprises are hitting a complexity wall with traditional IaC tools like Terraform, Pulumi, and CloudFormation, facing mounting technical debt and skyrocketing operational costs. As cloud infrastructure grows exponentially more complex, the manual, template-based approach of IaC is becoming unsustainable.
@@ -285,7 +314,7 @@
                 </div>
             </section>
 
-            <section class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm">
+            <section id="competitive-landscape" class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm">
                 <h2 class="text-xl font-semibold mb-4 text-emerald-600">Competitive Landscape Analysis</h2>
                 
                 <div class="mb-6">
@@ -365,7 +394,7 @@
                 </div>
             </section>
 
-            <section class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm">
+            <section id="market-segments" class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm">
                 <h2 class="text-xl font-semibold mb-4 text-emerald-600">Target Market Segments</h2>
                 <div class="grid md:grid-cols-3 gap-4">
                     <div class="text-center">
@@ -394,7 +423,7 @@
 
             <!-- Market Dynamics Section -->
             <!-- AI Infrastructure Market Analysis -->
-            <section class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm mb-8">
+            <section id="ai-infrastructure" class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm mb-8">
                 <h2 class="text-xl font-semibold mb-4 text-emerald-600">AI Infrastructure Market Analysis</h2>
                 <div class="space-y-6">
                     <div>
@@ -463,7 +492,7 @@
             </section>
 
             <!-- Market Dynamics Section -->
-            <section class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm">
+            <section id="market-dynamics" class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm">
                 <h2 class="text-xl font-semibold mb-4 text-emerald-600">Market Dynamics & Trends</h2>
                 <div class="grid md:grid-cols-2 gap-6">
                     <div>
@@ -512,7 +541,7 @@
             </section>
 
             <!-- Competitive Positioning -->
-            <section class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm">
+            <section id="competitive-matrix" class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm">
                 <h2 class="text-xl font-semibold mb-4 text-emerald-600">Competitive Positioning Matrix</h2>
                 <div class="overflow-x-auto">
                     <table class="min-w-full table-auto">
@@ -570,7 +599,7 @@
             </section>
 
             <!-- Strategic Advantages -->
-            <section class="bg-gradient-to-r from-emerald-50 to-blue-50 dark:from-emerald-900/20 dark:to-blue-900/20 p-6 rounded-lg border border-slate-200 dark:border-slate-700">
+            <section id="strategic-advantages" class="bg-gradient-to-r from-emerald-50 to-blue-50 dark:from-emerald-900/20 dark:to-blue-900/20 p-6 rounded-lg border border-slate-200 dark:border-slate-700">
                 <h2 class="text-xl font-semibold mb-4 text-emerald-600">Strategic Advantages</h2>
                 <div class="grid md:grid-cols-2 gap-6">
                     <div>
@@ -597,7 +626,7 @@
             </section>
 
             <!-- Customer Pain Points & Transition Metrics -->
-            <section class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm mb-8">
+            <section id="pain-points" class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm mb-8">
                 <h2 class="text-xl font-semibold mb-4 text-emerald-600">Customer Pain Points & Transition Metrics</h2>
                 <div class="grid md:grid-cols-2 gap-6">
                     <div>
@@ -688,7 +717,7 @@
             </section>
 
             <!-- Market Penetration Strategy -->
-            <section class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm">
+            <section id="penetration-strategy" class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm">
                 <h2 class="text-xl font-semibold mb-4 text-emerald-600">Market Penetration Strategy</h2>
                 <div class="grid md:grid-cols-3 gap-6">
                     <div class="text-center">
@@ -756,6 +785,80 @@
         
         document.addEventListener('DOMContentLoaded', function() {
             initTheme();
+            
+            // Table of contents toggle functionality
+            const tocToggle = document.getElementById('tocToggle');
+            const tocNav = document.getElementById('tocNav');
+            
+            if (tocToggle && tocNav) {
+                tocToggle.addEventListener('click', function() {
+                    tocNav.classList.toggle('hidden');
+                });
+            }
+            
+            // Smooth scrolling for table of contents links
+            const tocLinks = document.querySelectorAll('#tocNav a[href^="#"]');
+            tocLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    
+                    if (targetElement) {
+                        // Calculate offset to account for sticky header and TOC
+                        const headerHeight = document.querySelector('header').offsetHeight;
+                        const tocHeight = document.querySelector('#tocNav').closest('div').offsetHeight;
+                        const offset = headerHeight + tocHeight + 20; // Extra 20px for padding
+                        
+                        const elementPosition = targetElement.offsetTop - offset;
+                        
+                        window.scrollTo({
+                            top: elementPosition,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Close mobile menu after clicking
+                        if (window.innerWidth < 1024) {
+                            tocNav.classList.add('hidden');
+                        }
+                    }
+                });
+            });
+            
+            // Highlight current section in TOC
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('#tocNav a');
+            
+            function highlightCurrentSection() {
+                let currentSection = '';
+                const scrollPosition = window.scrollY + 200; // Offset for better UX
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.offsetHeight;
+                    
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                        currentSection = section.getAttribute('id');
+                    }
+                });
+                
+                navLinks.forEach(link => {
+                    const href = link.getAttribute('href').substring(1);
+                    if (href === currentSection) {
+                        link.classList.add('text-emerald-600', 'dark:text-emerald-400', 'font-medium');
+                        link.classList.remove('text-slate-600', 'dark:text-slate-400');
+                    } else {
+                        link.classList.remove('text-emerald-600', 'dark:text-emerald-400', 'font-medium');
+                        link.classList.add('text-slate-600', 'dark:text-slate-400');
+                    }
+                });
+            }
+            
+            // Initial highlight
+            highlightCurrentSection();
+            
+            // Update on scroll
+            window.addEventListener('scroll', highlightCurrentSection);
         });
     </script>
 </body>
