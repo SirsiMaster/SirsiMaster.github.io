@@ -1,4 +1,12 @@
 {
+<<<<<<< HEAD
+=======
+  "baseUrl": "https://sirsimaster.github.io/SirsiNexus",
+  "title": "SirsiNexus - Enterprise Cloud Optimization Platform"
+}
+
+{
+>>>>>>> temp_sirsinexus/main
   "source": {
     "branch": "main",
     "path": "/"

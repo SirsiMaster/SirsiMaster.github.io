@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SirsiNexus - Investor Login</title>
+<<<<<<< HEAD
+=======
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <script>console.log('🚀 Page loaded at:', new Date().toISOString());</script>
+>>>>>>> temp_sirsinexus/main
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -48,6 +55,7 @@
       })();
     </script>
     <style>
+<<<<<<< HEAD
       /* Professional Print Button */
       .print-button {
         position: fixed;
@@ -71,6 +79,8 @@
         transform: translateY(-2px);
         box-shadow: 0 8px 25px rgba(5, 150, 105, 0.4);
       }
+=======
+>>>>>>> temp_sirsinexus/main
       
       /* Professional Document Header */
       .document-header {
@@ -789,15 +799,31 @@ ul li::before {
               </div>
             </div>
           </div>
+<<<<<<< HEAD
           <nav class="hidden md:flex items-center gap-6">
             <a href="index.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">← Back to Home</a>
             <span class="text-sm text-emerald-600 dark:text-emerald-400 font-medium">Investor Portal</span>
             <a href="signup.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">Sign Up</a>
             <button onclick="toggleTheme()" class="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors border border-slate-300 dark:border-slate-600 ml-4" style="min-width: 40px; min-height: 40px;">
+=======
+          <nav class="hidden md:flex items-center gap-4">
+            <a href="index.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">← Back to Home</a>
+            <span class="text-sm text-emerald-600 dark:text-emerald-400 font-medium">Investor Portal</span>
+            <a href="signup.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">Sign Up</a>
+            <button onclick="toggleTheme()" class="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors border border-slate-300 dark:border-slate-600">
+>>>>>>> temp_sirsinexus/main
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
               </svg>
             </button>
+<<<<<<< HEAD
+=======
+            <a href="print.md" class="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors" title="Print">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
+              </svg>
+            </a>
+>>>>>>> temp_sirsinexus/main
           </nav>
           <button class="md:hidden text-slate-600 dark:text-slate-400" onclick="toggleMobileMenu()">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -808,6 +834,7 @@ ul li::before {
       </div>
     </header>
 
+<<<<<<< HEAD
     <!-- Page Title Section -->
 
     <!-- Print Button -->
@@ -817,6 +844,8 @@ ul li::before {
         </svg>
         Print/PDF
     </button>
+=======
+>>>>>>> temp_sirsinexus/main
 
     <!-- Main Content -->
     <main class="min-h-[calc(100vh-4rem)] flex items-center justify-center py-8">
@@ -951,6 +980,30 @@ ul li::before {
         }
 
         // LOGIN HANDLER - Clean version for login-only page
+<<<<<<< HEAD
+=======
+        console.log('🔧 Setting up login handler');
+        
+        // Test function to verify login works
+        window.testLogin = function() {
+            console.log('🧪 Testing login function');
+            const investorId = 'demo';
+            const accessCode = 'investor2025';
+            
+            console.log('🔐 TEST LOGIN ATTEMPT:', { investorId, accessCode });
+            
+            // Store authentication in sessionStorage
+            sessionStorage.setItem('investorAuth', JSON.stringify({
+                id: investorId,
+                role: 'investor',
+                loginTime: new Date().toISOString()
+            }));
+            
+            console.log('✅ Test login successful, redirecting...');
+            window.location.href = 'investor-portal/index.html';
+        };
+        
+>>>>>>> temp_sirsinexus/main
         document.getElementById('accessForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -962,7 +1015,26 @@ ul li::before {
             // Check for admin access
             if (investorId === 'admin' && accessCode === 'admin2025') {
                 console.log('✅ Admin access granted');
+<<<<<<< HEAD
                 window.location.href = 'investor-portal/admin/dashboard.html';
+=======
+                
+                // Store authentication in sessionStorage
+                sessionStorage.setItem('investorAuth', JSON.stringify({
+                    id: investorId,
+                    role: 'admin',
+                    loginTime: new Date().toISOString()
+                }));
+                
+                // Show success message
+                document.getElementById('accessGate').classList.add('hidden');
+                document.getElementById('loginSuccess').classList.remove('hidden');
+                
+                // Redirect to dashboard after 2 seconds
+                setTimeout(() => {
+                    window.location.href = 'investor-portal/index.html';
+                }, 2000);
+>>>>>>> temp_sirsinexus/main
                 return;
             }
             
@@ -1003,4 +1075,8 @@ ul li::before {
         </script>
 
 </body>
+<<<<<<< HEAD
+=======
+<!-- Force rebuild: 1752699490 -->
+>>>>>>> temp_sirsinexus/main
 </html>

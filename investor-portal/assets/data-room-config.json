@@ -1,5 +1,6 @@
 {
   "sections": {
+<<<<<<< HEAD
     "financial-reports": {
       "title": "Financial Reports",
       "files": []
@@ -28,12 +29,49 @@
           "name": "Terms of Service",
           "path": "../terms-of-service.html",
           "description": "Service terms and conditions",
+=======
+    "committee-overview": {
+      "title": "Committee Overview",
+      "files": [
+        {
+          "name": "Committee Overview",
+          "path": "committee/index.html",
+          "description": "Executive committee meeting index and summaries",
           "date": "January 2025"
         }
       ]
     },
+    "market-strategy": {
+      "title": "Market Strategy",
+      "files": [
+        {
+          "name": "Market Analysis",
+          "path": "committee/market-analysis.html",
+          "description": "Market analysis and competitive positioning",
+          "date": "January 2025"
+        },
+        {
+          "name": "Go-to-Market Strategy",
+          "path": "committee/go-to-market.html",
+          "description": "Go-to-market strategy and execution plan",
+          "date": "January 2025"
+        },
+        {
+          "name": "Sales Strategy",
+          "path": "committee/sales-strategy.html",
+          "description": "Sales strategy and revenue projections",
+>>>>>>> temp_sirsinexus/main
+          "date": "January 2025"
+        }
+      ]
+    },
+<<<<<<< HEAD
     "strategic-plans": {
       "title": "Strategic Plans",
+=======
+    "product-strategy": {
+      "title": "Product Strategy",
+>>>>>>> temp_sirsinexus/main
       "files": [
         {
           "name": "Product Roadmap",
@@ -43,6 +81,7 @@
         }
       ]
     },
+<<<<<<< HEAD
     "communications": {
       "title": "Communications",
       "files": [
@@ -50,16 +89,51 @@
           "name": "Committee Index",
           "path": "committee/index.html",
           "description": "Executive committee meeting index and summaries",
+=======
+    "performance-metrics": {
+      "title": "Performance Metrics",
+      "files": [
+        {
+          "name": "KPI Metrics",
+          "path": "committee/kpi-metrics.html",
+          "description": "Key performance indicators and metrics",
+>>>>>>> temp_sirsinexus/main
           "date": "January 2025"
         }
       ]
     },
+<<<<<<< HEAD
     "investment-terms": {
       "title": "Investment Terms",
       "files": [
         {
           "name": "Documentation",
           "path": "../documentation.html",
+=======
+    "legal-documents": {
+      "title": "Legal Documents",
+      "files": [
+        {
+          "name": "Privacy Policy",
+          "path": "../legal/privacy-policy.html",
+          "description": "Company privacy policy and data protection",
+          "date": "January 2025"
+        },
+        {
+          "name": "Terms of Service",
+          "path": "../legal/terms-of-service.html",
+          "description": "Service terms and conditions",
+          "date": "January 2025"
+        }
+      ]
+    },
+    "documentation": {
+      "title": "Documentation",
+      "files": [
+        {
+          "name": "Technical Documentation",
+          "path": "../docs/documentation.html",
+>>>>>>> temp_sirsinexus/main
           "description": "Technical documentation and platform information",
           "date": "January 2025"
         }

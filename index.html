@@ -3,6 +3,23 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+<<<<<<< HEAD
+=======
+    <meta name="description" content="Agent-embedded migration & infrastructure platform" />
+    <meta name="theme-color" content="#059669" />
+    <meta property="og:title" content="SirsiNexus - Agent-Embedded Infrastructure Platform" />
+    <meta property="og:description" content="Agent-embedded migration & infrastructure platform" />
+    <meta property="og:type" content="website" />
+    
+    <title>SirsiNexus - Agent-Embedded Infrastructure Platform</title>
+    
+    <!-- Preload critical resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    
+    <!-- TailwindCSS -->
+>>>>>>> temp_sirsinexus/main
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -22,11 +39,16 @@
         },
       }
     </script>
+<<<<<<< HEAD
     <title>Sirsi Nexus - Agent-Embedded Infrastructure Platform</title>
     <meta name="description" content="Agent-embedded migration & infrastructure platform" />
     <!-- Cache buster: v1752627309 -->
     <!-- MAIN BRANCH SYNC: 2025-07-16 01:15:09 -->
     <!-- JEKYLL DISABLED - STATIC SITE ONLY -->
+=======
+
+    <!-- Theme initialization - Must run before page render -->
+>>>>>>> temp_sirsinexus/main
     <script>
       (function() {
         function getInitialColorMode() {
@@ -48,6 +70,49 @@
         }
       })();
     </script>
+<<<<<<< HEAD
+=======
+
+    <!-- Theme toggle and mobile menu functionality -->
+    <script>
+      function toggleTheme() {
+        const html = document.documentElement;
+        const isDark = html.classList.contains('dark');
+        
+        if (isDark) {
+          html.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+        } else {
+          html.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        }
+      }
+      
+      function toggleMobileMenu() {
+        const mobileMenu = document.getElementById('mobile-menu');
+        const isHidden = mobileMenu.classList.contains('hidden');
+        
+        if (isHidden) {
+          mobileMenu.classList.remove('hidden');
+          mobileMenu.classList.add('flex');
+        } else {
+          mobileMenu.classList.add('hidden');
+          mobileMenu.classList.remove('flex');
+        }
+      }
+
+      // Initialize theme on DOM content loaded
+      document.addEventListener('DOMContentLoaded', function() {
+        const theme = localStorage.getItem('theme') || 
+                     (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.classList.toggle('dark', theme === 'dark');
+      });
+
+      // Make functions available globally
+      window.toggleTheme = toggleTheme;
+      window.toggleMobileMenu = toggleMobileMenu;
+    </script>
+>>>>>>> temp_sirsinexus/main
   
 <style>
 /* Professional Investment-Ready Styling */
@@ -439,14 +504,23 @@ ul li::before {
 </head>
   <body class="font-inter bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100">
     <!-- Header -->
+<<<<<<< HEAD
     <header class="bg-white dark:bg-gray-800/95 sticky top-0 z-50 border-b border-slate-200 dark:border-slate-700 backdrop-blur-sm">
+=======
+<header class="bg-white dark:bg-gray-800/95 sticky top-0 z-50 border-b border-slate-200 dark:border-slate-700 backdrop-blur-sm">
+>>>>>>> temp_sirsinexus/main
       <div class="max-w-7xl mx-auto px-6">
         <div class="flex h-16 items-center justify-between">
           <div class="flex items-center gap-6">
             <div class="flex items-center gap-3">
               <div class="w-12 h-12 flex items-center justify-center">
+<<<<<<< HEAD
                 <img src="assets/images/Sirsi_Logo_300ppi_cguiyg.png" alt="Sirsi Logo" class="w-12 h-12 object-contain dark:hidden">
                 <img src="assets/images/Sirsi_Logo_300ppi_Inverted_lt7asx.png" alt="Sirsi Logo" class="w-12 h-12 object-contain hidden dark:block">
+=======
+<img src="/assets/images/Sirsi_Logo_300ppi_cguiyg.png" alt="Sirsi Logo" class="w-12 h-12 object-contain dark:hidden">
+                <img src="/assets/images/Sirsi_Logo_300ppi_Inverted_lt7asx.png" alt="Sirsi Logo" class="w-12 h-12 object-contain hidden dark:block">
+>>>>>>> temp_sirsinexus/main
               </div>
               <div>
                 <h1 class="text-lg font-semibold text-slate-900 dark:text-slate-100">
@@ -454,7 +528,11 @@ ul li::before {
                 </h1>
                 <div class="flex items-center gap-2">
                   <span class="text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded">
+<<<<<<< HEAD
                     v0.7.9-alpha
+=======
+                    v0.7.10-alpha
+>>>>>>> temp_sirsinexus/main
                   </span>
                   <div class="flex items-center gap-1">
                     <div class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></div>
@@ -464,16 +542,32 @@ ul li::before {
               </div>
             </div>
           </div>
+<<<<<<< HEAD
           <nav class="flex items-center gap-6">
             <a href="index.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">Home</a>
             <a href="documentation.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">Documentation</a>
             <a href="investor-login.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">Investor Portal</a>
             <a href="signup.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">Sign Up</a>
             <button onclick="toggleTheme()" class="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors border border-slate-300 dark:border-slate-600 ml-4" style="min-width: 40px; min-height: 40px;">
+=======
+          <nav class="flex items-center gap-4">
+            <a href="index.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">Home</a>
+            <a href="documentation.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">Documentation</a>
+            <a href="investor-login.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">Investor Portal</a>
+            <button onclick="toggleTheme()" class="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors border border-slate-300 dark:border-slate-600">
+>>>>>>> temp_sirsinexus/main
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
               </svg>
             </button>
+<<<<<<< HEAD
+=======
+            <a href="print.md" class="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors" title="Print">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 9v2m0 4h12v-4h4v6H2V11h4m6 12h6m-10-8v1m5-5v1m-5 4v1m5-5v1m-5 4v1m5-5v1M2 3a2 2 0 012-2h16a2 2 0 012 2v3m-2-3V3z"></path>
+              </svg>
+            </a>
+>>>>>>> temp_sirsinexus/main
           </nav>
           <button class="md:hidden text-slate-600 dark:text-slate-400" onclick="toggleMobileMenu()">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -482,16 +576,33 @@ ul li::before {
           </button>
         </div>
       </div>
+<<<<<<< HEAD
     </header>
 
     <!-- Hero Section -->
     <section class="relative bg-gradient-to-br from-slate-50 via-emerald-50 to-emerald-100 dark:from-slate-900 dark:via-emerald-900 dark:to-emerald-800 py-20">
+=======
+      <!-- Mobile Menu -->
+      <div id="mobile-menu" class="hidden md:hidden w-full bg-white dark:bg-gray-800 border-t border-slate-200 dark:border-slate-700">
+        <div class="px-6 py-4 space-y-2">
+          <a href="index.html" class="block text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors py-2">Home</a>
+          <a href="documentation.html" class="block text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors py-2">Documentation</a>
+          <a href="investor-login.html" class="block text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors py-2">Investor Portal</a>
+        </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+<section class="relative bg-gradient-to-br from-slate-50 via-emerald-50 to-emerald-100 dark:from-slate-900 dark:via-emerald-900 dark:to-emerald-800 py-20">
+>>>>>>> temp_sirsinexus/main
       <div class="max-w-7xl mx-auto px-6">
         <div class="text-center">
           <h1 class="text-4xl md:text-6xl font-bold text-slate-900 dark:text-slate-100 mb-6">
             Agent-Embedded <span class="text-emerald-600">Infrastructure</span> Platform
           </h1>
           <p class="text-xl text-slate-600 dark:text-slate-400 mb-8 max-w-3xl mx-auto">
+<<<<<<< HEAD
             SirsiNexus revolutionizes cloud infrastructure management with AI-powered agents, 
             seamless migration tools, and intelligent automation for enterprise-scale deployments.
           </p>
@@ -507,6 +618,22 @@ ul li::before {
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
               </svg>
               Get Updates
+=======
+            SirsiNexus revolutionizes cloud infrastructure management.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="documentation.html" class="inline-flex items-center px-4 py-2 bg-emerald-600 text-white font-medium rounded-md hover:bg-emerald-700 transition-colors">
+              <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+              </svg>
+              Docs
+            </a>
+            <a href="signup.html" class="inline-flex items-center px-4 py-2 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-medium rounded-md hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+              <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+              </svg>
+              Updates
+>>>>>>> temp_sirsinexus/main
             </a>
           </div>
         </div>
@@ -622,6 +749,7 @@ ul li::before {
       <div class="max-w-4xl mx-auto px-6 text-center">
         <h2 class="text-3xl font-bold text-white mb-4">Ready to Transform Your Infrastructure?</h2>
         <p class="text-xl text-white/90 mb-8">Join hundreds of enterprises already using SirsiNexus for their cloud operations</p>
+<<<<<<< HEAD
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
           <a href="business-case.html" class="inline-flex items-center px-8 py-4 bg-white text-emerald-600 font-semibold rounded-lg hover:bg-gray-50 transition-colors">
             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -631,6 +759,17 @@ ul li::before {
           </a>
           <a href="investor-login.html" class="inline-flex items-center px-8 py-4 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-emerald-600 transition-colors">
             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+=======
+        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+          <a href="business-case.html" class="inline-flex items-center px-5 py-2 bg-white text-emerald-600 font-medium rounded-md hover:bg-gray-50 transition-colors">
+            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+            </svg>
+            Business Case
+          </a>
+          <a href="investor-login.html" class="inline-flex items-center px-5 py-2 border border-white text-white font-medium rounded-md hover:bg-white hover:text-emerald-600 transition-colors">
+            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+>>>>>>> temp_sirsinexus/main
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
             </svg>
             Investor Portal
@@ -646,7 +785,11 @@ ul li::before {
           <div>
             <div class="flex items-center gap-2 mb-4">
               <div class="w-8 h-8 flex items-center justify-center">
+<<<<<<< HEAD
                 <img src="assets/images/Sirsi_Logo_300ppi_Inverted_lt7asx.png" alt="Sirsi Logo" class="w-8 h-8 object-contain">
+=======
+<img src="/assets/images/Sirsi_Logo_300ppi_Inverted_lt7asx.png" alt="Sirsi Logo" class="w-8 h-8 object-contain">
+>>>>>>> temp_sirsinexus/main
               </div>
               <span class="text-xl font-semibold">SirsiNexus</span>
             </div>
@@ -711,16 +854,39 @@ ul li::before {
             console.log('Theme initialized:', theme);
         }
         
+<<<<<<< HEAD
         // Initialize immediately
         initTheme();
         
         // Make toggleTheme available globally
         window.toggleTheme = toggleTheme;
         
+=======
+        // Make toggleTheme available globally
+        window.toggleTheme = toggleTheme;
+        
+        // Initialize theme on DOM content loaded
+>>>>>>> temp_sirsinexus/main
         document.addEventListener('DOMContentLoaded', function() {
             initTheme();
         });
     </script>
+<<<<<<< HEAD
+=======
+
+    <!-- Mobile Menu Script -->
+    <script>
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.remove('hidden');
+                mobileMenu.classList.add('flex');
+            } else {
+                mobileMenu.classList.add('hidden');
+                mobileMenu.classList.remove('flex');
+            }
+        }
+>>>>>>> temp_sirsinexus/main
     </script>
   </body>
 </html>
