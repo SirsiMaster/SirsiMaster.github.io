@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="../../components/ui-library.js"></script>
+    <script src="../../components/universal-navigation.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <!-- Authentication Check -->
@@ -193,16 +194,9 @@
                         </div>
                     </div>
                 </div>
-                <nav class="flex items-center gap-6">
-                    <a href="../../index.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">← Back to Home</a>
-                    <a href="../kpi-unit-metrics.html" class="text-sm text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors">← Back to KPI Portal</a>
-                    <button onclick="logout()" class="text-sm text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-200 transition-colors">Logout</button>
-                    <button onclick="toggleTheme()" class="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors border border-slate-300 dark:border-slate-600" style="min-width: 40px; min-height: 40px;">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                        </svg>
-                    </button>
-                </nav>
+                <div id="universal-navigation">
+                    <!-- Navigation will be populated by universal-navigation.js -->
+                </div>
             </div>
         </div>
     </header>
@@ -653,18 +647,15 @@
         // Initialize theme
         initTheme();
         
-        // Logout function
-        function logout() {
-            sessionStorage.removeItem('investorAuth');
-            localStorage.removeItem('investor-authenticated');
-            localStorage.removeItem('investor-id');
-            localStorage.removeItem('user-role');
-            window.location.href = '../../investor-login.html';
-        }
-        
-        // Make functions available globally
-        window.toggleTheme = toggleTheme;
-        window.logout = logout;
+        // Populate navigation when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.universalNav) {
+                const navContainer = document.getElementById('universal-navigation');
+                if (navContainer) {
+                    navContainer.innerHTML = window.universalNav.renderNavigation();
+                }
+            }
+        });
     </script>
 </body>
 </html>
