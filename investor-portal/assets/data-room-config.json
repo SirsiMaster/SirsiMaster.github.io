@@ -1,6 +1,5 @@
 {
   "sections": {
-<<<<<<< HEAD
     "financial-reports": {
       "title": "Financial Reports",
       "files": []
@@ -29,7 +28,6 @@
           "name": "Terms of Service",
           "path": "../terms-of-service.html",
           "description": "Service terms and conditions",
-=======
     "committee-overview": {
       "title": "Committee Overview",
       "files": [
@@ -60,18 +58,14 @@
           "name": "Sales Strategy",
           "path": "committee/sales-strategy.html",
           "description": "Sales strategy and revenue projections",
->>>>>>> temp_sirsinexus/main
           "date": "January 2025"
         }
       ]
     },
-<<<<<<< HEAD
     "strategic-plans": {
       "title": "Strategic Plans",
-=======
     "product-strategy": {
       "title": "Product Strategy",
->>>>>>> temp_sirsinexus/main
       "files": [
         {
           "name": "Product Roadmap",
@@ -81,7 +75,6 @@
         }
       ]
     },
-<<<<<<< HEAD
     "communications": {
       "title": "Communications",
       "files": [
@@ -89,7 +82,6 @@
           "name": "Committee Index",
           "path": "committee/index.html",
           "description": "Executive committee meeting index and summaries",
-=======
     "performance-metrics": {
       "title": "Performance Metrics",
       "files": [
@@ -97,19 +89,16 @@
           "name": "KPI Metrics",
           "path": "committee/kpi-metrics.html",
           "description": "Key performance indicators and metrics",
->>>>>>> temp_sirsinexus/main
           "date": "January 2025"
         }
       ]
     },
-<<<<<<< HEAD
     "investment-terms": {
       "title": "Investment Terms",
       "files": [
         {
           "name": "Documentation",
           "path": "../documentation.html",
-=======
     "legal-documents": {
       "title": "Legal Documents",
       "files": [
@@ -133,7 +122,6 @@
         {
           "name": "Technical Documentation",
           "path": "../docs/documentation.html",
->>>>>>> temp_sirsinexus/main
           "description": "Technical documentation and platform information",
           "date": "January 2025"
         }
