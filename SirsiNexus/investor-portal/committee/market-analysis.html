@@ -141,23 +141,6 @@
         transform: translateX(0);
       }
       
-      /* Force table header to respect theme with ultra-high specificity */
-      .bg-white.dark\:bg-slate-800 table thead tr.competitive-matrix-header {
-        background-color: #ffffff !important;
-      }
-      
-      .dark .bg-white.dark\:bg-slate-800 table thead tr.competitive-matrix-header {
-        background-color: #334155 !important;
-      }
-      
-      /* Fallback with standard specificity */
-      table thead tr.competitive-matrix-header {
-        background-color: #ffffff !important;
-      }
-      
-      .dark table thead tr.competitive-matrix-header {
-        background-color: #334155 !important;
-      }
     </style>
 </head>
 <body class="font-inter bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100">
@@ -527,75 +510,82 @@
             <div class="bg-white dark:bg-slate-800 p-8 rounded-lg shadow-sm min-h-[600px] flex flex-col">
                 <h2 class="text-2xl font-semibold mb-6 text-emerald-600">Competitive Positioning Matrix</h2>
                 <div class="flex-1">
-                    <div class="bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
-                        <table class="min-w-full">
-                            <thead>
-                                <tr class="competitive-matrix-header border-b-2 border-emerald-200 dark:border-emerald-700">
-                                    <th class="text-left px-6 py-4 text-slate-900 dark:text-slate-100 font-bold border-b-2 border-emerald-200 dark:border-emerald-700">Feature</th>
-                                    <th class="text-center px-6 py-4 text-emerald-700 dark:text-emerald-300 font-bold border-b-2 border-emerald-200 dark:border-emerald-700">SIRSINEXUS</th>
-                                    <th class="text-center px-6 py-4 text-slate-700 dark:text-slate-200 font-bold border-b-2 border-emerald-200 dark:border-emerald-700">TERRAFORM</th>
-                                    <th class="text-center px-6 py-4 text-slate-700 dark:text-slate-200 font-bold border-b-2 border-emerald-200 dark:border-emerald-700">AWS CONFIG</th>
-                                    <th class="text-center px-6 py-4 text-slate-700 dark:text-slate-200 font-bold border-b-2 border-emerald-200 dark:border-emerald-700">CLOUDHEALTH</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-slate-200 dark:divide-slate-700">
-                                <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50">
-                                    <td class="px-6 py-4 text-slate-900 dark:text-slate-100 font-medium">AI-Powered Optimization</td>
-                                    <td class="text-center px-6 py-4 text-emerald-600 dark:text-emerald-400 font-semibold text-lg">✓✓✓</td>
-                                    <td class="text-center px-6 py-4 text-red-500 dark:text-red-400 font-semibold text-lg">✗</td>
-                                    <td class="text-center px-6 py-4 text-yellow-600 dark:text-yellow-400 font-semibold text-lg">✓</td>
-                                    <td class="text-center px-6 py-4 text-yellow-600 dark:text-yellow-400 font-semibold text-lg">✓</td>
-                                </tr>
-                                <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50">
-                                    <td class="px-6 py-4 text-slate-900 dark:text-slate-100 font-medium">Multi-Cloud Support</td>
-                                    <td class="text-center px-6 py-4 text-emerald-600 dark:text-emerald-400 font-semibold text-lg">✓✓✓</td>
-                                    <td class="text-center px-6 py-4 text-blue-600 dark:text-blue-400 font-semibold text-lg">✓✓</td>
-                                    <td class="text-center px-6 py-4 text-red-500 dark:text-red-400 font-semibold text-lg">✗</td>
-                                    <td class="text-center px-6 py-4 text-blue-600 dark:text-blue-400 font-semibold text-lg">✓✓</td>
-                                </tr>
-                                <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50">
-                                    <td class="px-6 py-4 text-slate-900 dark:text-slate-100 font-medium">Natural Language Interface</td>
-                                    <td class="text-center px-6 py-4 text-emerald-600 dark:text-emerald-400 font-semibold text-lg">✓✓✓</td>
-                                    <td class="text-center px-6 py-4 text-red-500 dark:text-red-400 font-semibold text-lg">✗</td>
-                                    <td class="text-center px-6 py-4 text-red-500 dark:text-red-400 font-semibold text-lg">✗</td>
-                                    <td class="text-center px-6 py-4 text-red-500 dark:text-red-400 font-semibold text-lg">✗</td>
-                                </tr>
-                                <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50">
-                                    <td class="px-6 py-4 text-slate-900 dark:text-slate-100 font-medium">Cost Prediction</td>
-                                    <td class="text-center px-6 py-4 text-emerald-600 dark:text-emerald-400 font-semibold text-lg">✓✓✓</td>
-                                    <td class="text-center px-6 py-4 text-red-500 dark:text-red-400 font-semibold text-lg">✗</td>
-                                    <td class="text-center px-6 py-4 text-yellow-600 dark:text-yellow-400 font-semibold text-lg">✓</td>
-                                    <td class="text-center px-6 py-4 text-blue-600 dark:text-blue-400 font-semibold text-lg">✓✓</td>
-                                </tr>
-                                <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50">
-                                    <td class="px-6 py-4 text-slate-900 dark:text-slate-100 font-medium">Real-time Monitoring</td>
-                                    <td class="text-center px-6 py-4 text-emerald-600 dark:text-emerald-400 font-semibold text-lg">✓✓✓</td>
-                                    <td class="text-center px-6 py-4 text-yellow-600 dark:text-yellow-400 font-semibold text-lg">✓</td>
-                                    <td class="text-center px-6 py-4 text-blue-600 dark:text-blue-400 font-semibold text-lg">✓✓</td>
-                                    <td class="text-center px-6 py-4 text-blue-600 dark:text-blue-400 font-semibold text-lg">✓✓</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <!-- Clean table with proper theming -->
+                    <div class="overflow-hidden rounded-lg border border-slate-200 dark:border-slate-700">
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <!-- Header with explicit background colors -->
+                                <thead class="bg-slate-100 dark:bg-slate-700">
+                                    <tr>
+                                        <th class="px-6 py-4 text-left text-sm font-bold text-slate-900 dark:text-slate-100 border-b border-slate-200 dark:border-slate-600">Feature</th>
+                                        <th class="px-6 py-4 text-center text-sm font-bold text-emerald-700 dark:text-emerald-300 border-b border-slate-200 dark:border-slate-600">SIRSINEXUS</th>
+                                        <th class="px-6 py-4 text-center text-sm font-bold text-slate-700 dark:text-slate-200 border-b border-slate-200 dark:border-slate-600">TERRAFORM</th>
+                                        <th class="px-6 py-4 text-center text-sm font-bold text-slate-700 dark:text-slate-200 border-b border-slate-200 dark:border-slate-600">AWS CONFIG</th>
+                                        <th class="px-6 py-4 text-center text-sm font-bold text-slate-700 dark:text-slate-200 border-b border-slate-200 dark:border-slate-600">CLOUDHEALTH</th>
+                                    </tr>
+                                </thead>
+                                <!-- Body with clean row styling -->
+                                <tbody class="bg-white dark:bg-slate-800 divide-y divide-slate-200 dark:divide-slate-700">
+                                    <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                                        <td class="px-6 py-4 text-sm font-medium text-slate-900 dark:text-slate-100">AI-Powered Optimization</td>
+                                        <td class="px-6 py-4 text-center text-lg font-bold text-emerald-600 dark:text-emerald-400">✓✓✓</td>
+                                        <td class="px-6 py-4 text-center text-lg font-bold text-red-500 dark:text-red-400">✗</td>
+                                        <td class="px-6 py-4 text-center text-lg font-bold text-yellow-600 dark:text-yellow-400">✓</td>
+                                        <td class="px-6 py-4 text-center text-lg font-bold text-yellow-600 dark:text-yellow-400">✓</td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                                        <td class="px-6 py-4 text-sm font-medium text-slate-900 dark:text-slate-100">Multi-Cloud Support</td>
+                                        <td class="px-6 py-4 text-center text-lg font-bold text-emerald-600 dark:text-emerald-400">✓✓✓</td>
+                                        <td class="px-6 py-4 text-center text-lg font-bold text-blue-600 dark:text-blue-400">✓✓</td>
+                                        <td class="px-6 py-4 text-center text-lg font-bold text-red-500 dark:text-red-400">✗</td>
+                                        <td class="px-6 py-4 text-center text-lg font-bold text-blue-600 dark:text-blue-400">✓✓</td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                                        <td class="px-6 py-4 text-sm font-medium text-slate-900 dark:text-slate-100">Natural Language Interface</td>
+                                        <td class="px-6 py-4 text-center text-lg font-bold text-emerald-600 dark:text-emerald-400">✓✓✓</td>
+                                        <td class="px-6 py-4 text-center text-lg font-bold text-red-500 dark:text-red-400">✗</td>
+                                        <td class="px-6 py-4 text-center text-lg font-bold text-red-500 dark:text-red-400">✗</td>
+                                        <td class="px-6 py-4 text-center text-lg font-bold text-red-500 dark:text-red-400">✗</td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                                        <td class="px-6 py-4 text-sm font-medium text-slate-900 dark:text-slate-100">Cost Prediction</td>
+                                        <td class="px-6 py-4 text-center text-lg font-bold text-emerald-600 dark:text-emerald-400">✓✓✓</td>
+                                        <td class="px-6 py-4 text-center text-lg font-bold text-red-500 dark:text-red-400">✗</td>
+                                        <td class="px-6 py-4 text-center text-lg font-bold text-yellow-600 dark:text-yellow-400">✓</td>
+                                        <td class="px-6 py-4 text-center text-lg font-bold text-blue-600 dark:text-blue-400">✓✓</td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                                        <td class="px-6 py-4 text-sm font-medium text-slate-900 dark:text-slate-100">Real-time Monitoring</td>
+                                        <td class="px-6 py-4 text-center text-lg font-bold text-emerald-600 dark:text-emerald-400">✓✓✓</td>
+                                        <td class="px-6 py-4 text-center text-lg font-bold text-yellow-600 dark:text-yellow-400">✓</td>
+                                        <td class="px-6 py-4 text-center text-lg font-bold text-blue-600 dark:text-blue-400">✓✓</td>
+                                        <td class="px-6 py-4 text-center text-lg font-bold text-blue-600 dark:text-blue-400">✓✓</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div class="mt-6 p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
-                        <h4 class="font-semibold text-slate-900 dark:text-slate-100 mb-2">Legend:</h4>
-                        <div class="flex flex-wrap gap-4 text-sm">
-                            <span class="flex items-center gap-2">
-                                <span class="text-emerald-600 dark:text-emerald-400 font-semibold">✓✓✓</span>
-                                <span class="text-slate-600 dark:text-slate-400">Superior</span>
-                            </span>
-                            <span class="flex items-center gap-2">
-                                <span class="text-blue-600 dark:text-blue-400 font-semibold">✓✓</span>
-                                <span class="text-slate-600 dark:text-slate-400">Good</span>
-                            </span>
-                            <span class="flex items-center gap-2">
-                                <span class="text-yellow-600 dark:text-yellow-400 font-semibold">✓</span>
-                                <span class="text-slate-600 dark:text-slate-400">Basic</span>
-                            </span>
-                            <span class="flex items-center gap-2">
-                                <span class="text-red-500 dark:text-red-400 font-semibold">✗</span>
-                                <span class="text-slate-600 dark:text-slate-400">Not Available</span>
-                            </span>
+                    
+                    <!-- Legend -->
+                    <div class="mt-6 p-6 bg-slate-50 dark:bg-slate-700 rounded-lg">
+                        <h4 class="text-sm font-bold text-slate-900 dark:text-slate-100 mb-4">Legend:</h4>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <div class="flex items-center gap-2">
+                                <span class="text-lg font-bold text-emerald-600 dark:text-emerald-400">✓✓✓</span>
+                                <span class="text-sm text-slate-600 dark:text-slate-300">Superior</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-lg font-bold text-blue-600 dark:text-blue-400">✓✓</span>
+                                <span class="text-sm text-slate-600 dark:text-slate-300">Good</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-lg font-bold text-yellow-600 dark:text-yellow-400">✓</span>
+                                <span class="text-sm text-slate-600 dark:text-slate-300">Basic</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-lg font-bold text-red-500 dark:text-red-400">✗</span>
+                                <span class="text-sm text-slate-600 dark:text-slate-300">Not Available</span>
+                            </div>
                         </div>
                     </div>
                 </div>
