@@ -2,15 +2,15 @@
 
 const SIRSI_CONFIG = {
     // Base path for GitHub Pages
-    basePath: '/SirsiMaster.github.io',
+    basePath: '/SirsiNexus',
     
     // Asset paths
     paths: {
-        components: '/SirsiMaster.github.io/components',
-        assets: '/SirsiMaster.github.io/assets',
-        styles: '/SirsiMaster.github.io/assets/css',
-        images: '/SirsiMaster.github.io/assets/images',
-        js: '/SirsiMaster.github.io/assets/js'
+        components: '/SirsiNexus/components',
+        assets: '/SirsiNexus/assets',
+        styles: '/SirsiNexus/assets/css',
+        images: '/SirsiNexus/assets/images',
+        js: '/SirsiNexus/assets/js'
     },
     
     // Theme configuration

@@ -24,28 +24,28 @@ class UniversalNavigation {
         const pathSegments = path.split('/').filter(segment => segment && segment !== 'index.html');
         
         // Root level - no back button needed
-        if (pathSegments.length === 0 || path === '/index.html') {
+        if (pathSegments.length === 0 || path === '/SirsiNexus/index.html') {
             return null;
         }
         
-        // First level (e.g., /investor-portal/index.html)
+        // First level (e.g., /SirsiNexus/investor-portal/index.html)
         if (pathSegments.length === 1 || 
             (pathSegments.length === 2 && pathSegments[1] === 'index.html')) {
-            return '/index.html';
+            return '/SirsiNexus/index.html';
         }
         
-        // Second level (e.g., /investor-portal/committee/index.html)
+        // Second level (e.g., /SirsiNexus/investor-portal/committee/index.html)
         if (pathSegments.length === 2 || 
             (pathSegments.length === 3 && pathSegments[2] === 'index.html')) {
-            return `/${pathSegments[0]}/index.html`;
+            return `/SirsiNexus/${pathSegments[0]}/index.html`;
         }
         
-        // Third level and beyond (e.g., /investor-portal/committee/kpi-metrics.html)
+        // Third level and beyond (e.g., /SirsiNexus/investor-portal/committee/kpi-metrics.html)
         if (pathSegments.length >= 3) {
-            return `/${pathSegments[0]}/${pathSegments[1]}/index.html`;
+            return `/SirsiNexus/${pathSegments[0]}/${pathSegments[1]}/index.html`;
         }
         
-        return '/index.html';
+        return '/SirsiNexus/index.html';
     }
 
     /**
@@ -58,17 +58,17 @@ class UniversalNavigation {
         const breadcrumb = [];
         
         // Always include home
-        breadcrumb.push({ name: 'Home', url: '/index.html' });
+        breadcrumb.push({ name: 'Home', url: '/SirsiNexus/index.html' });
         
         // Add intermediate segments
         if (pathSegments.length >= 1) {
             if (pathSegments[0] === 'investor-portal') {
-                breadcrumb.push({ name: 'Investor Portal', url: '/investor-portal/index.html' });
+                breadcrumb.push({ name: 'Investor Portal', url: '/SirsiNexus/investor-portal/index.html' });
             }
             
             if (pathSegments.length >= 2) {
                 if (pathSegments[1] === 'committee') {
-                    breadcrumb.push({ name: 'Committee', url: '/investor-portal/committee/index.html' });
+                    breadcrumb.push({ name: 'Committee', url: '/SirsiNexus/investor-portal/committee/index.html' });
                 }
             }
         }
@@ -177,7 +177,7 @@ class UniversalNavigation {
         localStorage.removeItem('investor-authenticated');
         localStorage.removeItem('investor-id');
         localStorage.removeItem('user-role');
-        window.location.href = '/investor-login.html';
+        window.location.href = '/SirsiNexus/investor-login.html';
     }
 
     /**
