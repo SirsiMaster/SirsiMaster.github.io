@@ -126,6 +126,20 @@
         transform: translateY(-2px);
         box-shadow: 0 8px 25px rgba(5, 150, 105, 0.4);
       }
+      
+      /* Pagination styles */
+      .page-slide {
+        display: none;
+        opacity: 0;
+        transform: translateX(20px);
+        transition: all 0.3s ease;
+      }
+      
+      .page-slide.active {
+        display: block;
+        opacity: 1;
+        transform: translateX(0);
+      }
     </style>
 </head>
 <body class="font-inter bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100">
@@ -221,221 +235,176 @@
         </div>
     </section>
 
-    <!-- Table of Contents -->
+    <!-- Navigation Controls -->
     <div class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 sticky top-16 z-40">
         <div class="max-w-7xl mx-auto px-6">
             <div class="py-4">
                 <div class="flex items-center justify-between">
-                    <h3 class="text-sm font-semibold text-slate-900 dark:text-slate-100">Table of Contents</h3>
-                    <button id="tocToggle" class="lg:hidden p-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                        </svg>
-                    </button>
+                    <div class="flex items-center gap-4">
+                        <h3 class="text-sm font-semibold text-slate-900 dark:text-slate-100">Market Analysis</h3>
+                        <div class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
+                            <span id="currentPage">1</span>
+                            <span>/</span>
+                            <span id="totalPages">9</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="hidden md:flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
+                            <span>Use</span>
+                            <kbd class="px-2 py-1 bg-slate-100 dark:bg-slate-700 rounded text-xs">←→</kbd>
+                            <span>or</span>
+                            <kbd class="px-2 py-1 bg-slate-100 dark:bg-slate-700 rounded text-xs">Tab</kbd>
+                            <span>to navigate</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button id="prevBtn" class="p-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors" disabled>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                                </svg>
+                            </button>
+                            <button id="nextBtn" class="p-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <nav id="tocNav" class="hidden lg:block mt-2">
-                    <ul class="flex flex-wrap gap-x-6 gap-y-2 text-sm">
-                        <li><a href="#executive-summary" class="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Executive Summary</a></li>
-                        <li><a href="#competitive-landscape" class="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Competitive Analysis</a></li>
-                        <li><a href="#market-segments" class="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Market Segments</a></li>
-                        <li><a href="#ai-infrastructure" class="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">AI Infrastructure</a></li>
-                        <li><a href="#market-dynamics" class="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Market Dynamics</a></li>
-                        <li><a href="#competitive-matrix" class="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Competitive Matrix</a></li>
-                        <li><a href="#strategic-advantages" class="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Strategic Advantages</a></li>
-                        <li><a href="#pain-points" class="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Customer Analysis</a></li>
-                        <li><a href="#penetration-strategy" class="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Market Strategy</a></li>
-                    </ul>
-                </nav>
             </div>
         </div>
     </div>
 
-    <div class="max-w-7xl mx-auto px-6 py-12">
-
-        <div class="space-y-8">
-            <section id="executive-summary" class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm">
-                <h2 class="text-xl font-semibold mb-4 text-emerald-600">Executive Summary</h2>
-                <p class="text-slate-600 dark:text-slate-400 mb-4">
-                    SirsiNexus represents a paradigm shift in cloud infrastructure management, leveraging advanced AI to fundamentally transform traditional Infrastructure as Code (IaC) approaches. Our breakthrough comes at a critical inflection point: enterprises are hitting a complexity wall with traditional IaC tools like Terraform, Pulumi, and CloudFormation, facing mounting technical debt and skyrocketing operational costs. As cloud infrastructure grows exponentially more complex, the manual, template-based approach of IaC is becoming unsustainable.
-
-                    Our AI-first platform doesn't just automate - it thinks, learns, and optimizes. By applying advanced machine learning to infrastructure patterns, we've achieved what traditional IaC vendors claimed was impossible: truly autonomous infrastructure that self-optimizes, self-heals, and continuously improves. Our customers see an average cost reduction of 35% while deployment velocity increases by 60%, but these metrics only tell part of the story. The real transformation is in moving from manual infrastructure management to AI-driven intelligence that understands and adapts to each organization's unique needs.
-
-                    What sets SirsiNexus apart is our patent-pending AI architecture that combines deep learning models for resource optimization with natural language processing for infrastructure interaction. This allows us to not only automate routine tasks but to understand and optimize complex infrastructure relationships in ways that traditional IaC tools simply cannot match. Our AI can predict resource needs, prevent outages before they occur, and continuously optimize infrastructure configurations across all major cloud providers.
-                </p>
-                <p class="text-slate-600 dark:text-slate-400 mb-4">
-                    Operating as a Qualified Small Business Corporation (QSBC), we combine aggressive technological innovation with investor-friendly tax advantages through the enhanced QSBS program. Our conservative growth projections and sustainable business model focus on high-margin enterprise customers, with a clear path to capturing 30% of the rapidly growing AI-assisted infrastructure market by 2027. This strategic positioning is supported by several key factors:
-
-                    • Proven Enterprise Adoption: Our platform is already managing critical infrastructure for Fortune 500 companies, with a 92% renewal rate and 128% net revenue retention
-                    • Clear Tax Advantages: QSBC status provides significant investor benefits through QSBS, including potential tax-free gains
-                    • Sustainable Growth: Our focus on high-margin enterprise customers (87% gross margin) provides strong unit economics and predictable revenue
-                    • Market Leadership: We're positioned as the clear leader in AI-driven infrastructure, with 3x more patent filings than our nearest competitor
-                </p>
-                <p class="text-slate-600 dark:text-slate-400 mb-4">
-                    The infrastructure automation market is experiencing a fundamental transformation from manual IaC to AI-driven solutions, driven by several converging factors:
-
-                    1. Unsustainable Cloud Costs:
-                    • Average cloud spend increasing 25% YoY
-                    • 82% of enterprises exceeding cloud budgets
-                    • Traditional IaC tools unable to optimize dynamically
-
-                    2. Rising Infrastructure Complexity:
-                    • 71% of enterprises now use 3+ cloud providers
-                    • 89% increase in microservices deployment
-                    • 4x increase in infrastructure configuration points
-
-                    3. Critical Skills Gap:
-                    • 40% shortfall in qualified DevOps engineers
-                    • $180K average DevOps salary (↑15% YoY)
-                    • 9-month average time to hire senior infrastructure engineers
-
-                    4. Regulatory & Compliance Pressure:
-                    • 3x increase in cloud compliance requirements
-                    • $5.2M average cost of cloud-related outages
-                    • 92% of enterprises seeking automated compliance
-
-                    SirsiNexus is uniquely positioned to address these challenges through our enterprise-grade AI platform that eliminates manual infrastructure management while delivering provable cost savings and performance improvements. Our solution isn't just about automation - it's about fundamental transformation of how enterprises manage cloud infrastructure.
-                </p>
-                <div class="grid md:grid-cols-3 gap-4">
-                    <div class="bg-slate-50 dark:bg-slate-700 p-4 rounded-lg">
-                        <h3 class="font-semibold text-slate-900 dark:text-slate-100">Total Market Size</h3>
-                        <p class="text-2xl font-bold text-emerald-600">$48.2B</p>
-                        <p class="text-sm text-slate-500 dark:text-slate-400">2025 TAM for AI-Infrastructure</p>
+    <!-- Page Container -->
+    <div class="max-w-7xl mx-auto px-6 py-8">
+        <!-- Page 1: Executive Summary -->
+        <div class="page-slide active" id="page-1">
+            <div class="bg-white dark:bg-slate-800 p-8 rounded-lg shadow-sm min-h-[600px] flex flex-col">
+                <h2 class="text-2xl font-semibold mb-6 text-emerald-600">Executive Summary</h2>
+                <div class="flex-1 space-y-6">
+                    <div class="prose max-w-none">
+                        <p class="text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
+                            SirsiNexus represents a paradigm shift in cloud infrastructure management, leveraging advanced AI to fundamentally transform traditional Infrastructure as Code (IaC) approaches. Our breakthrough comes at a critical inflection point: enterprises are hitting a complexity wall with traditional IaC tools like Terraform, Pulumi, and CloudFormation, facing mounting technical debt and skyrocketing operational costs.
+                        </p>
+                        <p class="text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
+                            Our AI-first platform doesn't just automate - it thinks, learns, and optimizes. By applying advanced machine learning to infrastructure patterns, we've achieved what traditional IaC vendors claimed was impossible: truly autonomous infrastructure that self-optimizes, self-heals, and continuously improves.
+                        </p>
+                        <p class="text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
+                            Operating as a Qualified Small Business Corporation (QSBC), we combine aggressive technological innovation with investor-friendly tax advantages through the enhanced QSBS program. Our conservative growth projections focus on high-margin enterprise customers, with a clear path to capturing 30% of the rapidly growing AI-assisted infrastructure market by 2027.
+                        </p>
                     </div>
-                    <div class="bg-slate-50 dark:bg-slate-700 p-4 rounded-lg">
-                        <h3 class="font-semibold text-slate-900 dark:text-slate-100">AI Infrastructure CAGR</h3>
-                        <p class="text-2xl font-bold text-emerald-600">32.5%</p>
-                        <p class="text-sm text-slate-500 dark:text-slate-400">Growth Rate 2025-2030</p>
-                    </div>
-                    <div class="bg-slate-50 dark:bg-slate-700 p-4 rounded-lg">
-                        <h3 class="font-semibold text-slate-900 dark:text-slate-100">SaaS Revenue</h3>
-                        <p class="text-2xl font-bold text-emerald-600">87%</p>
-                        <p class="text-sm text-slate-500 dark:text-slate-400">Gross Margin (2025)</p>
-                    </div>
-                </div>
-            </section>
-
-            <section id="competitive-landscape" class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm">
-                <h2 class="text-xl font-semibold mb-4 text-emerald-600">Competitive Landscape Analysis</h2>
-                
-                <div class="mb-6">
-                    <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-3">Market Evolution</h3>
-                    <p class="text-slate-600 dark:text-slate-400 mb-4">
-                        The infrastructure management market is experiencing a measured shift toward AI-enabled solutions, driven by cost pressures and operational complexities. As a QSBC, SirsiNexus offers a unique value proposition: advanced AI capabilities combined with significant investor tax advantages through the QSBS program. Our platform addresses immediate market needs while contributing to state economies through job creation and technological innovation.
-                    </p>
-                </div>
-
-                <div class="grid md:grid-cols-2 gap-6 mb-6">
-                    <div class="bg-slate-50 dark:bg-slate-700 p-6 rounded-lg">
-                        <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-3">Traditional IaC Market Limitations</h3>
-                        <div class="space-y-3">
-                            <div>
-                                <h4 class="font-medium text-emerald-600">HashiCorp (Terraform) - $5.1B Market Cap</h4>
-                                <p class="text-sm text-slate-600 dark:text-slate-400">Market leader facing challenges:
-                                    • 76% of users report maintenance overhead
-                                    • Manual configuration drives 40% slower deployments
-                                    • No AI capabilities for optimization
-                                    • Limited to static infrastructure patterns</p>
-                            </div>
-                            <div>
-                                <h4 class="font-medium text-emerald-600">Pulumi - $1.8B Valuation</h4>
-                                <p class="text-sm text-slate-600 dark:text-slate-400">Modern IaC approach but:
-                                    • Requires deep programming expertise
-                                    • No automated optimization
-                                    • High learning curve reported by 65% of users
-                                    • Manual intervention needed for scaling</p>
-                            </div>
-                            <div>
-                                <h4 class="font-medium text-emerald-600">Cloud-Native IaC (AWS, Azure, GCP)</h4>
-                                <p class="text-sm text-slate-600 dark:text-slate-400">Platform-specific limitations:
-                                    • Vendor lock-in concerns cited by 82% of enterprises
-                                    • No cross-cloud optimization
-                                    • Limited to basic automation
-                                    • Missing intelligent scaling capabilities</p>
-                            </div>
+                    <div class="grid md:grid-cols-3 gap-6 mt-8">
+                        <div class="bg-slate-50 dark:bg-slate-700 p-6 rounded-lg text-center">
+                            <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-2">Total Market Size</h3>
+                            <p class="text-3xl font-bold text-emerald-600">$48.2B</p>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">2025 TAM for AI-Infrastructure</p>
                         </div>
-                    </div>
-                    
-                    <div class="bg-slate-50 dark:bg-slate-700 p-6 rounded-lg">
-                        <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-3">SirsiNexus AI Advantages</h3>
-                        <div class="space-y-3">
-                            <div>
-                                <h4 class="font-medium text-emerald-600">Autonomous Infrastructure (Patent-Pending)</h4>
-                                <p class="text-sm text-slate-600 dark:text-slate-400">Revolutionary AI architecture:
-                                    • Self-optimizing infrastructure patterns
-                                    • Real-time cost optimization (35% average savings)
-                                    • Predictive scaling with 99.99% accuracy
-                                    • Zero-touch maintenance for 90% of operations</p>
-                            </div>
-                            <div>
-                                <h4 class="font-medium text-emerald-600">Enterprise-Grade Platform</h4>
-                                <p class="text-sm text-slate-600 dark:text-slate-400">Built for mission-critical workloads:
-                                    • SOC 2 Type II certified
-                                    • Multi-cloud support with unified management
-                                    • 99.99% uptime SLA
-                                    • Advanced compliance automation</p>
-                            </div>
-                            <div>
-                                <h4 class="font-medium text-emerald-600">Proven ROI Metrics</h4>
-                                <p class="text-sm text-slate-600 dark:text-slate-400">Quantifiable customer benefits:
-                                    • 60% faster deployments
-                                    • 75% reduction in maintenance time
-                                    • 8.5x average customer ROI
-                                    • 3.2 month average payback period</p>
-                            </div>
+                        <div class="bg-slate-50 dark:bg-slate-700 p-6 rounded-lg text-center">
+                            <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-2">AI Infrastructure CAGR</h3>
+                            <p class="text-3xl font-bold text-emerald-600">32.5%</p>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Growth Rate 2025-2030</p>
+                        </div>
+                        <div class="bg-slate-50 dark:bg-slate-700 p-6 rounded-lg text-center">
+                            <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-2">SaaS Revenue</h3>
+                            <p class="text-3xl font-bold text-emerald-600">87%</p>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Gross Margin (2025)</p>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <div class="bg-gradient-to-r from-emerald-50 to-blue-50 dark:from-emerald-900/20 dark:to-blue-900/20 p-6 rounded-lg">
-                    <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-3">Strategic Market Position</h3>
-                    <p class="text-slate-600 dark:text-slate-400">
-                        SirsiNexus is uniquely positioned to capture the growing demand for AI-powered infrastructure management. Our platform bridges the gap between traditional IaC tools and the future of cloud automation, offering enterprises a clear path to modernization without disrupting existing workflows. By focusing on enterprise-grade reliability while delivering cutting-edge AI capabilities, we're set to become the de facto standard for next-generation infrastructure management.
-                    </p>
+        <!-- Page 2: Competitive Landscape -->
+        <div class="page-slide" id="page-2">
+            <div class="bg-white dark:bg-slate-800 p-8 rounded-lg shadow-sm min-h-[600px] flex flex-col">
+                <h2 class="text-2xl font-semibold mb-6 text-emerald-600">Competitive Landscape Analysis</h2>
+                <div class="flex-1 space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-slate-50 dark:bg-slate-700 p-6 rounded-lg">
+                            <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-3">Traditional IaC Limitations</h3>
+                            <div class="space-y-3">
+                                <div>
+                                    <h4 class="font-medium text-emerald-600">HashiCorp (Terraform) - $5.1B</h4>
+                                    <p class="text-sm text-slate-600 dark:text-slate-400">• 76% report maintenance overhead<br>• Manual configuration drives 40% slower deployments<br>• No AI capabilities for optimization</p>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-emerald-600">Pulumi - $1.8B Valuation</h4>
+                                    <p class="text-sm text-slate-600 dark:text-slate-400">• Requires deep programming expertise<br>• No automated optimization<br>• High learning curve (65% of users)</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-slate-50 dark:bg-slate-700 p-6 rounded-lg">
+                            <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-3">SirsiNexus AI Advantages</h3>
+                            <div class="space-y-3">
+                                <div>
+                                    <h4 class="font-medium text-emerald-600">Autonomous Infrastructure</h4>
+                                    <p class="text-sm text-slate-600 dark:text-slate-400">• Self-optimizing infrastructure patterns<br>• Real-time cost optimization (35% savings)<br>• Predictive scaling with 99.99% accuracy</p>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-emerald-600">Enterprise-Grade Platform</h4>
+                                    <p class="text-sm text-slate-600 dark:text-slate-400">• SOC 2 Type II certified<br>• Multi-cloud unified management<br>• 99.99% uptime SLA</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gradient-to-r from-emerald-50 to-blue-50 dark:from-emerald-900/20 dark:to-blue-900/20 p-6 rounded-lg">
+                        <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-3">Strategic Market Position</h3>
+                        <p class="text-slate-600 dark:text-slate-400">
+                            SirsiNexus is uniquely positioned to capture the growing demand for AI-powered infrastructure management. Our platform bridges the gap between traditional IaC tools and the future of cloud automation, offering enterprises a clear path to modernization without disrupting existing workflows.
+                        </p>
+                    </div>
                 </div>
-            </section>
+            </div>
+        </div>
 
-            <section id="market-segments" class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm">
-                <h2 class="text-xl font-semibold mb-4 text-emerald-600">Target Market Segments</h2>
-                <div class="grid md:grid-cols-3 gap-4">
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-emerald-100 dark:bg-emerald-900/20 rounded-lg flex items-center justify-center mx-auto mb-2">
-                            <span class="text-2xl font-bold text-emerald-600">65%</span>
+        <!-- Page 3: Market Segments -->
+        <div class="page-slide" id="page-3">
+            <div class="bg-white dark:bg-slate-800 p-8 rounded-lg shadow-sm min-h-[600px] flex flex-col">
+                <h2 class="text-2xl font-semibold mb-6 text-emerald-600">Target Market Segments</h2>
+                <div class="flex-1 flex flex-col justify-center">
+                    <div class="grid md:grid-cols-3 gap-8 mb-8">
+                        <div class="text-center">
+                            <div class="w-24 h-24 bg-emerald-100 dark:bg-emerald-900/20 rounded-lg flex items-center justify-center mx-auto mb-4">
+                                <span class="text-3xl font-bold text-emerald-600">65%</span>
+                            </div>
+                            <h3 class="font-semibold text-lg text-slate-900 dark:text-slate-100 mb-2">Enterprise</h3>
+                            <p class="text-slate-600 dark:text-slate-400">Large organizations with complex cloud needs and multi-cloud strategies</p>
                         </div>
-                        <h3 class="font-semibold">Enterprise</h3>
-                        <p class="text-sm text-slate-500 dark:text-slate-400">Large organizations with complex cloud needs</p>
+                        <div class="text-center">
+                            <div class="w-24 h-24 bg-blue-100 dark:bg-blue-900/20 rounded-lg flex items-center justify-center mx-auto mb-4">
+                                <span class="text-3xl font-bold text-blue-600">25%</span>
+                            </div>
+                            <h3 class="font-semibold text-lg text-slate-900 dark:text-slate-100 mb-2">Mid-Market</h3>
+                            <p class="text-slate-600 dark:text-slate-400">Growing companies scaling cloud operations and seeking optimization</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-24 h-24 bg-purple-100 dark:bg-purple-900/20 rounded-lg flex items-center justify-center mx-auto mb-4">
+                                <span class="text-3xl font-bold text-purple-600">10%</span>
+                            </div>
+                            <h3 class="font-semibold text-lg text-slate-900 dark:text-slate-100 mb-2">SMB</h3>
+                            <p class="text-slate-600 dark:text-slate-400">Small businesses entering cloud with limited DevOps resources</p>
+                        </div>
                     </div>
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900/20 rounded-lg flex items-center justify-center mx-auto mb-2">
-                            <span class="text-2xl font-bold text-blue-600">25%</span>
-                        </div>
-                        <h3 class="font-semibold">Mid-Market</h3>
-                        <p class="text-sm text-slate-500 dark:text-slate-400">Growing companies scaling cloud operations</p>
-                    </div>
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-purple-100 dark:bg-purple-900/20 rounded-lg flex items-center justify-center mx-auto mb-2">
-                            <span class="text-2xl font-bold text-purple-600">10%</span>
-                        </div>
-                        <h3 class="font-semibold">SMB</h3>
-                        <p class="text-sm text-slate-500 dark:text-slate-400">Small businesses entering cloud</p>
+                    <div class="bg-gradient-to-r from-emerald-50 to-blue-50 dark:from-emerald-900/20 dark:to-blue-900/20 p-6 rounded-lg">
+                        <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-3">Market Focus Strategy</h3>
+                        <p class="text-slate-600 dark:text-slate-400">
+                            Our primary focus is on enterprise customers (65% of revenue target) who have the most complex infrastructure challenges and highest willingness to pay for AI-driven solutions. This segment provides the strongest unit economics and creates network effects that drive platform adoption.
+                        </p>
                     </div>
                 </div>
-            </section>
+            </div>
+        </div>
 
-            <!-- Market Dynamics Section -->
-            <!-- AI Infrastructure Market Analysis -->
-            <section id="ai-infrastructure" class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm mb-8">
-                <h2 class="text-xl font-semibold mb-4 text-emerald-600">AI Infrastructure Market Analysis</h2>
-                <div class="space-y-6">
-                    <div>
+        <!-- Page 4: AI Infrastructure -->
+        <div class="page-slide" id="page-4">
+            <div class="bg-white dark:bg-slate-800 p-8 rounded-lg shadow-sm min-h-[600px] flex flex-col">
+                <h2 class="text-2xl font-semibold mb-6 text-emerald-600">AI Infrastructure Market Analysis</h2>
+                <div class="flex-1 space-y-6">
+                    <div class="prose max-w-none">
                         <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-3">Market Evolution & Opportunity</h3>
-                        <p class="text-slate-600 dark:text-slate-400 mb-4">
+                        <p class="text-slate-600 dark:text-slate-400 mb-6">
                             The AI infrastructure management market represents a paradigm shift in how enterprises approach cloud operations. Traditional IaC tools, while effective for basic automation, are increasingly insufficient for the complexity and scale of modern cloud environments. SirsiNexus's AI-first approach addresses this gap by providing intelligent, predictive infrastructure management that goes beyond simple automation.
                         </p>
-                        <p class="text-slate-600 dark:text-slate-400 mb-4">
-                            Based on conservative market analysis, we project that by 2027, approximately 45% of enterprise infrastructure decisions will involve AI assistance, representing a $18.5B addressable market. This measured growth aligns with our focus on sustainable expansion and robust financial performance, supported by our QSBC status and the economic benefits we generate for our operating jurisdictions.
-                        </p>
                     </div>
-
                     <div class="grid md:grid-cols-2 gap-6">
                         <div class="bg-slate-50 dark:bg-slate-700 p-6 rounded-lg">
                             <h4 class="font-semibold text-slate-900 dark:text-slate-100 mb-3">AI Advantage</h4>
@@ -458,7 +427,6 @@
                                 </li>
                             </ul>
                         </div>
-
                         <div class="bg-slate-50 dark:bg-slate-700 p-6 rounded-lg">
                             <h4 class="font-semibold text-slate-900 dark:text-slate-100 mb-3">Market Impact</h4>
                             <ul class="space-y-2 text-slate-600 dark:text-slate-400">
@@ -481,20 +449,15 @@
                             </ul>
                         </div>
                     </div>
-
-                    <div class="bg-gradient-to-r from-emerald-50 to-blue-50 dark:from-emerald-900/20 dark:to-blue-900/20 p-6 rounded-lg">
-                        <h4 class="font-semibold text-slate-900 dark:text-slate-100 mb-3">Future Outlook</h4>
-                        <p class="text-slate-600 dark:text-slate-400">
-                            As enterprises continue their digital transformation journey, the demand for AI-powered infrastructure management will accelerate. SirsiNexus is uniquely positioned to lead this transition with our advanced AI capabilities, enterprise-grade security, and proven track record of innovation. Our conservative yet strategic approach ensures we can capture this opportunity while maintaining the reliability and security that enterprises demand.
-                        </p>
-                    </div>
                 </div>
-            </section>
+            </div>
+        </div>
 
-            <!-- Market Dynamics Section -->
-            <section id="market-dynamics" class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm">
-                <h2 class="text-xl font-semibold mb-4 text-emerald-600">Market Dynamics & Trends</h2>
-                <div class="grid md:grid-cols-2 gap-6">
+        <!-- Page 5: Market Dynamics & Trends -->
+        <div class="page-slide" id="page-5">
+            <div class="bg-white dark:bg-slate-800 p-8 rounded-lg shadow-sm min-h-[600px] flex flex-col">
+                <h2 class="text-2xl font-semibold mb-6 text-emerald-600">Market Dynamics & Trends</h2>
+                <div class="flex-1 grid md:grid-cols-2 gap-6">
                     <div>
                         <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-3">Key Market Drivers</h3>
                         <ul class="space-y-2 text-slate-600 dark:text-slate-400">
@@ -538,12 +501,14 @@
                         </ul>
                     </div>
                 </div>
-            </section>
+            </div>
+        </div>
 
-            <!-- Competitive Positioning -->
-            <section id="competitive-matrix" class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm">
-                <h2 class="text-xl font-semibold mb-4 text-emerald-600">Competitive Positioning Matrix</h2>
-                <div class="overflow-x-auto">
+        <!-- Page 6: Competitive Positioning Matrix -->
+        <div class="page-slide" id="page-6">
+            <div class="bg-white dark:bg-slate-800 p-8 rounded-lg shadow-sm min-h-[600px] flex flex-col">
+                <h2 class="text-2xl font-semibold mb-6 text-emerald-600">Competitive Positioning Matrix</h2>
+                <div class="flex-1 overflow-x-auto">
                     <table class="min-w-full table-auto">
                         <thead>
                             <tr class="bg-slate-200 dark:bg-slate-600">
@@ -592,69 +557,67 @@
                             </tr>
                         </tbody>
                     </table>
+                    <div class="mt-4 text-sm text-slate-600 dark:text-slate-400">
+                        <p><strong>Legend:</strong> ✓✓✓ = Superior, ✓✓ = Good, ✓ = Basic, ✗ = Not Available</p>
+                    </div>
                 </div>
-                <div class="mt-4 text-sm text-slate-600 dark:text-slate-400">
-                    <p><strong>Legend:</strong> ✓✓✓ = Superior, ✓✓ = Good, ✓ = Basic, ✗ = Not Available</p>
-                </div>
-            </section>
+            </div>
+        </div>
 
-            <!-- Strategic Advantages -->
-            <section id="strategic-advantages" class="bg-gradient-to-r from-emerald-50 to-blue-50 dark:from-emerald-900/20 dark:to-blue-900/20 p-6 rounded-lg border border-slate-200 dark:border-slate-700">
-                <h2 class="text-xl font-semibold mb-4 text-emerald-600">Strategic Advantages</h2>
-                <div class="grid md:grid-cols-2 gap-6">
+        <!-- Page 7: Strategic Advantages -->
+        <div class="page-slide" id="page-7">
+            <div class="bg-gradient-to-r from-emerald-50 to-blue-50 dark:from-emerald-900/20 dark:to-blue-900/20 p-8 rounded-lg shadow-sm min-h-[600px] flex flex-col">
+                <h2 class="text-2xl font-semibold mb-6 text-emerald-600">Strategic Advantages</h2>
+                <div class="flex-1 grid md:grid-cols-2 gap-6">
                     <div>
                         <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-3">Technical Differentiators</h3>
                         <ul class="space-y-2 text-slate-700 dark:text-slate-300">
-                            <li>• AI-driven resource optimization algorithms</li>
-                            <li>• Natural language query interface</li>
-                            <li>• Multi-cloud unified management</li>
-                            <li>• Predictive cost modeling</li>
-                            <li>• Real-time anomaly detection</li>
+                            <li>AI-driven resource optimization algorithms</li>
+                            <li>Natural language query interface</li>
+                            <li>Multi-cloud unified management</li>
+                            <li>Predictive cost modeling</li>
+                            <li>Real-time anomaly detection</li>
                         </ul>
                     </div>
                     <div>
                         <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-3">Market Position</h3>
                         <ul class="space-y-2 text-slate-700 dark:text-slate-300">
-                            <li>• First-mover in AI-powered optimization</li>
-                            <li>• Enterprise-ready from day one</li>
-                            <li>• Strong technical foundation</li>
-                            <li>• Network effects through partnerships</li>
-                            <li>• Proven customer demand</li>
+                            <li>First-mover in AI-powered optimization</li>
+                            <li>Enterprise-ready from day one</li>
+                            <li>Strong technical foundation</li>
+                            <li>Network effects through partnerships</li>
+                            <li>Proven customer demand</li>
                         </ul>
                     </div>
                 </div>
-            </section>
+            </div>
+        </div>
 
-            <!-- Customer Pain Points & Transition Metrics -->
-            <section id="pain-points" class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm mb-8">
-                <h2 class="text-xl font-semibold mb-4 text-emerald-600">Customer Pain Points & Transition Metrics</h2>
-                <div class="grid md:grid-cols-2 gap-6">
+        <!-- Page 8: Customer Pain Points & Transition -->
+        <div class="page-slide" id="page-8">
+            <div class="bg-white dark:bg-slate-800 p-8 rounded-lg shadow-sm min-h-[600px] flex flex-col">
+                <h2 class="text-2xl font-semibold mb-6 text-emerald-600">Customer Pain Points & Transition Metrics</h2>
+                <div class="flex-1 grid md:grid-cols-2 gap-6">
                     <div>
                         <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-3">Key Pain Points</h3>
                         <div class="space-y-4">
                             <div class="bg-red-50 dark:bg-red-900/10 p-4 rounded-lg">
                                 <h4 class="font-medium text-red-800 dark:text-red-200 mb-2">Infrastructure Complexity</h4>
-                                <p class="text-sm text-red-700 dark:text-red-300">
-                                    • 78% report increasing cloud complexity
-                                    • 3.4 cloud providers on average
-                                    • 65% struggle with multi-cloud management
-                                </p>
+                                <p class="text-sm text-red-700 dark:text-red-300">• 78% report increasing cloud complexity</p>
+                                <p class="text-sm text-red-700 dark:text-red-300">• 3.4 cloud providers on average</p>
+                                <p class="text-sm text-red-700 dark:text-red-300">• 65% struggle with multi-cloud management</p>
                             </div>
                             <div class="bg-orange-50 dark:bg-orange-900/10 p-4 rounded-lg">
                                 <h4 class="font-medium text-orange-800 dark:text-orange-200 mb-2">Cost Management</h4>
-                                <p class="text-sm text-orange-700 dark:text-orange-300">
-                                    • 82% exceed cloud budgets by 25%+
-                                    • 40% lack cost visibility
-                                    • 55% struggle with accurate forecasting
-                                </p>
+                                <p class="text-sm text-orange-700 dark:text-orange-300">• 82% exceed cloud budgets by 25%+</p>
+                                <p class="text-sm text-orange-700 dark:text-orange-300">• 40% lack cost visibility</p>
+                                <p class="text-sm text-orange-700 dark:text-orange-300">• 55% struggle with accurate forecasting</p>
                             </div>
                             <div class="bg-yellow-50 dark:bg-yellow-900/10 p-4 rounded-lg">
                                 <h4 class="font-medium text-yellow-800 dark:text-yellow-200 mb-2">Operational Overhead</h4>
-                                <p class="text-sm text-yellow-700 dark:text-yellow-300">
-                                    • 45 hours/week on manual management
-                                    • 70% face DevOps staffing challenges
-                                    • 60% delayed by manual approvals
-                                </p>
+                                <p class="text-sm text-yellow-700 dark:text-yellow-300">• 45 hours/week on manual management</p>
+                                <p class="text-sm text-yellow-700 dark:text-yellow-300">• 70% face DevOps staffing challenges</p>
+                                <p class="text-sm text-yellow-700 dark:text-yellow-300">• 60% delayed by manual approvals</p>
                             </div>
                         </div>
                     </div>
@@ -714,12 +677,14 @@
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
+        </div>
 
-            <!-- Market Penetration Strategy -->
-            <section id="penetration-strategy" class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm">
-                <h2 class="text-xl font-semibold mb-4 text-emerald-600">Market Penetration Strategy</h2>
-                <div class="grid md:grid-cols-3 gap-6">
+        <!-- Page 9: Market Penetration Strategy -->
+        <div class="page-slide" id="page-9">
+            <div class="bg-white dark:bg-slate-800 p-8 rounded-lg shadow-sm min-h-[600px] flex flex-col">
+                <h2 class="text-2xl font-semibold mb-6 text-emerald-600">Market Penetration Strategy</h2>
+                <div class="flex-1 grid md:grid-cols-3 gap-6">
                     <div class="text-center">
                         <div class="w-16 h-16 bg-emerald-100 dark:bg-emerald-900/20 rounded-lg flex items-center justify-center mx-auto mb-3">
                             <svg class="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -748,7 +713,8 @@
                         <p class="text-sm text-slate-600 dark:text-slate-400">Demonstrate clear cost savings and efficiency gains to drive adoption</p>
                     </div>
                 </div>
-            </section>
+            </div>
+        </div>
 
         </div>
 
@@ -786,79 +752,86 @@
         document.addEventListener('DOMContentLoaded', function() {
             initTheme();
             
-            // Table of contents toggle functionality
-            const tocToggle = document.getElementById('tocToggle');
-            const tocNav = document.getElementById('tocNav');
+            // Pagination system
+            let currentPage = 1;
+            const totalPages = 9;
             
-            if (tocToggle && tocNav) {
-                tocToggle.addEventListener('click', function() {
-                    tocNav.classList.toggle('hidden');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const currentPageSpan = document.getElementById('currentPage');
+            const totalPagesSpan = document.getElementById('totalPages');
+            
+            function updatePageDisplay() {
+                // Hide all slides
+                document.querySelectorAll('.page-slide').forEach(slide => {
+                    slide.classList.remove('active');
                 });
+                
+                // Show current slide
+                const currentSlide = document.getElementById(`page-${currentPage}`);
+                if (currentSlide) {
+                    currentSlide.classList.add('active');
+                }
+                
+                // Update navigation
+                currentPageSpan.textContent = currentPage;
+                totalPagesSpan.textContent = totalPages;
+                
+                // Update button states
+                prevBtn.disabled = currentPage === 1;
+                nextBtn.disabled = currentPage === totalPages;
+                
+                if (prevBtn.disabled) {
+                    prevBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                } else {
+                    prevBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                }
+                
+                if (nextBtn.disabled) {
+                    nextBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                } else {
+                    nextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                }
             }
             
-            // Smooth scrolling for table of contents links
-            const tocLinks = document.querySelectorAll('#tocNav a[href^="#"]');
-            tocLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href').substring(1);
-                    const targetElement = document.getElementById(targetId);
-                    
-                    if (targetElement) {
-                        // Calculate offset to account for sticky header and TOC
-                        const headerHeight = document.querySelector('header').offsetHeight;
-                        const tocHeight = document.querySelector('#tocNav').closest('div').offsetHeight;
-                        const offset = headerHeight + tocHeight + 20; // Extra 20px for padding
-                        
-                        const elementPosition = targetElement.offsetTop - offset;
-                        
-                        window.scrollTo({
-                            top: elementPosition,
-                            behavior: 'smooth'
-                        });
-                        
-                        // Close mobile menu after clicking
-                        if (window.innerWidth < 1024) {
-                            tocNav.classList.add('hidden');
-                        }
+            function goToPage(pageNumber) {
+                if (pageNumber >= 1 && pageNumber <= totalPages) {
+                    currentPage = pageNumber;
+                    updatePageDisplay();
+                }
+            }
+            
+            function nextPage() {
+                if (currentPage < totalPages) {
+                    goToPage(currentPage + 1);
+                }
+            }
+            
+            function prevPage() {
+                if (currentPage > 1) {
+                    goToPage(currentPage - 1);
+                }
+            }
+            
+            // Button event listeners
+            nextBtn.addEventListener('click', nextPage);
+            prevBtn.addEventListener('click', prevPage);
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowRight' || e.key === 'Tab') {
+                    if (e.key === 'Tab') {
+                        e.preventDefault();
                     }
-                });
+                    nextPage();
+                } else if (e.key === 'ArrowLeft' || (e.key === 'Tab' && e.shiftKey)) {
+                    e.preventDefault();
+                    prevPage();
+                }
             });
             
-            // Highlight current section in TOC
-            const sections = document.querySelectorAll('section[id]');
-            const navLinks = document.querySelectorAll('#tocNav a');
-            
-            function highlightCurrentSection() {
-                let currentSection = '';
-                const scrollPosition = window.scrollY + 200; // Offset for better UX
-                
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop;
-                    const sectionHeight = section.offsetHeight;
-                    
-                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                        currentSection = section.getAttribute('id');
-                    }
-                });
-                
-                navLinks.forEach(link => {
-                    const href = link.getAttribute('href').substring(1);
-                    if (href === currentSection) {
-                        link.classList.add('text-emerald-600', 'dark:text-emerald-400', 'font-medium');
-                        link.classList.remove('text-slate-600', 'dark:text-slate-400');
-                    } else {
-                        link.classList.remove('text-emerald-600', 'dark:text-emerald-400', 'font-medium');
-                        link.classList.add('text-slate-600', 'dark:text-slate-400');
-                    }
-                });
-            }
-            
-            // Initial highlight
-            highlightCurrentSection();
-            
-            // Update on scroll
-            window.addEventListener('scroll', highlightCurrentSection);
+            // Initialize pagination
+            updatePageDisplay();
         });
     </script>
 </body>
