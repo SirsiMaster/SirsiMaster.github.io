@@ -1,39 +1,41 @@
 {
   "sections": {
-    "financial-reports": {
-      "title": "Financial Reports",
-      "files": []
-    },
-    "business-metrics": {
-      "title": "Business Metrics",
+    "committee-overview": {
+      "title": "Committee Overview",
       "files": [
         {
-          "name": "Market Analysis Report",
+          "name": "Committee Overview",
+          "path": "committee/index.html",
+          "description": "Executive committee meeting index and summaries",
+          "date": "January 2025"
+        }
+      ]
+    },
+    "market-strategy": {
+      "title": "Market Strategy",
+      "files": [
+        {
+          "name": "Market Analysis",
           "path": "committee/market-analysis.html",
           "description": "Market analysis and competitive positioning",
           "date": "January 2025"
-        }
-      ]
-    },
-    "legal-documents": {
-      "title": "Legal Documents",
-      "files": [
+        },
         {
-          "name": "Privacy Policy",
-          "path": "../privacy-policy.html",
-          "description": "Company privacy policy and data protection",
+          "name": "Go-to-Market Strategy",
+          "path": "committee/go-to-market.html",
+          "description": "Go-to-market strategy and execution plan",
           "date": "January 2025"
         },
         {
-          "name": "Terms of Service",
-          "path": "../terms-of-service.html",
-          "description": "Service terms and conditions",
+          "name": "Sales Strategy",
+          "path": "committee/sales-strategy.html",
+          "description": "Sales strategy and revenue projections",
           "date": "January 2025"
         }
       ]
     },
-    "strategic-plans": {
-      "title": "Strategic Plans",
+    "product-strategy": {
+      "title": "Product Strategy",
       "files": [
         {
           "name": "Product Roadmap",
@@ -43,23 +45,40 @@
         }
       ]
     },
-    "communications": {
-      "title": "Communications",
+    "performance-metrics": {
+      "title": "Performance Metrics",
       "files": [
         {
-          "name": "Committee Index",
-          "path": "committee/index.html",
-          "description": "Executive committee meeting index and summaries",
+          "name": "KPI Metrics",
+          "path": "committee/kpi-metrics.html",
+          "description": "Key performance indicators and metrics",
           "date": "January 2025"
         }
       ]
     },
-    "investment-terms": {
-      "title": "Investment Terms",
+    "legal-documents": {
+      "title": "Legal Documents",
       "files": [
         {
-          "name": "Documentation",
-          "path": "../documentation.html",
+          "name": "Privacy Policy",
+          "path": "../legal/privacy-policy.html",
+          "description": "Company privacy policy and data protection",
+          "date": "January 2025"
+        },
+        {
+          "name": "Terms of Service",
+          "path": "../legal/terms-of-service.html",
+          "description": "Service terms and conditions",
+          "date": "January 2025"
+        }
+      ]
+    },
+    "documentation": {
+      "title": "Documentation",
+      "files": [
+        {
+          "name": "Technical Documentation",
+          "path": "../docs/documentation.html",
           "description": "Technical documentation and platform information",
           "date": "January 2025"
         }

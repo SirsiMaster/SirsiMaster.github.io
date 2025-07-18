@@ -1,3 +1,491 @@
+// SirsiNexus UI Component Library
+class SirsiHeader extends HTMLElement {
+    constructor() {
+        super();
+        this.attachShadow({ mode: 'open' });
+    }
+
+    connectedCallback() {
+        this.render();
+    }
+
+    render() {
+        this.shadowRoot.innerHTML = `
+            <style>
+                :host {
+                    display: block;
+                    font-family: 'Inter', sans-serif;
+                }
+
+                .header {
+                    background: var(--header-bg, #ffffff);
+                    border-bottom: 1px solid var(--border-color, #e2e8f0);
+                    position: sticky;
+                    top: 0;
+                    z-index: 50;
+                    backdrop-filter: blur(8px);
+                }
+
+                :host-context(.dark) .header {
+                    background: rgba(31, 41, 55, 0.95);
+                    border-color: #334155;
+                }
+
+                .container {
+                    max-width: 1280px;
+                    margin: 0 auto;
+                    padding: 0 1.5rem;
+                }
+
+                .nav-content {
+                    display: flex;
+                    height: 4rem;
+                    align-items: center;
+                    justify-content: space-between;
+                }
+
+                .logo-section {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.75rem;
+                }
+
+                .logo {
+                    width: 3rem;
+                    height: 3rem;
+                    object-fit: contain;
+                }
+
+                .title {
+                    font-size: 1.125rem;
+                    font-weight: 600;
+                    color: var(--text-primary, #1a1a1a);
+                }
+
+                :host-context(.dark) .title {
+                    color: #f1f5f9;
+                }
+
+                .nav-items {
+                    display: flex;
+                    align-items: center;
+                    gap: 1.5rem;
+                }
+
+                ::slotted(a) {
+                    font-size: 0.875rem;
+                    color: var(--text-secondary, #64748b);
+                    text-decoration: none;
+                    transition: color 0.2s;
+                }
+
+                ::slotted(a:hover) {
+                    color: var(--text-primary, #1a1a1a);
+                }
+
+                :host-context(.dark) ::slotted(a) {
+                    color: #94a3b8;
+                }
+
+                :host-context(.dark) ::slotted(a:hover) {
+                    color: #f1f5f9;
+                }
+
+                .theme-toggle {
+                    padding: 0.5rem;
+                    border-radius: 0.5rem;
+                    color: var(--text-secondary, #64748b);
+                    background: transparent;
+                    border: none;
+                    cursor: pointer;
+                    transition: all 0.2s;
+                }
+
+                .theme-toggle:hover {
+                    color: var(--text-primary, #1a1a1a);
+                    background: var(--hover-bg, #f1f5f9);
+                }
+
+                :host-context(.dark) .theme-toggle:hover {
+                    color: #f1f5f9;
+                    background: #334155;
+                }
+
+                .version-badge {
+                    font-size: 0.75rem;
+                    padding: 0.25rem 0.5rem;
+                    background: var(--badge-bg, #f1f5f9);
+                    border-radius: 0.25rem;
+                    color: var(--text-secondary, #64748b);
+                }
+
+                :host-context(.dark) .version-badge {
+                    background: #334155;
+                    color: #94a3b8;
+                }
+            </style>
+
+            <header class="header">
+                <div class="container">
+                    <nav class="nav-content">
+                        <div class="logo-section">
+                            <img src="../../assets/images/Sirsi_Logo_300ppi_cguiyg.png" alt="Sirsi Logo" class="logo light-logo">
+                            <img src="../../assets/images/Sirsi_Logo_300ppi_Inverted_lt7asx.png" alt="Sirsi Logo" class="logo dark-logo" style="display: none;">
+                            <div>
+                                <h1 class="title">SirsiNexus</h1>
+                                <span class="version-badge">v0.5.0-alpha</span>
+                            </div>
+                        </div>
+                        <div class="nav-items">
+                            <slot name="nav-items"></slot>
+                            <button class="theme-toggle" onclick="window.toggleTheme()">
+                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                          d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
+                                    </path>
+                                </svg>
+                            </button>
+                        </div>
+                    </nav>
+                </div>
+            </header>
+        `;
+
+        // Handle theme
+        const darkLogo = this.shadowRoot.querySelector('.dark-logo');
+        const lightLogo = this.shadowRoot.querySelector('.light-logo');
+        
+        const updateLogos = () => {
+            const isDark = document.documentElement.classList.contains('dark');
+            darkLogo.style.display = isDark ? 'block' : 'none';
+            lightLogo.style.display = isDark ? 'none' : 'block';
+        };
+
+        // Initial update
+        updateLogos();
+
+        // Watch for theme changes
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.attributeName === 'class') {
+                    updateLogos();
+                }
+            });
+        });
+
+        observer.observe(document.documentElement, {
+            attributes: true
+        });
+    }
+}
+
+class SirsiFooter extends HTMLElement {
+    constructor() {
+        super();
+        this.attachShadow({ mode: 'open' });
+    }
+
+    connectedCallback() {
+        this.render();
+    }
+
+    render() {
+        this.shadowRoot.innerHTML = `
+            <style>
+                :host {
+                    display: block;
+                    font-family: 'Inter', sans-serif;
+                }
+
+                .footer {
+                    background: var(--footer-bg, #1a1a1a);
+                    color: #ffffff;
+                    padding: 3rem 0;
+                    margin-top: 4rem;
+                }
+
+                .container {
+                    max-width: 1280px;
+                    margin: 0 auto;
+                    padding: 0 1.5rem;
+                }
+
+                .footer-content {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                    gap: 2rem;
+                }
+
+                .copyright {
+                    text-align: center;
+                    padding-top: 2rem;
+                    margin-top: 2rem;
+                    border-top: 1px solid rgba(255, 255, 255, 0.1);
+                    color: #94a3b8;
+                    font-size: 0.875rem;
+                }
+
+                ::slotted(*) {
+                    color: #ffffff;
+                }
+            </style>
+
+            <footer class="footer">
+                <div class="container">
+                    <div class="footer-content">
+                        <slot name="footer-content"></slot>
+                    </div>
+                    <div class="copyright">
+                        © ${new Date().getFullYear()} SirsiNexus. All rights reserved.
+                    </div>
+                </div>
+            </footer>
+        `;
+    }
+}
+
+class SirsiMetric extends HTMLElement {
+    static get observedAttributes() {
+        return ['value', 'label'];
+    }
+
+    constructor() {
+        super();
+        this.attachShadow({ mode: 'open' });
+    }
+
+    connectedCallback() {
+        this.render();
+    }
+
+    attributeChangedCallback() {
+        this.render();
+    }
+
+    render() {
+        const value = this.getAttribute('value');
+        const label = this.getAttribute('label');
+
+        this.shadowRoot.innerHTML = `
+            <style>
+                :host {
+                    display: block;
+                }
+
+                .metric {
+                    background: var(--metric-bg, #ffffff);
+                    border: 1px solid var(--border-color, #e2e8f0);
+                    border-radius: 0.75rem;
+                    padding: 1.5rem;
+                    text-align: center;
+                    transition: all 0.3s;
+                }
+
+                :host-context(.dark) .metric {
+                    background: rgba(31, 41, 55, 0.5);
+                    border-color: #334155;
+                }
+
+                .metric:hover {
+                    transform: translateY(-4px);
+                    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+                }
+
+                :host-context(.dark) .metric:hover {
+                    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+                }
+
+                .value {
+                    font-size: 2rem;
+                    font-weight: 700;
+                    color: var(--value-color, #16a34a);
+                    margin-bottom: 0.5rem;
+                }
+
+                :host-context(.dark) .value {
+                    color: #22c55e;
+                }
+
+                .label {
+                    font-size: 0.875rem;
+                    color: var(--label-color, #64748b);
+                    font-weight: 500;
+                }
+
+                :host-context(.dark) .label {
+                    color: #94a3b8;
+                }
+            </style>
+
+            <div class="metric">
+                <div class="value">${value}</div>
+                <div class="label">${label}</div>
+            </div>
+        `;
+    }
+}
+
+class SirsiChart extends HTMLElement {
+    static get observedAttributes() {
+        return ['title'];
+    }
+
+    constructor() {
+        super();
+        this.attachShadow({ mode: 'open' });
+    }
+
+    connectedCallback() {
+        this.render();
+    }
+
+    attributeChangedCallback() {
+        this.render();
+    }
+
+    render() {
+        const title = this.getAttribute('title');
+
+        this.shadowRoot.innerHTML = `
+            <style>
+                :host {
+                    display: block;
+                }
+
+                .chart-container {
+                    background: var(--chart-bg, #ffffff);
+                    border: 1px solid var(--border-color, #e2e8f0);
+                    border-radius: 0.75rem;
+                    padding: 1.5rem;
+                    transition: all 0.3s;
+                }
+
+                :host-context(.dark) .chart-container {
+                    background: rgba(31, 41, 55, 0.5);
+                    border-color: #334155;
+                }
+
+                .title {
+                    font-size: 1rem;
+                    font-weight: 600;
+                    color: var(--title-color, #1a1a1a);
+                    margin-bottom: 1rem;
+                }
+
+                :host-context(.dark) .title {
+                    color: #f1f5f9;
+                }
+
+                .chart-content {
+                    position: relative;
+                    height: 400px;
+                }
+            </style>
+
+            <div class="chart-container">
+                <div class="title">${title}</div>
+                <div class="chart-content">
+                    <slot></slot>
+                </div>
+            </div>
+        `;
+    }
+}
+
+class SirsiFeature extends HTMLElement {
+    static get observedAttributes() {
+        return ['title', 'description', 'icon'];
+    }
+
+    constructor() {
+        super();
+        this.attachShadow({ mode: 'open' });
+    }
+
+    connectedCallback() {
+        this.render();
+    }
+
+    attributeChangedCallback() {
+        this.render();
+    }
+
+    render() {
+        const title = this.getAttribute('title');
+        const description = this.getAttribute('description');
+        const icon = this.getAttribute('icon');
+
+        this.shadowRoot.innerHTML = `
+            <style>
+                :host {
+                    display: block;
+                }
+
+                .feature {
+                    background: var(--feature-bg, #ffffff);
+                    border: 1px solid var(--border-color, #e2e8f0);
+                    border-radius: 0.75rem;
+                    padding: 1.5rem;
+                    transition: all 0.3s;
+                }
+
+                :host-context(.dark) .feature {
+                    background: rgba(31, 41, 55, 0.5);
+                    border-color: #334155;
+                }
+
+                .feature:hover {
+                    transform: translateY(-4px);
+                    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+                }
+
+                :host-context(.dark) .feature:hover {
+                    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+                }
+
+                .icon {
+                    font-size: 2rem;
+                    margin-bottom: 1rem;
+                }
+
+                .title {
+                    font-size: 1.125rem;
+                    font-weight: 600;
+                    color: var(--title-color, #1a1a1a);
+                    margin-bottom: 0.5rem;
+                }
+
+                :host-context(.dark) .title {
+                    color: #f1f5f9;
+                }
+
+                .description {
+                    font-size: 0.875rem;
+                    color: var(--description-color, #64748b);
+                    line-height: 1.5;
+                }
+
+                :host-context(.dark) .description {
+                    color: #94a3b8;
+                }
+            </style>
+
+            <div class="feature">
+                <div class="icon">${icon}</div>
+                <div class="title">${title}</div>
+                <div class="description">${description}</div>
+            </div>
+        `;
+    }
+}
+
+// Register components
+customElements.define('sirsi-header', SirsiHeader);
+customElements.define('sirsi-footer', SirsiFooter);
+customElements.define('sirsi-metric', SirsiMetric);
+customElements.define('sirsi-chart', SirsiChart);
+customElements.define('sirsi-feature', SirsiFeature);
+
 /**
  * SirsiNexus UI Component Library
  * Provides consistent styling and components across all pages
