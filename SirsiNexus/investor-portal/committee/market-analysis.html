@@ -141,12 +141,12 @@
         transform: translateX(0);
       }
       
-      /* Force table header to respect theme */
-      .competitive-matrix-header {
+      /* Force table header to respect theme with higher specificity */
+      table thead tr.competitive-matrix-header {
         background-color: #ffffff !important;
       }
       
-      .dark .competitive-matrix-header {
+      .dark table thead tr.competitive-matrix-header {
         background-color: #334155 !important;
       }
     </style>
