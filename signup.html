@@ -738,6 +738,11 @@ Already signed up? <a href="https://sirsimaster.github.io/SirsiNexus/" class="te
           formData.businessUrl = businessUrl;
         }
         
+        // Store investor application if role is investor
+        if (role === 'investor') {
+          storeInvestorApplication(formData);
+        }
+        
         // Here you would typically send the form data to your backend
         console.log('Form submitted:', formData);
         
@@ -747,6 +752,61 @@ Already signed up? <a href="https://sirsimaster.github.io/SirsiNexus/" class="te
         // Hide investor fields after reset
         document.getElementById('investorFields').classList.add('hidden');
       });
+      
+      // Store investor application for admin review
+      function storeInvestorApplication(formData) {
+        // Generate unique investor ID
+        const investorId = 'INV' + Date.now().toString().slice(-6);
+        
+        // Create investor application object
+        const investorApplication = {
+          id: investorId,
+          name: formData.name,
+          email: formData.email,
+          company: formData.company,
+          linkedinUrl: formData.linkedinUrl,
+          businessUrl: formData.businessUrl,
+          status: 'pending',
+          appliedDate: new Date().toISOString(),
+          newsletter: formData.newsletter,
+          beta: formData.beta
+        };
+        
+        // Get existing applications
+        const existingApplications = JSON.parse(localStorage.getItem('investorApplications') || '[]');
+        
+        // Check if email already exists
+        const existingApplication = existingApplications.find(app => app.email === formData.email);
+        if (existingApplication) {
+          alert('An application with this email already exists. Please contact support if you need to update your application.');
+          return;
+        }
+        
+        // Add new application
+        existingApplications.push(investorApplication);
+        
+        // Save to localStorage
+        localStorage.setItem('investorApplications', JSON.stringify(existingApplications));
+        
+        // Log for debugging
+        console.log('✅ Investor application stored:', investorApplication);
+        
+        // Update success message for investors
+        const successMessage = document.getElementById('successMessage');
+        const messageContent = successMessage.querySelector('div');
+        messageContent.innerHTML = `
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+          <div>
+            <div class="font-medium">Investor application submitted successfully!</div>
+            <div class="text-sm opacity-90 mt-1">Your application (ID: ${investorId}) is under review. You'll receive an email notification once approved.</div>
+          </div>
+        `;
+        
+        // Send notification email (simulated)
+        console.log(`📧 Notification email sent to admin about new investor application from ${formData.name}`);
+      }
       
       function toggleMobileMenu() {
         // Mobile menu toggle functionality

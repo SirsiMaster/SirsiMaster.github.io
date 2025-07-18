@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Investor Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Check admin authentication
+        (function() {
+            const auth = sessionStorage.getItem('investorAuth');
+            if (!auth) {
+                window.location.href = 'investor-login.html';
+                return;
+            }
+            
+            try {
+                const authData = JSON.parse(auth);
+                if (authData.role !== 'admin') {
+                    alert('Access denied. Admin privileges required.');
+                    window.location.href = 'index.html';
+                    return;
+                }
+            } catch (error) {
+                console.error('Authentication error:', error);
+                sessionStorage.removeItem('investorAuth');
+                window.location.href = 'investor-login.html';
+            }
+        })();
+    </script>
+    <style>
+        /* Additional styles for admin dashboard */
+        body {
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+            color: #1a1a1a;
+            background-color: #f9fafb;
+        }
+        
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+        
+        .status-pending {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+        
+        .status-approved {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+        
+        .status-rejected {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .dark .status-pending {
+            background-color: #451a03;
+            color: #fbbf24;
+        }
+        
+        .dark .status-approved {
+            background-color: #064e3b;
+            color: #6ee7b7;
+        }
+        
+        .dark .status-rejected {
+            background-color: #7f1d1d;
+            color: #fca5a5;
+        }
+    </style>
+</head>
+<body class="font-inter">
+    <header class="bg-white dark:bg-gray-800/95 sticky top-0 z-50 border-b border-slate-200 dark:border-slate-700 backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex h-16 items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 flex items-center justify-center">
+                            <img src="/assets/images/Sirsi_Logo_300ppi_cguiyg.png" alt="Sirsi Logo" class="w-12 h-12 object-contain">
+                        </div>
+                        <div>
+                            <h1 class="text-lg font-semibold text-slate-900 dark:text-slate-100">SirsiNexus Admin Dashboard</h1>
+                        </div>
+                    </div>
+                </div>
+                <nav class="hidden md:flex items-center gap-3">
+                    <a href="index.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">Home</a>
+                    <button onclick="toggleTheme()" class="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors border border-slate-300 dark:border-slate-600 ml-4" style="min-width: 40px; min-height: 40px;">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 py-10">
+        <!-- Dashboard Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700">
+                <div class="flex items-center">
+                    <div class="p-2 bg-blue-100 dark:bg-blue-900 rounded-md">
+                        <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                        </svg>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-slate-600 dark:text-slate-400">Total Applications</p>
+                        <p class="text-2xl font-bold text-slate-900 dark:text-slate-100" id="totalApplications">0</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700">
+                <div class="flex items-center">
+                    <div class="p-2 bg-yellow-100 dark:bg-yellow-900 rounded-md">
+                        <svg class="w-6 h-6 text-yellow-600 dark:text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-slate-600 dark:text-slate-400">Pending</p>
+                        <p class="text-2xl font-bold text-slate-900 dark:text-slate-100" id="pendingCount">0</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700">
+                <div class="flex items-center">
+                    <div class="p-2 bg-green-100 dark:bg-green-900 rounded-md">
+                        <svg class="w-6 h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-slate-600 dark:text-slate-400">Approved</p>
+                        <p class="text-2xl font-bold text-slate-900 dark:text-slate-100" id="approvedCount">0</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700">
+                <div class="flex items-center">
+                    <div class="p-2 bg-red-100 dark:bg-red-900 rounded-md">
+                        <svg class="w-6 h-6 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-slate-600 dark:text-slate-400">Rejected</p>
+                        <p class="text-2xl font-bold text-slate-900 dark:text-slate-100" id="rejectedCount">0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Filter Tabs -->
+        <div class="mb-6">
+            <nav class="flex space-x-8">
+                <button onclick="filterInvestors('all')" class="filter-tab active py-2 px-1 border-b-2 border-emerald-500 font-medium text-sm text-emerald-600" data-filter="all">
+                    All Applications
+                </button>
+                <button onclick="filterInvestors('pending')" class="filter-tab py-2 px-1 border-b-2 border-transparent font-medium text-sm text-slate-500 hover:text-slate-700 hover:border-slate-300" data-filter="pending">
+                    Pending Review
+                </button>
+                <button onclick="filterInvestors('approved')" class="filter-tab py-2 px-1 border-b-2 border-transparent font-medium text-sm text-slate-500 hover:text-slate-700 hover:border-slate-300" data-filter="approved">
+                    Approved
+                </button>
+                <button onclick="filterInvestors('rejected')" class="filter-tab py-2 px-1 border-b-2 border-transparent font-medium text-sm text-slate-500 hover:text-slate-700 hover:border-slate-300" data-filter="rejected">
+                    Rejected
+                </button>
+            </nav>
+        </div>
+        
+        <!-- Investor Applications Table -->
+        <div class="bg-white dark:bg-slate-800 shadow-sm rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700">
+            <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-700">
+                <h3 class="text-lg font-medium text-slate-900 dark:text-slate-100">Investor Applications</h3>
+            </div>
+            
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-slate-200 dark:divide-slate-700">
+                    <thead class="bg-slate-50 dark:bg-slate-900">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Investor</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Contact</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Company</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">LinkedIn</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Business URL</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Status</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Applied</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="investorTableBody" class="bg-white dark:bg-slate-800 divide-y divide-slate-200 dark:divide-slate-700">
+                        <!-- Investor rows will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Empty State -->
+        <div id="emptyState" class="hidden text-center py-12">
+            <svg class="mx-auto h-12 w-12 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+            </svg>
+            <h3 class="mt-2 text-sm font-medium text-slate-900 dark:text-slate-100">No applications</h3>
+            <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">No investor applications match the current filter.</p>
+        </div>
+    </main>
+    
+    <!-- Action Modal -->
+    <div id="actionModal" class="hidden fixed inset-0 z-50 overflow-y-auto">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 transition-opacity">
+                <div class="absolute inset-0 bg-slate-500 opacity-75"></div>
+            </div>
+            <div class="inline-block align-bottom bg-white dark:bg-slate-800 rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+                <div class="sm:flex sm:items-start">
+                    <div id="modalIcon" class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full sm:mx-0 sm:h-10 sm:w-10">
+                        <!-- Icon will be populated by JavaScript -->
+                    </div>
+                    <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                        <h3 class="text-lg leading-6 font-medium text-slate-900 dark:text-slate-100" id="modalTitle">Confirm Action</h3>
+                        <div class="mt-2">
+                            <p class="text-sm text-slate-500 dark:text-slate-400" id="modalMessage">Are you sure you want to proceed?</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+                    <button onclick="confirmAction()" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm" id="confirmButton">
+                        Confirm
+                    </button>
+                    <button onclick="closeModal()" class="mt-3 w-full inline-flex justify-center rounded-md border border-slate-300 dark:border-slate-600 shadow-sm px-4 py-2 bg-white dark:bg-slate-700 text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 sm:mt-0 sm:w-auto sm:text-sm">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let investors = [];
+        let currentFilter = 'all';
+        let pendingAction = null;
+        
+        // Initialize the dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            loadInvestors();
+            initializeTheme();
+        });
+        
+        // Load investors from localStorage
+        function loadInvestors() {
+            const storedInvestors = localStorage.getItem('investorApplications');
+            if (storedInvestors) {
+                investors = JSON.parse(storedInvestors);
+            } else {
+                // Sample data for demonstration
+                investors = [
+                    {
+                        id: 'INV001',
+                        name: 'John Doe',
+                        email: 'john@example.com',
+                        company: 'Tech Ventures LLC',
+                        linkedinUrl: 'https://www.linkedin.com/in/johndoe',
+                        businessUrl: 'https://www.techventures.com',
+                        status: 'pending',
+                        appliedDate: '2025-01-15T10:30:00Z',
+                        newsletter: true,
+                        beta: false
+                    },
+                    {
+                        id: 'INV002',
+                        name: 'Jane Smith',
+                        email: 'jane@example.com',
+                        company: 'Growth Capital Partners',
+                        linkedinUrl: 'https://www.linkedin.com/in/janesmith',
+                        businessUrl: 'https://www.growthcapital.com',
+                        status: 'pending',
+                        appliedDate: '2025-01-16T14:20:00Z',
+                        newsletter: true,
+                        beta: true
+                    },
+                    {
+                        id: 'INV003',
+                        name: 'Michael Johnson',
+                        email: 'michael@example.com',
+                        company: 'Innovation Fund',
+                        linkedinUrl: 'https://www.linkedin.com/in/michaeljohnson',
+                        businessUrl: 'https://www.innovationfund.com',
+                        status: 'approved',
+                        appliedDate: '2025-01-10T09:15:00Z',
+                        approvedDate: '2025-01-12T11:00:00Z',
+                        newsletter: false,
+                        beta: true
+                    }
+                ];
+                saveInvestors();
+            }
+            
+            updateStats();
+            renderInvestorTable();
+        }
+        
+        // Save investors to localStorage
+        function saveInvestors() {
+            localStorage.setItem('investorApplications', JSON.stringify(investors));
+        }
+        
+        // Update dashboard statistics
+        function updateStats() {
+            const stats = investors.reduce((acc, investor) => {
+                acc.total++;
+                acc[investor.status]++;
+                return acc;
+            }, { total: 0, pending: 0, approved: 0, rejected: 0 });
+            
+            document.getElementById('totalApplications').textContent = stats.total;
+            document.getElementById('pendingCount').textContent = stats.pending;
+            document.getElementById('approvedCount').textContent = stats.approved;
+            document.getElementById('rejectedCount').textContent = stats.rejected;
+        }
+        
+        // Filter investors
+        function filterInvestors(status) {
+            currentFilter = status;
+            
+            // Update active tab
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                tab.classList.remove('active', 'border-emerald-500', 'text-emerald-600');
+                tab.classList.add('border-transparent', 'text-slate-500');
+            });
+            
+            const activeTab = document.querySelector(`[data-filter="${status}"]`);
+            activeTab.classList.add('active', 'border-emerald-500', 'text-emerald-600');
+            activeTab.classList.remove('border-transparent', 'text-slate-500');
+            
+            renderInvestorTable();
+        }
+        
+        // Render investor table
+        function renderInvestorTable() {
+            const tbody = document.getElementById('investorTableBody');
+            const emptyState = document.getElementById('emptyState');
+            
+            let filteredInvestors = investors;
+            if (currentFilter !== 'all') {
+                filteredInvestors = investors.filter(investor => investor.status === currentFilter);
+            }
+            
+            if (filteredInvestors.length === 0) {
+                tbody.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+            
+            emptyState.classList.add('hidden');
+            
+            tbody.innerHTML = filteredInvestors.map(investor => `
+                <tr class="hover:bg-slate-50 dark:hover:bg-slate-700">
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                            <div class="h-10 w-10 rounded-full bg-slate-300 dark:bg-slate-600 flex items-center justify-center">
+                                <span class="text-sm font-medium text-slate-700 dark:text-slate-300">${investor.name.charAt(0)}</span>
+                            </div>
+                            <div class="ml-4">
+                                <div class="text-sm font-medium text-slate-900 dark:text-slate-100">${investor.name}</div>
+                                <div class="text-sm text-slate-500 dark:text-slate-400">ID: ${investor.id}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-slate-900 dark:text-slate-100">${investor.email}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-slate-900 dark:text-slate-100">${investor.company || 'N/A'}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <a href="${investor.linkedinUrl}" target="_blank" class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
+                            View Profile
+                        </a>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <a href="${investor.businessUrl}" target="_blank" class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
+                            View Website
+                        </a>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="status-badge status-${investor.status}">${investor.status}</span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
+                        ${formatDate(investor.appliedDate)}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        ${investor.status === 'pending' ? `
+                            <div class="flex gap-2">
+                                <button onclick="showActionModal('${investor.id}', 'approve')" class="text-green-600 hover:text-green-800 dark:text-green-400 dark:hover:text-green-300">
+                                    Approve
+                                </button>
+                                <button onclick="showActionModal('${investor.id}', 'reject')" class="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300">
+                                    Reject
+                                </button>
+                            </div>
+                        ` : `
+                            <span class="text-slate-400 dark:text-slate-500">${investor.status === 'approved' ? 'Approved' : 'Rejected'}</span>
+                        `}
+                    </td>
+                </tr>
+            `).join('');
+        }
+        
+        // Show action confirmation modal
+        function showActionModal(investorId, action) {
+            const investor = investors.find(inv => inv.id === investorId);
+            if (!investor) return;
+            
+            const modal = document.getElementById('actionModal');
+            const modalIcon = document.getElementById('modalIcon');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalMessage = document.getElementById('modalMessage');
+            const confirmButton = document.getElementById('confirmButton');
+            
+            pendingAction = { investorId, action };
+            
+            if (action === 'approve') {
+                modalIcon.innerHTML = `
+                    <svg class="h-6 w-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                `;
+                modalIcon.className = 'mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-100 dark:bg-green-900 sm:mx-0 sm:h-10 sm:w-10';
+                modalTitle.textContent = 'Approve Investor';
+                modalMessage.textContent = `Are you sure you want to approve ${investor.name}? They will be granted access to the investor portal.`;
+                confirmButton.className = 'w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm';
+            } else {
+                modalIcon.innerHTML = `
+                    <svg class="h-6 w-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                `;
+                modalIcon.className = 'mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 dark:bg-red-900 sm:mx-0 sm:h-10 sm:w-10';
+                modalTitle.textContent = 'Reject Investor';
+                modalMessage.textContent = `Are you sure you want to reject ${investor.name}? This action cannot be undone.`;
+                confirmButton.className = 'w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm';
+            }
+            
+            modal.classList.remove('hidden');
+        }
+        
+        // Close modal
+        function closeModal() {
+            document.getElementById('actionModal').classList.add('hidden');
+            pendingAction = null;
+        }
+        
+        // Confirm action
+        function confirmAction() {
+            if (!pendingAction) return;
+            
+            const { investorId, action } = pendingAction;
+            const investor = investors.find(inv => inv.id === investorId);
+            
+            if (investor) {
+                if (action === 'approve') {
+                    investor.status = 'approved';
+                    investor.approvedDate = new Date().toISOString();
+                    
+                    // Simulate sending approval email
+                    console.log(`✅ Approval email sent to ${investor.email}`);
+                    
+                    // Show success notification
+                    showNotification(`${investor.name} has been approved and granted access to the investor portal.`, 'success');
+                } else {
+                    investor.status = 'rejected';
+                    investor.rejectedDate = new Date().toISOString();
+                    
+                    // Simulate sending rejection email
+                    console.log(`❌ Rejection email sent to ${investor.email}`);
+                    
+                    // Show notification
+                    showNotification(`${investor.name}'s application has been rejected.`, 'info');
+                }
+                
+                saveInvestors();
+                updateStats();
+                renderInvestorTable();
+            }
+            
+            closeModal();
+        }
+        
+        // Show notification
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg max-w-sm ${
+                type === 'success' ? 'bg-green-100 border border-green-400 text-green-700' :
+                type === 'error' ? 'bg-red-100 border border-red-400 text-red-700' :
+                'bg-blue-100 border border-blue-400 text-blue-700'
+            } transform translate-x-full transition-transform duration-300`;
+            
+            notification.innerHTML = `
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        ${type === 'success' ? `
+                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        ` : `
+                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        `}
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm font-medium">${message}</p>
+                    </div>
+                    <div class="ml-auto pl-3">
+                        <button onclick="this.parentElement.parentElement.parentElement.remove()" class="inline-flex text-gray-400 hover:text-gray-600">
+                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.classList.remove('translate-x-full');
+            }, 100);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                notification.classList.add('translate-x-full');
+                setTimeout(() => {
+                    if (notification.parentElement) {
+                        notification.remove();
+                    }
+                }, 300);
+            }, 5000);
+        }
+        
+        // Format date
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+        }
+        
+        // Theme management
+        function initializeTheme() {
+            const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            document.documentElement.classList.toggle('dark', theme === 'dark');
+        }
+        
+        function toggleTheme() {
+            const html = document.documentElement;
+            const wasDark = html.classList.contains('dark');
+            
+            if (wasDark) {
+                html.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+        
+        // Export functions to window for onclick handlers
+        window.filterInvestors = filterInvestors;
+        window.showActionModal = showActionModal;
+        window.closeModal = closeModal;
+        window.confirmAction = confirmAction;
+        window.toggleTheme = toggleTheme;
+    </script>
+</body>
+</html>
+

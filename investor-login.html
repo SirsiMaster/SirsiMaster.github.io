@@ -134,6 +134,12 @@
     </div>
 
     <script>
+        // Load approved investors from localStorage
+        function getApprovedInvestors() {
+            const applications = JSON.parse(localStorage.getItem('investorApplications') || '[]');
+            return applications.filter(app => app.status === 'approved');
+        }
+        
         // Demo credentials (in production, this would be handled server-side)
         const VALID_CREDENTIALS = [
             { id: 'INV001', code: 'DEMO2025', name: 'Demo Investor', role: 'investor' },
@@ -162,10 +168,26 @@
             
             // Simulate API call delay
             setTimeout(() => {
-                // Check credentials
-                const validCredential = VALID_CREDENTIALS.find(cred => 
+                // Check credentials against demo accounts
+                let validCredential = VALID_CREDENTIALS.find(cred => 
                     cred.id === investorId && cred.code === accessCode
                 );
+                
+                // Also check approved investors (using email as ID and a default code)
+                if (!validCredential) {
+                    const approvedInvestors = getApprovedInvestors();
+                    const approvedInvestor = approvedInvestors.find(inv => 
+                        inv.email === investorId && accessCode === 'investor2025'
+                    );
+                    
+                    if (approvedInvestor) {
+                        validCredential = {
+                            id: approvedInvestor.id,
+                            name: approvedInvestor.name,
+                            role: 'investor'
+                        };
+                    }
+                }
                 
                 if (validCredential) {
                     // Store session data (matching what portal expects)
@@ -176,27 +198,45 @@
                         loginTime: new Date().toISOString()
                     }));
                     
-                    // Success - redirect to investor portal
+                    // Success - redirect appropriately based on role
                     buttonText.textContent = 'Access Granted!';
                     
                     // Add success message with link
                     const successDiv = document.createElement('div');
                     successDiv.className = 'mt-4 p-3 bg-green-50 dark:bg-green-900 rounded-md text-xs text-green-700 dark:text-green-300';
-                    successDiv.innerHTML = `
-                        <strong>✅ Login Successful!</strong><br>
-                        Redirecting to <a href="investor-portal/index.html" class="underline" target="_blank">Investor Portal</a><br>
-                        <em>If redirect fails, click the link above</em>
-                    `;
+                    
+                    if (validCredential.role === 'admin') {
+                        successDiv.innerHTML = `
+                            <strong>✅ Admin Login Successful!</strong><br>
+                            Redirecting to <a href="admin-dashboard.html" class="underline" target="_blank">Admin Dashboard</a><br>
+                            <em>If redirect fails, click the link above</em>
+                        `;
+                    } else {
+                        successDiv.innerHTML = `
+                            <strong>✅ Login Successful!</strong><br>
+                            Redirecting to <a href="investor-portal/index.html" class="underline" target="_blank">Investor Portal</a><br>
+                            <em>If redirect fails, click the link above</em>
+                        `;
+                    }
+                    
                     document.querySelector('.bg-white.dark\\:bg-gray-800').appendChild(successDiv);
                     
                     setTimeout(() => {
-                        console.log('Attempting redirect to investor portal...');
+                        console.log('Attempting redirect...');
                         try {
-                        window.location.href = 'investor-portal/index.html';
+                            if (validCredential.role === 'admin') {
+                                window.location.href = 'admin-dashboard.html';
+                            } else {
+                                window.location.href = 'investor-portal/index.html';
+                            }
                         } catch (error) {
                             console.error('Redirect failed:', error);
                             // Fallback: open in new tab
-                            window.open('investor-portal/index.html', '_blank');
+                            if (validCredential.role === 'admin') {
+                                window.open('admin-dashboard.html', '_blank');
+                            } else {
+                                window.open('investor-portal/index.html', '_blank');
+                            }
                         }
                     }, 2000);
                 } else {
@@ -221,10 +261,16 @@
             // Add demo credentials info (for development)
             const demoInfo = document.createElement('div');
             demoInfo.className = 'mt-4 p-3 bg-blue-50 dark:bg-blue-900 rounded-md text-xs text-blue-700 dark:text-blue-300';
+            
+            // Get approved investors count
+            const approvedInvestors = getApprovedInvestors();
+            
             demoInfo.innerHTML = `
                 <strong>Demo Credentials:</strong><br>
                 • ID: <code>INV001</code> Code: <code>DEMO2025</code><br>
-                • ID: <code>GUEST</code> Code: <code>GUEST2025</code>
+                • ID: <code>GUEST</code> Code: <code>GUEST2025</code><br>
+                • ID: <code>ADMIN</code> Code: <code>ADMIN2025</code> (Admin Dashboard)<br>
+                ${approvedInvestors.length > 0 ? `<br><strong>Approved Investors:</strong><br>• Use your email and code: <code>investor2025</code>` : ''}
             `;
             document.querySelector('.bg-white.dark\\:bg-gray-800').appendChild(demoInfo);
         });
