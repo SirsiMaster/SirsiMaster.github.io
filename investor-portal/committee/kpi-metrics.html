@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <meta name="cache-bust" content="1752871562">
+    <meta name="cache-bust" content="1752872192">
     <title>KPI & Unit Metrics - SirsiNexus</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -196,6 +196,12 @@
                 <nav class="flex items-center gap-6">
                     <a href="../../index.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">← Back to Home</a>
                     <a href="../kpi-unit-metrics.html" class="text-sm text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors">← Back to KPI Portal</a>
+                    <button onclick="logout()" class="text-sm text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-200 transition-colors">Logout</button>
+                    <button onclick="toggleTheme()" class="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors border border-slate-300 dark:border-slate-600" style="min-width: 40px; min-height: 40px;">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                    </button>
                 </nav>
             </div>
         </div>
@@ -287,241 +293,244 @@
         </div>
     </section>
 
-    <!-- Main Content -->
-    <div class="max-w-7xl mx-auto px-6 py-12">
-        <div class="space-y-8">
-            <!-- Unit Economics Section -->
-            <section class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700" data-aos="fade-up">
-                <h2 class="text-2xl font-bold mb-6 text-emerald-600">Unit Economics</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="bg-gradient-to-br from-emerald-50 to-emerald-100 dark:from-emerald-900/20 dark:to-emerald-800/20 p-6 rounded-lg border border-emerald-200 dark:border-emerald-700">
-                        <h3 class="text-lg font-semibold mb-3 text-emerald-700 dark:text-emerald-400">Customer Acquisition</h3>
-                        <div class="space-y-3">
-                            <div class="flex justify-between">
-                                <span class="text-sm text-slate-600 dark:text-slate-400">CAC</span>
-                                <span class="text-sm font-semibold text-slate-900 dark:text-slate-100">$8,500</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-sm text-slate-600 dark:text-slate-400">LTV</span>
-                                <span class="text-sm font-semibold text-slate-900 dark:text-slate-100">$135,000</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-sm text-slate-600 dark:text-slate-400">LTV:CAC Ratio</span>
-                                <span class="text-sm font-semibold text-emerald-600">15.9:1</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 p-6 rounded-lg border border-blue-200 dark:border-blue-700">
-                        <h3 class="text-lg font-semibold mb-3 text-blue-700 dark:text-blue-400">Revenue Metrics</h3>
-                        <div class="space-y-3">
-                            <div class="flex justify-between">
-                                <span class="text-sm text-slate-600 dark:text-slate-400">Monthly Growth</span>
-                                <span class="text-sm font-semibold text-slate-900 dark:text-slate-100">18%</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-sm text-slate-600 dark:text-slate-400">Gross Margin</span>
-                                <span class="text-sm font-semibold text-slate-900 dark:text-slate-100">78%</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-sm text-slate-600 dark:text-slate-400">Magic Number</span>
-                                <span class="text-sm font-semibold text-blue-600">2.3</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 p-6 rounded-lg border border-purple-200 dark:border-purple-700">
-                        <h3 class="text-lg font-semibold mb-3 text-purple-700 dark:text-purple-400">Efficiency Metrics</h3>
-                        <div class="space-y-3">
-                            <div class="flex justify-between">
-                                <span class="text-sm text-slate-600 dark:text-slate-400">Payback Period</span>
-                                <span class="text-sm font-semibold text-slate-900 dark:text-slate-100">5.2 months</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-sm text-slate-600 dark:text-slate-400">Revenue per Employee</span>
-                                <span class="text-sm font-semibold text-slate-900 dark:text-slate-100">$420K</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-sm text-slate-600 dark:text-slate-400">Burn Multiple</span>
-                                <span class="text-sm font-semibold text-purple-600">0.6x</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+    <!-- Content -->
+    <main class="max-w-7xl mx-auto px-6 py-12">
+        <!-- Executive Summary -->
+        <section class="mb-16 bg-gradient-to-br from-primary-50 via-white to-primary-100/50 dark:from-primary-900/10 dark:via-secondary-900 dark:to-primary-800/5 rounded-2xl p-8 border border-primary-100 dark:border-primary-800">
+            <h2 class="text-3xl font-bold mb-4">Performance Summary</h2>
+            <p class="text-lg text-slate-700 dark:text-slate-300 mb-6">SirsiNexus is setting new industry benchmarks in AI-powered infrastructure management, with performance metrics consistently outpacing both traditional IaC providers and cloud-native solutions. Our autonomous infrastructure platform has demonstrated superior efficiency, with AI-driven optimizations delivering unprecedented cost savings and operational improvements for enterprise customers.</p>
+            
+            <div class="bg-primary-50 dark:bg-primary-900/10 rounded-lg p-4 mb-6 border border-primary-100 dark:border-primary-800">
+                <h3 class="text-lg font-semibold mb-2">Industry-Leading Performance Indicators</h3>
+                <ul class="list-disc list-inside space-y-2 text-slate-700 dark:text-slate-300">
+                    <li>142% YoY growth vs. industry average of 35% for infrastructure management tools</li>
+                    <li>35% average cost reduction vs. 12-15% from traditional IaC solutions</li>
+                    <li>60% faster deployment velocity compared to manual infrastructure management</li>
+                    <li>99.99% AI prediction accuracy for resource scaling and optimization</li>
+                </ul>
+            </div>
+            
+            <div class="bg-primary-50 dark:bg-primary-900/10 rounded-lg p-4 mb-6 border border-primary-100 dark:border-primary-800">
+                <h3 class="text-lg font-semibold mb-2">Key Performance Highlights</h3>
+                <ul class="list-disc list-inside space-y-2 text-slate-700 dark:text-slate-300">
+                    <li>$33M ARR projection for 2025 (Year 3) with 35% cost reduction delivery</li>
+                    <li>280 enterprise customers with 99.2% uptime and 8.5x ROI</li>
+                    <li>3.2 month payback period with 25% average customer savings</li>
+                    <li>96% customer retention rate with 128% net revenue retention</li>
+                </ul>
+            </div>
+        </section>
 
-            <!-- Growth Trajectory Chart -->
-            <section class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700" data-aos="fade-up">
-                <h2 class="text-2xl font-bold mb-6 text-emerald-600">ARR Growth Trajectory</h2>
-                <div class="chart-container">
-                    <canvas id="growthChart"></canvas>
+        <!-- KPI Overview -->
+        <section class="mb-16">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-3xl font-bold">Key Performance Indicators</h2>
+                <div class="text-sm text-slate-500 dark:text-slate-400">
+                    Last updated: July 2025
                 </div>
-            </section>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Annual Recurring Revenue -->
+                <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold">Annual Recurring Revenue</h3>
+                        <span class="text-primary-600 dark:text-primary-400">Y3</span>
+                    </div>
+                    <div class="flex items-baseline gap-2">
+                        <span class="text-4xl font-bold">$33M</span>
+                        <span class="text-primary-600 dark:text-primary-400">↑ 142%</span>
+                    </div>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 mt-2">Year-over-year growth from Y2</p>
+                </div>
 
-            <!-- Strategic Performance Indicators -->
-            <section class="bg-gradient-to-r from-emerald-50 to-blue-50 dark:from-emerald-900/20 dark:to-blue-900/20 p-8 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700" data-aos="fade-up">
-                <h2 class="text-2xl font-bold mb-6 text-emerald-600">Strategic Performance Indicators</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div>
-                        <h3 class="text-lg font-semibold mb-4 text-slate-900 dark:text-slate-100">Customer Success Metrics</h3>
-                        <div class="space-y-4">
-                            <div class="flex justify-between items-center">
-                                <span class="text-sm text-slate-600 dark:text-slate-400">Net Promoter Score</span>
-                                <div class="flex items-center gap-2">
-                                    <div class="w-24 h-2 bg-slate-200 dark:bg-slate-700 rounded-full">
-                                        <div class="progress-bar h-2 bg-emerald-500 rounded-full" style="width: 82%"></div>
-                                    </div>
-                                    <span class="text-sm font-semibold text-slate-900 dark:text-slate-100">82</span>
-                                </div>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <span class="text-sm text-slate-600 dark:text-slate-400">Customer Health Score</span>
-                                <div class="flex items-center gap-2">
-                                    <div class="w-24 h-2 bg-slate-200 dark:bg-slate-700 rounded-full">
-                                        <div class="progress-bar h-2 bg-emerald-500 rounded-full" style="width: 89%"></div>
-                                    </div>
-                                    <span class="text-sm font-semibold text-slate-900 dark:text-slate-100">89%</span>
-                                </div>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <span class="text-sm text-slate-600 dark:text-slate-400">Time to Value</span>
-                                <span class="text-sm font-semibold text-slate-900 dark:text-slate-100">14 days</span>
-                            </div>
-                        </div>
+                <!-- Total Customers -->
+                <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold">Total Customers</h3>
+                        <span class="text-primary-600 dark:text-primary-400">Active</span>
                     </div>
-                    
-                    <div>
-                        <h3 class="text-lg font-semibold mb-4 text-slate-900 dark:text-slate-100">Operational Excellence</h3>
-                        <div class="space-y-4">
-                            <div class="flex justify-between items-center">
-                                <span class="text-sm text-slate-600 dark:text-slate-400">System Uptime</span>
-                                <div class="flex items-center gap-2">
-                                    <div class="w-24 h-2 bg-slate-200 dark:bg-slate-700 rounded-full">
-                                        <div class="progress-bar h-2 bg-emerald-500 rounded-full" style="width: 99.9%"></div>
-                                    </div>
-                                    <span class="text-sm font-semibold text-slate-900 dark:text-slate-100">99.9%</span>
-                                </div>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <span class="text-sm text-slate-600 dark:text-slate-400">Deployment Success Rate</span>
-                                <div class="flex items-center gap-2">
-                                    <div class="w-24 h-2 bg-slate-200 dark:bg-slate-700 rounded-full">
-                                        <div class="progress-bar h-2 bg-emerald-500 rounded-full" style="width: 96%"></div>
-                                    </div>
-                                    <span class="text-sm font-semibold text-slate-900 dark:text-slate-100">96%</span>
-                                </div>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <span class="text-sm text-slate-600 dark:text-slate-400">Security Incidents</span>
-                                <span class="text-sm font-semibold text-emerald-600">0</span>
-                            </div>
-                        </div>
+                    <div class="flex items-baseline gap-2">
+                        <span class="text-4xl font-bold">280</span>
+                        <span class="text-primary-600 dark:text-primary-400">↑ 87%</span>
                     </div>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 mt-2">Net increase in last 12 months</p>
                 </div>
-            </section>
 
-            <!-- Industry Benchmarks -->
-            <section class="bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700" data-aos="fade-up">
-                <h2 class="text-2xl font-bold mb-6 text-emerald-600">Industry Benchmarks</h2>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-sm text-left text-slate-500 dark:text-slate-400">
-                        <thead class="text-xs text-slate-700 dark:text-slate-300 uppercase bg-slate-50 dark:bg-slate-700">
-                            <tr>
-                                <th class="px-6 py-3">Metric</th>
-                                <th class="px-6 py-3">SirsiNexus</th>
-                                <th class="px-6 py-3">Industry Average</th>
-                                <th class="px-6 py-3">Top Quartile</th>
-                                <th class="px-6 py-3">Performance</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
-                                <td class="px-6 py-4 font-medium text-slate-900 dark:text-slate-100">LTV:CAC Ratio</td>
-                                <td class="px-6 py-4 text-emerald-600 font-semibold">15.9:1</td>
-                                <td class="px-6 py-4">3.2:1</td>
-                                <td class="px-6 py-4">5.1:1</td>
-                                <td class="px-6 py-4"><span class="bg-emerald-100 dark:bg-emerald-900/20 text-emerald-800 dark:text-emerald-400 text-xs font-medium px-2.5 py-0.5 rounded">Exceptional</span></td>
-                            </tr>
-                            <tr class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
-                                <td class="px-6 py-4 font-medium text-slate-900 dark:text-slate-100">Monthly Growth Rate</td>
-                                <td class="px-6 py-4 text-emerald-600 font-semibold">18%</td>
-                                <td class="px-6 py-4">8%</td>
-                                <td class="px-6 py-4">15%</td>
-                                <td class="px-6 py-4"><span class="bg-emerald-100 dark:bg-emerald-900/20 text-emerald-800 dark:text-emerald-400 text-xs font-medium px-2.5 py-0.5 rounded">Top Quartile</span></td>
-                            </tr>
-                            <tr class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
-                                <td class="px-6 py-4 font-medium text-slate-900 dark:text-slate-100">Gross Margin</td>
-                                <td class="px-6 py-4 text-emerald-600 font-semibold">78%</td>
-                                <td class="px-6 py-4">65%</td>
-                                <td class="px-6 py-4">75%</td>
-                                <td class="px-6 py-4"><span class="bg-emerald-100 dark:bg-emerald-900/20 text-emerald-800 dark:text-emerald-400 text-xs font-medium px-2.5 py-0.5 rounded">Top Quartile</span></td>
-                            </tr>
-                            <tr class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
-                                <td class="px-6 py-4 font-medium text-slate-900 dark:text-slate-100">Customer Retention</td>
-                                <td class="px-6 py-4 text-emerald-600 font-semibold">92%</td>
-                                <td class="px-6 py-4">85%</td>
-                                <td class="px-6 py-4">90%</td>
-                                <td class="px-6 py-4"><span class="bg-emerald-100 dark:bg-emerald-900/20 text-emerald-800 dark:text-emerald-400 text-xs font-medium px-2.5 py-0.5 rounded">Top Quartile</span></td>
-                            </tr>
-                            <tr class="bg-white dark:bg-slate-800">
-                                <td class="px-6 py-4 font-medium text-slate-900 dark:text-slate-100">Payback Period</td>
-                                <td class="px-6 py-4 text-emerald-600 font-semibold">5.2 months</td>
-                                <td class="px-6 py-4">12 months</td>
-                                <td class="px-6 py-4">8 months</td>
-                                <td class="px-6 py-4"><span class="bg-emerald-100 dark:bg-emerald-900/20 text-emerald-800 dark:text-emerald-400 text-xs font-medium px-2.5 py-0.5 rounded">Exceptional</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <!-- Cost Savings -->
+                <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold">Customer Cost Savings</h3>
+                        <span class="text-primary-600 dark:text-primary-400">Average</span>
+                    </div>
+                    <div class="flex items-baseline gap-2">
+                        <span class="text-4xl font-bold">25%</span>
+                        <span class="text-primary-600 dark:text-primary-400">↑ 5%</span>
+                    </div>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 mt-2">Improvement from previous quarter</p>
                 </div>
-            </section>
 
-            <!-- Strategic Traction Metrics -->
-            <section class="bg-gradient-to-r from-purple-50 to-indigo-50 dark:from-purple-900/20 dark:to-indigo-900/20 p-8 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700" data-aos="fade-up">
-                <h2 class="text-2xl font-bold mb-6 text-purple-600">Strategic Traction Metrics</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div>
-                        <h3 class="text-lg font-semibold mb-4 text-slate-900 dark:text-slate-100">Partnership Value</h3>
-                        <div class="space-y-4">
-                            <div class="bg-white dark:bg-slate-800 p-4 rounded-lg border border-slate-200 dark:border-slate-700">
-                                <div class="flex justify-between items-center mb-2">
-                                    <span class="text-sm font-medium text-slate-900 dark:text-slate-100">NVIDIA Inception Benefits</span>
-                                    <span class="text-sm text-emerald-600 font-semibold">$250K value</span>
-                                </div>
-                                <div class="text-xs text-slate-500 dark:text-slate-400">GPU credits, technical support, go-to-market</div>
-                            </div>
-                            <div class="bg-white dark:bg-slate-800 p-4 rounded-lg border border-slate-200 dark:border-slate-700">
-                                <div class="flex justify-between items-center mb-2">
-                                    <span class="text-sm font-medium text-slate-900 dark:text-slate-100">AWS Migration Acceleration</span>
-                                    <span class="text-sm text-emerald-600 font-semibold">$150K value</span>
-                                </div>
-                                <div class="text-xs text-slate-500 dark:text-slate-400">Cloud credits, technical resources, sales support</div>
-                            </div>
-                        </div>
+                <!-- System Uptime -->
+                <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold">System Uptime</h3>
+                        <span class="text-primary-600 dark:text-primary-400">30d Avg</span>
                     </div>
-                    
-                    <div>
-                        <h3 class="text-lg font-semibold mb-4 text-slate-900 dark:text-slate-100">Network Effect</h3>
-                        <div class="space-y-4">
-                            <div class="bg-white dark:bg-slate-800 p-4 rounded-lg border border-slate-200 dark:border-slate-700">
-                                <div class="flex justify-between items-center mb-2">
-                                    <span class="text-sm font-medium text-slate-900 dark:text-slate-100">Techstars Network Access</span>
-                                    <span class="text-sm text-purple-600 font-semibold">500+ mentors</span>
-                                </div>
-                                <div class="text-xs text-slate-500 dark:text-slate-400">Global startup ecosystem, investor introductions</div>
-                            </div>
-                            <div class="bg-white dark:bg-slate-800 p-4 rounded-lg border border-slate-200 dark:border-slate-700">
-                                <div class="flex justify-between items-center mb-2">
-                                    <span class="text-sm font-medium text-slate-900 dark:text-slate-100">Hedera Hashgraph Ecosystem</span>
-                                    <span class="text-sm text-purple-600 font-semibold">DLT Leadership</span>
-                                </div>
-                                <div class="text-xs text-slate-500 dark:text-slate-400">Next-gen distributed ledger integration</div>
-                            </div>
+                    <div class="flex items-baseline gap-2">
+                        <span class="text-4xl font-bold">99.2%</span>
+                        <span class="text-primary-600 dark:text-primary-400">↑ 0.3%</span>
+                    </div>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 mt-2">Improvement from previous month</p>
+                </div>
+
+                <!-- Customer ROI -->
+                <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold">Customer ROI</h3>
+                        <span class="text-primary-600 dark:text-primary-400">Average</span>
+                    </div>
+                    <div class="flex items-baseline gap-2">
+                        <span class="text-4xl font-bold">8.5x</span>
+                        <span class="text-primary-600 dark:text-primary-400">↑ 1.2x</span>
+                    </div>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 mt-2">Improvement from previous quarter</p>
+                </div>
+
+                <!-- Payback Period -->
+                <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold">Payback Period</h3>
+                        <span class="text-primary-600 dark:text-primary-400">Average</span>
+                    </div>
+                    <div class="flex items-baseline gap-2">
+                        <span class="text-4xl font-bold">3.2mo</span>
+                        <span class="text-primary-600 dark:text-primary-400">↓ 0.8mo</span>
+                    </div>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 mt-2">Reduction from previous quarter</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Unit Economics -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-8">Unit Economics</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Customer Acquisition Metrics -->
+                <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg">
+                    <h3 class="text-xl font-semibold mb-6">Customer Acquisition</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-600 dark:text-slate-400">CAC</span>
+                            <span class="font-semibold">$12,500</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-600 dark:text-slate-400">Sales Cycle</span>
+                            <span class="font-semibold">45 days</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-600 dark:text-slate-400">Lead-to-Close Rate</span>
+                            <span class="font-semibold">18%</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-600 dark:text-slate-400">CAC Payback</span>
+                            <span class="font-semibold">6 months</span>
                         </div>
                     </div>
                 </div>
-            </section>
-        </div>
-    </div>
+
+                <!-- Customer Value Metrics -->
+                <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg">
+                    <h3 class="text-xl font-semibold mb-6">Customer Value</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-600 dark:text-slate-400">ARR per Customer</span>
+                            <span class="font-semibold">$117,857</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-600 dark:text-slate-400">Gross Margin</span>
+                            <span class="font-semibold">82%</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-600 dark:text-slate-400">Net Revenue Retention</span>
+                            <span class="font-semibold">128%</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-600 dark:text-slate-400">Customer Lifetime Value</span>
+                            <span class="font-semibold">$706,250</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Operational Metrics -->
+                <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg">
+                    <h3 class="text-xl font-semibold mb-6">Operational Metrics</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-600 dark:text-slate-400">Average Contract Value</span>
+                            <span class="font-semibold">$125,000</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-600 dark:text-slate-400">Support Response Time</span>
+                            <span class="font-semibold">< 1 hour</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-600 dark:text-slate-400">Implementation Time</span>
+                            <span class="font-semibold">21 days</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-600 dark:text-slate-400">Customer Health Score</span>
+                            <span class="font-semibold">8.7/10</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Market Growth -->
+        <section>
+            <h2 class="text-3xl font-bold mb-8">Market Growth</h2>
+            <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg">
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-xl font-semibold mb-4">Total Addressable Market</h3>
+                        <div class="flex items-baseline gap-4">
+                            <span class="text-4xl font-bold">$48B</span>
+                            <span class="text-primary-600 dark:text-primary-400">↑ 18% YoY</span>
+                        </div>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 mt-2">Global cloud infrastructure optimization market</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                        <div>
+                            <h4 class="font-semibold mb-2">Market Share</h4>
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-2xl font-bold">2.8%</span>
+                                <span class="text-primary-600 dark:text-primary-400">↑ 0.9%</span>
+                            </div>
+                            <p class="text-sm text-slate-500 mt-1">Tracking to 5% by EOY 2025</p>
+                        </div>
+
+                        <div>
+                            <h4 class="font-semibold mb-2">Market Growth Rate</h4>
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-2xl font-bold">32.5%</span>
+                                <span class="text-primary-600 dark:text-primary-400">CAGR</span>
+                            </div>
+                            <p class="text-sm text-slate-500 mt-1">AI segment growing 2.5x faster</p>
+                        </div>
+
+                        <div>
+                            <h4 class="font-semibold mb-2">Market Position</h4>
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-2xl font-bold">#2</span>
+                                <span class="text-primary-600 dark:text-primary-400">Enterprise AI</span>
+                            </div>
+                            <p class="text-sm text-slate-500 mt-1">#1 in autonomous infrastructure</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <script>
         // Initialize AOS animations
@@ -621,6 +630,41 @@
                 toggleActions: "play none none reverse"
             }
         });
+        
+        // Theme toggle functionality
+        function toggleTheme() {
+            const html = document.documentElement;
+            const wasDark = html.classList.contains('dark');
+            
+            if (wasDark) {
+                html.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+        
+        function initTheme() {
+            const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            document.documentElement.classList.toggle('dark', theme === 'dark');
+        }
+        
+        // Initialize theme
+        initTheme();
+        
+        // Logout function
+        function logout() {
+            sessionStorage.removeItem('investorAuth');
+            localStorage.removeItem('investor-authenticated');
+            localStorage.removeItem('investor-id');
+            localStorage.removeItem('user-role');
+            window.location.href = '../../investor-login.html';
+        }
+        
+        // Make functions available globally
+        window.toggleTheme = toggleTheme;
+        window.logout = logout;
     </script>
 </body>
 </html>
