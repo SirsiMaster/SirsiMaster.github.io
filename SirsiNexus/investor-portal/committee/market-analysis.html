@@ -141,7 +141,16 @@
         transform: translateX(0);
       }
       
-      /* Force table header to respect theme with higher specificity */
+      /* Force table header to respect theme with ultra-high specificity */
+      .bg-white.dark\:bg-slate-800 table thead tr.competitive-matrix-header {
+        background-color: #ffffff !important;
+      }
+      
+      .dark .bg-white.dark\:bg-slate-800 table thead tr.competitive-matrix-header {
+        background-color: #334155 !important;
+      }
+      
+      /* Fallback with standard specificity */
       table thead tr.competitive-matrix-header {
         background-color: #ffffff !important;
       }
