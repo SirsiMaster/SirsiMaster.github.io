@@ -11,7 +11,7 @@
       (function() {
         const auth = sessionStorage.getItem('investorAuth');
         if (!auth) {
-          window.location.href = '../../investor-login.html';
+          window.location.href = '/SirsiNexus/investor-login.html';
           return;
         }
         
@@ -24,7 +24,7 @@
           // Check if session expired (24 hours)
           if (hoursSinceLogin > 24) {
             sessionStorage.removeItem('investorAuth');
-            window.location.href = '../../investor-login.html';
+            window.location.href = '/SirsiNexus/investor-login.html';
             return;
           }
           
@@ -32,7 +32,7 @@
         } catch (error) {
           console.error('❌ Authentication error:', error);
           sessionStorage.removeItem('investorAuth');
-          window.location.href = '../../investor-login.html';
+          window.location.href = '/SirsiNexus/investor-login.html';
           return;
         }
       })();
@@ -153,7 +153,7 @@
                 </div>
                 <nav class="flex items-center gap-6">
                     <a href="/SirsiNexus/index.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">← Back to Home</a>
-                    <a href="/SirsiNexus/index.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">← Back to Portal</a>
+                    <a href="/SirsiNexus/investor-portal/index.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">← Back to Portal</a>
                     <div class="relative group">
                         <button class="text-sm text-emerald-600 dark:text-emerald-400 font-medium hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors flex items-center gap-1">
                             Committee
@@ -163,7 +163,7 @@
                         </button>
                         <div class="absolute top-full left-0 mt-2 w-48 bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-slate-200 dark:border-slate-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                             <div class="py-2">
-                                <a href="/SirsiNexus/index.html" class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">Committee Index</a>
+                                <a href="/SirsiNexus/investor-portal/committee/index.html" class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">Committee Index</a>
                                 <span class="block px-4 py-2 text-sm text-emerald-600 dark:text-emerald-400 font-medium border-b border-slate-200 dark:border-slate-700">Market Analysis</span>
                                 <a href="product-roadmap.html" class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">Product Roadmap</a>
                             </div>
