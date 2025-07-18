@@ -136,10 +136,10 @@
     <script>
         // Demo credentials (in production, this would be handled server-side)
         const VALID_CREDENTIALS = [
-            { id: 'INV001', code: 'DEMO2025', name: 'Demo Investor' },
-            { id: 'INV002', code: 'BETA2025', name: 'Beta Investor' },
-            { id: 'ADMIN', code: 'ADMIN2025', name: 'Administrator' },
-            { id: 'GUEST', code: 'GUEST2025', name: 'Guest Access' }
+            { id: 'INV001', code: 'DEMO2025', name: 'Demo Investor', role: 'investor' },
+            { id: 'INV002', code: 'BETA2025', name: 'Beta Investor', role: 'investor' },
+            { id: 'ADMIN', code: 'ADMIN2025', name: 'Administrator', role: 'admin' },
+            { id: 'GUEST', code: 'GUEST2025', name: 'Guest Access', role: 'guest' }
         ];
 
         document.getElementById('loginForm').addEventListener('submit', function(e) {
@@ -172,6 +172,7 @@
                     sessionStorage.setItem('investorAuth', JSON.stringify({
                         id: validCredential.id,
                         name: validCredential.name,
+                        role: validCredential.role,
                         loginTime: new Date().toISOString()
                     }));
                     
