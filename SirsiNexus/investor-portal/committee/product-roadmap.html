@@ -88,23 +88,21 @@
 </head>
 <body class="font-inter bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100">
     <!-- Header -->
-    <header class="bg-white dark:bg-gray-800/95 sticky top-0 z-50 border-b border-slate-200 dark:border-slate-700 backdrop-blur-sm">
+    <header class="bg-white dark:bg-slate-800 sticky top-0 z-50 border-b border-slate-200 dark:border-slate-700 backdrop-blur-sm">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex h-16 items-center justify-between">
-                <div class="flex items-center gap-6">
-                    <div class="flex items-center gap-3">
-                        <div class="w-12 h-12 flex items-center justify-center">
-                            <img src="/SirsiNexus/assets/images/Sirsi_Logo_300ppi_cguiyg.png" alt="Sirsi Logo" class="w-12 h-12 object-contain dark:hidden">
-                            <img src="/SirsiNexus/assets/images/Sirsi_Logo_300ppi_Inverted_lt7asx.png" alt="Sirsi Logo" class="w-12 h-12 object-contain hidden dark:block">
-                        </div>
-                        <div>
-                            <h1 class="text-lg font-semibold text-slate-900 dark:text-slate-100">SirsiNexus</h1>
-                            <div class="flex items-center gap-2">
-                                <span class="text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded">Committee Access</span>
-                                <div class="flex items-center gap-1">
-                                    <div class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></div>
-                                    <span class="text-xs text-slate-600 dark:text-slate-300">Live</span>
-                                </div>
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12">
+                        <img src="/SirsiNexus/assets/images/Sirsi_Logo_300ppi_cguiyg.png" alt="Sirsi Logo" class="w-full h-full object-contain dark:hidden">
+                        <img src="/SirsiNexus/assets/images/Sirsi_Logo_300ppi_Inverted_lt7asx.png" alt="Sirsi Logo" class="w-full h-full object-contain hidden dark:block">
+                    </div>
+                    <div>
+                        <h1 class="text-lg font-semibold text-slate-900 dark:text-slate-100">SirsiNexus</h1>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-700 px-2 py-0.5 rounded">Committee Access</span>
+                            <div class="flex items-center gap-1">
+                                <div class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></div>
+                                <span class="text-xs text-slate-600 dark:text-slate-300">Live</span>
                             </div>
                         </div>
                     </div>
@@ -304,106 +302,175 @@
             </div>
         </div>
 
-        <!-- Development Phases -->
-        <div class="sirsi-card mb-12">
-            <h2 class="sirsi-heading-2 mb-6">Development Timeline</h2>
-            <div class="sirsi-timeline">
-                <div class="sirsi-timeline-item">
-                    <div class="sirsi-timeline-dot"></div>
-                    <h3 class="font-semibold mb-2">Q3-Q4 2025: Foundation & Strategic Partnerships</h3>
-                    <p class="sirsi-text">
-                        • Secure strategic investment ($150-250K)
-                        • Advanced Graph of Thought AI implementation
-                        • Enterprise Hedera integration
-                        • Multi-cloud optimization engine v1
-                        • Initial enterprise customer pilots
-                    </p>
+        <!-- Strategic Development Timeline -->
+        <section class="bg-white dark:bg-slate-800 rounded-xl p-8 shadow-lg border border-slate-200 dark:border-slate-700 mb-12">
+            <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-8">Development Timeline & Strategic Milestones</h2>
+            <div class="space-y-8">
+                <!-- Phase 1 -->
+                <div class="flex gap-4">
+                    <div class="flex-shrink-0 w-12 h-12 bg-emerald-500 rounded-full flex items-center justify-center text-white font-bold">1</div>
+                    <div class="flex-grow">
+                        <div class="flex items-center gap-3 mb-2">
+                            <h3 class="text-lg font-semibold text-emerald-600">Q3-Q4 2025: Foundation & AI Core</h3>
+                            <span class="bg-emerald-100 dark:bg-emerald-900/20 text-emerald-800 dark:text-emerald-200 px-2 py-1 rounded text-xs">Active</span>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-400 mb-3">Build core infrastructure and advanced Graph of Thought AI engine</p>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <ul class="text-sm text-slate-600 dark:text-slate-400 space-y-1">
+                                <li>• Graph of Thought AI implementation</li>
+                                <li>• Hedera Hashgraph integration</li>
+                                <li>• Multi-cloud optimization v1</li>
+                            </ul>
+                            <ul class="text-sm text-slate-600 dark:text-slate-400 space-y-1">
+                                <li>• Strategic investment ($150-250K)</li>
+                                <li>• Enterprise pilot customers</li>
+                                <li>• Core team expansion</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-                <div class="sirsi-timeline-item">
-                    <div class="sirsi-timeline-dot"></div>
-                    <h3 class="font-semibold mb-2">Q1-Q2 2026: Pre-Seed & Market Entry</h3>
-                    <p class="sirsi-text">
-                        • Close $2M Pre-Seed round
-                        • Enterprise portal GA launch
-                        • Advanced AI prediction system
-                        • 25 enterprise customer deployments
-                        • Achieve 92% AI prediction accuracy
-                        • SOC 2 Type II certification
-                    </p>
-                </div>
-                <div class="sirsi-timeline-item">
-                    <div class="sirsi-timeline-dot"></div>
-                    <h3 class="font-semibold mb-2">Q3-Q4 2026: Seed Round & Scale</h3>
-                    <p class="sirsi-text">
-                        • Secure $8M Seed funding
-                        • Global market expansion
-                        • 100+ enterprise customers
-                        • Achieve 42% cost reduction
-                        • FedRAMP certification process
-                        • Advanced security features
-                    </p>
-                </div>
-                <div class="sirsi-timeline-item">
-                    <div class="sirsi-timeline-dot"></div>
-                    <h3 class="font-semibold mb-2">2027: Series A & Enterprise Dominance</h3>
-                    <p class="sirsi-text">
-                        • Raise $15M Series A
-                        • 500+ enterprise customers
-                        • Advanced AI features rollout
-                        • On-premises solution GA
-                        • Complete FedRAMP certification
-                        • Strategic acquisitions
-                    </p>
-                </div>
-            </div>
-        </div>
 
-        <!-- Future Roadmap -->
-        <div class="sirsi-card">
-            <h2 class="sirsi-heading-2 mb-6">Strategic Vision (2025-2027)</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="p-6 bg-slate-100 dark:bg-slate-800 rounded-lg">
-                    <h3 class="text-lg font-semibold mb-4">Q1-Q2 2025</h3>
-                    <ul class="space-y-3 text-sm text-slate-600 dark:text-slate-400">
-                        <li>• Enhanced Graph of Thought capabilities</li>
-                        <li>• Advanced multi-cloud optimization</li>
-                        <li>• Enterprise customer onboarding</li>
-                        <li>• TEDCO grant acquisition ($150-200K)</li>
-                    </ul>
+                <!-- Phase 2 -->
+                <div class="flex gap-4">
+                    <div class="flex-shrink-0 w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">2</div>
+                    <div class="flex-grow">
+                        <div class="flex items-center gap-3 mb-2">
+                            <h3 class="text-lg font-semibold text-blue-600">Q1-Q2 2026: Market Entry & Scale</h3>
+                            <span class="bg-blue-100 dark:bg-blue-900/20 text-blue-800 dark:text-blue-200 px-2 py-1 rounded text-xs">Planned</span>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-400 mb-3">Enterprise portal launch and rapid customer acquisition</p>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <ul class="text-sm text-slate-600 dark:text-slate-400 space-y-1">
+                                <li>• $2M Pre-Seed round closure</li>
+                                <li>• Enterprise portal GA launch</li>
+                                <li>• 92% AI prediction accuracy</li>
+                            </ul>
+                            <ul class="text-sm text-slate-600 dark:text-slate-400 space-y-1">
+                                <li>• 25 enterprise customers</li>
+                                <li>• SOC 2 Type II certification</li>
+                                <li>• Advanced security features</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-                <div class="p-6 bg-slate-100 dark:bg-slate-800 rounded-lg">
-                    <h3 class="text-lg font-semibold mb-4">Q3-Q4 2025</h3>
-                    <ul class="space-y-3 text-sm text-slate-600 dark:text-slate-400">
-                        <li>• Automated infrastructure migration</li>
-                        <li>• Enhanced security features</li>
-                        <li>• Pre-seed round ($1.5M)</li>
-                        <li>• Team expansion</li>
-                    </ul>
+
+                <!-- Phase 3 -->
+                <div class="flex gap-4">
+                    <div class="flex-shrink-0 w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold">3</div>
+                    <div class="flex-grow">
+                        <div class="flex items-center gap-3 mb-2">
+                            <h3 class="text-lg font-semibold text-purple-600">Q3-Q4 2026: Global Expansion</h3>
+                            <span class="bg-purple-100 dark:bg-purple-900/20 text-purple-800 dark:text-purple-200 px-2 py-1 rounded text-xs">Future</span>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-400 mb-3">Scale operations and establish market leadership</p>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <ul class="text-sm text-slate-600 dark:text-slate-400 space-y-1">
+                                <li>• $8M Seed funding secured</li>
+                                <li>• 100+ enterprise customers</li>
+                                <li>• 42% cost reduction achieved</li>
+                            </ul>
+                            <ul class="text-sm text-slate-600 dark:text-slate-400 space-y-1">
+                                <li>• Global market expansion</li>
+                                <li>• FedRAMP certification</li>
+                                <li>• Advanced AI features</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-                <div class="p-6 bg-slate-100 dark:bg-slate-800 rounded-lg">
-                    <h3 class="text-lg font-semibold mb-4">2026-2027</h3>
-                    <ul class="space-y-3 text-sm text-slate-600 dark:text-slate-400">
-                        <li>• Global market expansion</li>
-                        <li>• Advanced AI capabilities</li>
-                        <li>• Seed round ($6M)</li>
-                        <li>• Series A funding ($15M)</li>
-                    </ul>
+
+                <!-- Phase 4 -->
+                <div class="flex gap-4">
+                    <div class="flex-shrink-0 w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold">4</div>
+                    <div class="flex-grow">
+                        <div class="flex items-center gap-3 mb-2">
+                            <h3 class="text-lg font-semibold text-orange-600">2027: Market Leadership</h3>
+                            <span class="bg-orange-100 dark:bg-orange-900/20 text-orange-800 dark:text-orange-200 px-2 py-1 rounded text-xs">Vision</span>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-400 mb-3">Establish industry dominance and prepare for exit opportunities</p>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <ul class="text-sm text-slate-600 dark:text-slate-400 space-y-1">
+                                <li>• $15M Series A funding</li>
+                                <li>• 500+ enterprise customers</li>
+                                <li>• On-premises solution GA</li>
+                            </ul>
+                            <ul class="text-sm text-slate-600 dark:text-slate-400 space-y-1">
+                                <li>• Strategic partnerships</li>
+                                <li>• Advanced AI rollout</li>
+                                <li>• Acquisition opportunities</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
+
+        <!-- Investment & Growth Targets -->
+        <section class="bg-gradient-to-r from-emerald-50 to-blue-50 dark:from-emerald-900/10 dark:to-blue-900/10 rounded-xl p-8 border border-emerald-200 dark:border-emerald-700">
+            <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-6 text-center">Investment & Growth Targets</h2>
+            <div class="grid md:grid-cols-4 gap-6">
+                <div class="bg-white dark:bg-slate-800 p-6 rounded-lg text-center">
+                    <div class="text-2xl font-bold text-emerald-600 mb-2">$25M</div>
+                    <div class="text-sm text-slate-600 dark:text-slate-400">Total Funding Target</div>
+                    <div class="text-xs text-slate-500 dark:text-slate-500 mt-1">Through Series A</div>
+                </div>
+                <div class="bg-white dark:bg-slate-800 p-6 rounded-lg text-center">
+                    <div class="text-2xl font-bold text-blue-600 mb-2">500+</div>
+                    <div class="text-sm text-slate-600 dark:text-slate-400">Enterprise Customers</div>
+                    <div class="text-xs text-slate-500 dark:text-slate-500 mt-1">By end of 2027</div>
+                </div>
+                <div class="bg-white dark:bg-slate-800 p-6 rounded-lg text-center">
+                    <div class="text-2xl font-bold text-purple-600 mb-2">$45M</div>
+                    <div class="text-sm text-slate-600 dark:text-slate-400">Annual Revenue</div>
+                    <div class="text-xs text-slate-500 dark:text-slate-500 mt-1">2027 target</div>
+                </div>
+                <div class="bg-white dark:bg-slate-800 p-6 rounded-lg text-center">
+                    <div class="text-2xl font-bold text-orange-600 mb-2">42%</div>
+                    <div class="text-sm text-slate-600 dark:text-slate-400">Cost Reduction</div>
+                    <div class="text-xs text-slate-500 dark:text-slate-500 mt-1">Customer savings</div>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <sirsi-footer>
-        <div slot="footer-content">
-            <h4 class="font-semibold mb-4">Product Resources</h4>
-            <ul class="space-y-2 text-sm text-slate-400">
-                <li><a href="/SirsiNexus/index.html" class="hover:text-white transition-colors">Investor Portal</a></li>
-                <li><a href="market-analysis.html" class="hover:text-white transition-colors">Market Analysis</a></li>
-                <li><a href="../kpi-unit-metrics.html" class="hover:text-white transition-colors">KPI Metrics</a></li>
-            </ul>
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-white py-12 mt-16">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <img src="/SirsiNexus/assets/images/Sirsi_Logo_300ppi_Inverted_lt7asx.png" alt="Sirsi Logo" class="w-10 h-10 object-contain">
+                        <div>
+                            <h3 class="text-lg font-semibold">SirsiNexus</h3>
+                            <p class="text-sm text-slate-400">AI-Powered Cloud Infrastructure</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Revolutionizing cloud infrastructure management with cutting-edge AI technology and enterprise-grade solutions.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Investor Resources</h4>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li><a href="/SirsiNexus/index.html" class="hover:text-white transition-colors">Investor Portal</a></li>
+                        <li><a href="market-analysis.html" class="hover:text-white transition-colors">Market Analysis</a></li>
+                        <li><a href="product-roadmap.html" class="hover:text-white transition-colors">Product Roadmap</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Committee Access</h4>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li><a href="/SirsiNexus/index.html" class="hover:text-white transition-colors">Committee Dashboard</a></li>
+                        <li><a href="../../contact.html" class="hover:text-white transition-colors">Contact Support</a></li>
+                        <li><a href="../../privacy.html" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-slate-800 mt-8 pt-8 text-center text-sm text-slate-400">
+                <p>&copy; 2025 Sirsi Technologies Inc. All rights reserved. | Product Roadmap & Strategy Documentation</p>
+            </div>
         </div>
-    </sirsi-footer>
-    <!-- Scripts -->
+    </footer>
+
     <script>
         function toggleTheme() {
             const html = document.documentElement;
