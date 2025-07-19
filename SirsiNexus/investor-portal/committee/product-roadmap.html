@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SirsiNexus - Product Roadmap</title>
+    <title>Product Roadmap - SirsiNexus Investor Portal</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Authentication check -->
     <script>
-      // Authentication check - redirect if not authenticated
       (function() {
         const auth = sessionStorage.getItem('investorAuth');
         if (!auth) {
@@ -21,7 +22,6 @@
           const now = new Date();
           const hoursSinceLogin = (now - loginTime) / (1000 * 60 * 60);
           
-          // Check if session expired (24 hours)
           if (hoursSinceLogin > 24) {
             sessionStorage.removeItem('investorAuth');
             window.location.href = '../../investor-login.html';
@@ -37,6 +37,8 @@
         }
       })();
     </script>
+    
+    <!-- Tailwind Config -->
     <script>
       tailwind.config = {
         darkMode: 'class',
@@ -57,24 +59,14 @@
                 700: '#15803d',
                 800: '#166534',
                 900: '#14532d'
-              },
-              secondary: {
-                50: '#f8fafc',
-                100: '#f1f5f9',
-                200: '#e2e8f0',
-                300: '#cbd5e1',
-                400: '#94a3b8',
-                500: '#64748b',
-                600: '#475569',
-                700: '#334155',
-                800: '#1e293b',
-                900: '#0f172a'
               }
-            },
-          },
-        },
+            }
+          }
+        }
       }
     </script>
+    
+    <!-- Theme initialization -->
     <script>
       (function() {
         function getInitialColorMode() {
@@ -83,88 +75,81 @@
             return persistedColorPreference;
           }
           const mql = window.matchMedia('(prefers-color-scheme: dark)');
-          if (mql.matches) {
-            return 'dark';
-          }
-          return 'light';
+          return mql.matches ? 'dark' : 'light';
         }
         const colorMode = getInitialColorMode();
         if (colorMode === 'dark') {
           document.documentElement.classList.add('dark');
-        } else {
-          document.documentElement.classList.remove('dark');
         }
       })();
     </script>
+    
     <link rel="stylesheet" href="/SirsiNexus/assets/css/shared.css">
-    <script src="/SirsiNexus/assets/js/theme-toggle.js"></script>
-    <!-- Cache buster: v1752625978 -->
-    <style>
-      .print-button {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        z-index: 1000;
-        background: linear-gradient(135deg, #059669 0%, #047857 100%);
-        color: white;
-        border: none;
-        padding: 1rem 1.5rem;
-        border-radius: 12px;
-        cursor: pointer;
-        font-size: 0.875rem;
-        font-weight: 600;
-        box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3);
-        transition: all 0.3s ease;
-      }
-      
-      .print-button:hover {
-        background: linear-gradient(135deg, #047857 0%, #065f46 100%);
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(5, 150, 105, 0.4);
-      }
-    </style>
 </head>
 <body class="font-inter bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <meta name="cache-bust" content="1752718800">
-    <meta name="description" content="SirsiNexus Product Roadmap - Strategic vision and development timeline for our AI-powered cloud infrastructure management platform">
-    <title>Product Roadmap - SirsiNexus Investor Portal</title>
-    
-    <!-- Core Dependencies -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="../../components/ui-library.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-    
-    <!-- Animation Libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    
-    <!-- Additional Dependencies -->
-    <link rel="stylesheet" href="/SirsiNexus/assets/css/shared.css">
-    <link rel="stylesheet" href="/SirsiNexus/assets/css/enhanced-ui.css">
-    <script src="/SirsiNexus/assets/js/tailwind.config.js"></script>
-    <script src="/SirsiNexus/assets/js/version-loader.js"></script>
-<body class="h-full bg-slate-50 dark:bg-slate-900">
-    <sirsi-header>
-        <nav slot="nav-items">
-            <a href="/SirsiNexus/index.html" class="sirsi-nav-item">← Back to Home</a>
-            <a href="/SirsiNexus/index.html" class="sirsi-nav-item">← Back to Portal</a>
-        </nav>
-    </sirsi-header>
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800/95 sticky top-0 z-50 border-b border-slate-200 dark:border-slate-700 backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex h-16 items-center justify-between">
+                <div class="flex items-center gap-6">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 flex items-center justify-center">
+                            <img src="/SirsiNexus/assets/images/Sirsi_Logo_300ppi_cguiyg.png" alt="Sirsi Logo" class="w-12 h-12 object-contain dark:hidden">
+                            <img src="/SirsiNexus/assets/images/Sirsi_Logo_300ppi_Inverted_lt7asx.png" alt="Sirsi Logo" class="w-12 h-12 object-contain hidden dark:block">
+                        </div>
+                        <div>
+                            <h1 class="text-lg font-semibold text-slate-900 dark:text-slate-100">SirsiNexus</h1>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded">Committee Access</span>
+                                <div class="flex items-center gap-1">
+                                    <div class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></div>
+                                    <span class="text-xs text-slate-600 dark:text-slate-300">Live</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <nav class="flex items-center gap-6">
+                    <a href="/SirsiNexus/index.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">← Back to Portal</a>
+                    <div class="relative group">
+                        <button class="text-sm text-primary-600 dark:text-primary-400 font-medium hover:text-primary-700 dark:hover:text-primary-300 transition-colors flex items-center gap-1">
+                            Committee
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="absolute top-full left-0 mt-2 w-48 bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-slate-200 dark:border-slate-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                            <div class="py-2">
+                                <a href="/SirsiNexus/index.html" class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">Committee Index</a>
+                                <a href="market-analysis.html" class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">Market Analysis</a>
+                                <span class="block px-4 py-2 text-sm text-emerald-600 dark:text-emerald-400 font-medium">Product Roadmap</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="toggleTheme()" class="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                    </button>
+                    <button onclick="logout()" class="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors">
+                        Logout
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </header>
 
-    <main class="sirsi-container py-12">
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-6 py-12">
         <!-- Hero Section -->
-<div class="sirsi-section text-center">
-            <h1 class="sirsi-heading-1 mb-6">Product Roadmap & Vision</h1>
-            <p class="sirsi-text max-w-3xl mx-auto">
-                3-phase product development vision from foundational infrastructure to scale, leveraging Graph of Thought architecture for industry-leading cloud optimization
+        <div class="text-center mb-16">
+            <h1 class="text-4xl md:text-6xl font-bold text-slate-900 dark:text-slate-100 mb-6">
+                Product <span class="text-emerald-600">Roadmap</span> & Strategy
+            </h1>
+            <p class="text-xl text-slate-600 dark:text-slate-400 mb-8 max-w-3xl mx-auto">
+                Strategic vision and development timeline for our AI-powered cloud infrastructure management platform, delivering enterprise-grade solutions with proven ROI.
             </p>
-            <div class="flex flex-wrap justify-center gap-4 mt-8">
+            <div class="flex flex-wrap justify-center gap-4 mb-8">
                 <span class="inline-flex items-center px-4 py-2 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium rounded-lg border border-slate-200 dark:border-slate-700">
                     <span class="mr-2">🚀</span>
                     Winter 2025: Sirsi AI MVP
@@ -178,14 +163,71 @@
                     Fall 2027: On-Prem Launch
                 </span>
             </div>
+            <button onclick="window.print()" class="inline-flex items-center px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors shadow-sm hover:shadow-md">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
+                </svg>
+                Print Roadmap
+            </button>
         </div>
 
         <!-- Key Metrics -->
-        <div class="sirsi-metric-grid mb-12">
-            <sirsi-metric value="$150K" label="Funds Raised"></sirsi-metric>
-            <sirsi-metric value="$25M" label="Total Funding Goal"></sirsi-metric>
-            <sirsi-metric value="42%" label="Cost Reduction"></sirsi-metric>
-            <sirsi-metric value="92%" label="AI Accuracy"></sirsi-metric>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-16">
+            <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg border border-slate-200 dark:border-slate-700">
+                <div class="flex items-center gap-4 mb-3">
+                    <div class="w-12 h-12 bg-emerald-100 dark:bg-emerald-900/20 rounded-lg flex items-center justify-center text-emerald-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-bold text-emerald-600">$150K</div>
+                        <div class="text-sm text-slate-500 dark:text-slate-400">Funds Raised</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg border border-slate-200 dark:border-slate-700">
+                <div class="flex items-center gap-4 mb-3">
+                    <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/20 rounded-lg flex items-center justify-center text-blue-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-bold text-slate-900 dark:text-slate-100">4</div>
+                        <div class="text-sm text-slate-600 dark:text-slate-400">Team Members</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg border border-slate-200 dark:border-slate-700">
+                <div class="flex items-center gap-4 mb-3">
+                    <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/20 rounded-lg flex items-center justify-center text-purple-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-bold text-slate-900 dark:text-slate-100">92%</div>
+                        <div class="text-sm text-slate-500 dark:text-slate-400">AI Accuracy</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-lg border border-slate-200 dark:border-slate-700">
+                <div class="flex items-center gap-4 mb-3">
+                    <div class="w-12 h-12 bg-orange-100 dark:bg-orange-900/20 rounded-lg flex items-center justify-center text-orange-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-bold text-slate-900 dark:text-slate-100">42%</div>
+                        <div class="text-sm text-slate-500 dark:text-slate-400">Cost Reduction</div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Technical Architecture -->
