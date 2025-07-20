@@ -15,7 +15,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="/SirsiNexus/assets/theme-toggle.js"></script>
     <link rel="icon" type="image/x-icon" href="/SirsiNexus/assets/images/favicon.ico">
     <script>
         // Enhanced admin authentication and session management
@@ -1580,12 +1579,81 @@
             window.location.href = 'investor-login.html';
         }
         
+        // =======================
+        // THEME TOGGLE FUNCTIONALITY
+        // =======================
+        
+        // Initialize theme immediately
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = savedTheme || (prefersDark ? 'dark' : 'light');
+            
+            document.documentElement.classList.toggle('dark', theme === 'dark');
+            updateThemeIcon(theme);
+        }
+        
+        // Toggle theme function
+        function toggleTheme() {
+            const html = document.documentElement;
+            const isDark = html.classList.contains('dark');
+            
+            if (isDark) {
+                html.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                updateThemeIcon('light');
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                updateThemeIcon('dark');
+            }
+        }
+        
+        // Update theme icon
+        function updateThemeIcon(theme) {
+            const themeToggleBtn = document.querySelector('.theme-toggle');
+            if (themeToggleBtn) {
+                const iconSvg = themeToggleBtn.querySelector('svg');
+                if (iconSvg) {
+                    if (theme === 'dark') {
+                        // Sun icon for dark mode (click to go light)
+                        iconSvg.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>';
+                    } else {
+                        // Moon icon for light mode (click to go dark)
+                        iconSvg.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>';
+                    }
+                }
+            }
+        }
+        
+        // Initialize theme immediately (before DOM ready)
+        initTheme();
+        
+        // Add click handler when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggleBtn = document.querySelector('.theme-toggle');
+            if (themeToggleBtn) {
+                themeToggleBtn.addEventListener('click', toggleTheme);
+            }
+            // Re-initialize theme after DOM is ready
+            initTheme();
+        });
+        
+        // Listen for system theme changes
+        if (window.matchMedia) {
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+                if (!localStorage.getItem('theme')) {
+                    initTheme();
+                }
+            });
+        }
+        
         // Export functions to window for onclick handlers
         window.filterInvestors = filterInvestors;
         window.showActionModal = showActionModal;
         window.closeModal = closeModal;
         window.confirmAction = confirmAction;
-        // window.toggleTheme is handled by external theme-toggle.js script
+        window.toggleTheme = toggleTheme; // Now available globally
         window.showAddUserModal = showAddUserModal;
         window.closeAddUserModal = closeAddUserModal;
         window.showInviteModal = showInviteModal;
