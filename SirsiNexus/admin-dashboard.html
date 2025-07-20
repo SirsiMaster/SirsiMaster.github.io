@@ -3,12 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SirsiNexus - Enhanced Admin Dashboard</title>
+    <title>SirsiNexus - Enterprise Admin Console</title>
+    <meta name="description" content="Comprehensive enterprise admin dashboard with telemetry, data room management, and site-wide controls">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="icon" type="image/x-icon" href="/SirsiNexus/assets/images/favicon.ico">
     <script>
-        // Check admin authentication
+        // Enhanced admin authentication and session management
         (function() {
             const auth = sessionStorage.getItem('investorAuth');
             if (!auth) {
@@ -19,10 +24,24 @@
             try {
                 const authData = JSON.parse(auth);
                 if (authData.role !== 'admin') {
-                    alert('Access denied. Admin privileges required.');
+                    alert('🔒 Access Denied: Administrator privileges required for this console.');
                     window.location.href = '/SirsiNexus/index.html';
                     return;
                 }
+                
+                // Log admin session
+                const sessionLog = {
+                    adminId: authData.id,
+                    sessionStart: new Date().toISOString(),
+                    userAgent: navigator.userAgent,
+                    ipAddress: 'Admin Session', // Would be populated by server
+                    accessType: 'Admin Dashboard'
+                };
+                
+                const sessions = JSON.parse(localStorage.getItem('adminSessions') || '[]');
+                sessions.push(sessionLog);
+                localStorage.setItem('adminSessions', JSON.stringify(sessions.slice(-100))); // Keep last 100 sessions
+                
             } catch (error) {
                 console.error('Authentication error:', error);
                 sessionStorage.removeItem('investorAuth');
@@ -79,31 +98,200 @@
         }
     </style>
 </head>
-<body class="font-inter">
-    <header class="bg-white dark:bg-gray-800/95 sticky top-0 z-50 border-b border-slate-200 dark:border-slate-700 backdrop-blur-sm">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="flex h-16 items-center justify-between">
+<body class="font-inter bg-slate-50 dark:bg-slate-900">
+    <!-- Enterprise Header -->
+    <header class="bg-white dark:bg-slate-800 sticky top-0 z-50 border-b border-slate-200 dark:border-slate-700 shadow-sm">
+        <div class="flex h-16 items-center justify-between px-6">
+            <div class="flex items-center gap-4">
+                <button onclick="toggleSidebar()" class="p-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors lg:hidden">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
                 <div class="flex items-center gap-3">
-                    <div class="flex items-center gap-3">
-                        <div class="w-12 h-12 flex items-center justify-center">
-                            <img src="/assets/images/Sirsi_Logo_300ppi_cguiyg.png" alt="Sirsi Logo" class="w-12 h-12 object-contain">
-                        </div>
-                        <div>
-                            <h1 class="text-lg font-semibold text-slate-900 dark:text-slate-100">SirsiNexus Admin Dashboard</h1>
+                    <div class="w-10 h-10 flex items-center justify-center">
+                        <img src="/SirsiNexus/assets/images/Sirsi_Logo_300ppi_cguiyg.png" alt="Sirsi Logo" class="w-10 h-10 object-contain dark:hidden">
+                        <img src="/SirsiNexus/assets/images/Sirsi_Logo_300ppi_Inverted_lt7asx.png" alt="Sirsi Logo" class="w-10 h-10 object-contain hidden dark:block">
+                    </div>
+                    <div>
+                        <h1 class="text-lg font-bold text-slate-900 dark:text-slate-100">SirsiNexus</h1>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs text-slate-500 dark:text-slate-400 bg-red-100 dark:bg-red-900 px-2 py-0.5 rounded font-semibold">ADMIN CONSOLE</span>
+                            <div class="flex items-center gap-1">
+                                <div class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></div>
+                                <span class="text-xs text-slate-600 dark:text-slate-300">Live</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <nav class="hidden md:flex items-center gap-3">
-                    <a href="/SirsiNexus/index.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">Home</a>
-                    <button onclick="toggleTheme()" class="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors border border-slate-300 dark:border-slate-600 ml-4" style="min-width: 40px; min-height: 40px;">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                        </svg>
-                    </button>
-                </nav>
+            </div>
+            
+            <!-- Breadcrumb -->
+            <nav class="hidden md:flex items-center space-x-2 text-sm">
+                <a href="/SirsiNexus/index.html" class="text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200">Platform</a>
+                <svg class="w-4 h-4 text-slate-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                <span class="text-slate-700 dark:text-slate-300 font-medium">Admin Console</span>
+            </nav>
+            
+            <!-- Header Actions -->
+            <div class="flex items-center gap-3">
+                <div class="hidden md:flex items-center gap-3 text-sm text-slate-600 dark:text-slate-400">
+                    <span id="currentTime">Loading...</span>
+                    <span class="text-slate-300 dark:text-slate-600">|</span>
+                    <span id="currentUser">Loading...</span>
+                </div>
+                <button onclick="toggleTheme()" class="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                    </svg>
+                </button>
+                <button onclick="showNotificationsPanel()" class="relative p-2 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5-5-5h5v-5a7 7 0 10-14 0v5h5l-5 5-5-5h5v-5"></path>
+                    </svg>
+                    <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center" id="notificationCount">3</span>
+                </button>
+                <button onclick="logout()" class="p-2 text-slate-500 dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors" title="Logout">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                    </svg>
+                </button>
             </div>
         </div>
     </header>
+    
+    <div class="flex h-screen bg-slate-50 dark:bg-slate-900">
+        <!-- Enterprise Sidebar -->
+        <nav id="sidebar" class="fixed inset-y-0 left-0 z-40 w-72 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 transform -translate-x-full transition-transform duration-200 ease-in-out lg:translate-x-0 lg:static lg:inset-0 shadow-lg">
+            <div class="flex flex-col h-full pt-16 lg:pt-0">
+                <!-- Sidebar Header -->
+                <div class="flex items-center justify-between p-4 lg:hidden">
+                    <span class="text-lg font-semibold text-slate-900 dark:text-slate-100">Admin Menu</span>
+                    <button onclick="toggleSidebar()" class="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <!-- Admin Stats Summary -->
+                <div class="px-4 py-3 bg-gradient-to-r from-emerald-50 to-blue-50 dark:from-emerald-900/20 dark:to-blue-900/20 mx-4 rounded-lg mb-4">
+                    <h3 class="text-sm font-semibold text-slate-900 dark:text-slate-100 mb-2">System Overview</h3>
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                        <div class="text-center">
+                            <div class="font-bold text-emerald-600" id="sidebar-total-users">0</div>
+                            <div class="text-slate-500 dark:text-slate-400">Total Users</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="font-bold text-blue-600" id="sidebar-active-sessions">0</div>
+                            <div class="text-slate-500 dark:text-slate-400">Active Sessions</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation Menu -->
+                <div class="flex-1 px-4 pb-4 overflow-y-auto">
+                    <div class="space-y-1">
+                        <!-- Dashboard -->
+                        <button onclick="showSection('dashboard')" class="nav-item active w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors" data-section="dashboard">
+                            <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            </svg>
+                            <span class="text-sm font-medium text-slate-900 dark:text-slate-100">Dashboard</span>
+                        </button>
+                        
+                        <!-- User Management -->
+                        <button onclick="showSection('users')" class="nav-item w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors" data-section="users">
+                            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                            </svg>
+                            <span class="text-sm font-medium text-slate-900 dark:text-slate-100">User Management</span>
+                        </button>
+                        
+                        <!-- Data Room Management -->
+                        <button onclick="showSection('dataroom')" class="nav-item w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors" data-section="dataroom">
+                            <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                            </svg>
+                            <span class="text-sm font-medium text-slate-900 dark:text-slate-100">Data Room</span>
+                        </button>
+                        
+                        <!-- Telemetry & Analytics -->
+                        <button onclick="showSection('telemetry')" class="nav-item w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors" data-section="telemetry">
+                            <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            </svg>
+                            <span class="text-sm font-medium text-slate-900 dark:text-slate-100">Telemetry</span>
+                        </button>
+                        
+                        <!-- Site Administration -->
+                        <button onclick="showSection('siteadmin')" class="nav-item w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors" data-section="siteadmin">
+                            <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            <span class="text-sm font-medium text-slate-900 dark:text-slate-100">Site Admin</span>
+                        </button>
+                        
+                        <!-- Security & Access -->
+                        <button onclick="showSection('security')" class="nav-item w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors" data-section="security">
+                            <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                            </svg>
+                            <span class="text-sm font-medium text-slate-900 dark:text-slate-100">Security</span>
+                        </button>
+                        
+                        <!-- System Logs -->
+                        <button onclick="showSection('logs')" class="nav-item w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors" data-section="logs">
+                            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                            <span class="text-sm font-medium text-slate-900 dark:text-slate-100">System Logs</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Quick Actions -->
+                    <div class="mt-8">
+                        <h3 class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3">Quick Actions</h3>
+                        <div class="space-y-1">
+                            <button onclick="showAddUserModal()" class="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors">
+                                <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+                                </svg>
+                                <span class="text-xs text-slate-700 dark:text-slate-300">Add User</span>
+                            </button>
+                            <button onclick="showInviteModal()" class="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors">
+                                <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                </svg>
+                                <span class="text-xs text-slate-700 dark:text-slate-300">Send Invite</span>
+                            </button>
+                            <button onclick="exportData()" class="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors">
+                                <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path>
+                                </svg>
+                                <span class="text-xs text-slate-700 dark:text-slate-300">Export Data</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sidebar Footer -->
+                <div class="px-4 py-3 border-t border-slate-200 dark:border-slate-700">
+                    <div class="text-xs text-slate-500 dark:text-slate-400">
+                        <div class="flex items-center justify-between">
+                            <span>SirsiNexus v0.7.10</span>
+                            <div class="flex items-center gap-1">
+                                <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                                <span>Online</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
 
     <main class="max-w-7xl mx-auto px-6 py-10">
         <!-- Enhanced Dashboard Stats -->
@@ -1308,6 +1496,95 @@
         window.exportData = exportData;
         window.refreshData = refreshData;
     </script>
+    <!-- Data Room Management -->
+    <section id="data-room" class="hidden">
+        <div class="p-4 sm:p-8">
+            <h2 class="text-xl font-semibold text-slate-900 dark:text-slate-100 mb-4">Data Room Management</h2>
+            <div class="mt-6 border bg-white dark:bg-slate-800 rounded-lg">
+                <div class="py-4 px-6 border-b border-slate-200 dark:border-slate-700">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-lg font-medium text-slate-700 dark:text-slate-300">Documents</h3>
+                        <button class="bg-emerald-600 text-white px-4 py-2 rounded-md hover:bg-emerald-700 transition">Add Document</button>
+                    </div>
+                </div>
+                <table class="w-full text-left table-fixed">
+                    <thead>
+                        <tr class="text-slate-500 dark:text-slate-400">
+                            <th class="w-1/2 px-6 py-3">Name</th>
+                            <th class="w-1/4 px-6 py-3">Date</th>
+                            <th class="w-1/6 px-6 py-3">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white dark:bg-slate-800 divide-y divide-slate-200 dark:divide-slate-700">
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900 dark:text-slate-100">
+                              Market Analysis Report
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
+                              January 2025
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <button class="text-blue-600 hover:text-blue-900 dark:hover:text-blue-500">Edit</button>
+                                <button class="ml-4 text-red-600 hover:text-red-900 dark:hover:text-red-500">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Telemetry Analytics -->
+    <section id="telemetry" class="hidden">
+        <div class="p-4 sm:p-8">
+            <h2 class="text-xl font-semibold text-slate-900 dark:text-slate-100 mb-4">Telemetry Analytics</h2>
+            <div class="chart-container">
+                <canvas id="telemetryChart"></canvas>
+            </div>
+            <script>
+                const ctx = document.getElementById('telemetryChart').getContext('2d');
+                const telemetryChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['January', 'February', 'March', 'April'],
+                        datasets: [{
+                            label: 'Active Users',
+                            data: [120, 150, 180, 220],
+                            borderColor: '#059669',
+                            backgroundColor: 'rgba(5, 150, 105, 0.2)',
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'top',
+                                labels: {
+                                    color: '#374151'
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                ticks: {
+                                    color: '#374151'
+                                }
+                            },
+                            y: {
+                                ticks: {
+                                    color: '#374151'
+                                },
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            </script>
+        </div>
+    </section>
 </body>
 </html>
 
