@@ -11,6 +11,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/SirsiNexus/assets/theme-toggle.js"></script>
     <link rel="icon" type="image/x-icon" href="/SirsiNexus/assets/images/favicon.ico">
     <script>
         // Enhanced admin authentication and session management
@@ -815,7 +816,6 @@
         // Initialize the dashboard
         document.addEventListener('DOMContentLoaded', function() {
             loadInvestors();
-            initializeTheme();
             updateCurrentTime();
             updateCurrentUser();
             updateSidebarStats();
@@ -823,7 +823,6 @@
             // Update time every minute
             setInterval(updateCurrentTime, 60000);
         });
-        
         // Load investors from localStorage
         function loadInvestors() {
             const storedInvestors = localStorage.getItem('investorApplications');
@@ -1127,24 +1126,6 @@
             });
         }
         
-        // Theme management
-        function initializeTheme() {
-            const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-            document.documentElement.classList.toggle('dark', theme === 'dark');
-        }
-        
-        function toggleTheme() {
-            const html = document.documentElement;
-            const wasDark = html.classList.contains('dark');
-            
-            if (wasDark) {
-                html.classList.remove('dark');
-                localStorage.setItem('theme', 'light');
-            } else {
-                html.classList.add('dark');
-                localStorage.setItem('theme', 'dark');
-            }
-        }
         
         // Enhanced Features Functions
         
