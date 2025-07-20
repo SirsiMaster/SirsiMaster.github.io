@@ -294,74 +294,99 @@
         </nav>
 
     <main class="max-w-7xl mx-auto px-6 py-10">
-        <!-- Enhanced Dashboard Stats -->
+        <!-- Professional Dashboard Stats -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
-            <div class="bg-gradient-to-br from-blue-500 to-blue-600 p-6 rounded-xl shadow-lg text-white hover:shadow-xl transition-shadow">
+            <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-blue-100 text-sm font-medium">Total Users</p>
-                        <p class="text-3xl font-bold" id="totalApplications">0</p>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Total Users</p>
+                        <p class="text-2xl font-bold text-slate-900 dark:text-slate-100" id="totalApplications">0</p>
                     </div>
-                    <div class="p-3 bg-white/20 rounded-lg">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                    <div class="p-3 bg-slate-100 dark:bg-slate-700 rounded-lg">
+                        <svg class="w-6 h-6 text-slate-600 dark:text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
                         </svg>
+                    </div>
+                </div>
+                <div class="mt-2">
+                    <div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-1">
+                        <div class="bg-emerald-500 h-1 rounded-full" style="width: 75%"></div>
                     </div>
                 </div>
             </div>
             
-            <div class="bg-gradient-to-br from-yellow-500 to-yellow-600 p-6 rounded-xl shadow-lg text-white hover:shadow-xl transition-shadow">
+            <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-yellow-100 text-sm font-medium">Pending</p>
-                        <p class="text-3xl font-bold" id="pendingCount">0</p>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Pending Review</p>
+                        <p class="text-2xl font-bold text-slate-900 dark:text-slate-100" id="pendingCount">0</p>
                     </div>
-                    <div class="p-3 bg-white/20 rounded-lg">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    <div class="p-3 bg-slate-100 dark:bg-slate-700 rounded-lg">
+                        <svg class="w-6 h-6 text-slate-600 dark:text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
+                    </div>
+                </div>
+                <div class="mt-2">
+                    <div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-1">
+                        <div class="bg-amber-500 h-1 rounded-full" style="width: 45%"></div>
                     </div>
                 </div>
             </div>
             
-            <div class="bg-gradient-to-br from-green-500 to-green-600 p-6 rounded-xl shadow-lg text-white hover:shadow-xl transition-shadow">
+            <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-green-100 text-sm font-medium">Approved</p>
-                        <p class="text-3xl font-bold" id="approvedCount">0</p>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Approved</p>
+                        <p class="text-2xl font-bold text-slate-900 dark:text-slate-100" id="approvedCount">0</p>
                     </div>
-                    <div class="p-3 bg-white/20 rounded-lg">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    <div class="p-3 bg-slate-100 dark:bg-slate-700 rounded-lg">
+                        <svg class="w-6 h-6 text-slate-600 dark:text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
+                    </div>
+                </div>
+                <div class="mt-2">
+                    <div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-1">
+                        <div class="bg-emerald-500 h-1 rounded-full" style="width: 85%"></div>
                     </div>
                 </div>
             </div>
             
-            <div class="bg-gradient-to-br from-red-500 to-red-600 p-6 rounded-xl shadow-lg text-white hover:shadow-xl transition-shadow">
+            <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-red-100 text-sm font-medium">Rejected</p>
-                        <p class="text-3xl font-bold" id="rejectedCount">0</p>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Rejected</p>
+                        <p class="text-2xl font-bold text-slate-900 dark:text-slate-100" id="rejectedCount">0</p>
                     </div>
-                    <div class="p-3 bg-white/20 rounded-lg">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    <div class="p-3 bg-slate-100 dark:bg-slate-700 rounded-lg">
+                        <svg class="w-6 h-6 text-slate-600 dark:text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
+                    </div>
+                </div>
+                <div class="mt-2">
+                    <div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-1">
+                        <div class="bg-red-500 h-1 rounded-full" style="width: 15%"></div>
                     </div>
                 </div>
             </div>
             
-            <div class="bg-gradient-to-br from-purple-500 to-purple-600 p-6 rounded-xl shadow-lg text-white hover:shadow-xl transition-shadow">
+            <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-purple-100 text-sm font-medium">Invites Sent</p>
-                        <p class="text-3xl font-bold" id="invitesSent">0</p>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Invites Sent</p>
+                        <p class="text-2xl font-bold text-slate-900 dark:text-slate-100" id="invitesSent">0</p>
                     </div>
-                    <div class="p-3 bg-white/20 rounded-lg">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                    <div class="p-3 bg-slate-100 dark:bg-slate-700 rounded-lg">
+                        <svg class="w-6 h-6 text-slate-600 dark:text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                         </svg>
+                    </div>
+                </div>
+                <div class="mt-2">
+                    <div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-1">
+                        <div class="bg-blue-500 h-1 rounded-full" style="width: 60%"></div>
                     </div>
                 </div>
             </div>
@@ -791,6 +816,12 @@
         document.addEventListener('DOMContentLoaded', function() {
             loadInvestors();
             initializeTheme();
+            updateCurrentTime();
+            updateCurrentUser();
+            updateSidebarStats();
+            
+            // Update time every minute
+            setInterval(updateCurrentTime, 60000);
         });
         
         // Load investors from localStorage
@@ -1475,6 +1506,88 @@
         
         // Initialize invites count on load
         loadInvitesCount();
+        
+        // Update current time display
+        function updateCurrentTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', { 
+                hour: '2-digit', 
+                minute: '2-digit',
+                hour12: false 
+            });
+            document.getElementById('currentTime').textContent = timeString;
+        }
+        
+        // Update current user display
+        function updateCurrentUser() {
+            const auth = sessionStorage.getItem('investorAuth');
+            if (auth) {
+                try {
+                    const authData = JSON.parse(auth);
+                    document.getElementById('currentUser').textContent = authData.id || 'Admin';
+                } catch (error) {
+                    document.getElementById('currentUser').textContent = 'Admin';
+                }
+            } else {
+                document.getElementById('currentUser').textContent = 'Admin';
+            }
+        }
+        
+        // Update sidebar stats
+        function updateSidebarStats() {
+            document.getElementById('sidebar-total-users').textContent = investors.length;
+            const sessions = JSON.parse(localStorage.getItem('adminSessions') || '[]');
+            document.getElementById('sidebar-active-sessions').textContent = Math.min(sessions.length, 5);
+        }
+        
+        // Toggle sidebar for mobile
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('-translate-x-full');
+        }
+        
+        // Show section (navigation)
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = ['dashboard', 'users', 'dataroom', 'telemetry', 'siteadmin', 'security', 'logs'];
+            sections.forEach(id => {
+                const section = document.getElementById(id);
+                if (section) section.classList.add('hidden');
+            });
+            
+            // Show main dashboard content by default or specific section
+            if (sectionId === 'dashboard') {
+                // Show the main dashboard content (it's not in a section, just show it)
+                document.querySelector('main').style.display = 'block';
+            } else {
+                // Hide main dashboard content
+                document.querySelector('main').style.display = 'none';
+                // Show specific section
+                const targetSection = document.getElementById(sectionId);
+                if (targetSection) targetSection.classList.remove('hidden');
+            }
+            
+            // Update active nav item
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active', 'bg-slate-100', 'dark:bg-slate-700');
+            });
+            const activeItem = document.querySelector(`[data-section="${sectionId}"]`);
+            if (activeItem) {
+                activeItem.classList.add('active', 'bg-slate-100', 'dark:bg-slate-700');
+            }
+        }
+        
+        // Show notifications panel
+        function showNotificationsPanel() {
+            showNotification('Notifications panel coming soon!', 'info');
+        }
+        
+        // Logout function
+        function logout() {
+            sessionStorage.removeItem('investorAuth');
+            localStorage.removeItem('adminSessions');
+            window.location.href = 'investor-login.html';
+        }
         
         // Export functions to window for onclick handlers
         window.filterInvestors = filterInvestors;
