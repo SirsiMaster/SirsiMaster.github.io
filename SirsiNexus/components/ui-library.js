@@ -1,3 +1,428 @@
+/**
+ * SirsiNexus Toast Notification System
+ * Features:
+ * - Success, warning, error, and info toast types
+ * - Auto-dismiss with configurable duration
+ * - Stack multiple notifications
+ * - Click-to-dismiss functionality
+ * - Smooth slide-in animations
+ * - Position options (top-right default)
+ * - Queue management for multiple toasts
+ */
+class SirsiToastNotification {
+    constructor(options = {}) {
+        this.queue = [];
+        this.maxVisible = options.maxVisible || 5;
+        this.position = options.position || 'top-right';
+        this.defaultDuration = options.defaultDuration || 5000;
+        this.init();
+    }
+
+    init() {
+        this.createContainer();
+        this.injectStyles();
+    }
+
+    createContainer() {
+        this.container = document.createElement('div');
+        this.container.className = `sirsi-toast-container sirsi-toast-${this.position}`;
+        this.container.setAttribute('role', 'region');
+        this.container.setAttribute('aria-label', 'Notifications');
+        document.body.appendChild(this.container);
+    }
+
+    injectStyles() {
+        const styles = `
+            .sirsi-toast-container {
+                position: fixed;
+                z-index: 9999;
+                pointer-events: none;
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                max-width: 400px;
+                width: 100%;
+                padding: 16px;
+            }
+
+            .sirsi-toast-top-right {
+                top: 0;
+                right: 0;
+            }
+
+            .sirsi-toast-top-left {
+                top: 0;
+                left: 0;
+            }
+
+            .sirsi-toast-bottom-right {
+                bottom: 0;
+                right: 0;
+            }
+
+            .sirsi-toast-bottom-left {
+                bottom: 0;
+                left: 0;
+            }
+
+            .sirsi-toast-top-center {
+                top: 0;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .sirsi-toast-bottom-center {
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .sirsi-toast {
+                pointer-events: auto;
+                display: flex;
+                align-items: flex-start;
+                gap: 12px;
+                padding: 16px;
+                border-radius: 8px;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+                backdrop-filter: blur(8px);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                cursor: pointer;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                transform: translateX(100%);
+                opacity: 0;
+                font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+                font-size: 14px;
+                line-height: 1.4;
+                max-width: 100%;
+                word-wrap: break-word;
+            }
+
+            .sirsi-toast.sirsi-toast-show {
+                transform: translateX(0);
+                opacity: 1;
+            }
+
+            .sirsi-toast.sirsi-toast-hide {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            /* Toast type styles */
+            .sirsi-toast-success {
+                background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+                color: #ffffff;
+            }
+
+            .sirsi-toast-error {
+                background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+                color: #ffffff;
+            }
+
+            .sirsi-toast-warning {
+                background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+                color: #ffffff;
+            }
+
+            .sirsi-toast-info {
+                background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+                color: #ffffff;
+            }
+
+            .sirsi-toast-icon {
+                flex-shrink: 0;
+                width: 20px;
+                height: 20px;
+                margin-top: 1px;
+            }
+
+            .sirsi-toast-content {
+                flex: 1;
+                min-width: 0;
+            }
+
+            .sirsi-toast-title {
+                font-weight: 600;
+                margin-bottom: 4px;
+            }
+
+            .sirsi-toast-message {
+                opacity: 0.9;
+            }
+
+            .sirsi-toast-close {
+                flex-shrink: 0;
+                background: none;
+                border: none;
+                color: inherit;
+                cursor: pointer;
+                padding: 0;
+                margin-left: 8px;
+                opacity: 0.7;
+                transition: opacity 0.2s;
+                width: 16px;
+                height: 16px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .sirsi-toast-close:hover {
+                opacity: 1;
+            }
+
+            .sirsi-toast-progress {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                height: 3px;
+                background: rgba(255, 255, 255, 0.3);
+                border-radius: 0 0 8px 8px;
+                transition: width linear;
+            }
+
+            /* Dark mode support */
+            .dark .sirsi-toast {
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3), 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            /* Animation for left positioned toasts */
+            .sirsi-toast-top-left .sirsi-toast,
+            .sirsi-toast-bottom-left .sirsi-toast {
+                transform: translateX(-100%);
+            }
+
+            .sirsi-toast-top-left .sirsi-toast.sirsi-toast-show,
+            .sirsi-toast-bottom-left .sirsi-toast.sirsi-toast-show {
+                transform: translateX(0);
+            }
+
+            .sirsi-toast-top-left .sirsi-toast.sirsi-toast-hide,
+            .sirsi-toast-bottom-left .sirsi-toast.sirsi-toast-hide {
+                transform: translateX(-100%);
+            }
+
+            /* Animation for center positioned toasts */
+            .sirsi-toast-top-center .sirsi-toast,
+            .sirsi-toast-bottom-center .sirsi-toast {
+                transform: translateY(-100%);
+            }
+
+            .sirsi-toast-top-center .sirsi-toast.sirsi-toast-show,
+            .sirsi-toast-bottom-center .sirsi-toast.sirsi-toast-show {
+                transform: translateY(0);
+            }
+
+            .sirsi-toast-top-center .sirsi-toast.sirsi-toast-hide,
+            .sirsi-toast-bottom-center .sirsi-toast.sirsi-toast-hide {
+                transform: translateY(-100%);
+            }
+
+            /* Responsive design */
+            @media (max-width: 640px) {
+                .sirsi-toast-container {
+                    max-width: calc(100vw - 32px);
+                    padding: 16px;
+                }
+
+                .sirsi-toast {
+                    padding: 12px;
+                    font-size: 13px;
+                }
+            }
+        `;
+
+        if (!document.querySelector('#sirsi-toast-styles')) {
+            const styleSheet = document.createElement('style');
+            styleSheet.id = 'sirsi-toast-styles';
+            styleSheet.textContent = styles;
+            document.head.appendChild(styleSheet);
+        }
+    }
+
+    getIcon(type) {
+        const icons = {
+            success: `<svg viewBox="0 0 20 20" fill="currentColor" class="sirsi-toast-icon">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+            </svg>`,
+            error: `<svg viewBox="0 0 20 20" fill="currentColor" class="sirsi-toast-icon">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+            </svg>`,
+            warning: `<svg viewBox="0 0 20 20" fill="currentColor" class="sirsi-toast-icon">
+                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+            </svg>`,
+            info: `<svg viewBox="0 0 20 20" fill="currentColor" class="sirsi-toast-icon">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+            </svg>`
+        };
+        return icons[type] || icons.info;
+    }
+
+    show(options) {
+        // Handle both string and object parameters
+        if (typeof options === 'string') {
+            options = { message: options };
+        }
+
+        const {
+            message,
+            title,
+            type = 'info',
+            duration = this.defaultDuration,
+            persistent = false,
+            showProgress = true,
+            onClick = null
+        } = options;
+
+        // Create toast element
+        const toast = document.createElement('div');
+        toast.className = `sirsi-toast sirsi-toast-${type}`;
+        toast.setAttribute('role', 'alert');
+        toast.setAttribute('aria-live', type === 'error' ? 'assertive' : 'polite');
+
+        // Build content
+        let contentHTML = this.getIcon(type);
+        contentHTML += '<div class="sirsi-toast-content">';
+        if (title) {
+            contentHTML += `<div class="sirsi-toast-title">${title}</div>`;
+        }
+        contentHTML += `<div class="sirsi-toast-message">${message}</div>`;
+        contentHTML += '</div>';
+
+        // Add close button
+        contentHTML += `<button class="sirsi-toast-close" aria-label="Close notification">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>`;
+
+        toast.innerHTML = contentHTML;
+
+        // Add progress bar if enabled and not persistent
+        if (showProgress && !persistent && duration > 0) {
+            const progress = document.createElement('div');
+            progress.className = 'sirsi-toast-progress';
+            progress.style.width = '100%';
+            toast.appendChild(progress);
+
+            // Animate progress bar
+            setTimeout(() => {
+                progress.style.width = '0%';
+                progress.style.transitionDuration = `${duration}ms`;
+            }, 100);
+        }
+
+        // Add to queue
+        this.queue.push({
+            element: toast,
+            timeout: null,
+            duration,
+            persistent,
+            onClick
+        });
+
+        // Handle click events
+        const closeBtn = toast.querySelector('.sirsi-toast-close');
+        closeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.dismiss(toast);
+        });
+
+        toast.addEventListener('click', () => {
+            if (onClick) {
+                onClick();
+            }
+            this.dismiss(toast);
+        });
+
+        this.render();
+        return toast;
+    }
+
+    dismiss(toastElement) {
+        const toastData = this.queue.find(item => item.element === toastElement);
+        if (!toastData) return;
+
+        // Clear timeout
+        if (toastData.timeout) {
+            clearTimeout(toastData.timeout);
+        }
+
+        // Add hide animation
+        toastElement.classList.remove('sirsi-toast-show');
+        toastElement.classList.add('sirsi-toast-hide');
+
+        // Remove after animation
+        setTimeout(() => {
+            if (toastElement.parentNode) {
+                toastElement.parentNode.removeChild(toastElement);
+            }
+            this.queue = this.queue.filter(item => item.element !== toastElement);
+            this.render();
+        }, 300);
+    }
+
+    render() {
+        // Show only the most recent toasts up to maxVisible
+        const visibleToasts = this.queue.slice(-this.maxVisible);
+        
+        // Clear container
+        this.container.innerHTML = '';
+
+        // Add visible toasts
+        visibleToasts.forEach((toastData, index) => {
+            this.container.appendChild(toastData.element);
+            
+            // Trigger show animation
+            setTimeout(() => {
+                toastData.element.classList.add('sirsi-toast-show');
+            }, index * 100);
+
+            // Set auto-dismiss timeout
+            if (!toastData.persistent && toastData.duration > 0 && !toastData.timeout) {
+                toastData.timeout = setTimeout(() => {
+                    this.dismiss(toastData.element);
+                }, toastData.duration);
+            }
+        });
+    }
+
+    // Convenience methods
+    success(message, options = {}) {
+        return this.show({ ...options, message, type: 'success' });
+    }
+
+    error(message, options = {}) {
+        return this.show({ ...options, message, type: 'error' });
+    }
+
+    warning(message, options = {}) {
+        return this.show({ ...options, message, type: 'warning' });
+    }
+
+    info(message, options = {}) {
+        return this.show({ ...options, message, type: 'info' });
+    }
+
+    clear() {
+        this.queue.forEach(toastData => {
+            if (toastData.timeout) {
+                clearTimeout(toastData.timeout);
+            }
+            this.dismiss(toastData.element);
+        });
+    }
+
+    setPosition(position) {
+        this.position = position;
+        this.container.className = `sirsi-toast-container sirsi-toast-${position}`;
+    }
+}
+
+// Initialize the notification system
+window.SirsiToast = new SirsiToastNotification();
+
 // SirsiNexus UI Component Library
 // Fix paths to be relative to root
 const BASE_PATH = '';

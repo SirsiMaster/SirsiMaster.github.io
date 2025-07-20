@@ -41,22 +41,16 @@
     <!-- MAIN BRANCH SYNC: 2025-07-16 01:15:09 -->
     <!-- JEKYLL DISABLED - STATIC SITE ONLY -->
 
-    <!-- Theme initialization - Must run before page render -->
+    <!-- Fresh Theme Toggle - Inline script to prevent flash of unstyled content -->
     <script>
       (function() {
-        function getInitialColorMode() {
-          const persistedColorPreference = window.localStorage.getItem('theme');
-          if (persistedColorPreference) {
-            return persistedColorPreference;
-          }
-          const mql = window.matchMedia('(prefers-color-scheme: dark)');
-          if (mql.matches) {
-            return 'dark';
-          }
-          return 'light';
-        }
-        const colorMode = getInitialColorMode();
-        if (colorMode === 'dark') {
+        // Get initial theme preference
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const shouldBeDark = savedTheme ? savedTheme === 'dark' : prefersDark;
+        
+        // Apply theme immediately to prevent flash
+        if (shouldBeDark) {
           document.documentElement.classList.add('dark');
         } else {
           document.documentElement.classList.remove('dark');
@@ -64,21 +58,11 @@
       })();
     </script>
 
-    <!-- Theme toggle and mobile menu functionality -->
+    <!-- Fresh Theme Toggle Script -->
+    <script src="/SirsiNexus/assets/js/fresh-theme-toggle.js"></script>
+    
+    <!-- Mobile menu functionality -->
     <script>
-      function toggleTheme() {
-        const html = document.documentElement;
-        const isDark = html.classList.contains('dark');
-        
-        if (isDark) {
-          html.classList.remove('dark');
-          localStorage.setItem('theme', 'light');
-        } else {
-          html.classList.add('dark');
-          localStorage.setItem('theme', 'dark');
-        }
-      }
-      
       function toggleMobileMenu() {
         const mobileMenu = document.getElementById('mobile-menu');
         const isHidden = mobileMenu.classList.contains('hidden');
@@ -91,16 +75,8 @@
           mobileMenu.classList.remove('flex');
         }
       }
-
-      // Initialize theme on DOM content loaded
-      document.addEventListener('DOMContentLoaded', function() {
-        const theme = localStorage.getItem('theme') || 
-                     (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-        document.documentElement.classList.toggle('dark', theme === 'dark');
-      });
-
-      // Make functions available globally
-      window.toggleTheme = toggleTheme;
+      
+      // Make mobile menu function available globally
       window.toggleMobileMenu = toggleMobileMenu;
     </script>
   </head>
@@ -137,7 +113,7 @@
             <a href="/SirsiNexus/documentation.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">Documentation</a>
             <a href="/SirsiNexus/investor-login.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">Investor Portal</a>
             <a href="/SirsiNexus/signup.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">Sign Up</a>
-            <button onclick="toggleTheme()" class="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors border border-slate-300 dark:border-slate-600">
+            <button data-theme-toggle class="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors border border-slate-300 dark:border-slate-600" title="Toggle theme">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
               </svg>
@@ -511,48 +487,5 @@
       </div>
     </footer>
 
-    <script>
-        function toggleTheme() {
-            console.log('Theme toggle clicked');
-            const html = document.documentElement;
-            const isDark = html.classList.contains('dark');
-            
-            if (isDark) {
-                html.classList.remove('dark');
-                localStorage.setItem('theme', 'light');
-                console.log('Switched to light mode');
-            } else {
-                html.classList.add('dark');
-                localStorage.setItem('theme', 'dark');
-                console.log('Switched to dark mode');
-            }
-        }
-        
-        function initTheme() {
-            const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-            document.documentElement.classList.toggle('dark', theme === 'dark');
-            console.log('Theme initialized:', theme);
-        }
-        
-        // Make toggleTheme available globally
-        window.toggleTheme = toggleTheme;
-        
-        // Initialize theme on DOM content loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            initTheme();
-        });
-
-        // Mobile Menu Script
-        function toggleMobileMenu() {
-            const mobileMenu = document.getElementById('mobile-menu');
-            if (mobileMenu.classList.contains('hidden')) {
-                mobileMenu.classList.remove('hidden');
-                mobileMenu.classList.add('flex');
-            } else {
-                mobileMenu.classList.add('hidden');
-                mobileMenu.classList.remove('flex');
-            }
-        }
-    </script>
   </body>
 </html>
