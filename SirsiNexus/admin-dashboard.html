@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - Investor Management</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>SirsiNexus - Enhanced Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
     <script>
         // Check admin authentication
         (function() {
@@ -105,60 +106,164 @@
     </header>
 
     <main class="max-w-7xl mx-auto px-6 py-10">
-        <!-- Dashboard Stats -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700">
-                <div class="flex items-center">
-                    <div class="p-2 bg-blue-100 dark:bg-blue-900 rounded-md">
-                        <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
-                        </svg>
+        <!-- Enhanced Dashboard Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
+            <div class="bg-gradient-to-br from-blue-500 to-blue-600 p-6 rounded-xl shadow-lg text-white hover:shadow-xl transition-shadow">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-blue-100 text-sm font-medium">Total Users</p>
+                        <p class="text-3xl font-bold" id="totalApplications">0</p>
                     </div>
-                    <div class="ml-4">
-                        <p class="text-sm font-medium text-slate-600 dark:text-slate-400">Total Applications</p>
-                        <p class="text-2xl font-bold text-slate-900 dark:text-slate-100" id="totalApplications">0</p>
+                    <div class="p-3 bg-white/20 rounded-lg">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
                     </div>
                 </div>
             </div>
             
-            <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700">
-                <div class="flex items-center">
-                    <div class="p-2 bg-yellow-100 dark:bg-yellow-900 rounded-md">
-                        <svg class="w-6 h-6 text-yellow-600 dark:text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="bg-gradient-to-br from-yellow-500 to-yellow-600 p-6 rounded-xl shadow-lg text-white hover:shadow-xl transition-shadow">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-yellow-100 text-sm font-medium">Pending</p>
+                        <p class="text-3xl font-bold" id="pendingCount">0</p>
+                    </div>
+                    <div class="p-3 bg-white/20 rounded-lg">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
-                    <div class="ml-4">
-                        <p class="text-sm font-medium text-slate-600 dark:text-slate-400">Pending</p>
-                        <p class="text-2xl font-bold text-slate-900 dark:text-slate-100" id="pendingCount">0</p>
-                    </div>
                 </div>
             </div>
             
-            <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700">
-                <div class="flex items-center">
-                    <div class="p-2 bg-green-100 dark:bg-green-900 rounded-md">
-                        <svg class="w-6 h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="bg-gradient-to-br from-green-500 to-green-600 p-6 rounded-xl shadow-lg text-white hover:shadow-xl transition-shadow">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-green-100 text-sm font-medium">Approved</p>
+                        <p class="text-3xl font-bold" id="approvedCount">0</p>
+                    </div>
+                    <div class="p-3 bg-white/20 rounded-lg">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>
                     </div>
-                    <div class="ml-4">
-                        <p class="text-sm font-medium text-slate-600 dark:text-slate-400">Approved</p>
-                        <p class="text-2xl font-bold text-slate-900 dark:text-slate-100" id="approvedCount">0</p>
+                </div>
+            </div>
+            
+            <div class="bg-gradient-to-br from-red-500 to-red-600 p-6 rounded-xl shadow-lg text-white hover:shadow-xl transition-shadow">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-red-100 text-sm font-medium">Rejected</p>
+                        <p class="text-3xl font-bold" id="rejectedCount">0</p>
+                    </div>
+                    <div class="p-3 bg-white/20 rounded-lg">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
                     </div>
                 </div>
             </div>
             
-            <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700">
-                <div class="flex items-center">
-                    <div class="p-2 bg-red-100 dark:bg-red-900 rounded-md">
-                        <svg class="w-6 h-6 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            <div class="bg-gradient-to-br from-purple-500 to-purple-600 p-6 rounded-xl shadow-lg text-white hover:shadow-xl transition-shadow">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-purple-100 text-sm font-medium">Invites Sent</p>
+                        <p class="text-3xl font-bold" id="invitesSent">0</p>
+                    </div>
+                    <div class="p-3 bg-white/20 rounded-lg">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                         </svg>
                     </div>
-                    <div class="ml-4">
-                        <p class="text-sm font-medium text-slate-600 dark:text-slate-400">Rejected</p>
-                        <p class="text-2xl font-bold text-slate-900 dark:text-slate-100" id="rejectedCount">0</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Quick Actions Panel -->
+        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 mb-8">
+            <div class="p-6 border-b border-slate-200 dark:border-slate-700">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-xl font-bold text-slate-900 dark:text-slate-100">Quick Actions</h2>
+                    <div class="flex items-center gap-2">
+                        <span class="text-sm text-slate-500 dark:text-slate-400">Admin Tools</span>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <button onclick="showAddUserModal()" class="flex flex-col items-center p-6 border-2 border-dashed border-emerald-300 hover:border-emerald-500 rounded-lg hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-all">
+                        <svg class="w-8 h-8 text-emerald-600 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+                        </svg>
+                        <span class="text-sm font-medium text-slate-700 dark:text-slate-300">Add User</span>
+                    </button>
+                    
+                    <button onclick="showInviteModal()" class="flex flex-col items-center p-6 border-2 border-dashed border-blue-300 hover:border-blue-500 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all">
+                        <svg class="w-8 h-8 text-blue-600 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                        <span class="text-sm font-medium text-slate-700 dark:text-slate-300">Send Invite</span>
+                    </button>
+                    
+                    <button onclick="showQRModal()" class="flex flex-col items-center p-6 border-2 border-dashed border-purple-300 hover:border-purple-500 rounded-lg hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-all">
+                        <svg class="w-8 h-8 text-purple-600 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h4M4 8h4m0 0V4m0 4h.01M8 12v.01"></path>
+                        </svg>
+                        <span class="text-sm font-medium text-slate-700 dark:text-slate-300">Generate QR</span>
+                    </button>
+                    
+                    <button onclick="showRoleManagement()" class="flex flex-col items-center p-6 border-2 border-dashed border-orange-300 hover:border-orange-500 rounded-lg hover:bg-orange-50 dark:hover:bg-orange-900/20 transition-all">
+                        <svg class="w-8 h-8 text-orange-600 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                        </svg>
+                        <span class="text-sm font-medium text-slate-700 dark:text-slate-300">Role Management</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Enhanced Filtering System -->
+        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 mb-8">
+            <div class="p-6">
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                    <div class="flex flex-wrap gap-4">
+                        <div class="flex items-center gap-2">
+                            <label class="text-sm font-medium text-slate-700 dark:text-slate-300">Date Range:</label>
+                            <input type="date" id="dateFrom" class="px-3 py-1 border border-slate-300 dark:border-slate-600 rounded-md text-sm bg-white dark:bg-slate-700 dark:text-white">
+                            <span class="text-slate-400">to</span>
+                            <input type="date" id="dateTo" class="px-3 py-1 border border-slate-300 dark:border-slate-600 rounded-md text-sm bg-white dark:bg-slate-700 dark:text-white">
+                        </div>
+                        
+                        <div class="flex items-center gap-2">
+                            <label class="text-sm font-medium text-slate-700 dark:text-slate-300">Type:</label>
+                            <select id="userTypeFilter" class="px-3 py-1 border border-slate-300 dark:border-slate-600 rounded-md text-sm bg-white dark:bg-slate-700 dark:text-white">
+                                <option value="all">All Types</option>
+                                <option value="investor">Investors</option>
+                                <option value="admin">Admins</option>
+                                <option value="user">Regular Users</option>
+                            </select>
+                        </div>
+                        
+                        <div class="flex items-center gap-2">
+                            <input type="text" id="searchInput" placeholder="Search by name or email..." class="px-3 py-1 border border-slate-300 dark:border-slate-600 rounded-md text-sm bg-white dark:bg-slate-700 dark:text-white w-64">
+                            <button onclick="applyFilters()" class="px-4 py-1 bg-emerald-600 text-white rounded-md text-sm hover:bg-emerald-700 transition-colors">
+                                Apply
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center gap-2">
+                        <button onclick="exportData()" class="flex items-center gap-2 px-4 py-2 bg-slate-600 text-white rounded-lg hover:bg-slate-700 transition-colors text-sm">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path>
+                            </svg>
+                            Export
+                        </button>
+                        <button onclick="refreshData()" class="p-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                            </svg>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -248,12 +353,251 @@
             </div>
         </div>
     </div>
+    
+    <!-- Add User Modal -->
+    <div id="addUserModal" class="hidden fixed inset-0 z-50 overflow-y-auto">
+        <div class="flex items-center justify-center min-h-screen px-4 text-center">
+            <div class="fixed inset-0 bg-black opacity-50"></div>
+            <div class="relative bg-white dark:bg-slate-800 rounded-xl max-w-2xl w-full p-8 shadow-2xl">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Add New User</h2>
+                    <button onclick="closeAddUserModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <form id="addUserForm" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Full Name</label>
+                            <input type="text" id="newUserName" required class="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white dark:bg-slate-700 dark:text-white">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Email</label>
+                            <input type="email" id="newUserEmail" required class="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white dark:bg-slate-700 dark:text-white">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Role</label>
+                            <select id="newUserRole" required class="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white dark:bg-slate-700 dark:text-white">
+                                <option value="">Select Role</option>
+                                <option value="investor">Investor</option>
+                                <option value="admin">Admin</option>
+                                <option value="user">Regular User</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Status</label>
+                            <select id="newUserStatus" required class="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white dark:bg-slate-700 dark:text-white">
+                                <option value="pending">Pending</option>
+                                <option value="approved">Approved</option>
+                                <option value="rejected">Rejected</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Company</label>
+                            <input type="text" id="newUserCompany" class="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white dark:bg-slate-700 dark:text-white">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">LinkedIn URL</label>
+                            <input type="url" id="newUserLinkedin" class="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white dark:bg-slate-700 dark:text-white">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Business Website</label>
+                        <input type="url" id="newUserWebsite" class="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white dark:bg-slate-700 dark:text-white">
+                    </div>
+                    
+                    <div class="flex justify-end gap-4">
+                        <button type="button" onclick="closeAddUserModal()" class="px-6 py-2 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+                            Cancel
+                        </button>
+                        <button type="submit" class="px-6 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors">
+                            Add User
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Invite Modal -->
+    <div id="inviteModal" class="hidden fixed inset-0 z-50 overflow-y-auto">
+        <div class="flex items-center justify-center min-h-screen px-4 text-center">
+            <div class="fixed inset-0 bg-black opacity-50"></div>
+            <div class="relative bg-white dark:bg-slate-800 rounded-xl max-w-lg w-full p-8 shadow-2xl">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Send Invitation</h2>
+                    <button onclick="closeInviteModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <form id="inviteForm" class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Invitation Type</label>
+                        <select id="inviteType" class="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white dark:bg-slate-700 dark:text-white">
+                            <option value="email">Email Invitation</option>
+                            <option value="sms">SMS Invitation</option>
+                            <option value="both">Email & SMS</option>
+                        </select>
+                    </div>
+                    
+                    <div id="emailField">
+                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Email Address</label>
+                        <input type="email" id="inviteEmail" class="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white dark:bg-slate-700 dark:text-white">
+                    </div>
+                    
+                    <div id="phoneField" class="hidden">
+                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Phone Number</label>
+                        <input type="tel" id="invitePhone" class="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white dark:bg-slate-700 dark:text-white">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Role</label>
+                        <select id="inviteRole" class="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white dark:bg-slate-700 dark:text-white">
+                            <option value="investor">Investor</option>
+                            <option value="user">User</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Custom Message (Optional)</label>
+                        <textarea id="inviteMessage" rows="3" class="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white dark:bg-slate-700 dark:text-white" placeholder="Add a personal message to the invitation..."></textarea>
+                    </div>
+                    
+                    <div class="flex justify-end gap-4">
+                        <button type="button" onclick="closeInviteModal()" class="px-6 py-2 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+                            Cancel
+                        </button>
+                        <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                            Send Invitation
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- QR Code Modal -->
+    <div id="qrModal" class="hidden fixed inset-0 z-50 overflow-y-auto">
+        <div class="flex items-center justify-center min-h-screen px-4 text-center">
+            <div class="fixed inset-0 bg-black opacity-50"></div>
+            <div class="relative bg-white dark:bg-slate-800 rounded-xl max-w-lg w-full p-8 shadow-2xl">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Generate QR Code</h2>
+                    <button onclick="closeQRModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <form id="qrForm" class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">QR Code Type</label>
+                        <select id="qrType" class="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white dark:bg-slate-700 dark:text-white">
+                            <option value="signup">Platform Signup</option>
+                            <option value="investor">Investor Portal</option>
+                            <option value="admin">Admin Login</option>
+                            <option value="custom">Custom URL</option>
+                        </select>
+                    </div>
+                    
+                    <div id="customUrlField" class="hidden">
+                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Custom URL</label>
+                        <input type="url" id="customUrl" class="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white dark:bg-slate-700 dark:text-white">
+                    </div>
+                    
+                    <div class="text-center">
+                        <div id="qrCodeContainer" class="flex justify-center mb-4">
+                            <canvas id="qrCanvas" class="border border-slate-200 dark:border-slate-600 rounded-lg"></canvas>
+                        </div>
+                        <button type="button" onclick="downloadQR()" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+                            Download QR Code
+                        </button>
+                    </div>
+                    
+                    <div class="flex justify-end gap-4">
+                        <button type="button" onclick="closeQRModal()" class="px-6 py-2 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+                            Close
+                        </button>
+                        <button type="submit" class="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+                            Generate QR
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Role Management Modal -->
+    <div id="roleModal" class="hidden fixed inset-0 z-50 overflow-y-auto">
+        <div class="flex items-center justify-center min-h-screen px-4 text-center">
+            <div class="fixed inset-0 bg-black opacity-50"></div>
+            <div class="relative bg-white dark:bg-slate-800 rounded-xl max-w-4xl w-full p-8 shadow-2xl max-h-screen overflow-y-auto">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Role Management</h2>
+                    <button onclick="closeRoleModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-2">
+                        <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-4">User Roles</h3>
+                        <div class="space-y-4" id="roleList">
+                            <!-- Role items will be populated here -->
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-4">Role Permissions</h3>
+                        <div class="bg-slate-50 dark:bg-slate-700 rounded-lg p-4">
+                            <div class="space-y-3" id="permissionsList">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-slate-700 dark:text-slate-300">Dashboard Access</span>
+                                    <input type="checkbox" class="rounded border-slate-300 dark:border-slate-600" checked disabled>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-slate-700 dark:text-slate-300">User Management</span>
+                                    <input type="checkbox" class="rounded border-slate-300 dark:border-slate-600" disabled>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-slate-700 dark:text-slate-300">Investor Portal</span>
+                                    <input type="checkbox" class="rounded border-slate-300 dark:border-slate-600" disabled>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-slate-700 dark:text-slate-300">Admin Functions</span>
+                                    <input type="checkbox" class="rounded border-slate-300 dark:border-slate-600" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex justify-end mt-8">
+                    <button onclick="closeRoleModal()" class="px-6 py-2 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
         // Global variables
         let investors = [];
         let currentFilter = 'all';
         let pendingAction = null;
+        let invitesSentCount = 0;
         
         // Initialize the dashboard
         document.addEventListener('DOMContentLoaded', function() {
@@ -583,12 +927,386 @@
             }
         }
         
+        // Enhanced Features Functions
+        
+        // Add User Modal Functions
+        function showAddUserModal() {
+            document.getElementById('addUserModal').classList.remove('hidden');
+        }
+        
+        function closeAddUserModal() {
+            document.getElementById('addUserModal').classList.add('hidden');
+            document.getElementById('addUserForm').reset();
+        }
+        
+        // Handle Add User Form Submission
+        document.getElementById('addUserForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const newUser = {
+                id: 'INV' + String(Date.now()).slice(-6).padStart(3, '0'),
+                name: document.getElementById('newUserName').value,
+                email: document.getElementById('newUserEmail').value,
+                company: document.getElementById('newUserCompany').value || null,
+                linkedinUrl: document.getElementById('newUserLinkedin').value || 'https://linkedin.com',
+                businessUrl: document.getElementById('newUserWebsite').value || 'https://example.com',
+                status: document.getElementById('newUserStatus').value,
+                role: document.getElementById('newUserRole').value,
+                appliedDate: new Date().toISOString(),
+                newsletter: false,
+                beta: false,
+                addedByAdmin: true
+            };
+            
+            investors.push(newUser);
+            saveInvestors();
+            updateStats();
+            renderInvestorTable();
+            closeAddUserModal();
+            
+            showNotification(`${newUser.name} has been added successfully!`, 'success');
+        });
+        
+        // Invite Modal Functions
+        function showInviteModal() {
+            document.getElementById('inviteModal').classList.remove('hidden');
+        }
+        
+        function closeInviteModal() {
+            document.getElementById('inviteModal').classList.add('hidden');
+            document.getElementById('inviteForm').reset();
+        }
+        
+        // Handle Invite Type Change
+        document.getElementById('inviteType').addEventListener('change', function() {
+            const type = this.value;
+            const emailField = document.getElementById('emailField');
+            const phoneField = document.getElementById('phoneField');
+            
+            if (type === 'email') {
+                emailField.classList.remove('hidden');
+                phoneField.classList.add('hidden');
+            } else if (type === 'sms') {
+                emailField.classList.add('hidden');
+                phoneField.classList.remove('hidden');
+            } else {
+                emailField.classList.remove('hidden');
+                phoneField.classList.remove('hidden');
+            }
+        });
+        
+        // Handle Invite Form Submission
+        document.getElementById('inviteForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const inviteType = document.getElementById('inviteType').value;
+            const email = document.getElementById('inviteEmail').value;
+            const phone = document.getElementById('invitePhone').value;
+            const role = document.getElementById('inviteRole').value;
+            const message = document.getElementById('inviteMessage').value;
+            
+            // Generate unique invite code
+            const inviteCode = 'INV-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+            
+            // Store invite in localStorage
+            const invites = JSON.parse(localStorage.getItem('pendingInvites') || '[]');
+            invites.push({
+                code: inviteCode,
+                email: email,
+                phone: phone,
+                role: role,
+                message: message,
+                type: inviteType,
+                sentDate: new Date().toISOString(),
+                status: 'pending'
+            });
+            localStorage.setItem('pendingInvites', JSON.stringify(invites));
+            
+            // Update invite count
+            invitesSentCount++;
+            document.getElementById('invitesSent').textContent = invitesSentCount;
+            
+            // Simulate sending invite
+            console.log(`📧 Invitation sent via ${inviteType}:`, { email, phone, role, code: inviteCode });
+            
+            closeInviteModal();
+            showNotification(`Invitation sent successfully! Invite code: ${inviteCode}`, 'success');
+        });
+        
+        // QR Code Modal Functions
+        function showQRModal() {
+            document.getElementById('qrModal').classList.remove('hidden');
+            generateQRCode(); // Generate initial QR code
+        }
+        
+        function closeQRModal() {
+            document.getElementById('qrModal').classList.add('hidden');
+        }
+        
+        // Handle QR Type Change
+        document.getElementById('qrType').addEventListener('change', function() {
+            const customUrlField = document.getElementById('customUrlField');
+            if (this.value === 'custom') {
+                customUrlField.classList.remove('hidden');
+            } else {
+                customUrlField.classList.add('hidden');
+            }
+            generateQRCode();
+        });
+        
+        // Generate QR Code
+        function generateQRCode() {
+            const qrType = document.getElementById('qrType').value;
+            const customUrl = document.getElementById('customUrl').value;
+            const canvas = document.getElementById('qrCanvas');
+            
+            let url;
+            switch(qrType) {
+                case 'signup':
+                    url = window.location.origin + '/SirsiNexus/signup.html';
+                    break;
+                case 'investor':
+                    url = window.location.origin + '/SirsiNexus/investor-login.html';
+                    break;
+                case 'admin':
+                    url = window.location.origin + '/SirsiNexus/admin-dashboard.html';
+                    break;
+                case 'custom':
+                    url = customUrl || window.location.origin;
+                    break;
+                default:
+                    url = window.location.origin;
+            }
+            
+            // Generate QR code using the QRCode library
+            QRCode.toCanvas(canvas, url, {
+                width: 200,
+                margin: 2,
+                color: {
+                    dark: '#000000',
+                    light: '#FFFFFF'
+                }
+            }, function(error) {
+                if (error) console.error('QR Code generation error:', error);
+            });
+        }
+        
+        // Handle QR Form Submission
+        document.getElementById('qrForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            generateQRCode();
+        });
+        
+        // Download QR Code
+        function downloadQR() {
+            const canvas = document.getElementById('qrCanvas');
+            const link = document.createElement('a');
+            link.download = 'sirsinexus-qr-code.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+        
+        // Role Management Modal Functions
+        function showRoleManagement() {
+            document.getElementById('roleModal').classList.remove('hidden');
+            renderRoleList();
+        }
+        
+        function closeRoleModal() {
+            document.getElementById('roleModal').classList.add('hidden');
+        }
+        
+        // Render Role List
+        function renderRoleList() {
+            const roleList = document.getElementById('roleList');
+            const roleStats = investors.reduce((acc, inv) => {
+                acc[inv.role || 'user'] = (acc[inv.role || 'user'] || 0) + 1;
+                return acc;
+            }, {});
+            
+            roleList.innerHTML = Object.entries(roleStats).map(([role, count]) => `
+                <div class="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-700 rounded-lg">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-900 flex items-center justify-center">
+                            <span class="text-emerald-600 font-semibold text-sm">${count}</span>
+                        </div>
+                        <div>
+                            <h4 class="font-medium text-slate-900 dark:text-slate-100 capitalize">${role}s</h4>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">${count} user${count !== 1 ? 's' : ''}</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        <button class="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // Enhanced Filtering Functions
+        function applyFilters() {
+            const dateFrom = document.getElementById('dateFrom').value;
+            const dateTo = document.getElementById('dateTo').value;
+            const userType = document.getElementById('userTypeFilter').value;
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            
+            let filteredInvestors = investors;
+            
+            // Apply date filter
+            if (dateFrom) {
+                filteredInvestors = filteredInvestors.filter(inv => new Date(inv.appliedDate) >= new Date(dateFrom));
+            }
+            if (dateTo) {
+                filteredInvestors = filteredInvestors.filter(inv => new Date(inv.appliedDate) <= new Date(dateTo + 'T23:59:59'));
+            }
+            
+            // Apply user type filter
+            if (userType !== 'all') {
+                filteredInvestors = filteredInvestors.filter(inv => (inv.role || 'user') === userType);
+            }
+            
+            // Apply search filter
+            if (searchTerm) {
+                filteredInvestors = filteredInvestors.filter(inv => 
+                    inv.name.toLowerCase().includes(searchTerm) || 
+                    inv.email.toLowerCase().includes(searchTerm) ||
+                    (inv.company && inv.company.toLowerCase().includes(searchTerm))
+                );
+            }
+            
+            // Render filtered results
+            const tbody = document.getElementById('investorTableBody');
+            const emptyState = document.getElementById('emptyState');
+            
+            if (filteredInvestors.length === 0) {
+                tbody.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+            
+            emptyState.classList.add('hidden');
+            tbody.innerHTML = filteredInvestors.map(investor => `
+                <tr class="hover:bg-slate-50 dark:hover:bg-slate-700">
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                            <div class="h-10 w-10 rounded-full bg-slate-300 dark:bg-slate-600 flex items-center justify-center">
+                                <span class="text-sm font-medium text-slate-700 dark:text-slate-300">${investor.name.charAt(0)}</span>
+                            </div>
+                            <div class="ml-4">
+                                <div class="text-sm font-medium text-slate-900 dark:text-slate-100">${investor.name}</div>
+                                <div class="text-sm text-slate-500 dark:text-slate-400">ID: ${investor.id}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-slate-900 dark:text-slate-100">${investor.email}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-slate-900 dark:text-slate-100">${investor.company || 'N/A'}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <a href="${investor.linkedinUrl}" target="_blank" class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
+                            View Profile
+                        </a>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <a href="${investor.businessUrl}" target="_blank" class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
+                            View Website
+                        </a>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="status-badge status-${investor.status}">${investor.status}</span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
+                        ${formatDate(investor.appliedDate)}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        ${investor.status === 'pending' ? `
+                            <div class="flex gap-2">
+                                <button onclick="showActionModal('${investor.id}', 'approve')" class="text-green-600 hover:text-green-800 dark:text-green-400 dark:hover:text-green-300">
+                                    Approve
+                                </button>
+                                <button onclick="showActionModal('${investor.id}', 'reject')" class="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300">
+                                    Reject
+                                </button>
+                            </div>
+                        ` : `
+                            <span class="text-slate-400 dark:text-slate-500">${investor.status === 'approved' ? 'Approved' : 'Rejected'}</span>
+                        `}
+                    </td>
+                </tr>
+            `).join('');
+        }
+        
+        // Export Data Function
+        function exportData() {
+            const data = investors.map(inv => ({
+                ID: inv.id,
+                Name: inv.name,
+                Email: inv.email,
+                Company: inv.company,
+                LinkedIn: inv.linkedinUrl,
+                Website: inv.businessUrl,
+                Status: inv.status,
+                Role: inv.role || 'user',
+                'Applied Date': formatDate(inv.appliedDate),
+                'Added by Admin': inv.addedByAdmin || false
+            }));
+            
+            const csv = [
+                Object.keys(data[0]).join(','),
+                ...data.map(row => Object.values(row).map(val => `"${val}"`).join(','))
+            ].join('\n');
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `sirsinexus-users-${new Date().toISOString().split('T')[0]}.csv`;
+            link.click();
+            window.URL.revokeObjectURL(url);
+            
+            showNotification('User data exported successfully!', 'success');
+        }
+        
+        // Refresh Data Function
+        function refreshData() {
+            loadInvestors();
+            showNotification('Data refreshed successfully!', 'success');
+        }
+        
+        // Load initial invites count
+        function loadInvitesCount() {
+            const invites = JSON.parse(localStorage.getItem('pendingInvites') || '[]');
+            invitesSentCount = invites.length;
+            document.getElementById('invitesSent').textContent = invitesSentCount;
+        }
+        
+        // Initialize invites count on load
+        loadInvitesCount();
+        
         // Export functions to window for onclick handlers
         window.filterInvestors = filterInvestors;
         window.showActionModal = showActionModal;
         window.closeModal = closeModal;
         window.confirmAction = confirmAction;
         window.toggleTheme = toggleTheme;
+        window.showAddUserModal = showAddUserModal;
+        window.closeAddUserModal = closeAddUserModal;
+        window.showInviteModal = showInviteModal;
+        window.closeInviteModal = closeInviteModal;
+        window.showQRModal = showQRModal;
+        window.closeQRModal = closeQRModal;
+        window.generateQRCode = generateQRCode;
+        window.downloadQR = downloadQR;
+        window.showRoleManagement = showRoleManagement;
+        window.closeRoleModal = closeRoleModal;
+        window.applyFilters = applyFilters;
+        window.exportData = exportData;
+        window.refreshData = refreshData;
     </script>
 </body>
 </html>
