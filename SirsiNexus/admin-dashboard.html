@@ -186,6 +186,20 @@
             animation: spin 0.8s linear infinite;
         }
         
+        /* Loading indicator */
+        .loading-indicator {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 9999;
+            background: white;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
         .dark .loading-spinner {
             border-color: #2a2f3a;
             border-top-color: #60a5fa;
@@ -612,7 +626,7 @@
     <!-- Main Dashboard Content -->
     <main class="ml-64 pt-16 min-h-screen bg-gray-50 dark:bg-slate-900 p-6" role="main" aria-label="Admin Dashboard">
         <!-- Loading Indicator - Hidden by default -->
-        <div id="dashboard-loading" class="loading-indicator" style="display: none !important;" aria-live="polite">
+        <div id="dashboard-loading" class="loading-indicator" style="display: none;" aria-live="polite">
             <div class="loading-spinner"></div>
             <p>Loading dashboard data...</p>
         </div>

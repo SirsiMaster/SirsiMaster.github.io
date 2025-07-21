@@ -330,3 +330,9 @@ if (window.location.hostname === 'sirsimaster.github.io' || window.location.host
 
 // Export for use
 window.MockWebSocket = MockWebSocket;
+window.MockWebSocketClient = window.WebSocketClient;
+
+// Create a lowercase reference for the dashboard
+if (window.location.hostname === 'sirsimaster.github.io' || window.location.hostname === 'localhost') {
+    window.mockWebSocketClient = window.websocketClient;
+}
