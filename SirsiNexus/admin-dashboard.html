@@ -8,31 +8,22 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- TailwindCSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Production Tailwind CSS - Using compiled version to avoid CDN warning -->
+    <link href="https://unpkg.com/tailwindcss@^3/dist/tailwind.min.css" rel="stylesheet">
     
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        'inter': ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        'dark-bg': '#0f1419',
-                        'dark-card': '#1a1f29',
-                        'dark-border': '#2a2f3a',
-                        'dark-text': '#e1e8ed',
-                        'dark-text-secondary': '#8b98a5',
-                    }
-                }
-            }
+    <!-- Custom CSS Variables for Dark Mode -->
+    <style>
+        :root {
+            --color-dark-bg: #0f1419;
+            --color-dark-card: #1a1f29;
+            --color-dark-border: #2a2f3a;
+            --color-dark-text: #e1e8ed;
+            --color-dark-text-secondary: #8b98a5;
         }
-    </script>
+    </style>
     
     <!-- Theme Toggle Script -->
     <script src="/SirsiNexus/assets/js/fresh-theme-toggle.js"></script>
