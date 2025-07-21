@@ -43,7 +43,7 @@ class UserManagement {
 
     generateSampleData() {
         // Generate sample user data
-        const roles = ['admin', 'investor', 'user'];
+        const roles = ['super_admin', 'admin', 'manager', 'investor', 'committee', 'contributor', 'viewer'];
         const statuses = ['active', 'inactive'];
         const firstNames = ['John', 'Jane', 'Michael', 'Sarah', 'David', 'Emily', 'Robert', 'Lisa', 'William', 'Jennifer', 'James', 'Maria', 'Christopher', 'Linda', 'Daniel'];
         const lastNames = ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis', 'Rodriguez', 'Martinez', 'Hernandez', 'Lopez', 'Gonzalez', 'Wilson', 'Anderson'];
@@ -57,7 +57,7 @@ class UserManagement {
             const company = companies[Math.floor(Math.random() * companies.length)];
             
             // Create more admins for realistic data
-            const finalRole = i <= 8 ? 'admin' : role;
+            const finalRole = i <= 3 ? 'super_admin' : i <= 8 ? 'admin' : role;
             
             const createdDate = new Date();
             createdDate.setDate(createdDate.getDate() - Math.floor(Math.random() * 365));

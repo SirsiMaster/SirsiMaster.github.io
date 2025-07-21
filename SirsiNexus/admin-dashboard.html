@@ -28,6 +28,9 @@
     <!-- Theme Toggle Script -->
     <script src="/SirsiNexus/assets/js/fresh-theme-toggle.js"></script>
     
+    <!-- RBAC System -->
+    <script src="/SirsiNexus/assets/js/rbac-system.js"></script>
+    
     <!-- Custom Styles -->
     <style>
         /* Dark mode styling */
@@ -526,12 +529,12 @@
                     <!-- Exit/Logout Button -->
                     <button class="p-2 rounded-md bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 transition-colors" onclick="handleLogout()">
                         <svg class="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></path>
                         </svg>
                     </button>
                     <!-- User Info -->
                     <div class="flex items-center space-x-3">
-                        <span class="text-sm font-medium text-gray-700 dark:text-gray-200">ADMIN</span>
+                        <span class="text-sm font-medium text-gray-700 dark:text-gray-200 user-role-badge px-2 py-1 rounded">ADMIN</span>
                         <div class="w-8 h-8 bg-gray-300 dark:bg-gray-600 rounded-full flex items-center justify-center">
                             <svg class="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
@@ -553,7 +556,7 @@
                     </svg>
                     Dashboard
                 </a>
-                <a href="#" class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700 rounded-md">
+                <a href="#" class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700 rounded-md" data-feature="user_management">
                     <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
                     </svg>
@@ -577,13 +580,13 @@
                     </svg>
                     Site Admin
                 </a>
-                <a href="#" class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700 rounded-md">
+                <a href="#" class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700 rounded-md" data-feature="security_settings">
                     <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
                     </svg>
                     Security
                 </a>
-                <a href="#" class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700 rounded-md">
+                <a href="#" class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700 rounded-md" data-permission="admin.view_logs">
                     <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
                         <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
@@ -595,7 +598,7 @@
             <div class="mt-8">
                 <h3 class="px-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Quick Actions</h3>
                 <div class="mt-2 space-y-1">
-                    <button class="sidebar-add-user flex items-center w-full px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700 rounded-md">
+                    <button class="sidebar-add-user flex items-center w-full px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700 rounded-md" data-permission="users.create">
                         <svg class="w-4 h-4 mr-3" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z"/>
                         </svg>
@@ -640,11 +643,17 @@
         <!-- Quick Actions Section -->
         <section class="quick-actions-section mb-8">
             <div class="flex justify-between items-center mb-4">
-                <h3 class="text-lg font-semibold text-gray-900">Quick Actions</h3>
-                <span class="text-sm text-gray-500">Admin Tools</span>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-900">Quick Actions</h3>
+                    <span class="text-sm text-gray-500">Admin Tools</span>
+                </div>
+                <div class="flex space-x-2">
+                    <button id="export-csv" class="btn btn-secondary">Export CSV</button>
+                    <button id="export-excel" class="btn btn-secondary">Export Excel</button>
+                </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <button class="quick-action-btn" data-action="add-user">
+                <button class="quick-action-btn" data-action="add-user" data-permission="users.create">
                     <div class="quick-action-icon bg-blue-100 text-blue-600">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
@@ -652,7 +661,7 @@
                     </div>
                     <span class="quick-action-text">Add User</span>
                 </button>
-                <button class="quick-action-btn" data-action="send-invite">
+                <button class="quick-action-btn" data-action="send-invite" data-permission="users.invite">
                     <div class="quick-action-icon bg-green-100 text-green-600">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
@@ -668,7 +677,7 @@
                     </div>
                     <span class="quick-action-text">Generate QR</span>
                 </button>
-                <button class="quick-action-btn" data-action="role-management">
+                <button class="quick-action-btn" data-action="role-management" data-permission="users.manage_roles">
                     <div class="quick-action-icon bg-orange-100 text-orange-600">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
@@ -873,7 +882,13 @@
     <!-- Load Core Services -->
     <script src="/SirsiNexus/assets/js/session-manager.js"></script>
     <script src="/SirsiNexus/assets/js/api-service.js"></script>
-    <!-- dashboard-api.js removed as DashboardAPI is now in api-service.js -->
+    <script src="/SirsiNexus/assets/js/dashboard-api.js"></script>
+    
+    <!-- Mock Backend for GitHub Pages -->
+    <script src="/SirsiNexus/assets/js/mock-backend.js"></script>
+    
+    <!-- WebSocket Client for Real-Time Updates -->
+    <script src="/SirsiNexus/assets/js/websocket-client.js"></script>
     
     <!-- Load Admin Components -->
     <script src="/SirsiNexus/components/admin-header.js"></script>
@@ -881,6 +896,9 @@
     
     <!-- QR Code Library -->
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    
+    <!-- Data Exporter -->
+    <script src="/SirsiNexus/assets/js/data-exporter.js"></script>
     
     <!-- Dashboard JavaScript -->
     <script>
@@ -1029,6 +1047,7 @@
                 
                 return `
                     <div class="kpi-card" 
+                         data-kpi-id="${kpi.id}"
                          tabindex="0" 
                          role="region" 
                          aria-labelledby="${kpi.id}-label"
@@ -1350,6 +1369,15 @@
              * Setup real-time updates
              */
             setupRealTimeUpdates() {
+                // Initialize WebSocket connection
+                if (window.websocketClient) {
+                    console.log('Initializing WebSocket connection...');
+                    websocketClient.connect();
+                    
+                    // Setup WebSocket event listeners
+                    this.setupWebSocketListeners();
+                }
+                
                 // Refresh data every 5 minutes
                 this.refreshInterval = setInterval(() => {
                     this.refreshDashboardData();
@@ -1359,6 +1387,160 @@
                 setInterval(() => {
                     this.updateTimestamps();
                 }, 60 * 1000);
+            }
+            
+            /**
+             * Setup WebSocket event listeners
+             */
+            setupWebSocketListeners() {
+                if (!window.websocketClient) return;
+                
+                // Connection events
+                websocketClient.on('connected', (data) => {
+                    console.log('✅ WebSocket connected:', data);
+                    showToast('Real-time updates connected', 'success');
+                });
+                
+                websocketClient.on('disconnected', (data) => {
+                    console.log('❌ WebSocket disconnected:', data);
+                    showToast('Real-time updates disconnected', 'warning');
+                });
+                
+                websocketClient.on('error', (data) => {
+                    console.error('WebSocket error:', data);
+                });
+                
+                // Real-time data updates
+                websocketClient.on('kpiUpdate', (data) => {
+                    console.log('📊 KPI Update received:', data);
+                    this.handleKPIUpdate(data);
+                });
+                
+                websocketClient.on('newActivity', (data) => {
+                    console.log('📝 New activity received:', data);
+                    this.handleNewActivity(data);
+                });
+                
+                websocketClient.on('newNotification', (data) => {
+                    console.log('🔔 New notification received:', data);
+                    this.handleNewNotification(data);
+                });
+                
+                websocketClient.on('userCountUpdate', (data) => {
+                    console.log('👥 User count update:', data);
+                    this.handleUserCountUpdate(data);
+                });
+                
+                websocketClient.on('metricsUpdate', (data) => {
+                    console.log('📈 Metrics update:', data);
+                    this.handleMetricsUpdate(data);
+                });
+                
+                websocketClient.on('systemStatusUpdate', (data) => {
+                    console.log('🖥️ System status update:', data);
+                    this.handleSystemStatusUpdate(data);
+                });
+            }
+            
+            /**
+             * Handle real-time KPI updates
+             */
+            handleKPIUpdate(data) {
+                const kpiElement = document.querySelector(`[data-kpi-id="${data.kpiId}"]`);
+                if (kpiElement) {
+                    const valueElement = kpiElement.querySelector(`#${data.kpiId}-value`);
+                    if (valueElement) {
+                        const currentValue = parseInt(valueElement.textContent.replace(/,/g, '')) || 0;
+                        const newValue = currentValue + (data.change || 0);
+                        valueElement.textContent = newValue.toLocaleString();
+                        
+                        // Add animation effect
+                        kpiElement.classList.add('animate-pulse');
+                        setTimeout(() => {
+                            kpiElement.classList.remove('animate-pulse');
+                        }, 1000);
+                    }
+                }
+            }
+            
+            /**
+             * Handle new activity in real-time
+             */
+            handleNewActivity(data) {
+                const tbody = document.getElementById('activity-tbody');
+                if (!tbody) return;
+                
+                // Create new row
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = this.createActivityRow(data.activity);
+                newRow.classList.add('bg-yellow-50', 'dark:bg-yellow-900/20');
+                
+                // Insert at the beginning
+                tbody.insertBefore(newRow, tbody.firstChild);
+                
+                // Remove highlight after 2 seconds
+                setTimeout(() => {
+                    newRow.classList.remove('bg-yellow-50', 'dark:bg-yellow-900/20');
+                }, 2000);
+                
+                // Keep only last 10 activities
+                while (tbody.children.length > 10) {
+                    tbody.removeChild(tbody.lastChild);
+                }
+                
+                // Announce to screen readers
+                if (window.accessibilityManager) {
+                    accessibilityManager.announce(`New activity: ${data.activity.action}`);
+                }
+            }
+            
+            /**
+             * Handle new notification in real-time
+             */
+            handleNewNotification(data) {
+                // Add to notifications array
+                if (!this.notifications) this.notifications = [];
+                this.notifications.unshift(data.notification);
+                
+                // Update badge
+                const badge = document.querySelector('.notification-badge');
+                if (badge) {
+                    const unreadCount = this.notifications.filter(n => !n.read).length;
+                    badge.textContent = unreadCount || '0';
+                    badge.style.display = unreadCount ? 'block' : 'none';
+                }
+                
+                // Show toast notification
+                showToast(data.notification.title, data.notification.type || 'info');
+                
+                // Update notifications list
+                this.renderNotifications(this.notifications);
+            }
+            
+            /**
+             * Handle user count updates
+             */
+            handleUserCountUpdate(data) {
+                const onlineIndicator = document.querySelector('[data-metric="active-sessions"]');
+                if (onlineIndicator) {
+                    onlineIndicator.textContent = data.count;
+                }
+            }
+            
+            /**
+             * Handle metrics updates
+             */
+            handleMetricsUpdate(data) {
+                // Update system metrics if displayed
+                console.log('Metrics updated:', data.metrics);
+            }
+            
+            /**
+             * Handle system status updates
+             */
+            handleSystemStatusUpdate(data) {
+                // Re-render system status
+                this.renderSystemStatus(data.status);
             }
 
             /**
@@ -2292,6 +2474,25 @@
             if (viewAllNotificationsBtn) {
                 viewAllNotificationsBtn.addEventListener('click', () => {
                     alert('View all notifications page coming soon!');
+                });
+            }
+            
+            // Export buttons
+            const exportCSVBtn = document.getElementById('export-csv');
+            if (exportCSVBtn) {
+                exportCSVBtn.addEventListener('click', () => {
+                    if (window.dataExporter) {
+                        dataExporter.showExportOptions('csv');
+                    }
+                });
+            }
+            
+            const exportExcelBtn = document.getElementById('export-excel');
+            if (exportExcelBtn) {
+                exportExcelBtn.addEventListener('click', () => {
+                    if (window.dataExporter) {
+                        dataExporter.showExportOptions('excel');
+                    }
                 });
             }
         });

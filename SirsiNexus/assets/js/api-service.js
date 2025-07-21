@@ -27,9 +27,11 @@ class APIService {
     setupDefaults() {
         // Add auth token to all requests
         this.addRequestInterceptor((config) => {
-            const token = sessionManager.getAuthToken();
-            if (token) {
-                config.headers.Authorization = `Bearer ${token}`;
+            if (typeof sessionManager !== 'undefined' && sessionManager.getAuthToken) {
+                const token = sessionManager.getAuthToken();
+                if (token) {
+                    config.headers.Authorization = `Bearer ${token}`;
+                }
             }
             
             // Add timestamp to prevent caching
@@ -50,11 +52,15 @@ class APIService {
                     error.config._retry = true;
                     
                     try {
-                        await sessionManager.refreshToken();
-                        // Retry the original request
-                        return this.request(error.config);
+                        if (typeof sessionManager !== 'undefined' && sessionManager.refreshToken) {
+                            await sessionManager.refreshToken();
+                            // Retry the original request
+                            return this.request(error.config);
+                        }
                     } catch (refreshError) {
-                        sessionManager.logout('token_expired');
+                        if (typeof sessionManager !== 'undefined' && sessionManager.logout) {
+                            sessionManager.logout('token_expired');
+                        }
                         return Promise.reject(refreshError);
                     }
                 }
@@ -209,12 +215,19 @@ class APIService {
                 error.status = response.status;
                 error.config = options;
                 
+                // Clone response before reading to avoid stream issues
+                const clonedResponse = response.clone();
+                
                 // Try to parse error response
                 try {
-                    const errorData = await response.json();
+                    const errorData = await clonedResponse.json();
                     error.data = errorData;
                 } catch (parseError) {
-                    error.data = await response.text();
+                    try {
+                        error.data = await response.text();
+                    } catch (textError) {
+                        error.data = null;
+                    }
                 }
                 
                 throw error;
