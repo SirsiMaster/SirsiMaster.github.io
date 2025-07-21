@@ -613,75 +613,8 @@
         <!-- System Status Section -->
         <section class="system-status-section mb-8" aria-labelledby="status-heading" role="region">
             <h2 id="status-heading" class="text-xl font-semibold text-gray-900 dark:text-white mb-4">System Status</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="stat-card">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-sm text-gray-600 dark:text-gray-400">Server Status</p>
-                            <p class="text-2xl font-semibold text-gray-900 dark:text-white mt-1">Operational</p>
-                        </div>
-                        <div class="w-12 h-12 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center">
-                            <svg class="w-6 h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="mt-4">
-                        <div class="flex items-center justify-between text-sm">
-                            <span class="text-gray-600 dark:text-gray-400">Uptime</span>
-                            <span class="text-gray-900 dark:text-white font-medium">99.98%</span>
-                        </div>
-                        <div class="mt-2 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                            <div class="bg-green-500 h-2 rounded-full" style="width: 99.98%"></div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-sm text-gray-600 dark:text-gray-400">API Response Time</p>
-                            <p class="text-2xl font-semibold text-gray-900 dark:text-white mt-1">124ms</p>
-                        </div>
-                        <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/20 rounded-full flex items-center justify-center">
-                            <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="mt-4">
-                        <div class="flex items-center justify-between text-sm">
-                            <span class="text-gray-600 dark:text-gray-400">Average</span>
-                            <span class="text-gray-900 dark:text-white font-medium">Good</span>
-                        </div>
-                        <div class="mt-2 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                            <div class="bg-blue-500 h-2 rounded-full" style="width: 75%"></div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-sm text-gray-600 dark:text-gray-400">Storage Used</p>
-                            <p class="text-2xl font-semibold text-gray-900 dark:text-white mt-1">62.4 GB</p>
-                        </div>
-                        <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/20 rounded-full flex items-center justify-center">
-                            <svg class="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"></path>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="mt-4">
-                        <div class="flex items-center justify-between text-sm">
-                            <span class="text-gray-600 dark:text-gray-400">Of 100 GB</span>
-                            <span class="text-gray-900 dark:text-white font-medium">62.4%</span>
-                        </div>
-                        <div class="mt-2 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                            <div class="bg-purple-500 h-2 rounded-full" style="width: 62.4%"></div>
-                        </div>
-                    </div>
-                </div>
+            <div id="system-status-grid" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- System status cards will be dynamically loaded -->
             </div>
         </section>
         
@@ -692,45 +625,8 @@
                     <h3 id="notifications-heading" class="text-lg font-semibold text-gray-900 dark:text-white">Recent Notifications</h3>
                     <button class="text-sm text-blue-600 dark:text-blue-400 hover:underline">View All</button>
                 </div>
-                <div class="space-y-3">
-                    <div class="flex items-start space-x-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                        <div class="flex-shrink-0">
-                            <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
-                            </svg>
-                        </div>
-                        <div class="flex-1">
-                            <p class="text-sm font-medium text-gray-900 dark:text-white">System Update Available</p>
-                            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Version 2.4.0 is now available with new features and improvements.</p>
-                            <p class="text-xs text-gray-500 dark:text-gray-500 mt-2">2 hours ago</p>
-                        </div>
-                    </div>
-                    
-                    <div class="flex items-start space-x-3 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
-                        <div class="flex-shrink-0">
-                            <svg class="w-5 h-5 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                            </svg>
-                        </div>
-                        <div class="flex-1">
-                            <p class="text-sm font-medium text-gray-900 dark:text-white">Backup Completed</p>
-                            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Daily backup completed successfully.</p>
-                            <p class="text-xs text-gray-500 dark:text-gray-500 mt-2">5 hours ago</p>
-                        </div>
-                    </div>
-                    
-                    <div class="flex items-start space-x-3 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
-                        <div class="flex-shrink-0">
-                            <svg class="w-5 h-5 text-yellow-600 dark:text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
-                            </svg>
-                        </div>
-                        <div class="flex-1">
-                            <p class="text-sm font-medium text-gray-900 dark:text-white">High Memory Usage</p>
-                            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Server memory usage is above 85%.</p>
-                            <p class="text-xs text-gray-500 dark:text-gray-500 mt-2">1 day ago</p>
-                        </div>
-                    </div>
+                <div id="notifications-list" class="space-y-3">
+                    <!-- Notifications will be dynamically loaded -->
                 </div>
             </div>
         </section>
@@ -829,6 +725,9 @@
                     
                     // Load users
                     await this.loadUsers();
+                    
+                    // Load system status
+                    await this.loadSystemStatus();
                     
                     this.lastUpdate = new Date();
                 } catch (error) {
@@ -1238,7 +1137,8 @@
                         this.loadKPIs(),
                         this.loadRecentActivity(),
                         this.loadUsers(),
-                        this.loadNotifications()
+                        this.loadNotifications(),
+                        this.loadSystemStatus()
                     ]);
                     
                     this.lastUpdate = new Date();
@@ -1525,12 +1425,16 @@
                     // Update notification badge count
                     const badge = document.querySelector('.notification-badge');
                     if (badge) {
-                        badge.textContent = notifications.length || '0';
-                        badge.style.display = notifications.length ? 'block' : 'none';
+                        const unreadCount = notifications.filter(n => !n.read).length;
+                        badge.textContent = unreadCount || '0';
+                        badge.style.display = unreadCount ? 'block' : 'none';
                     }
                     
                     // Store notifications for dropdown
                     this.notifications = notifications;
+                    
+                    // Render notifications in the notifications section
+                    this.renderNotifications(notifications);
                     
                 } catch (error) {
                     console.error('Error loading notifications:', error);
@@ -1538,6 +1442,119 @@
                     const badge = document.querySelector('.notification-badge');
                     if (badge) {
                         badge.style.display = 'none';
+                    }
+                }
+            }
+
+            /**
+             * Render notifications in the UI
+             */
+            renderNotifications(notifications) {
+                const notificationsList = document.getElementById('notifications-list');
+                if (!notificationsList) return;
+                
+                if (notifications.length === 0) {
+                    notificationsList.innerHTML = `
+                        <div class="text-center py-8">
+                            <p class="text-gray-500 dark:text-gray-400">No notifications</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                notificationsList.innerHTML = notifications.slice(0, 5).map(notification => {
+                    const bgColor = this.getNotificationBgColor(notification.type);
+                    const icon = this.getNotificationIcon(notification.type);
+                    const timeAgo = this.getTimeAgo(notification.timestamp);
+                    
+                    return `
+                        <div class="flex items-start space-x-3 p-3 ${bgColor} rounded-lg cursor-pointer hover:opacity-90 transition-opacity"
+                             onclick="adminDashboard.handleNotificationClick(${notification.id})"
+                             role="button"
+                             tabindex="0"
+                             aria-label="${notification.title}">
+                            <div class="flex-shrink-0">
+                                ${icon}
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-sm font-medium text-gray-900 dark:text-white">${notification.title}</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">${notification.message}</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-500 mt-2">${timeAgo}</p>
+                            </div>
+                            ${!notification.read ? '<div class="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0"></div>' : ''}
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            /**
+             * Get notification background color based on type
+             */
+            getNotificationBgColor(type) {
+                const colors = {
+                    'info': 'bg-blue-50 dark:bg-blue-900/20',
+                    'success': 'bg-green-50 dark:bg-green-900/20',
+                    'warning': 'bg-yellow-50 dark:bg-yellow-900/20',
+                    'error': 'bg-red-50 dark:bg-red-900/20'
+                };
+                return colors[type] || colors['info'];
+            }
+
+            /**
+             * Get notification icon based on type
+             */
+            getNotificationIcon(type) {
+                const icons = {
+                    'info': `<svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                            </svg>`,
+                    'success': `<svg class="w-5 h-5 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                                   <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                               </svg>`,
+                    'warning': `<svg class="w-5 h-5 text-yellow-600 dark:text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                   <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                               </svg>`,
+                    'error': `<svg class="w-5 h-5 text-red-600 dark:text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+                             </svg>`
+                };
+                return icons[type] || icons['info'];
+            }
+
+            /**
+             * Get time ago string
+             */
+            getTimeAgo(timestamp) {
+                const date = new Date(timestamp);
+                const now = new Date();
+                const seconds = Math.floor((now - date) / 1000);
+                
+                if (seconds < 60) return 'just now';
+                if (seconds < 3600) return `${Math.floor(seconds / 60)} minutes ago`;
+                if (seconds < 86400) return `${Math.floor(seconds / 3600)} hours ago`;
+                if (seconds < 604800) return `${Math.floor(seconds / 86400)} days ago`;
+                return date.toLocaleDateString();
+            }
+
+            /**
+             * Handle notification click
+             */
+            handleNotificationClick(notificationId) {
+                // Mark as read
+                this.api.markNotificationRead(notificationId);
+                
+                // Update UI
+                const notification = this.notifications.find(n => n.id === notificationId);
+                if (notification) {
+                    notification.read = true;
+                    this.renderNotifications(this.notifications);
+                    
+                    // Update badge
+                    const badge = document.querySelector('.notification-badge');
+                    if (badge) {
+                        const unreadCount = this.notifications.filter(n => !n.read).length;
+                        badge.textContent = unreadCount || '0';
+                        badge.style.display = unreadCount ? 'block' : 'none';
                     }
                 }
             }
@@ -1569,6 +1586,144 @@
                 } catch (error) {
                     console.error('Error loading users:', error);
                     // Keep default values on error
+                }
+            }
+
+            /**
+             * Load system status from API
+             */
+            async loadSystemStatus() {
+                try {
+                    const response = await this.api.getSystemStatus();
+                    const status = response.data;
+                    
+                    this.renderSystemStatus(status);
+                    
+                } catch (error) {
+                    console.error('Error loading system status:', error);
+                    this.showSystemStatusError();
+                }
+            }
+
+            /**
+             * Render system status cards
+             */
+            renderSystemStatus(status) {
+                const statusGrid = document.getElementById('system-status-grid');
+                if (!statusGrid) return;
+                
+                const statusCards = [
+                    {
+                        title: 'Server Status',
+                        value: status.server.status.charAt(0).toUpperCase() + status.server.status.slice(1),
+                        subtitle: 'Uptime',
+                        subvalue: `${status.server.uptime}%`,
+                        progress: status.server.uptime,
+                        icon: 'check',
+                        color: 'green'
+                    },
+                    {
+                        title: 'API Response Time',
+                        value: `${status.api.responseTime}ms`,
+                        subtitle: 'Average',
+                        subvalue: status.api.status === 'healthy' ? 'Good' : 'Slow',
+                        progress: Math.max(0, 100 - (status.api.responseTime / 5)),
+                        icon: 'lightning',
+                        color: 'blue'
+                    },
+                    {
+                        title: 'Storage Used',
+                        value: `${status.storage.used} GB`,
+                        subtitle: `Of ${status.storage.total} GB`,
+                        subvalue: `${status.storage.percentage}%`,
+                        progress: status.storage.percentage,
+                        icon: 'database',
+                        color: 'purple'
+                    }
+                ];
+                
+                statusGrid.innerHTML = statusCards.map(card => this.createSystemStatusCard(card)).join('');
+            }
+
+            /**
+             * Create system status card HTML
+             */
+            createSystemStatusCard(card) {
+                const iconSvg = this.getSystemStatusIcon(card.icon, card.color);
+                const progressColor = this.getProgressColor(card.color);
+                
+                return `
+                    <div class="stat-card" 
+                         tabindex="0"
+                         role="region"
+                         aria-label="${card.title}: ${card.value}">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">${card.title}</p>
+                                <p class="text-2xl font-semibold text-gray-900 dark:text-white mt-1">${card.value}</p>
+                            </div>
+                            <div class="w-12 h-12 bg-${card.color}-100 dark:bg-${card.color}-900/20 rounded-full flex items-center justify-center">
+                                ${iconSvg}
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-gray-600 dark:text-gray-400">${card.subtitle}</span>
+                                <span class="text-gray-900 dark:text-white font-medium">${card.subvalue}</span>
+                            </div>
+                            <div class="mt-2 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                <div class="${progressColor} h-2 rounded-full transition-all duration-300" 
+                                     style="width: ${card.progress}%"></div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            /**
+             * Get system status icon
+             */
+            getSystemStatusIcon(type, color) {
+                const icons = {
+                    'check': `<svg class="w-6 h-6 text-${color}-600 dark:text-${color}-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                              </svg>`,
+                    'lightning': `<svg class="w-6 h-6 text-${color}-600 dark:text-${color}-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                  </svg>`,
+                    'database': `<svg class="w-6 h-6 text-${color}-600 dark:text-${color}-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"></path>
+                                 </svg>`
+                };
+                return icons[type] || icons['check'];
+            }
+
+            /**
+             * Get progress bar color
+             */
+            getProgressColor(color) {
+                const colors = {
+                    'green': 'bg-green-500',
+                    'blue': 'bg-blue-500',
+                    'purple': 'bg-purple-500',
+                    'yellow': 'bg-yellow-500',
+                    'red': 'bg-red-500'
+                };
+                return colors[color] || 'bg-gray-500';
+            }
+
+            /**
+             * Show system status error
+             */
+            showSystemStatusError() {
+                const statusGrid = document.getElementById('system-status-grid');
+                if (statusGrid) {
+                    statusGrid.innerHTML = `
+                        <div class="col-span-full text-center py-8">
+                            <p class="text-gray-500 dark:text-gray-400">Failed to load system status</p>
+                            <button onclick="adminDashboard.loadSystemStatus()" class="btn btn-primary mt-4">Retry</button>
+                        </div>
+                    `;
                 }
             }
 
