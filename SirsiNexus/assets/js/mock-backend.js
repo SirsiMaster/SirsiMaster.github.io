@@ -240,16 +240,16 @@ class MockBackend {
     }
 
     createResponse(data, status = 200) {
-        return {
-            ok: status >= 200 && status < 300,
+        // Create a proper Response object that supports clone()
+        const responseBody = JSON.stringify({ data });
+        const response = new Response(responseBody, {
             status,
             statusText: status === 200 ? 'OK' : 'Error',
-            json: async () => ({ data }),
-            text: async () => JSON.stringify({ data }),
-            headers: new Headers({
+            headers: {
                 'Content-Type': 'application/json'
-            })
-        };
+            }
+        });
+        return response;
     }
 
     // API Methods

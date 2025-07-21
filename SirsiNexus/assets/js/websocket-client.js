@@ -17,8 +17,11 @@ class WebSocketClient {
         this.config = {
             url: window.location.hostname === 'localhost' 
                 ? 'ws://localhost:8080' 
-                : 'wss://your-production-websocket-url.com',
-            heartbeatInterval: 30000 // 30 seconds
+                : window.location.protocol === 'https:' 
+                    ? 'wss://echo.websocket.org' // Use echo server for demo
+                    : 'ws://echo.websocket.org',
+            heartbeatInterval: 30000, // 30 seconds
+            useMockConnection: true // Use mock for GitHub Pages
         };
     }
 
