@@ -476,12 +476,12 @@
             <div class="flex items-center space-x-6 text-sm">
                 <div class="flex items-center">
                     <span class="text-gray-500 dark:text-gray-400">Total Users</span>
-                    <span class="ml-2 font-semibold text-gray-900 dark:text-white">3</span>
+                    <span class="ml-2 font-semibold text-gray-900 dark:text-white" data-metric="total-users">0</span>
                 </div>
                 <div class="w-px h-5 bg-gray-300 dark:bg-gray-600"></div>
                 <div class="flex items-center">
                     <span class="text-gray-500 dark:text-gray-400">Active Sessions</span>
-                    <span class="ml-2 font-semibold text-gray-900 dark:text-white">1</span>
+                    <span class="ml-2 font-semibold text-gray-900 dark:text-white" data-metric="active-sessions">0</span>
                 </div>
             </div>
         </div>
@@ -736,6 +736,11 @@
         </section>
     </main>
     
+    <!-- Load Core Services -->
+    <script src="../assets/js/session-manager.js"></script>
+    <script src="../assets/js/api-service.js"></script>
+    <script src="../assets/js/dashboard-api.js"></script>
+    
     <!-- Load Admin Components -->
     <script src="components/admin-header.js"></script>
     <script src="components/admin-sidebar.js"></script>
@@ -753,6 +758,7 @@
                 this.refreshInterval = null;
                 this.isLoading = false;
                 this.lastUpdate = null;
+                this.api = new DashboardAPI(); // Use real API
                 
                 // Initialize dashboard
                 this.init();
@@ -774,7 +780,7 @@
                     // Show loading indicator
                     this.showLoading(true);
                     
-                    // Load dashboard data (with fallbacks)
+                    // Load dashboard data from API
                     await this.loadDashboardData();
                     
                     // Initialize charts
@@ -783,27 +789,7 @@
                     // Setup real-time updates
                     this.setupRealTimeUpdates();
                     
-// Load users and update UI
-            async loadUsers() {
-                try {
-                    const response = await dashboardAPI.getUsers();
-                    console.log('Users loaded:', response.data);
-                } catch (error) {
-                    console.error('Error loading users:', error);
-                }
-            }
-
-            // Load notifications and update UI
-            async loadNotifications() {
-                try {
-                    const response = await dashboardAPI.getNotifications();
-                    console.log('Notifications loaded:', response.data);
-                } catch (error) {
-                    console.error('Error loading notifications:', error);
-                }
-            }
-
-            // Setup event listeners
+                    // Setup event listeners
                     this.setupEventListeners();
                     
                     // Hide loading indicator
@@ -819,8 +805,8 @@
                     console.error('❌ Dashboard initialization failed:', error);
                     // Hide loading indicator even on error
                     this.showLoading(false);
-                    // Load fallback data instead of showing error
-                    this.loadFallbackKPIs();
+                    // Show error message to user
+                    this.showError('Failed to load dashboard data. Please check your connection and try again.');
                 }
             }
 
@@ -829,22 +815,25 @@
              */
             async loadDashboardData() {
                 try {
-                    // Load KPIs (always use fallback for now)
-                    this.loadFallbackKPIs();
+                    // Load KPIs from real API
+                    await this.loadKPIs();
                     
-                    // Load recent activity (with fallback)
-                    await this.loadRecentActivity().catch(() => {
-                        console.log('Using fallback activity data');
-                        // Add fallback activity data if needed
-                    });
+                    // Load recent activity from real API
+                    await this.loadRecentActivity();
                     
-                    // Load chart data (with fallback)
+                    // Load chart data from real API
                     await this.loadChartData();
+                    
+                    // Load notifications
+                    await this.loadNotifications();
+                    
+                    // Load users
+                    await this.loadUsers();
                     
                     this.lastUpdate = new Date();
                 } catch (error) {
                     console.error('Error loading dashboard data:', error);
-                    // Don't throw error, use fallbacks
+                    throw error; // Let init handle the error
                 }
             }
 
@@ -853,12 +842,21 @@
              */
             async loadKPIs() {
                 try {
-                    // Try to load from API first
-                    const response = await dashboardAPI.getKPIs();
-                    const kpis = response.data;
+                    // Load from API
+                    const response = await this.api.getKPIs();
+                    const kpis = response.data || [];
                     
                     const kpiGrid = document.getElementById('kpi-grid');
                     if (!kpiGrid) return;
+                    
+                    if (kpis.length === 0) {
+                        kpiGrid.innerHTML = `
+                            <div class="col-span-full text-center py-8">
+                                <p class="text-gray-500 dark:text-gray-400">No KPI data available yet</p>
+                            </div>
+                        `;
+                        return;
+                    }
                     
                     kpiGrid.innerHTML = kpis.map(kpi => this.createKPICard(kpi)).join('');
                     
@@ -867,71 +865,10 @@
                     
                 } catch (error) {
                     console.error('Error loading KPIs:', error);
-                    // Show beautiful fallback KPIs instead of error
-                    this.loadFallbackKPIs();
+                    this.showKPIError();
                 }
             }
 
-            /**
-             * Load fallback KPI data for beautiful dashboard display
-             */
-            loadFallbackKPIs() {
-                const fallbackKPIs = [
-                    {
-                        id: 'total-users',
-                        name: 'Total Users',
-                        value: '3',
-                        trend: 'up',
-                        change: '+15%',
-                        color: 'blue',
-                        icon: '👥'
-                    },
-                    {
-                        id: 'pending-review',
-                        name: 'Pending Review',
-                        value: '2',
-                        trend: 'neutral',
-                        change: '0%',
-                        color: 'orange',
-                        icon: '⏳'
-                    },
-                    {
-                        id: 'approved',
-                        name: 'Approved',
-                        value: '1',
-                        trend: 'up',
-                        change: '+100%',
-                        color: 'emerald',
-                        icon: '✅'
-                    },
-                    {
-                        id: 'rejected',
-                        name: 'Rejected',
-                        value: '0',
-                        trend: 'neutral',
-                        change: '0%',
-                        color: 'red',
-                        icon: '❌'
-                    },
-                    {
-                        id: 'invites-sent',
-                        name: 'Invites Sent', 
-                        value: '0',
-                        trend: 'neutral',
-                        change: '0%',
-                        color: 'blue',
-                        icon: '📨'
-                    }
-                ];
-                
-                const kpiGrid = document.getElementById('kpi-grid');
-                if (!kpiGrid) return;
-                
-                kpiGrid.innerHTML = fallbackKPIs.map(kpi => this.createKPICard(kpi)).join('');
-                
-                // Add accessibility enhancements
-                this.enhanceKPIAccessibility();
-            }
 
             /**
              * Create KPI card HTML matching the reference image layout
@@ -1000,11 +937,22 @@
              */
             async loadRecentActivity() {
                 try {
-                    const response = await dashboardAPI.getRecentActivity();
-                    const activities = response.data;
+                    const response = await this.api.getRecentActivity();
+                    const activities = response.data || [];
                     
                     const tbody = document.getElementById('activity-tbody');
                     if (!tbody) return;
+                    
+                    if (activities.length === 0) {
+                        tbody.innerHTML = `
+                            <tr>
+                                <td colspan="4" class="text-center py-8">
+                                    <p class="text-gray-500 dark:text-gray-400">No recent activity yet</p>
+                                </td>
+                            </tr>
+                        `;
+                        return;
+                    }
                     
                     tbody.innerHTML = activities.map(activity => this.createActivityRow(activity)).join('');
                     
@@ -1057,13 +1005,13 @@
             async loadChartData() {
                 try {
                     // Load revenue data
-                    const revenueResponse = await dashboardAPI.getChartData('revenue');
+                    const revenueResponse = await this.api.getChartData('revenue');
                     this.chartData = {
                         revenue: revenueResponse.data
                     };
                     
                     // Load user data
-                    const userResponse = await dashboardAPI.getChartData('users');
+                    const userResponse = await this.api.getChartData('users');
                     this.chartData.users = userResponse.data;
                     
                 } catch (error) {
@@ -1274,10 +1222,7 @@
             }
 
             /**
-// Refresh dashboard data
-                // Ensure additional data loads
-                this.loadUsers(); // Load user data
-                this.loadNotifications(); // Load notifications
+             * Refresh dashboard data
              */
             async refreshDashboardData() {
                 if (this.isLoading) return;
@@ -1289,8 +1234,12 @@
                     this.showRefreshIndicator(true);
                     
                     // Load fresh data
-                    await this.loadKPIs();
-                    await this.loadRecentActivity();
+                    await Promise.all([
+                        this.loadKPIs(),
+                        this.loadRecentActivity(),
+                        this.loadUsers(),
+                        this.loadNotifications()
+                    ]);
                     
                     this.lastUpdate = new Date();
                     
@@ -1562,6 +1511,64 @@
                             </td>
                         </tr>
                     `;
+                }
+            }
+
+            /**
+             * Load notifications from API
+             */
+            async loadNotifications() {
+                try {
+                    const response = await this.api.getNotifications();
+                    const notifications = response.data || [];
+                    
+                    // Update notification badge count
+                    const badge = document.querySelector('.notification-badge');
+                    if (badge) {
+                        badge.textContent = notifications.length || '0';
+                        badge.style.display = notifications.length ? 'block' : 'none';
+                    }
+                    
+                    // Store notifications for dropdown
+                    this.notifications = notifications;
+                    
+                } catch (error) {
+                    console.error('Error loading notifications:', error);
+                    // Don't show error, just hide badge
+                    const badge = document.querySelector('.notification-badge');
+                    if (badge) {
+                        badge.style.display = 'none';
+                    }
+                }
+            }
+
+            /**
+             * Load users from API  
+             */
+            async loadUsers() {
+                try {
+                    const response = await this.api.getUsers();
+                    const users = response.data || [];
+                    
+                    // Update user count in system overview
+                    const userCountElement = document.querySelector('[data-metric="total-users"]');
+                    if (userCountElement) {
+                        userCountElement.textContent = users.length;
+                    }
+                    
+                    // Update active sessions count
+                    const activeSessions = users.filter(user => user.isActive).length;
+                    const sessionCountElement = document.querySelector('[data-metric="active-sessions"]');
+                    if (sessionCountElement) {
+                        sessionCountElement.textContent = activeSessions;
+                    }
+                    
+                    // Store users for other features
+                    this.users = users;
+                    
+                } catch (error) {
+                    console.error('Error loading users:', error);
+                    // Keep default values on error
                 }
             }
 
