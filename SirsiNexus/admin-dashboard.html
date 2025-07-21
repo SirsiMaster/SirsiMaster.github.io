@@ -2088,11 +2088,32 @@
 
         // Modal functions
         function openModal(modalId) {
-            document.getElementById(modalId).classList.add('show');
+            console.log('=== OPEN MODAL CALLED ===');
+            console.log('Modal ID:', modalId);
+            const modal = document.getElementById(modalId);
+            console.log('Modal element:', modal);
+            console.log('Modal exists:', modal !== null);
+            
+            if (modal) {
+                console.log('Current classes before:', modal.className);
+                modal.classList.add('show');
+                console.log('Current classes after:', modal.className);
+                console.log('Modal display style:', window.getComputedStyle(modal).display);
+            } else {
+                console.error('Modal not found:', modalId);
+            }
         }
 
         function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('show');
+            console.log('=== CLOSE MODAL CALLED ===');
+            console.log('Modal ID:', modalId);
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('show');
+                console.log('Modal closed');
+            } else {
+                console.error('Modal not found:', modalId);
+            }
         }
 
         // QR Code functions
@@ -2286,20 +2307,30 @@
 
         // Handle quick actions
         function handleQuickAction(action) {
-            console.log('Quick action:', action);
+            console.log('=== HANDLE QUICK ACTION CALLED ===');
+            console.log('Action:', action);
+            console.log('Available modals:', {
+                addUserModal: document.getElementById('addUserModal'),
+                sendInviteModal: document.getElementById('sendInviteModal'),
+                qrCodeModal: document.getElementById('qrCodeModal')
+            });
             
             switch(action) {
                 case 'add-user':
+                    console.log('Opening add user modal...');
                     openModal('addUserModal');
                     break;
                 case 'send-invite':
+                    console.log('Opening send invite modal...');
                     openModal('sendInviteModal');
                     break;
                 case 'generate-qr':
+                    console.log('Opening QR code modal...');
                     openModal('qrCodeModal');
                     updateQRForm(); // Initialize form
                     break;
                 case 'role-management':
+                    console.log('Navigating to role management...');
                     // Navigate to role management page
                     window.location.href = 'role-management.html';
                     break;
