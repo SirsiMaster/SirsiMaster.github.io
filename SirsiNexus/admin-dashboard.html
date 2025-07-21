@@ -33,8 +33,47 @@
     
     <!-- Accessibility System -->
     <script src="assets/js/accessibility.js"></script>
+    
+    <!-- Quick Actions Styles -->
+    <style>
+        .quick-action-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            background: white;
+            border: 2px dashed #d1d5db;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-height: 120px;
+        }
+        
+        .quick-action-btn:hover {
+            border-color: #6b7280;
+            background-color: #f9fafb;
+        }
+        
+        .quick-action-icon {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.75rem;
+        }
+        
+        .quick-action-text {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #374151;
+            text-align: center;
+        }
+    </style>
 </head>
-<body class="font-inter bg-slate-900 text-slate-100 transition-colors duration-300 dark">
+<body class="font-inter bg-gray-50 text-gray-900 transition-colors duration-300">
     <!-- Skip Links for Accessibility -->
     <div id="skip-links"></div>
     <!-- Admin Sidebar Navigation -->
@@ -53,26 +92,64 @@
             <div class="loading-spinner"></div>
             <p>Loading dashboard data...</p>
         </div>
+        <!-- System Overview Header -->
+        <div class="mb-6">
+            <h2 class="text-xl font-semibold text-gray-900 mb-2">System Overview</h2>
+            <div class="flex space-x-4 text-sm text-gray-600">
+                <span>Total Users</span>
+                <span>Active Sessions</span>
+            </div>
+        </div>
+
         <!-- KPI Dashboard Section -->
         <section class="kpi-section" aria-labelledby="kpi-heading" role="region">
             <h2 id="kpi-heading" class="sr-only">Key Performance Indicators</h2>
-            <div id="kpi-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div id="kpi-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
                 <!-- KPI Cards will be dynamically loaded -->
             </div>
         </section>
         
-        <!-- Enhanced Analytics Preview -->
-        <div class="card mb-8" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%); color: white; border: none; box-shadow: 0 8px 25px rgba(5, 150, 105, 0.25);">
-            <div class="flex justify-between items-center">
-                <div>
-                    <h3 class="text-white mb-2 font-bold">Advanced Analytics Dashboard</h3>
-                    <p class="text-emerald-100 mb-0">Real-time metrics, charts, and activity monitoring</p>
-                </div>
-                <a href="analytics-dashboard.html" class="bg-white bg-opacity-20 hover:bg-opacity-30 px-6 py-3 rounded-lg font-semibold transition-all duration-200 hover:transform hover:scale-105 text-white hover:text-white">
-                    View Analytics →
-                </a>
+        <!-- Quick Actions Section -->
+        <section class="quick-actions-section mb-8">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold text-gray-900">Quick Actions</h3>
+                <span class="text-sm text-gray-500">Admin Tools</span>
             </div>
-        </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <button class="quick-action-btn" data-action="add-user">
+                    <div class="quick-action-icon bg-blue-100 text-blue-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
+                    </div>
+                    <span class="quick-action-text">Add User</span>
+                </button>
+                <button class="quick-action-btn" data-action="send-invite">
+                    <div class="quick-action-icon bg-green-100 text-green-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <span class="quick-action-text">Send Invite</span>
+                </button>
+                <button class="quick-action-btn" data-action="generate-qr">
+                    <div class="quick-action-icon bg-purple-100 text-purple-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path>
+                        </svg>
+                    </div>
+                    <span class="quick-action-text">Generate QR</span>
+                </button>
+                <button class="quick-action-btn" data-action="role-management">
+                    <div class="quick-action-icon bg-orange-100 text-orange-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                        </svg>
+                    </div>
+                    <span class="quick-action-text">Role Management</span>
+                </button>
+            </div>
+        </section>
         
         <!-- Analytics Charts Section -->
         <section class="analytics-section" aria-labelledby="analytics-heading" role="region">
@@ -313,26 +390,35 @@
             }
 
             /**
-             * Create KPI card HTML
+             * Create KPI card HTML matching the dark theme layout
              */
             createKPICard(kpi) {
-                const trendIcon = kpi.trend === 'up' ? '↗' : '↘';
-                const trendClass = kpi.trend === 'up' ? 'text-emerald-600' : 'text-red-600';
+                const colorClasses = {
+                    'blue': 'bg-blue-500 border-blue-400',
+                    'orange': 'bg-orange-500 border-orange-400', 
+                    'emerald': 'bg-emerald-500 border-emerald-400',
+                    'red': 'bg-red-500 border-red-400'
+                };
+                
+                const cardColor = colorClasses[kpi.color] || 'bg-gray-500 border-gray-400';
                 
                 return `
-                    <div class="card kpi-card" 
+                    <div class="kpi-card bg-white rounded-lg border border-gray-200 p-4 shadow-sm hover:shadow-md transition-all duration-200" 
                          tabindex="0" 
                          role="region" 
                          aria-labelledby="${kpi.id}-label"
                          aria-describedby="${kpi.id}-change">
-                        <div class="metric-card bg-gradient-to-br from-${kpi.color}-500 to-${kpi.color}-600">
-                            <span class="metric-value" id="${kpi.id}-value">${kpi.value}</span>
-                            <span class="metric-label" id="${kpi.id}-label">${kpi.name}</span>
-                            <div class="metric-change ${trendClass}" 
-                                 id="${kpi.id}-change" 
-                                 aria-label="${kpi.trend === 'up' ? 'Increased' : 'Decreased'} by ${kpi.change}">
-                                ${trendIcon} ${kpi.change}
+                        <div class="flex items-center justify-between mb-2">
+                            <h4 class="text-sm font-medium text-gray-600" id="${kpi.id}-label">${kpi.name}</h4>
+                            <div class="w-8 h-8 rounded-full ${cardColor} flex items-center justify-center">
+                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3.5 6L12 10.5 8.5 8 12 5.5 15.5 8zM8.5 16L12 13.5 15.5 16 12 18.5 8.5 16z"/>
+                                </svg>
                             </div>
+                        </div>
+                        <div class="text-2xl font-bold text-gray-900 mb-1" id="${kpi.id}-value">${kpi.value}</div>
+                        <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
+                            <div class="h-full ${cardColor} transition-all duration-300" style="width: ${parseInt(kpi.value) * 10}%"></div>
                         </div>
                     </div>
                 `;
@@ -345,12 +431,16 @@
                 const kpiCards = document.querySelectorAll('.kpi-card');
                 kpiCards.forEach(card => {
                     card.addEventListener('focus', () => {
-                        const label = card.querySelector('.metric-label').textContent;
-                        const value = card.querySelector('.metric-value').textContent;
-                        const change = card.querySelector('.metric-change').textContent;
+                        const labelElement = card.querySelector('[id$="-label"]');
+                        const valueElement = card.querySelector('[id$="-value"]');
                         
-                        if (window.accessibilityManager) {
-                            accessibilityManager.announce(`${label}: ${value}, ${change}`);
+                        if (labelElement && valueElement) {
+                            const label = labelElement.textContent;
+                            const value = valueElement.textContent;
+                            
+                            if (window.accessibilityManager) {
+                                accessibilityManager.announce(`${label}: ${value}`);
+                            }
                         }
                     });
                 });
