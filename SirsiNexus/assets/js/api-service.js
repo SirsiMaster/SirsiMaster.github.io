@@ -660,6 +660,13 @@ dashboardAPI.addErrorInterceptor((error) => {
     }
 });
 
+// Expose to global window object
+window.APIService = APIService;
+window.DashboardAPI = DashboardAPI;
+window.MockDashboardAPI = MockDashboardAPI;
+window.apiService = apiService;
+window.dashboardAPI = dashboardAPI;
+
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = { APIService, DashboardAPI, MockDashboardAPI };
 }

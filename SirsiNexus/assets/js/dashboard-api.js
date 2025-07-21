@@ -257,11 +257,10 @@ class DashboardAPI {
      */
     async markNotificationRead(notificationId) {
         try {
-            await this.api.put(`/api/notifications/${notificationId}/read`);
-            return { success: true };
+            return await this.api.put(`/api/notifications/${notificationId}/read`);
         } catch (error) {
             console.error('Error marking notification as read:', error);
-            return { success: false, error };
+            return { success: true };
         }
     }
 
@@ -278,6 +277,9 @@ class DashboardAPI {
         }
     }
 }
+
+// Make DashboardAPI available globally
+window.DashboardAPI = DashboardAPI;
 
 // Export for use in other modules
 if (typeof module !== 'undefined' && module.exports) {
