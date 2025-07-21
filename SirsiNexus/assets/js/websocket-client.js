@@ -29,6 +29,13 @@ class WebSocketClient {
      * Connect to WebSocket server
      */
     connect() {
+        // Check if we should use mock connection (for GitHub Pages)
+        if (this.config.useMockConnection || window.location.hostname.includes('github.io')) {
+            console.log('Using mock WebSocket connection...');
+            // Mock connection will be handled by mock-websocket.js
+            return;
+        }
+        
         if (this.ws && this.ws.readyState === WebSocket.OPEN) {
             console.log('WebSocket already connected');
             return;
