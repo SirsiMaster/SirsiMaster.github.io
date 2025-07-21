@@ -287,20 +287,52 @@
     
     <!-- Admin Header -->
     <header class="bg-white dark:bg-slate-800 shadow-sm border-b border-gray-200 dark:border-slate-700 fixed top-0 left-0 right-0 z-50">
-        <div class="px-6 py-4">
+        <div class="px-6 py-3">
             <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-4">
-                    <h1 class="text-xl font-semibold text-gray-900 dark:text-white">SirsiNexus Admin Console</h1>
-                    <span class="text-sm text-gray-500 dark:text-gray-400">• Live</span>
+                <div class="flex items-center space-x-6">
+                    <!-- Logo/Brand -->
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">S</span>
+                        </div>
+                        <div>
+                            <h1 class="text-base font-semibold text-gray-900 dark:text-white">SirsiNexus</h1>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">ADMIN CONSOLE</p>
+                        </div>
+                    </div>
+                    <!-- Status Indicator -->
+                    <span class="inline-flex items-center text-xs text-green-600 dark:text-green-400">
+                        <span class="w-2 h-2 bg-green-600 rounded-full mr-1 animate-pulse"></span>
+                        Live
+                    </span>
                 </div>
-                <div class="flex items-center space-x-4">
-                    <span class="clock text-sm text-gray-600 dark:text-gray-300">16:00</span>
+                <!-- Right Section -->
+                <div class="flex items-center space-x-6">
+                    <!-- Platform/Page Info -->
+                    <nav class="flex items-center text-sm text-gray-500 dark:text-gray-400">
+                        <span>Platform</span>
+                        <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                        <span class="text-gray-900 dark:text-white font-medium">Admin Console</span>
+                    </nav>
+                    <!-- Clock -->
+                    <span class="clock text-sm font-mono text-gray-600 dark:text-gray-300">16:00</span>
+                    <!-- Theme Toggle -->
                     <button data-theme-toggle class="p-2 rounded-md bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 transition-colors">
                         <svg class="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
                         </svg>
                     </button>
-                    <span class="text-sm font-medium text-gray-700 dark:text-gray-200">ADMIN</span>
+                    <!-- User Info -->
+                    <div class="flex items-center space-x-3">
+                        <span class="text-sm font-medium text-gray-700 dark:text-gray-200">ADMIN</span>
+                        <div class="w-8 h-8 bg-gray-300 dark:bg-gray-600 rounded-full flex items-center justify-center">
+                            <svg class="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                            </svg>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -378,10 +410,17 @@
         </div>
         <!-- System Overview Header -->
         <div class="mb-6">
-            <h2 class="text-xl font-semibold text-gray-900 mb-2">System Overview</h2>
-            <div class="flex space-x-4 text-sm text-gray-600">
-                <span>Total Users</span>
-                <span>Active Sessions</span>
+            <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">System Overview</h2>
+            <div class="flex items-center space-x-6 text-sm">
+                <div class="flex items-center">
+                    <span class="text-gray-500 dark:text-gray-400">Total Users</span>
+                    <span class="ml-2 font-semibold text-gray-900 dark:text-white">3</span>
+                </div>
+                <div class="w-px h-5 bg-gray-300 dark:bg-gray-600"></div>
+                <div class="flex items-center">
+                    <span class="text-gray-500 dark:text-gray-400">Active Sessions</span>
+                    <span class="ml-2 font-semibold text-gray-900 dark:text-white">1</span>
+                </div>
             </div>
         </div>
 
@@ -805,35 +844,40 @@
             }
 
             /**
-             * Create KPI card HTML matching the dark theme layout
+             * Create KPI card HTML matching the reference image layout
              */
             createKPICard(kpi) {
-                const colorClasses = {
-                    'blue': 'bg-blue-500 border-blue-400',
-                    'orange': 'bg-orange-500 border-orange-400', 
-                    'emerald': 'bg-emerald-500 border-emerald-400',
-                    'red': 'bg-red-500 border-red-400'
+                const iconClasses = {
+                    'total-users': { icon: '👥', bg: 'bg-blue-100', text: 'text-blue-600' },
+                    'pending-review': { icon: '⏳', bg: 'bg-yellow-100', text: 'text-yellow-600' },
+                    'approved': { icon: '✓', bg: 'bg-green-100', text: 'text-green-600' },
+                    'rejected': { icon: '✗', bg: 'bg-red-100', text: 'text-red-600' },
+                    'invites-sent': { icon: '✉️', bg: 'bg-blue-100', text: 'text-blue-600' }
                 };
                 
-                const cardColor = colorClasses[kpi.color] || 'bg-gray-500 border-gray-400';
+                const config = iconClasses[kpi.id] || { icon: '📊', bg: 'bg-gray-100', text: 'text-gray-600' };
+                const progressColor = kpi.color === 'emerald' ? 'bg-green-500' : 
+                                    kpi.color === 'orange' ? 'bg-yellow-500' : 
+                                    kpi.color === 'red' ? 'bg-red-500' : 'bg-blue-500';
                 
                 return `
-                    <div class="kpi-card bg-white rounded-lg border border-gray-200 p-4 shadow-sm hover:shadow-md transition-all duration-200" 
+                    <div class="kpi-card" 
                          tabindex="0" 
                          role="region" 
                          aria-labelledby="${kpi.id}-label"
-                         aria-describedby="${kpi.id}-change">
-                        <div class="flex items-center justify-between mb-2">
-                            <h4 class="text-sm font-medium text-gray-600" id="${kpi.id}-label">${kpi.name}</h4>
-                            <div class="w-8 h-8 rounded-full ${cardColor} flex items-center justify-center">
-                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3.5 6L12 10.5 8.5 8 12 5.5 15.5 8zM8.5 16L12 13.5 15.5 16 12 18.5 8.5 16z"/>
-                                </svg>
+                         aria-describedby="${kpi.id}-value">
+                        <div class="flex items-start justify-between mb-3">
+                            <div>
+                                <p class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider" id="${kpi.id}-label">${kpi.name}</p>
+                                <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1" id="${kpi.id}-value">${kpi.value}</p>
+                            </div>
+                            <div class="${config.bg} dark:${config.bg.replace('100', '900/20')} p-2 rounded-lg">
+                                <span class="text-xl">${config.icon}</span>
                             </div>
                         </div>
-                        <div class="text-2xl font-bold text-gray-900 mb-1" id="${kpi.id}-value">${kpi.value}</div>
-                        <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
-                            <div class="h-full ${cardColor} transition-all duration-300" style="width: ${parseInt(kpi.value) * 10}%"></div>
+                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1">
+                            <div class="${progressColor} h-1 rounded-full transition-all duration-300" 
+                                 style="width: ${Math.min(parseInt(kpi.value) * 20, 100)}%"></div>
                         </div>
                     </div>
                 `;
