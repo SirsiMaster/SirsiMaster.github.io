@@ -1,5 +1,35 @@
 # SirsiNexus GitHub Pages Changelog
 
+## v2.1 - Enhanced System Monitoring (2025-01-21)
+
+### 📊 System Status Monitoring
+- **Server Status Widget**: Live operational status with uptime percentage and visual indicators
+- **API Response Metrics**: Real-time tracking of API performance with average response time display
+- **Storage Analytics**: Visual representation of storage consumption with progress bars and percentage indicators
+- **Performance Gauges**: Color-coded status indicators (green/blue/purple) for different system metrics
+
+### 🔔 Notification Center
+- **Categorized Alerts**: Color-coded notifications for different priority levels:
+  - Info (blue) - System updates and general information
+  - Success (green) - Completed operations and successful tasks
+  - Warning (yellow) - Items requiring attention
+- **Time-Based Display**: Relative timestamps showing when each notification occurred
+- **Quick Actions**: "View All" link for comprehensive notification history
+- **Visual Hierarchy**: Icon-based categorization for quick scanning
+
+### 🎨 UI/UX Improvements
+- **Stat Cards**: New reusable component design with consistent styling and hover effects
+- **Progress Bars**: Animated visual indicators for percentage-based metrics
+- **Dark Mode Enhancement**: Full dark theme support for all new components with proper contrast ratios
+- **Responsive Grid**: Mobile-optimized layouts for system status and notification sections
+
+### 🚀 Technical Updates
+- **Component Architecture**: Modular stat-card and notification components for reusability
+- **Accessibility**: Proper ARIA labels and screen reader support for all new sections
+- **Performance**: Maintained lazy loading approach for optimal page speed
+
+---
+
 ## v2.0 - Enterprise Administration Console (2025-01-20)
 
 ### 🚀 Major Platform Transformation
