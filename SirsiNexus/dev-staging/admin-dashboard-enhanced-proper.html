@@ -311,6 +311,143 @@
             border-bottom: none;
         }
         
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background-color: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.show {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .dark .modal-content {
+            background: #1a1f29;
+            color: #e1e8ed;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6b7280;
+            padding: 0.25rem;
+        }
+        
+        .dark .modal-close {
+            color: #8b98a5;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #374151;
+        }
+        
+        .dark .form-label {
+            color: #e1e8ed;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 0.5rem 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            transition: border-color 0.15s;
+        }
+        
+        .dark .form-input {
+            background: #252a34;
+            border-color: #2a2f3a;
+            color: #e1e8ed;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s;
+            border: none;
+        }
+        
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #2563eb;
+        }
+        
+        .btn-secondary {
+            background: #e5e7eb;
+            color: #374151;
+        }
+        
+        .dark .btn-secondary {
+            background: #2a2f3a;
+            color: #e1e8ed;
+        }
+        
+        .btn-secondary:hover {
+            background: #d1d5db;
+        }
+        
+        .dark .btn-secondary:hover {
+            background: #3a3f4a;
+        }
+        
+        /* QR Code styles */
+        #qrcode {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+        
         /* Responsive adjustments */
         @media (max-width: 1024px) {
             main {
@@ -373,6 +510,21 @@
                             </svg>
                             <span class="notification-badge">3</span>
                         </button>
+                        <!-- Notifications Dropdown -->
+                        <div id="notificationsDropdown" class="notifications-dropdown">
+                            <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Notifications</h3>
+                                    <button class="text-sm text-blue-600 dark:text-blue-400 hover:underline" onclick="markAllAsRead()">Mark all as read</button>
+                                </div>
+                            </div>
+                            <div id="notificationsDropdownContent" class="max-h-96 overflow-y-auto">
+                                <!-- Notifications will be loaded here -->
+                            </div>
+                            <div class="p-4 border-t border-gray-200 dark:border-gray-700">
+                                <a href="#" class="text-center block text-sm text-blue-600 dark:text-blue-400 hover:underline">View all notifications</a>
+                            </div>
+                        </div>
                     </div>
                     <!-- Theme Toggle -->
                     <button data-theme-toggle class="p-2 rounded-md bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 transition-colors">
@@ -452,7 +604,7 @@
             <div class="mt-8">
                 <h3 class="px-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Quick Actions</h3>
                 <div class="mt-2 space-y-1">
-                    <button class="flex items-center w-full px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700 rounded-md">
+                    <button class="sidebar-add-user flex items-center w-full px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700 rounded-md">
                         <svg class="w-4 h-4 mr-3" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z"/>
                         </svg>
@@ -632,6 +784,101 @@
         </section>
     </main>
     
+    <!-- Modals -->
+    <!-- Add User Modal -->
+    <div id="addUserModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Add New User</h2>
+                <button class="modal-close" onclick="closeModal('addUserModal')">&times;</button>
+            </div>
+            <form id="addUserForm">
+                <div class="form-group">
+                    <label class="form-label" for="userName">Full Name</label>
+                    <input type="text" id="userName" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="userEmail">Email Address</label>
+                    <input type="email" id="userEmail" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="userRole">Role</label>
+                    <select id="userRole" class="form-input" required>
+                        <option value="investor">Investor</option>
+                        <option value="admin">Admin</option>
+                        <option value="moderator">Moderator</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="userPhone">Phone Number</label>
+                    <input type="tel" id="userPhone" class="form-input">
+                </div>
+                <div class="flex justify-end space-x-3 mt-6">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('addUserModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add User</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Send Invite Modal -->
+    <div id="sendInviteModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Send Invitation</h2>
+                <button class="modal-close" onclick="closeModal('sendInviteModal')">&times;</button>
+            </div>
+            <form id="sendInviteForm">
+                <div class="form-group">
+                    <label class="form-label" for="inviteEmail">Email Address</label>
+                    <input type="email" id="inviteEmail" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="inviteMessage">Personal Message (Optional)</label>
+                    <textarea id="inviteMessage" class="form-input" rows="4" placeholder="Add a personal message to the invitation..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="inviteRole">Invite As</label>
+                    <select id="inviteRole" class="form-input" required>
+                        <option value="investor">Investor</option>
+                        <option value="moderator">Moderator</option>
+                    </select>
+                </div>
+                <div class="flex justify-end space-x-3 mt-6">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('sendInviteModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Send Invitation</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- QR Code Modal -->
+    <div id="qrCodeModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Generate QR Code</h2>
+                <button class="modal-close" onclick="closeModal('qrCodeModal')">&times;</button>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="qrType">QR Code Type</label>
+                <select id="qrType" class="form-input" onchange="updateQRForm()">
+                    <option value="invite">Invitation Link</option>
+                    <option value="login">Login Page</option>
+                    <option value="document">Document Access</option>
+                </select>
+            </div>
+            <div id="qrFormContent">
+                <!-- Dynamic form content based on QR type -->
+            </div>
+            <div id="qrcode"></div>
+            <div class="flex justify-end space-x-3 mt-6">
+                <button type="button" class="btn btn-secondary" onclick="closeModal('qrCodeModal')">Close</button>
+                <button type="button" class="btn btn-primary" onclick="generateQRCode()">Generate QR Code</button>
+                <button type="button" class="btn btn-primary" onclick="downloadQRCode()" style="display:none;" id="downloadQRBtn">Download QR Code</button>
+            </div>
+        </div>
+    </div>
+    
     <!-- Load Core Services -->
     <script src="../assets/js/session-manager.js"></script>
     <script src="../assets/js/api-service.js"></script>
@@ -640,6 +887,9 @@
     <!-- Load Admin Components -->
     <script src="components/admin-header.js"></script>
     <script src="components/admin-sidebar.js"></script>
+    
+    <!-- QR Code Library -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     
     <!-- Dashboard JavaScript -->
     <script>
@@ -1744,16 +1994,231 @@
             }
         }
 
+        // Global functions for button clicks
+        function toggleNotifications() {
+            const dropdown = document.getElementById('notificationsDropdown');
+            const isOpen = dropdown.classList.contains('show');
+            
+            if (isOpen) {
+                dropdown.classList.remove('show');
+            } else {
+                dropdown.classList.add('show');
+                loadNotificationsDropdown();
+            }
+            
+            // Close dropdown when clicking outside
+            if (!isOpen) {
+                setTimeout(() => {
+                    document.addEventListener('click', closeNotificationsOnClickOutside);
+                }, 100);
+            }
+        }
+
+        function closeNotificationsOnClickOutside(e) {
+            const dropdown = document.getElementById('notificationsDropdown');
+            const button = e.target.closest('button[onclick="toggleNotifications()"]');
+            
+            if (!dropdown.contains(e.target) && !button) {
+                dropdown.classList.remove('show');
+                document.removeEventListener('click', closeNotificationsOnClickOutside);
+            }
+        }
+
+        function loadNotificationsDropdown() {
+            if (window.adminDashboard && window.adminDashboard.notifications) {
+                const content = document.getElementById('notificationsDropdownContent');
+                const notifications = window.adminDashboard.notifications;
+                
+                if (notifications.length === 0) {
+                    content.innerHTML = '<div class="p-4 text-center text-gray-500 dark:text-gray-400">No notifications</div>';
+                    return;
+                }
+                
+                content.innerHTML = notifications.map(notification => {
+                    const icon = window.adminDashboard.getNotificationIcon(notification.type);
+                    const timeAgo = window.adminDashboard.getTimeAgo(notification.timestamp);
+                    const bgColor = window.adminDashboard.getNotificationBgColor(notification.type);
+                    
+                    return `
+                        <div class="notification-item ${!notification.read ? 'font-semibold' : ''}" 
+                             onclick="handleNotificationClick(${notification.id})">
+                            <div class="flex items-start space-x-3">
+                                <div class="flex-shrink-0">${icon}</div>
+                                <div class="flex-1">
+                                    <p class="text-sm text-gray-900 dark:text-white">${notification.title}</p>
+                                    <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">${notification.message}</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-500 mt-2">${timeAgo}</p>
+                                </div>
+                                ${!notification.read ? '<div class="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0"></div>' : ''}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+
+        function handleNotificationClick(notificationId) {
+            if (window.adminDashboard) {
+                window.adminDashboard.handleNotificationClick(notificationId);
+                loadNotificationsDropdown(); // Refresh dropdown
+            }
+        }
+
+        function markAllAsRead() {
+            if (window.adminDashboard && window.adminDashboard.notifications) {
+                window.adminDashboard.notifications.forEach(n => n.read = true);
+                window.adminDashboard.renderNotifications(window.adminDashboard.notifications);
+                loadNotificationsDropdown();
+                
+                // Update badge
+                const badge = document.querySelector('.notification-badge');
+                if (badge) {
+                    badge.style.display = 'none';
+                }
+            }
+        }
+
+        function handleLogout() {
+            if (window.adminDashboard) {
+                window.adminDashboard.handleLogout();
+            } else {
+                window.location.href = 'investor-login.html';
+            }
+        }
+
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('show');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('show');
+        }
+
+        // QR Code functions
+        let qrcode = null;
+
+        function updateQRForm() {
+            const qrType = document.getElementById('qrType').value;
+            const formContent = document.getElementById('qrFormContent');
+            
+            switch(qrType) {
+                case 'invite':
+                    formContent.innerHTML = `
+                        <div class="form-group">
+                            <label class="form-label" for="qrInviteRole">Invite Role</label>
+                            <select id="qrInviteRole" class="form-input">
+                                <option value="investor">Investor</option>
+                                <option value="moderator">Moderator</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="qrExpiry">Expiry</label>
+                            <select id="qrExpiry" class="form-input">
+                                <option value="24h">24 Hours</option>
+                                <option value="7d">7 Days</option>
+                                <option value="30d">30 Days</option>
+                                <option value="never">Never</option>
+                            </select>
+                        </div>
+                    `;
+                    break;
+                case 'login':
+                    formContent.innerHTML = `
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Generate a QR code for quick login access</p>
+                    `;
+                    break;
+                case 'document':
+                    formContent.innerHTML = `
+                        <div class="form-group">
+                            <label class="form-label" for="qrDocumentId">Document ID</label>
+                            <input type="text" id="qrDocumentId" class="form-input" placeholder="Enter document ID">
+                        </div>
+                    `;
+                    break;
+            }
+        }
+
+        function generateQRCode() {
+            const qrType = document.getElementById('qrType').value;
+            let qrData = '';
+            
+            switch(qrType) {
+                case 'invite':
+                    const role = document.getElementById('qrInviteRole')?.value || 'investor';
+                    const expiry = document.getElementById('qrExpiry')?.value || '24h';
+                    qrData = `${window.location.origin}/invite?role=${role}&expiry=${expiry}&code=${generateInviteCode()}`;
+                    break;
+                case 'login':
+                    qrData = `${window.location.origin}/investor-login.html`;
+                    break;
+                case 'document':
+                    const docId = document.getElementById('qrDocumentId')?.value || 'sample';
+                    qrData = `${window.location.origin}/document/${docId}`;
+                    break;
+            }
+            
+            // Clear previous QR code
+            document.getElementById('qrcode').innerHTML = '';
+            
+            // Generate new QR code
+            qrcode = new QRCode(document.getElementById('qrcode'), {
+                text: qrData,
+                width: 256,
+                height: 256,
+                colorDark: '#000000',
+                colorLight: '#ffffff',
+                correctLevel: QRCode.CorrectLevel.H
+            });
+            
+            // Show download button
+            document.getElementById('downloadQRBtn').style.display = 'inline-block';
+        }
+
+        function generateInviteCode() {
+            return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+        }
+
+        function downloadQRCode() {
+            const canvas = document.querySelector('#qrcode canvas');
+            if (canvas) {
+                const link = document.createElement('a');
+                link.download = 'qrcode.png';
+                link.href = canvas.toDataURL();
+                link.click();
+            }
+        }
+
         // Initialize dashboard when DOM is ready
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('Dashboard DOM loaded, initializing...');
+            
             // Hide loading indicator immediately
             const loadingIndicator = document.getElementById('dashboard-loading');
             if (loadingIndicator) {
                 loadingIndicator.style.display = 'none';
             }
             
-            // Initialize dashboard
-            window.adminDashboard = new AdminDashboard();
+            // Add error handler
+            window.addEventListener('error', function(e) {
+                console.error('Dashboard error:', e.message, 'at', e.filename, ':', e.lineno);
+            });
+            
+            try {
+                // Check if required classes exist
+                console.log('Checking dependencies...');
+                console.log('DashboardAPI exists:', typeof DashboardAPI !== 'undefined');
+                console.log('SessionManager exists:', typeof SessionManager !== 'undefined');
+                console.log('APIService exists:', typeof APIService !== 'undefined');
+                
+                // Initialize dashboard
+                console.log('Creating AdminDashboard instance...');
+                window.adminDashboard = new AdminDashboard();
+            } catch (error) {
+                console.error('Failed to initialize dashboard:', error);
+                // Continue with basic functionality
+                console.log('Falling back to basic button functionality...');
+            }
             
             // Initialize clock
             function updateClock() {
@@ -1792,7 +2257,147 @@
             if (savedTheme === 'dark') {
                 document.documentElement.classList.add('dark');
             }
+
+            // Quick action buttons
+            const quickActionButtons = document.querySelectorAll('.quick-action-btn');
+            quickActionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const action = this.getAttribute('data-action');
+                    handleQuickAction(action);
+                });
+            });
+
+            // Sidebar Add User button
+            const sidebarAddUserBtn = document.querySelector('.sidebar-add-user');
+            if (sidebarAddUserBtn) {
+                sidebarAddUserBtn.addEventListener('click', () => {
+                    handleQuickAction('add-user');
+                });
+            }
+
+            // View All Notifications button
+            const viewAllNotificationsBtn = document.querySelector('.notifications-section button');
+            if (viewAllNotificationsBtn) {
+                viewAllNotificationsBtn.addEventListener('click', () => {
+                    alert('View all notifications page coming soon!');
+                });
+            }
         });
+
+        // Handle quick actions
+        function handleQuickAction(action) {
+            console.log('Quick action:', action);
+            
+            switch(action) {
+                case 'add-user':
+                    openModal('addUserModal');
+                    break;
+                case 'send-invite':
+                    openModal('sendInviteModal');
+                    break;
+                case 'generate-qr':
+                    openModal('qrCodeModal');
+                    updateQRForm(); // Initialize form
+                    break;
+                case 'role-management':
+                    // Navigate to role management page
+                    window.location.href = 'role-management.html';
+                    break;
+                default:
+                    console.log('Unknown action:', action);
+            }
+        }
+
+        // Form submissions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add User Form
+            const addUserForm = document.getElementById('addUserForm');
+            if (addUserForm) {
+                addUserForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    
+                    const userData = {
+                        name: document.getElementById('userName').value,
+                        email: document.getElementById('userEmail').value,
+                        role: document.getElementById('userRole').value,
+                        phone: document.getElementById('userPhone').value
+                    };
+                    
+                    console.log('Adding user:', userData);
+                    
+                    // Show success message
+                    showToast('User added successfully!', 'success');
+                    
+                    // Reset form and close modal
+                    addUserForm.reset();
+                    closeModal('addUserModal');
+                    
+                    // Refresh dashboard data
+                    if (window.adminDashboard) {
+                        window.adminDashboard.loadUsers();
+                    }
+                });
+            }
+            
+            // Send Invite Form
+            const sendInviteForm = document.getElementById('sendInviteForm');
+            if (sendInviteForm) {
+                sendInviteForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    
+                    const inviteData = {
+                        email: document.getElementById('inviteEmail').value,
+                        message: document.getElementById('inviteMessage').value,
+                        role: document.getElementById('inviteRole').value
+                    };
+                    
+                    console.log('Sending invite:', inviteData);
+                    
+                    // Show success message
+                    showToast('Invitation sent successfully!', 'success');
+                    
+                    // Reset form and close modal
+                    sendInviteForm.reset();
+                    closeModal('sendInviteModal');
+                });
+            }
+        });
+
+        // Toast notification function
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `fixed bottom-4 right-4 px-6 py-3 rounded-lg text-white font-medium shadow-lg z-50 transform transition-all duration-300 translate-y-full`;
+            
+            switch(type) {
+                case 'success':
+                    toast.style.backgroundColor = '#10b981';
+                    break;
+                case 'error':
+                    toast.style.backgroundColor = '#ef4444';
+                    break;
+                case 'warning':
+                    toast.style.backgroundColor = '#f59e0b';
+                    break;
+                default:
+                    toast.style.backgroundColor = '#3b82f6';
+            }
+            
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            // Animate in
+            setTimeout(() => {
+                toast.classList.remove('translate-y-full');
+            }, 100);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                toast.classList.add('translate-y-full');
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            }, 3000);
+        }
 
         // Cleanup on page unload
         window.addEventListener('beforeunload', () => {
