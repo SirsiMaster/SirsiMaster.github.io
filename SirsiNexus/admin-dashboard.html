@@ -186,20 +186,6 @@
             animation: spin 0.8s linear infinite;
         }
         
-        /* Loading indicator */
-        .loading-indicator {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            z-index: 9999;
-            background: white;
-            padding: 2rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        }
-        
         .dark .loading-spinner {
             border-color: #2a2f3a;
             border-top-color: #60a5fa;
@@ -473,7 +459,7 @@
         }
     </style>
 </head>
-<body class="bg-gray-50 dark:bg-slate-900 text-gray-900 dark:text-slate-100 transition-colors duration-300" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Roboto, 'Helvetica Neue', Arial, sans-serif;">
+<body class="font-inter bg-gray-50 dark:bg-slate-900 text-gray-900 dark:text-slate-100 transition-colors duration-300">
     <!-- Skip Links for Accessibility -->
     <div id="skip-links"></div>
     
@@ -537,13 +523,13 @@
                     <!-- Theme Toggle -->
                     <button data-theme-toggle class="p-2 rounded-md bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 transition-colors">
                         <svg class="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 818 0z"></path>
                         </svg>
                     </button>
                     <!-- Exit/Logout Button -->
                     <button class="p-2 rounded-md bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 transition-colors" onclick="handleLogout()">
                         <svg class="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></path>
                         </svg>
                     </button>
                     <!-- User Info -->
@@ -626,7 +612,7 @@
     <!-- Main Dashboard Content -->
     <main class="ml-64 pt-16 min-h-screen bg-gray-50 dark:bg-slate-900 p-6" role="main" aria-label="Admin Dashboard">
         <!-- Loading Indicator - Hidden by default -->
-        <div id="dashboard-loading" class="loading-indicator" style="display: none;" aria-live="polite">
+        <div id="dashboard-loading" class="loading-indicator" style="display: none !important;" aria-live="polite">
             <div class="loading-spinner"></div>
             <p>Loading dashboard data...</p>
         </div>
@@ -903,7 +889,6 @@
     
     <!-- WebSocket Client for Real-Time Updates -->
     <script src="/SirsiNexus/assets/js/websocket-client.js"></script>
-    <script src="/SirsiNexus/assets/js/mock-websocket.js"></script>
     
     <!-- Load Admin Components -->
     <script src="/SirsiNexus/components/admin-header.js"></script>
@@ -1385,14 +1370,7 @@
              */
             setupRealTimeUpdates() {
                 // Initialize WebSocket connection
-                if (window.mockWebSocketClient) {
-                    console.log('Initializing mock WebSocket connection...');
-                    window.websocketClient = window.mockWebSocketClient;
-                    mockWebSocketClient.connect();
-                    
-                    // Setup WebSocket event listeners
-                    this.setupWebSocketListeners();
-                } else if (window.websocketClient) {
+                if (window.websocketClient) {
                     console.log('Initializing WebSocket connection...');
                     websocketClient.connect();
                     
