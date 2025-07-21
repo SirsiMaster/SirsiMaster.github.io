@@ -23,8 +23,13 @@
 }
 
 /* Card Styles */
-.common-card {
-    @apply bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-4;
+.card {
+    @apply bg-white dark:bg-slate-800 rounded-lg border shadow-md p-6 mb-4 transition-shadow ease-in-out duration-300;
+    border-color: #e5e7eb;
+}
+
+.card:hover {
+    @apply shadow-lg;
 }
 
 /* KPI Stats Container */
