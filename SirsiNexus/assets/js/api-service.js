@@ -34,6 +34,7 @@ class APIService {
             
             // Add timestamp to prevent caching
             if (!config.cache) {
+                config.headers = config.headers || {};
                 config.headers['Cache-Control'] = 'no-cache';
                 config.headers['X-Timestamp'] = Date.now();
             }
@@ -492,6 +493,11 @@ class DashboardAPI extends APIService {
     async downloadReport(reportId) {
         return this.download(`/reports/${reportId}/download`);
     }
+
+    // System Status
+    async getSystemStatus() {
+        return this.get('/system/status');
+    }
 }
 
 // Mock API responses for development
@@ -507,6 +513,9 @@ class MockDashboardAPI extends DashboardAPI {
         this.getKPIs = this.mockGetKPIs.bind(this);
         this.getRecentActivity = this.mockGetRecentActivity.bind(this);
         this.getChartData = this.mockGetChartData.bind(this);
+        this.getSystemStatus = this.mockGetSystemStatus.bind(this);
+        this.getNotifications = this.mockGetNotifications.bind(this);
+        this.getUsers = this.mockGetUsers.bind(this);
     }
 
     async mockGetMetrics(timeframe) {
@@ -567,6 +576,21 @@ class MockDashboardAPI extends DashboardAPI {
         };
     }
 
+    async mockGetSystemStatus() {
+        await this.delay(200);
+
+        return {
+            data: {
+                cpuUsage: '45%',
+                memoryUsage: '2.5GB / 8GB',
+                diskSpace: '120GB / 256GB',
+                serverUptime: '48 days',
+                runningServices: { serviceA: 'active', serviceB: 'inactive' },
+            },
+            status: 200
+        };
+    }
+
     async mockGetRecentActivity() {
         await this.delay(400);
         
@@ -601,6 +625,32 @@ class MockDashboardAPI extends DashboardAPI {
         };
     }
 
+    async mockGetUsers() {
+        await this.delay(300);
+
+        return {
+            data: [
+                { id: 1, name: 'John Doe', email: 'john.doe@example.com', role: 'user', phone: '123-456-7890', status: 'active' },
+                { id: 2, name: 'Jane Smith', email: 'jane.smith@example.com', role: 'admin', phone: '987-654-3210', status: 'active' },
+                { id: 3, name: 'Chris Johnson', email: 'chris.johnson@example.com', role: 'moderator', phone: '555-555-5555', status: 'inactive' }
+            ],
+            status: 200
+        };
+    }
+
+    async mockGetNotifications() {
+        await this.delay(200);
+
+        return {
+            data: [
+                { id: 1, title: 'Welcome to SirsiNexus!', message: 'Your account has been created successfully.', timestamp: new Date(Date.now() - 3600000).toISOString(), read: false },
+                { id: 2, title: 'Maintenance Scheduled', message: 'System maintenance is scheduled for tonight at 11 PM.', timestamp: new Date(Date.now() - 7200000).toISOString(), read: true },
+                { id: 3, title: 'New Feature Released', message: 'Check out the new analytics dashboard.', timestamp: new Date(Date.now() - 10800000).toISOString(), read: false }
+            ],
+            status: 200
+        };
+    }
+
     async mockGetChartData(chartType) {
         await this.delay(600);
         
@@ -623,7 +673,7 @@ class MockDashboardAPI extends DashboardAPI {
                 }]
             }
         };
-
+        
         return {
             data: mockData[chartType] || mockData.revenue,
             status: 200
