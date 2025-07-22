@@ -655,50 +655,46 @@ Endpoints:
 
                 <!-- Backup & Restore -->
                 <div class="settings-section">
-                    <h3 class="mb-4">Backup & Restore</h3>
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Backup & Restore</h3>
                     
-                    <div class="mb-4">
-                        <h5>Automated Backups</h5>
-                        <div class="row align-items-center mb-3">
-                            <div class="col-md-8">
-                                <p class="text-muted mb-0">Enable automated daily backups</p>
-                            </div>
-                            <div class="col-md-4 text-end">
-                                <label class="toggle-switch">
-                                    <input type="checkbox" id="autoBackup" checked>
-                                    <span class="slider"></span>
-                                </label>
-                            </div>
+                    <div class="mb-6">
+                        <h5 class="text-lg font-medium text-gray-900 dark:text-white mb-3">Automated Backups</h5>
+                        <div class="flex items-center justify-between">
+                            <p class="text-gray-600 dark:text-gray-400">Enable automated daily backups</p>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="autoBackup" checked>
+                                <span class="slider"></span>
+                            </label>
                         </div>
                     </div>
                     
-                    <div class="mb-4">
-                        <h5>Recent Backups</h5>
+                    <div class="mb-6">
+                        <h5 class="text-lg font-medium text-gray-900 dark:text-white mb-3">Recent Backups</h5>
                         <div id="backupList">
                             <div class="backup-item">
                                 <div>
-                                    <strong>Full Backup - January 16, 2024</strong>
-                                    <p class="text-muted mb-0">Size: 2.3 GB • Status: Complete</p>
+                                    <p class="font-semibold text-gray-900 dark:text-white">Full Backup - January 16, 2024</p>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Size: 2.3 GB • Status: Complete</p>
                                 </div>
-                                <div>
-                                    <button class="btn btn-sm btn-secondary me-2" onclick="downloadBackup(1)">
+                                <div class="flex space-x-2">
+                                    <button class="px-3 py-1 bg-gray-600 hover:bg-gray-700 text-white text-sm font-medium rounded transition-colors duration-200" onclick="downloadBackup(1)">
                                         <i class="fas fa-download"></i> Download
                                     </button>
-                                    <button class="btn btn-sm btn-primary" onclick="restoreBackup(1)">
+                                    <button class="px-3 py-1 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded transition-colors duration-200" onclick="restoreBackup(1)">
                                         <i class="fas fa-undo"></i> Restore
                                     </button>
                                 </div>
                             </div>
                             <div class="backup-item">
                                 <div>
-                                    <strong>Full Backup - January 15, 2024</strong>
-                                    <p class="text-muted mb-0">Size: 2.2 GB • Status: Complete</p>
+                                    <p class="font-semibold text-gray-900 dark:text-white">Full Backup - January 15, 2024</p>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Size: 2.2 GB • Status: Complete</p>
                                 </div>
-                                <div>
-                                    <button class="btn btn-sm btn-secondary me-2" onclick="downloadBackup(2)">
+                                <div class="flex space-x-2">
+                                    <button class="px-3 py-1 bg-gray-600 hover:bg-gray-700 text-white text-sm font-medium rounded transition-colors duration-200" onclick="downloadBackup(2)">
                                         <i class="fas fa-download"></i> Download
                                     </button>
-                                    <button class="btn btn-sm btn-primary" onclick="restoreBackup(2)">
+                                    <button class="px-3 py-1 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded transition-colors duration-200" onclick="restoreBackup(2)">
                                         <i class="fas fa-undo"></i> Restore
                                     </button>
                                 </div>
@@ -707,7 +703,7 @@ Endpoints:
                     </div>
                     
                     <div class="text-center">
-                        <button class="btn btn-primary" onclick="createBackup()">
+                        <button class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-md transition-colors duration-200" onclick="createBackup()">
                             <i class="fas fa-plus"></i> Create New Backup
                         </button>
                     </div>
@@ -715,79 +711,75 @@ Endpoints:
 
                 <!-- Advanced Settings -->
                 <div class="settings-section">
-                    <h3 class="mb-4">Advanced Settings</h3>
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Advanced Settings</h3>
                     
-                    <div class="alert alert-warning">
-                        <i class="fas fa-exclamation-triangle"></i> Warning: These settings can affect system stability. Proceed with caution.
+                    <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-md p-4 mb-6">
+                        <p class="text-yellow-800 dark:text-yellow-200">
+                            <i class="fas fa-exclamation-triangle mr-2"></i>Warning: These settings can affect system stability. Proceed with caution.
+                        </p>
                     </div>
                     
                     <div class="setting-item">
-                        <div class="row align-items-center">
-                            <div class="col-md-8">
-                                <h5>Debug Mode</h5>
-                                <p class="text-muted mb-0">Enable detailed error logging</p>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h5 class="text-lg font-semibold text-gray-900 dark:text-white">Debug Mode</h5>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Enable detailed error logging</p>
                             </div>
-                            <div class="col-md-4 text-end">
-                                <label class="toggle-switch">
-                                    <input type="checkbox" id="debugMode">
-                                    <span class="slider"></span>
-                                </label>
-                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="debugMode">
+                                <span class="slider"></span>
+                            </label>
                         </div>
                     </div>
                     
                     <div class="setting-item">
-                        <div class="row">
-                            <div class="col-12">
-                                <h5>Database Connection</h5>
-                                <div class="config-code mb-3">
-                                    <pre>Host: localhost
+                        <h5 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">Database Connection</h5>
+                        <div class="config-code mb-4">
+                            <pre>Host: localhost
 Port: 5432
 Database: sirsinexus_prod
 Username: admin
 Status: Connected</pre>
-                                </div>
-                                <button class="btn btn-warning" onclick="testDatabase()">Test Connection</button>
-                            </div>
                         </div>
+                        <button class="px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white font-medium rounded-md transition-colors duration-200" onclick="testDatabase()">Test Connection</button>
                     </div>
                     
                     <div class="setting-item">
-                        <div class="row">
-                            <div class="col-12">
-                                <h5>Clear Cache</h5>
-                                <p class="text-muted">Clear all system caches to free up space and resolve issues</p>
-                                <button class="btn btn-danger" onclick="clearCache()">
-                                    <i class="fas fa-trash"></i> Clear All Caches
-                                </button>
-                            </div>
-                        </div>
+                        <h5 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Clear Cache</h5>
+                        <p class="text-gray-600 dark:text-gray-400 mb-4">Clear all system caches to free up space and resolve issues</p>
+                        <button class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-medium rounded-md transition-colors duration-200" onclick="clearCache()">
+                            <i class="fas fa-trash"></i> Clear All Caches
+                        </button>
                     </div>
         </div>
     </main>
 
     <!-- Integration Modal -->
-    <div class="modal fade" id="integrationModal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="integrationTitle">Configure Integration</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+    <div id="integrationModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white dark:bg-gray-800">
+            <div class="mt-3">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white" id="integrationTitle">Configure Integration</h3>
+                    <button type="button" class="text-gray-400 hover:text-gray-500" onclick="closeModal()">
+                        <span class="sr-only">Close</span>
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
                 </div>
-                <div class="modal-body">
+                <div class="mt-2 px-1">
                     <div id="integrationForm">
                         <!-- Form will be populated based on selected integration -->
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" onclick="saveIntegration()">Save Configuration</button>
+                <div class="flex justify-end mt-4 space-x-3">
+                    <button type="button" class="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400 dark:bg-gray-600 dark:text-gray-200 dark:hover:bg-gray-500" onclick="closeModal()">Cancel</button>
+                    <button type="button" class="px-4 py-2 bg-emerald-500 text-white rounded hover:bg-emerald-600" onclick="saveIntegration()">Save Configuration</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/fresh-theme-toggle.js"></script>
     <script>
         function init() {
@@ -851,52 +843,52 @@ Status: Connected</pre>
             switch(integration) {
                 case 'slack':
                     formHTML = `
-                        <div class="mb-3">
-                            <label for="slackWebhook" class="form-label">Webhook URL</label>
-                            <input type="text" class="form-control" id="slackWebhook" placeholder="https://hooks.slack.com/services/...">
+                        <div class="mb-4">
+                            <label for="slackWebhook" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Webhook URL</label>
+                            <input type="text" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:bg-gray-700 dark:text-white" id="slackWebhook" placeholder="https://hooks.slack.com/services/...">
                         </div>
-                        <div class="mb-3">
-                            <label for="slackChannel" class="form-label">Default Channel</label>
-                            <input type="text" class="form-control" id="slackChannel" value="#notifications">
+                        <div class="mb-4">
+                            <label for="slackChannel" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Default Channel</label>
+                            <input type="text" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:bg-gray-700 dark:text-white" id="slackChannel" value="#notifications">
                         </div>
                     `;
                     break;
                     
                 case 'google':
                     formHTML = `
-                        <div class="mb-3">
-                            <label for="googleClientId" class="form-label">Client ID</label>
-                            <input type="text" class="form-control" id="googleClientId" placeholder="1234567890.apps.googleusercontent.com">
+                        <div class="mb-4">
+                            <label for="googleClientId" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Client ID</label>
+                            <input type="text" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:bg-gray-700 dark:text-white" id="googleClientId" placeholder="1234567890.apps.googleusercontent.com">
                         </div>
-                        <div class="mb-3">
-                            <label for="googleClientSecret" class="form-label">Client Secret</label>
-                            <input type="password" class="form-control" id="googleClientSecret" placeholder="••••••••">
+                        <div class="mb-4">
+                            <label for="googleClientSecret" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Client Secret</label>
+                            <input type="password" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:bg-gray-700 dark:text-white" id="googleClientSecret" placeholder="••••••••">
                         </div>
                     `;
                     break;
                     
                 case 'stripe':
                     formHTML = `
-                        <div class="mb-3">
-                            <label for="stripePublicKey" class="form-label">Publishable Key</label>
-                            <input type="text" class="form-control" id="stripePublicKey" placeholder="pk_test_...">
+                        <div class="mb-4">
+                            <label for="stripePublicKey" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Publishable Key</label>
+                            <input type="text" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:bg-gray-700 dark:text-white" id="stripePublicKey" placeholder="pk_test_...">
                         </div>
-                        <div class="mb-3">
-                            <label for="stripeSecretKey" class="form-label">Secret Key</label>
-                            <input type="password" class="form-control" id="stripeSecretKey" placeholder="sk_test_...">
+                        <div class="mb-4">
+                            <label for="stripeSecretKey" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Secret Key</label>
+                            <input type="password" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:bg-gray-700 dark:text-white" id="stripeSecretKey" placeholder="sk_test_...">
                         </div>
                     `;
                     break;
                     
                 case 'analytics':
                     formHTML = `
-                        <div class="mb-3">
-                            <label for="gaTrackingId" class="form-label">Tracking ID</label>
-                            <input type="text" class="form-control" id="gaTrackingId" value="UA-123456789-1">
+                        <div class="mb-4">
+                            <label for="gaTrackingId" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tracking ID</label>
+                            <input type="text" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:bg-gray-700 dark:text-white" id="gaTrackingId" value="UA-123456789-1">
                         </div>
-                        <div class="form-check mb-3">
-                            <input class="form-check-input" type="checkbox" id="gaEnhancedEcommerce" checked>
-                            <label class="form-check-label" for="gaEnhancedEcommerce">
+                        <div class="flex items-center mb-4">
+                            <input class="mr-2 rounded" type="checkbox" id="gaEnhancedEcommerce" checked>
+                            <label class="text-sm text-gray-700 dark:text-gray-300" for="gaEnhancedEcommerce">
                                 Enable Enhanced Ecommerce
                             </label>
                         </div>
@@ -906,13 +898,17 @@ Status: Connected</pre>
             
             integrationForm.innerHTML = formHTML;
             
-            const modal = new bootstrap.Modal(document.getElementById('integrationModal'));
-            modal.show();
+            // Show modal
+            document.getElementById('integrationModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('integrationModal').classList.add('hidden');
         }
 
         function saveIntegration() {
             // Save integration configuration
-            bootstrap.Modal.getInstance(document.getElementById('integrationModal')).hide();
+            closeModal();
             showNotification('Integration configured successfully!', 'success');
         }
 
@@ -941,14 +937,14 @@ Status: Connected</pre>
                 newBackup.className = 'backup-item';
                 newBackup.innerHTML = `
                     <div>
-                        <strong>Full Backup - ${new Date().toLocaleDateString()}</strong>
-                        <p class="text-muted mb-0">Size: 2.4 GB • Status: Complete</p>
+                        <p class="font-semibold text-gray-900 dark:text-white">Full Backup - ${new Date().toLocaleDateString()}</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Size: 2.4 GB • Status: Complete</p>
                     </div>
-                    <div>
-                        <button class="btn btn-sm btn-secondary me-2" onclick="downloadBackup(0)">
+                    <div class="flex space-x-2">
+                        <button class="px-3 py-1 bg-gray-600 hover:bg-gray-700 text-white text-sm font-medium rounded transition-colors duration-200" onclick="downloadBackup(0)">
                             <i class="fas fa-download"></i> Download
                         </button>
-                        <button class="btn btn-sm btn-primary" onclick="restoreBackup(0)">
+                        <button class="px-3 py-1 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded transition-colors duration-200" onclick="restoreBackup(0)">
                             <i class="fas fa-undo"></i> Restore
                         </button>
                     </div>
