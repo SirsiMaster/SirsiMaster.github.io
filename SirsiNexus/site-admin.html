@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Administration - SirsiNexus Admin</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/admin-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .settings-section {
+            background: var(--bg-primary);
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .setting-item {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 30px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: var(--accent-primary);
+        }
+        input:checked + .slider:before {
+            transform: translateX(30px);
+        }
+        .integration-card {
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .integration-card:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-5px);
+        }
+        .integration-card.active {
+            border-color: var(--accent-primary);
+            background: rgba(255, 94, 0, 0.1);
+        }
+        .integration-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: var(--accent-secondary);
+        }
+        .config-code {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+        }
+        .maintenance-banner {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        .maintenance-banner.active {
+            display: block;
+        }
+        .backup-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <span class="brand-highlight">Sirsi</span>Nexus Admin
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin-dashboard.html">
+                            <i class="fas fa-tachometer-alt"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-link nav-link" id="theme-toggle">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="logout()">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <!-- Maintenance Mode Banner -->
+        <div class="maintenance-banner" id="maintenanceBanner">
+            <i class="fas fa-exclamation-triangle"></i> <strong>Maintenance Mode Active:</strong> The site is currently in maintenance mode. Only administrators can access it.
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <h1 class="mb-4">Site Administration</h1>
+                
+                <!-- Quick Actions -->
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-server"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>Active</h3>
+                                <p>System Status</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>98.5%</h3>
+                                <p>Database Health</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>Secure</h3>
+                                <p>Security Status</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>99.9%</h3>
+                                <p>Uptime</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- General Settings -->
+                <div class="settings-section">
+                    <h3 class="mb-4">General Settings</h3>
+                    
+                    <div class="setting-item">
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <h5>Site Name</h5>
+                                <input type="text" class="form-control" id="siteName" value="SirsiNexus Investor Portal">
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <button class="btn btn-primary" onclick="saveSetting('siteName')">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-item">
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <h5>Maintenance Mode</h5>
+                                <p class="text-muted mb-0">Enable maintenance mode to prevent non-admin access</p>
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="maintenanceMode" onchange="toggleMaintenance()">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-item">
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <h5>Registration</h5>
+                                <p class="text-muted mb-0">Allow new users to register</p>
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="allowRegistration" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-item">
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <h5>Two-Factor Authentication</h5>
+                                <p class="text-muted mb-0">Require 2FA for all users</p>
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="require2FA">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Email Configuration -->
+                <div class="settings-section">
+                    <h3 class="mb-4">Email Configuration</h3>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="smtpHost" class="form-label">SMTP Host</label>
+                            <input type="text" class="form-control" id="smtpHost" value="smtp.gmail.com">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="smtpPort" class="form-label">SMTP Port</label>
+                            <input type="text" class="form-control" id="smtpPort" value="587">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="smtpUser" class="form-label">SMTP Username</label>
+                            <input type="text" class="form-control" id="smtpUser" value="noreply@sirsinexus.com">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="smtpPass" class="form-label">SMTP Password</label>
+                            <input type="password" class="form-control" id="smtpPass" placeholder="••••••••">
+                        </div>
+                    </div>
+                    <div class="text-end">
+                        <button class="btn btn-secondary me-2" onclick="testEmail()">Send Test Email</button>
+                        <button class="btn btn-primary" onclick="saveEmailConfig()">Save Configuration</button>
+                    </div>
+                </div>
+
+                <!-- Integrations -->
+                <div class="settings-section">
+                    <h3 class="mb-4">Integrations</h3>
+                    
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <div class="integration-card" onclick="configureIntegration('slack')">
+                                <i class="fab fa-slack integration-icon"></i>
+                                <h5>Slack</h5>
+                                <p class="text-muted mb-0">Send notifications to Slack</p>
+                                <span class="badge bg-success mt-2">Connected</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="integration-card" onclick="configureIntegration('google')">
+                                <i class="fab fa-google integration-icon"></i>
+                                <h5>Google OAuth</h5>
+                                <p class="text-muted mb-0">Sign in with Google</p>
+                                <span class="badge bg-secondary mt-2">Not Connected</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="integration-card" onclick="configureIntegration('stripe')">
+                                <i class="fab fa-stripe integration-icon"></i>
+                                <h5>Stripe</h5>
+                                <p class="text-muted mb-0">Payment processing</p>
+                                <span class="badge bg-secondary mt-2">Not Connected</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="integration-card" onclick="configureIntegration('analytics')">
+                                <i class="fas fa-chart-line integration-icon"></i>
+                                <h5>Analytics</h5>
+                                <p class="text-muted mb-0">Google Analytics</p>
+                                <span class="badge bg-success mt-2">Connected</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- API Configuration -->
+                <div class="settings-section">
+                    <h3 class="mb-4">API Configuration</h3>
+                    
+                    <div class="mb-3">
+                        <label for="apiKey" class="form-label">API Key</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="apiKey" value="sk_live_••••••••••••••••••••••••" readonly>
+                            <button class="btn btn-outline-secondary" onclick="regenerateAPIKey()">
+                                <i class="fas fa-sync"></i> Regenerate
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">API Endpoints</label>
+                        <div class="config-code">
+                            <pre>Base URL: https://api.sirsinexus.com/v1/
+                            
+Endpoints:
+- GET /users
+- GET /users/{id}
+- POST /users
+- PUT /users/{id}
+- DELETE /users/{id}
+- GET /files
+- POST /files/upload
+- GET /analytics/events</pre>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="rateLimits" class="form-label">Rate Limits (requests per hour)</label>
+                        <input type="number" class="form-control" id="rateLimits" value="1000">
+                    </div>
+                    
+                    <div class="text-end">
+                        <button class="btn btn-primary" onclick="saveAPIConfig()">Save API Configuration</button>
+                    </div>
+                </div>
+
+                <!-- Backup & Restore -->
+                <div class="settings-section">
+                    <h3 class="mb-4">Backup & Restore</h3>
+                    
+                    <div class="mb-4">
+                        <h5>Automated Backups</h5>
+                        <div class="row align-items-center mb-3">
+                            <div class="col-md-8">
+                                <p class="text-muted mb-0">Enable automated daily backups</p>
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="autoBackup" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5>Recent Backups</h5>
+                        <div id="backupList">
+                            <div class="backup-item">
+                                <div>
+                                    <strong>Full Backup - January 16, 2024</strong>
+                                    <p class="text-muted mb-0">Size: 2.3 GB • Status: Complete</p>
+                                </div>
+                                <div>
+                                    <button class="btn btn-sm btn-secondary me-2" onclick="downloadBackup(1)">
+                                        <i class="fas fa-download"></i> Download
+                                    </button>
+                                    <button class="btn btn-sm btn-primary" onclick="restoreBackup(1)">
+                                        <i class="fas fa-undo"></i> Restore
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="backup-item">
+                                <div>
+                                    <strong>Full Backup - January 15, 2024</strong>
+                                    <p class="text-muted mb-0">Size: 2.2 GB • Status: Complete</p>
+                                </div>
+                                <div>
+                                    <button class="btn btn-sm btn-secondary me-2" onclick="downloadBackup(2)">
+                                        <i class="fas fa-download"></i> Download
+                                    </button>
+                                    <button class="btn btn-sm btn-primary" onclick="restoreBackup(2)">
+                                        <i class="fas fa-undo"></i> Restore
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <button class="btn btn-primary" onclick="createBackup()">
+                            <i class="fas fa-plus"></i> Create New Backup
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Advanced Settings -->
+                <div class="settings-section">
+                    <h3 class="mb-4">Advanced Settings</h3>
+                    
+                    <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-triangle"></i> Warning: These settings can affect system stability. Proceed with caution.
+                    </div>
+                    
+                    <div class="setting-item">
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <h5>Debug Mode</h5>
+                                <p class="text-muted mb-0">Enable detailed error logging</p>
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="debugMode">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-item">
+                        <div class="row">
+                            <div class="col-12">
+                                <h5>Database Connection</h5>
+                                <div class="config-code mb-3">
+                                    <pre>Host: localhost
+Port: 5432
+Database: sirsinexus_prod
+Username: admin
+Status: Connected</pre>
+                                </div>
+                                <button class="btn btn-warning" onclick="testDatabase()">Test Connection</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-item">
+                        <div class="row">
+                            <div class="col-12">
+                                <h5>Clear Cache</h5>
+                                <p class="text-muted">Clear all system caches to free up space and resolve issues</p>
+                                <button class="btn btn-danger" onclick="clearCache()">
+                                    <i class="fas fa-trash"></i> Clear All Caches
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Integration Modal -->
+    <div class="modal fade" id="integrationModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="integrationTitle">Configure Integration</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="integrationForm">
+                        <!-- Form will be populated based on selected integration -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveIntegration()">Save Configuration</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/fresh-theme-toggle.js"></script>
+    <script>
+        function init() {
+            // Check maintenance mode
+            const maintenanceMode = localStorage.getItem('maintenanceMode') === 'true';
+            document.getElementById('maintenanceMode').checked = maintenanceMode;
+            document.getElementById('maintenanceBanner').classList.toggle('active', maintenanceMode);
+        }
+
+        function toggleMaintenance() {
+            const isEnabled = document.getElementById('maintenanceMode').checked;
+            localStorage.setItem('maintenanceMode', isEnabled);
+            document.getElementById('maintenanceBanner').classList.toggle('active', isEnabled);
+            showNotification(`Maintenance mode ${isEnabled ? 'enabled' : 'disabled'}`, 'success');
+        }
+
+        function saveSetting(settingName) {
+            const value = document.getElementById(settingName).value;
+            // Save to backend
+            showNotification(`${settingName} updated successfully!`, 'success');
+        }
+
+        function saveEmailConfig() {
+            // Collect email configuration
+            const config = {
+                host: document.getElementById('smtpHost').value,
+                port: document.getElementById('smtpPort').value,
+                user: document.getElementById('smtpUser').value,
+                pass: document.getElementById('smtpPass').value
+            };
+            
+            // Save to backend
+            showNotification('Email configuration saved successfully!', 'success');
+        }
+
+        function testEmail() {
+            showNotification('Sending test email...', 'info');
+            
+            // Simulate sending test email
+            setTimeout(() => {
+                showNotification('Test email sent successfully!', 'success');
+            }, 2000);
+        }
+
+        function configureIntegration(integration) {
+            const integrationTitle = document.getElementById('integrationTitle');
+            const integrationForm = document.getElementById('integrationForm');
+            
+            // Set title
+            const titles = {
+                'slack': 'Configure Slack Integration',
+                'google': 'Configure Google OAuth',
+                'stripe': 'Configure Stripe',
+                'analytics': 'Configure Google Analytics'
+            };
+            integrationTitle.textContent = titles[integration];
+            
+            // Build form based on integration type
+            let formHTML = '';
+            
+            switch(integration) {
+                case 'slack':
+                    formHTML = `
+                        <div class="mb-3">
+                            <label for="slackWebhook" class="form-label">Webhook URL</label>
+                            <input type="text" class="form-control" id="slackWebhook" placeholder="https://hooks.slack.com/services/...">
+                        </div>
+                        <div class="mb-3">
+                            <label for="slackChannel" class="form-label">Default Channel</label>
+                            <input type="text" class="form-control" id="slackChannel" value="#notifications">
+                        </div>
+                    `;
+                    break;
+                    
+                case 'google':
+                    formHTML = `
+                        <div class="mb-3">
+                            <label for="googleClientId" class="form-label">Client ID</label>
+                            <input type="text" class="form-control" id="googleClientId" placeholder="1234567890.apps.googleusercontent.com">
+                        </div>
+                        <div class="mb-3">
+                            <label for="googleClientSecret" class="form-label">Client Secret</label>
+                            <input type="password" class="form-control" id="googleClientSecret" placeholder="••••••••">
+                        </div>
+                    `;
+                    break;
+                    
+                case 'stripe':
+                    formHTML = `
+                        <div class="mb-3">
+                            <label for="stripePublicKey" class="form-label">Publishable Key</label>
+                            <input type="text" class="form-control" id="stripePublicKey" placeholder="pk_test_...">
+                        </div>
+                        <div class="mb-3">
+                            <label for="stripeSecretKey" class="form-label">Secret Key</label>
+                            <input type="password" class="form-control" id="stripeSecretKey" placeholder="sk_test_...">
+                        </div>
+                    `;
+                    break;
+                    
+                case 'analytics':
+                    formHTML = `
+                        <div class="mb-3">
+                            <label for="gaTrackingId" class="form-label">Tracking ID</label>
+                            <input type="text" class="form-control" id="gaTrackingId" value="UA-123456789-1">
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="gaEnhancedEcommerce" checked>
+                            <label class="form-check-label" for="gaEnhancedEcommerce">
+                                Enable Enhanced Ecommerce
+                            </label>
+                        </div>
+                    `;
+                    break;
+            }
+            
+            integrationForm.innerHTML = formHTML;
+            
+            const modal = new bootstrap.Modal(document.getElementById('integrationModal'));
+            modal.show();
+        }
+
+        function saveIntegration() {
+            // Save integration configuration
+            bootstrap.Modal.getInstance(document.getElementById('integrationModal')).hide();
+            showNotification('Integration configured successfully!', 'success');
+        }
+
+        function regenerateAPIKey() {
+            if (confirm('Are you sure you want to regenerate the API key? This will invalidate the current key.')) {
+                // Generate new API key
+                const newKey = 'sk_live_' + Math.random().toString(36).substring(2, 15);
+                document.getElementById('apiKey').value = 'sk_live_••••••••••••••••••••••••';
+                showNotification('API key regenerated successfully!', 'success');
+            }
+        }
+
+        function saveAPIConfig() {
+            // Save API configuration
+            showNotification('API configuration saved successfully!', 'success');
+        }
+
+        function createBackup() {
+            showNotification('Creating backup...', 'info');
+            
+            // Simulate backup creation
+            setTimeout(() => {
+                // Add new backup to list
+                const backupList = document.getElementById('backupList');
+                const newBackup = document.createElement('div');
+                newBackup.className = 'backup-item';
+                newBackup.innerHTML = `
+                    <div>
+                        <strong>Full Backup - ${new Date().toLocaleDateString()}</strong>
+                        <p class="text-muted mb-0">Size: 2.4 GB • Status: Complete</p>
+                    </div>
+                    <div>
+                        <button class="btn btn-sm btn-secondary me-2" onclick="downloadBackup(0)">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                        <button class="btn btn-sm btn-primary" onclick="restoreBackup(0)">
+                            <i class="fas fa-undo"></i> Restore
+                        </button>
+                    </div>
+                `;
+                backupList.insertBefore(newBackup, backupList.firstChild);
+                
+                showNotification('Backup created successfully!', 'success');
+            }, 3000);
+        }
+
+        function downloadBackup(backupId) {
+            showNotification('Preparing backup download...', 'info');
+        }
+
+        function restoreBackup(backupId) {
+            if (confirm('Are you sure you want to restore this backup? This will overwrite current data.')) {
+                showNotification('Restoring backup...', 'info');
+                
+                setTimeout(() => {
+                    showNotification('Backup restored successfully!', 'success');
+                }, 3000);
+            }
+        }
+
+        function testDatabase() {
+            showNotification('Testing database connection...', 'info');
+            
+            setTimeout(() => {
+                showNotification('Database connection successful!', 'success');
+            }, 1500);
+        }
+
+        function clearCache() {
+            if (confirm('Are you sure you want to clear all caches?')) {
+                showNotification('Clearing caches...', 'info');
+                
+                setTimeout(() => {
+                    showNotification('All caches cleared successfully!', 'success');
+                }, 2000);
+            }
+        }
+
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type} notification`;
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 9999;
+                animation: slideIn 0.3s ease;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        function logout() {
+            localStorage.removeItem('adminToken');
+            window.location.href = 'login.html';
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

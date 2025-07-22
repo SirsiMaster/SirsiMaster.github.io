@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Logs - SirsiNexus Admin</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/admin-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .log-viewer {
+            background: var(--bg-primary);
+            border-radius: 10px;
+            padding: 20px;
+            min-height: 600px;
+        }
+        .log-filters {
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .log-entry {
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            padding: 8px 12px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .log-entry:hover {
+            background: rgba(255, 94, 0, 0.05);
+        }
+        .log-timestamp {
+            color: var(--text-secondary);
+            min-width: 180px;
+            font-weight: 500;
+        }
+        .log-level {
+            min-width: 80px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .log-level.info {
+            color: #3b82f6;
+        }
+        .log-level.warning {
+            color: #f59e0b;
+        }
+        .log-level.error {
+            color: #ef4444;
+        }
+        .log-level.debug {
+            color: #8b5cf6;
+        }
+        .log-level.success {
+            color: #10b981;
+        }
+        .log-message {
+            flex: 1;
+            word-break: break-word;
+        }
+        .log-source {
+            color: var(--text-secondary);
+            font-size: 12px;
+        }
+        .log-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .log-stat-card {
+            background: var(--bg-secondary);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .log-stat-card h4 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        .log-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .log-search {
+            position: relative;
+            max-width: 400px;
+            flex: 1;
+        }
+        .log-search input {
+            padding-left: 40px;
+        }
+        .log-search i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+        .log-container {
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            max-height: 600px;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+        }
+        .log-export-options {
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .realtime-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: #10b981;
+            border-radius: 50%;
+            margin-right: 5px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <span class="brand-highlight">Sirsi</span>Nexus Admin
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin-dashboard.html">
+                            <i class="fas fa-tachometer-alt"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-link nav-link" id="theme-toggle">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="logout()">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="mb-4">System Logs</h1>
+                
+                <!-- Log Statistics -->
+                <div class="log-stats">
+                    <div class="log-stat-card">
+                        <i class="fas fa-info-circle fa-2x text-primary mb-2"></i>
+                        <h4 id="info-count">0</h4>
+                        <p class="mb-0">Info</p>
+                    </div>
+                    <div class="log-stat-card">
+                        <i class="fas fa-exclamation-triangle fa-2x text-warning mb-2"></i>
+                        <h4 id="warning-count">0</h4>
+                        <p class="mb-0">Warnings</p>
+                    </div>
+                    <div class="log-stat-card">
+                        <i class="fas fa-times-circle fa-2x text-danger mb-2"></i>
+                        <h4 id="error-count">0</h4>
+                        <p class="mb-0">Errors</p>
+                    </div>
+                    <div class="log-stat-card">
+                        <i class="fas fa-bug fa-2x text-secondary mb-2"></i>
+                        <h4 id="debug-count">0</h4>
+                        <p class="mb-0">Debug</p>
+                    </div>
+                    <div class="log-stat-card">
+                        <i class="fas fa-check-circle fa-2x text-success mb-2"></i>
+                        <h4 id="success-count">0</h4>
+                        <p class="mb-0">Success</p>
+                    </div>
+                </div>
+
+                <!-- Log Filters -->
+                <div class="log-filters">
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <label for="logLevel" class="form-label">Log Level</label>
+                            <select class="form-select" id="logLevel" onchange="filterLogs()">
+                                <option value="all">All Levels</option>
+                                <option value="info">Info</option>
+                                <option value="warning">Warning</option>
+                                <option value="error">Error</option>
+                                <option value="debug">Debug</option>
+                                <option value="success">Success</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="logSource" class="form-label">Source</label>
+                            <select class="form-select" id="logSource" onchange="filterLogs()">
+                                <option value="all">All Sources</option>
+                                <option value="system">System</option>
+                                <option value="application">Application</option>
+                                <option value="database">Database</option>
+                                <option value="api">API</option>
+                                <option value="security">Security</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="dateFrom" class="form-label">From Date</label>
+                            <input type="datetime-local" class="form-control" id="dateFrom" onchange="filterLogs()">
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="dateTo" class="form-label">To Date</label>
+                            <input type="datetime-local" class="form-control" id="dateTo" onchange="filterLogs()">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Log Viewer -->
+                <div class="log-viewer">
+                    <div class="log-controls">
+                        <div class="log-search">
+                            <i class="fas fa-search"></i>
+                            <input type="text" class="form-control" id="logSearch" placeholder="Search logs...">
+                        </div>
+                        <div>
+                            <span class="me-3">
+                                <span class="realtime-indicator"></span>
+                                <span id="realtimeStatus">Real-time</span>
+                            </span>
+                            <button class="btn btn-sm btn-secondary" onclick="toggleRealtime()">
+                                <i class="fas fa-pause" id="realtimeIcon"></i>
+                            </button>
+                            <button class="btn btn-sm btn-secondary" onclick="clearLogs()">
+                                <i class="fas fa-trash"></i> Clear
+                            </button>
+                            <button class="btn btn-sm btn-primary" onclick="refreshLogs()">
+                                <i class="fas fa-sync"></i> Refresh
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="log-container" id="logContainer">
+                        <!-- Logs will be populated here -->
+                    </div>
+                </div>
+
+                <!-- Export Options -->
+                <div class="log-export-options">
+                    <h5 class="mb-3">Export Logs</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="exportFormat" class="form-label">Format</label>
+                            <select class="form-select" id="exportFormat">
+                                <option value="txt">Plain Text (.txt)</option>
+                                <option value="csv">CSV (.csv)</option>
+                                <option value="json">JSON (.json)</option>
+                                <option value="xml">XML (.xml)</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="exportRange" class="form-label">Range</label>
+                            <select class="form-select" id="exportRange">
+                                <option value="current">Current View</option>
+                                <option value="today">Today</option>
+                                <option value="week">Last 7 Days</option>
+                                <option value="month">Last 30 Days</option>
+                                <option value="all">All Logs</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <button class="btn btn-primary" onclick="exportLogs()">
+                            <i class="fas fa-download"></i> Export Logs
+                        </button>
+                        <button class="btn btn-secondary" onclick="emailLogs()">
+                            <i class="fas fa-envelope"></i> Email Logs
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Log Analysis -->
+                <div class="log-viewer mt-4">
+                    <h5 class="mb-3">Log Analysis</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <canvas id="logTrendChart" height="200"></canvas>
+                        </div>
+                        <div class="col-md-6">
+                            <canvas id="logDistributionChart" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/fresh-theme-toggle.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Sample log data
+        let logs = [
+            {
+                timestamp: new Date().toISOString(),
+                level: 'info',
+                source: 'system',
+                message: 'Application started successfully'
+            },
+            {
+                timestamp: new Date(Date.now() - 60000).toISOString(),
+                level: 'success',
+                source: 'api',
+                message: 'API endpoint /users responded in 45ms'
+            },
+            {
+                timestamp: new Date(Date.now() - 120000).toISOString(),
+                level: 'warning',
+                source: 'database',
+                message: 'Query took longer than expected: 2.3s'
+            },
+            {
+                timestamp: new Date(Date.now() - 180000).toISOString(),
+                level: 'error',
+                source: 'application',
+                message: 'Failed to load user preferences: Connection timeout'
+            },
+            {
+                timestamp: new Date(Date.now() - 240000).toISOString(),
+                level: 'debug',
+                source: 'system',
+                message: 'Memory usage: 512MB / 2048MB'
+            },
+            {
+                timestamp: new Date(Date.now() - 300000).toISOString(),
+                level: 'info',
+                source: 'security',
+                message: 'User authentication successful for john.doe@example.com'
+            }
+        ];
+
+        let filteredLogs = [...logs];
+        let realtimeEnabled = true;
+        let charts = {};
+
+        function init() {
+            loadLogs();
+            updateStats();
+            initCharts();
+            setupSearch();
+            
+            // Set default date range
+            const now = new Date();
+            const yesterday = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+            document.getElementById('dateFrom').value = yesterday.toISOString().slice(0, 16);
+            document.getElementById('dateTo').value = now.toISOString().slice(0, 16);
+            
+            // Simulate real-time logs
+            if (realtimeEnabled) {
+                setInterval(addRandomLog, 5000);
+            }
+        }
+
+        function loadLogs() {
+            const container = document.getElementById('logContainer');
+            container.innerHTML = '';
+            
+            filteredLogs.forEach(log => {
+                const logEntry = document.createElement('div');
+                logEntry.className = 'log-entry';
+                logEntry.innerHTML = `
+                    <span class="log-timestamp">${formatTimestamp(log.timestamp)}</span>
+                    <span class="log-level ${log.level}">${log.level}</span>
+                    <span class="log-message">
+                        ${log.message}
+                        <span class="log-source">[${log.source}]</span>
+                    </span>
+                `;
+                container.appendChild(logEntry);
+            });
+            
+            // Auto-scroll to bottom if realtime is enabled
+            if (realtimeEnabled) {
+                container.scrollTop = container.scrollHeight;
+            }
+        }
+
+        function formatTimestamp(timestamp) {
+            const date = new Date(timestamp);
+            return date.toLocaleString();
+        }
+
+        function updateStats() {
+            const stats = {
+                info: 0,
+                warning: 0,
+                error: 0,
+                debug: 0,
+                success: 0
+            };
+            
+            filteredLogs.forEach(log => {
+                stats[log.level]++;
+            });
+            
+            document.getElementById('info-count').textContent = stats.info;
+            document.getElementById('warning-count').textContent = stats.warning;
+            document.getElementById('error-count').textContent = stats.error;
+            document.getElementById('debug-count').textContent = stats.debug;
+            document.getElementById('success-count').textContent = stats.success;
+        }
+
+        function filterLogs() {
+            const level = document.getElementById('logLevel').value;
+            const source = document.getElementById('logSource').value;
+            const dateFrom = new Date(document.getElementById('dateFrom').value);
+            const dateTo = new Date(document.getElementById('dateTo').value);
+            
+            filteredLogs = logs.filter(log => {
+                // Level filter
+                if (level !== 'all' && log.level !== level) return false;
+                
+                // Source filter
+                if (source !== 'all' && log.source !== source) return false;
+                
+                // Date filter
+                const logDate = new Date(log.timestamp);
+                if (dateFrom && logDate < dateFrom) return false;
+                if (dateTo && logDate > dateTo) return false;
+                
+                return true;
+            });
+            
+            loadLogs();
+            updateStats();
+            updateCharts();
+        }
+
+        function setupSearch() {
+            const searchInput = document.getElementById('logSearch');
+            searchInput.addEventListener('input', (e) => {
+                const searchTerm = e.target.value.toLowerCase();
+                const logEntries = document.querySelectorAll('.log-entry');
+                
+                logEntries.forEach(entry => {
+                    const text = entry.textContent.toLowerCase();
+                    if (text.includes(searchTerm)) {
+                        entry.style.display = 'flex';
+                    } else {
+                        entry.style.display = 'none';
+                    }
+                });
+            });
+        }
+
+        function toggleRealtime() {
+            realtimeEnabled = !realtimeEnabled;
+            const icon = document.getElementById('realtimeIcon');
+            const status = document.getElementById('realtimeStatus');
+            const indicator = document.querySelector('.realtime-indicator');
+            
+            if (realtimeEnabled) {
+                icon.className = 'fas fa-pause';
+                status.textContent = 'Real-time';
+                indicator.style.display = 'inline-block';
+            } else {
+                icon.className = 'fas fa-play';
+                status.textContent = 'Paused';
+                indicator.style.display = 'none';
+            }
+        }
+
+        function clearLogs() {
+            if (confirm('Are you sure you want to clear the displayed logs?')) {
+                filteredLogs = [];
+                loadLogs();
+                updateStats();
+                showNotification('Logs cleared', 'success');
+            }
+        }
+
+        function refreshLogs() {
+            // In a real implementation, this would fetch new logs from the server
+            showNotification('Logs refreshed', 'success');
+            loadLogs();
+        }
+
+        function addRandomLog() {
+            if (!realtimeEnabled) return;
+            
+            const levels = ['info', 'warning', 'error', 'debug', 'success'];
+            const sources = ['system', 'application', 'database', 'api', 'security'];
+            const messages = [
+                'Database connection established',
+                'Cache cleared successfully',
+                'User session created',
+                'API request processed',
+                'Background job completed',
+                'File upload completed',
+                'Email sent successfully',
+                'Configuration updated',
+                'Backup process started',
+                'Memory cleanup performed'
+            ];
+            
+            const newLog = {
+                timestamp: new Date().toISOString(),
+                level: levels[Math.floor(Math.random() * levels.length)],
+                source: sources[Math.floor(Math.random() * sources.length)],
+                message: messages[Math.floor(Math.random() * messages.length)]
+            };
+            
+            logs.unshift(newLog);
+            filterLogs();
+        }
+
+        function exportLogs() {
+            const format = document.getElementById('exportFormat').value;
+            const range = document.getElementById('exportRange').value;
+            
+            showNotification(`Exporting logs as ${format.toUpperCase()}...`, 'info');
+            
+            // Simulate export
+            setTimeout(() => {
+                const filename = `system_logs_${new Date().toISOString().split('T')[0]}.${format}`;
+                showNotification(`Logs exported: ${filename}`, 'success');
+            }, 1500);
+        }
+
+        function emailLogs() {
+            showNotification('Preparing logs for email...', 'info');
+            
+            setTimeout(() => {
+                showNotification('Logs sent to admin@sirsinexus.com', 'success');
+            }, 2000);
+        }
+
+        function initCharts() {
+            const isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
+            const textColor = isDarkMode ? '#ffffff' : '#333333';
+            const gridColor = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
+
+            // Log Trend Chart
+            const trendCtx = document.getElementById('logTrendChart').getContext('2d');
+            charts.trend = new Chart(trendCtx, {
+                type: 'line',
+                data: {
+                    labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', '24:00'],
+                    datasets: [{
+                        label: 'Log Volume',
+                        data: [20, 15, 30, 45, 60, 40, 35],
+                        borderColor: '#ff5e00',
+                        backgroundColor: 'rgba(255, 94, 0, 0.1)',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Log Volume Trend (24h)',
+                            color: textColor
+                        },
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: { color: textColor },
+                            grid: { color: gridColor }
+                        },
+                        x: {
+                            ticks: { color: textColor },
+                            grid: { color: gridColor }
+                        }
+                    }
+                }
+            });
+
+            // Log Distribution Chart
+            const distCtx = document.getElementById('logDistributionChart').getContext('2d');
+            charts.distribution = new Chart(distCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Info', 'Warning', 'Error', 'Debug', 'Success'],
+                    datasets: [{
+                        data: [35, 20, 15, 20, 10],
+                        backgroundColor: ['#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6', '#10b981']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Log Level Distribution',
+                            color: textColor
+                        },
+                        legend: {
+                            position: 'bottom',
+                            labels: { color: textColor }
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateCharts() {
+            // Update distribution data based on current filtered logs
+            const distribution = {
+                info: 0,
+                warning: 0,
+                error: 0,
+                debug: 0,
+                success: 0
+            };
+            
+            filteredLogs.forEach(log => {
+                distribution[log.level]++;
+            });
+            
+            charts.distribution.data.datasets[0].data = [
+                distribution.info,
+                distribution.warning,
+                distribution.error,
+                distribution.debug,
+                distribution.success
+            ];
+            charts.distribution.update();
+        }
+
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type} notification`;
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 9999;
+                animation: slideIn 0.3s ease;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        function logout() {
+            localStorage.removeItem('adminToken');
+            window.location.href = 'login.html';
+        }
+
+        // Update charts on theme change
+        document.addEventListener('theme-changed', () => {
+            const isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
+            const textColor = isDarkMode ? '#ffffff' : '#333333';
+            const gridColor = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
+
+            Object.values(charts).forEach(chart => {
+                if (chart.options.scales) {
+                    if (chart.options.scales.y) {
+                        chart.options.scales.y.ticks.color = textColor;
+                        chart.options.scales.y.grid.color = gridColor;
+                    }
+                    if (chart.options.scales.x) {
+                        chart.options.scales.x.ticks.color = textColor;
+                        chart.options.scales.x.grid.color = gridColor;
+                    }
+                }
+                if (chart.options.plugins) {
+                    if (chart.options.plugins.title) {
+                        chart.options.plugins.title.color = textColor;
+                    }
+                    if (chart.options.plugins.legend) {
+                        chart.options.plugins.legend.labels.color = textColor;
+                    }
+                }
+                chart.update();
+            });
+        });
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Room Management - SirsiNexus Admin</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/admin-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .file-manager {
+            background: var(--bg-primary);
+            border-radius: 10px;
+            padding: 20px;
+            min-height: 600px;
+        }
+        .folder-tree {
+            border-right: 1px solid var(--border-color);
+            padding-right: 20px;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        .folder-item {
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            transition: all 0.3s ease;
+        }
+        .folder-item:hover {
+            background: var(--accent-primary);
+            color: white;
+        }
+        .folder-item.active {
+            background: var(--accent-primary);
+            color: white;
+        }
+        .file-list {
+            padding-left: 20px;
+        }
+        .file-item {
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+        .file-item:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+        }
+        .file-icon {
+            font-size: 24px;
+            margin-right: 15px;
+            color: var(--accent-secondary);
+        }
+        .file-details {
+            flex-grow: 1;
+        }
+        .file-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .upload-zone {
+            border: 2px dashed var(--border-color);
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        .upload-zone.dragover {
+            border-color: var(--accent-primary);
+            background: rgba(255, 94, 0, 0.1);
+        }
+        .access-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-left: 10px;
+        }
+        .access-public {
+            background: #10b981;
+            color: white;
+        }
+        .access-restricted {
+            background: #f59e0b;
+            color: white;
+        }
+        .access-private {
+            background: #ef4444;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <span class="brand-highlight">Sirsi</span>Nexus Admin
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin-dashboard.html">
+                            <i class="fas fa-tachometer-alt"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-link nav-link" id="theme-toggle">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="logout()">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="mb-4">Data Room Management</h1>
+                
+                <!-- Storage Statistics -->
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-hdd"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="total-storage">0 GB</h3>
+                                <p>Total Storage</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-file"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="total-files">0</h3>
+                                <p>Total Files</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-folder"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="total-folders">0</h3>
+                                <p>Total Folders</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-download"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="total-downloads">0</h3>
+                                <p>Downloads Today</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upload Zone -->
+                <div class="upload-zone" id="uploadZone">
+                    <i class="fas fa-cloud-upload-alt fa-3x mb-3"></i>
+                    <h4>Drag & Drop Files Here</h4>
+                    <p class="text-muted">or click to browse</p>
+                    <input type="file" id="fileInput" multiple style="display: none;">
+                    <button class="btn btn-primary mt-3" onclick="document.getElementById('fileInput').click()">
+                        <i class="fas fa-plus"></i> Select Files
+                    </button>
+                </div>
+
+                <!-- File Manager -->
+                <div class="file-manager">
+                    <div class="row">
+                        <!-- Folder Tree -->
+                        <div class="col-md-3">
+                            <h5 class="mb-3">Folders</h5>
+                            <div class="folder-tree" id="folderTree">
+                                <div class="folder-item active" data-folder="root">
+                                    <i class="fas fa-folder"></i> Root
+                                </div>
+                                <div class="folder-item ms-3" data-folder="financials">
+                                    <i class="fas fa-folder"></i> Financials
+                                </div>
+                                <div class="folder-item ms-3" data-folder="legal">
+                                    <i class="fas fa-folder"></i> Legal Documents
+                                </div>
+                                <div class="folder-item ms-3" data-folder="presentations">
+                                    <i class="fas fa-folder"></i> Presentations
+                                </div>
+                                <div class="folder-item ms-3" data-folder="technical">
+                                    <i class="fas fa-folder"></i> Technical Docs
+                                </div>
+                            </div>
+                            <button class="btn btn-sm btn-secondary mt-3 w-100" onclick="createFolder()">
+                                <i class="fas fa-folder-plus"></i> New Folder
+                            </button>
+                        </div>
+
+                        <!-- File List -->
+                        <div class="col-md-9">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5>Files in <span id="currentFolder">Root</span></h5>
+                                <div>
+                                    <input type="text" class="form-control form-control-sm d-inline-block w-auto" 
+                                           placeholder="Search files..." id="fileSearch" style="margin-right: 10px;">
+                                    <button class="btn btn-sm btn-secondary" onclick="toggleView()">
+                                        <i class="fas fa-th"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="file-list" id="fileList">
+                                <!-- Files will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- File Details Modal -->
+    <div class="modal fade" id="fileModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">File Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="fileForm">
+                        <input type="hidden" id="fileId">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="fileName" class="form-label">File Name</label>
+                                <input type="text" class="form-control" id="fileName" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="fileAccess" class="form-label">Access Level</label>
+                                <select class="form-select" id="fileAccess" required>
+                                    <option value="public">Public</option>
+                                    <option value="restricted">Restricted</option>
+                                    <option value="private">Private</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fileDescription" class="form-label">Description</label>
+                            <textarea class="form-control" id="fileDescription" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Allowed Users/Groups</label>
+                            <select class="form-select" id="allowedUsers" multiple>
+                                <option value="all-investors">All Investors</option>
+                                <option value="partners">Partners</option>
+                                <option value="board">Board Members</option>
+                                <option value="executives">Executives</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">File Information</label>
+                            <div class="info-grid">
+                                <p><strong>Type:</strong> <span id="fileType">-</span></p>
+                                <p><strong>Size:</strong> <span id="fileSize">-</span></p>
+                                <p><strong>Uploaded:</strong> <span id="fileUploaded">-</span></p>
+                                <p><strong>Downloads:</strong> <span id="fileDownloads">-</span></p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" onclick="deleteFile()">Delete File</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveFileDetails()">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/fresh-theme-toggle.js"></script>
+    <script>
+        // Sample file data (replace with actual backend integration)
+        let files = [
+            {
+                id: 1,
+                name: 'Q4 2023 Financial Report.pdf',
+                folder: 'financials',
+                size: '2.5 MB',
+                type: 'pdf',
+                access: 'restricted',
+                uploaded: '2024-01-10',
+                downloads: 45,
+                description: 'Quarterly financial report for Q4 2023'
+            },
+            {
+                id: 2,
+                name: 'Investment Deck 2024.pptx',
+                folder: 'presentations',
+                size: '15.8 MB',
+                type: 'pptx',
+                access: 'public',
+                uploaded: '2024-01-15',
+                downloads: 127,
+                description: 'Latest investment deck for potential investors'
+            },
+            {
+                id: 3,
+                name: 'Term Sheet Template.docx',
+                folder: 'legal',
+                size: '245 KB',
+                type: 'docx',
+                access: 'private',
+                uploaded: '2024-01-05',
+                downloads: 12,
+                description: 'Standard term sheet template'
+            },
+            {
+                id: 4,
+                name: 'Technical Architecture.pdf',
+                folder: 'technical',
+                size: '8.3 MB',
+                type: 'pdf',
+                access: 'restricted',
+                uploaded: '2024-01-12',
+                downloads: 23,
+                description: 'System architecture documentation'
+            }
+        ];
+
+        let currentFolder = 'root';
+        let selectedFile = null;
+
+        function init() {
+            setupFolderTree();
+            setupUploadZone();
+            loadFiles();
+            updateStats();
+            setupSearch();
+        }
+
+        function updateStats() {
+            // Calculate total storage
+            let totalSize = 0;
+            files.forEach(file => {
+                const size = parseFloat(file.size);
+                if (file.size.includes('MB')) {
+                    totalSize += size / 1024;
+                } else if (file.size.includes('KB')) {
+                    totalSize += size / (1024 * 1024);
+                } else if (file.size.includes('GB')) {
+                    totalSize += size;
+                }
+            });
+            
+            document.getElementById('total-storage').textContent = totalSize.toFixed(2) + ' GB';
+            document.getElementById('total-files').textContent = files.length;
+            document.getElementById('total-folders').textContent = 5; // Static for demo
+            document.getElementById('total-downloads').textContent = files.reduce((sum, file) => sum + file.downloads, 0);
+        }
+
+        function setupFolderTree() {
+            const folderItems = document.querySelectorAll('.folder-item');
+            folderItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Remove active class from all
+                    folderItems.forEach(f => f.classList.remove('active'));
+                    // Add active to clicked
+                    this.classList.add('active');
+                    // Update current folder
+                    currentFolder = this.dataset.folder;
+                    document.getElementById('currentFolder').textContent = this.textContent.trim();
+                    // Reload files
+                    loadFiles();
+                });
+            });
+        }
+
+        function setupUploadZone() {
+            const uploadZone = document.getElementById('uploadZone');
+            const fileInput = document.getElementById('fileInput');
+
+            uploadZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadZone.classList.add('dragover');
+            });
+
+            uploadZone.addEventListener('dragleave', () => {
+                uploadZone.classList.remove('dragover');
+            });
+
+            uploadZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadZone.classList.remove('dragover');
+                handleFiles(e.dataTransfer.files);
+            });
+
+            fileInput.addEventListener('change', (e) => {
+                handleFiles(e.target.files);
+            });
+        }
+
+        function handleFiles(fileList) {
+            Array.from(fileList).forEach(file => {
+                // Create new file entry
+                const newFile = {
+                    id: files.length + 1,
+                    name: file.name,
+                    folder: currentFolder,
+                    size: formatFileSize(file.size),
+                    type: file.name.split('.').pop(),
+                    access: 'restricted',
+                    uploaded: new Date().toISOString().split('T')[0],
+                    downloads: 0,
+                    description: ''
+                };
+                files.push(newFile);
+            });
+            
+            loadFiles();
+            updateStats();
+            showNotification(`${fileList.length} file(s) uploaded successfully!`, 'success');
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function loadFiles() {
+            const fileList = document.getElementById('fileList');
+            fileList.innerHTML = '';
+
+            const folderFiles = currentFolder === 'root' ? files : files.filter(f => f.folder === currentFolder);
+
+            folderFiles.forEach(file => {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                fileItem.innerHTML = `
+                    <div class="d-flex align-items-center">
+                        <i class="file-icon ${getFileIcon(file.type)}"></i>
+                        <div class="file-details">
+                            <h6 class="mb-1">${file.name}</h6>
+                            <small class="text-muted">${file.size} • Uploaded ${file.uploaded} • ${file.downloads} downloads</small>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <span class="access-badge access-${file.access}">${file.access}</span>
+                        <div class="file-actions ms-3">
+                            <button class="btn btn-sm btn-primary" onclick="editFile(${file.id})" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-sm btn-secondary" onclick="downloadFile(${file.id})" title="Download">
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button class="btn btn-sm btn-info" onclick="shareFile(${file.id})" title="Share">
+                                <i class="fas fa-share"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                fileList.appendChild(fileItem);
+            });
+
+            if (folderFiles.length === 0) {
+                fileList.innerHTML = '<p class="text-center text-muted">No files in this folder</p>';
+            }
+        }
+
+        function getFileIcon(type) {
+            const icons = {
+                'pdf': 'fas fa-file-pdf text-danger',
+                'docx': 'fas fa-file-word text-primary',
+                'doc': 'fas fa-file-word text-primary',
+                'xlsx': 'fas fa-file-excel text-success',
+                'xls': 'fas fa-file-excel text-success',
+                'pptx': 'fas fa-file-powerpoint text-warning',
+                'ppt': 'fas fa-file-powerpoint text-warning',
+                'jpg': 'fas fa-file-image text-info',
+                'jpeg': 'fas fa-file-image text-info',
+                'png': 'fas fa-file-image text-info',
+                'zip': 'fas fa-file-archive text-secondary',
+                'rar': 'fas fa-file-archive text-secondary'
+            };
+            return icons[type.toLowerCase()] || 'fas fa-file text-secondary';
+        }
+
+        function setupSearch() {
+            const searchInput = document.getElementById('fileSearch');
+            searchInput.addEventListener('input', (e) => {
+                const searchTerm = e.target.value.toLowerCase();
+                const fileItems = document.querySelectorAll('.file-item');
+                
+                fileItems.forEach(item => {
+                    const fileName = item.querySelector('h6').textContent.toLowerCase();
+                    if (fileName.includes(searchTerm)) {
+                        item.style.display = 'flex';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        }
+
+        function editFile(fileId) {
+            selectedFile = files.find(f => f.id === fileId);
+            if (selectedFile) {
+                document.getElementById('fileId').value = selectedFile.id;
+                document.getElementById('fileName').value = selectedFile.name;
+                document.getElementById('fileAccess').value = selectedFile.access;
+                document.getElementById('fileDescription').value = selectedFile.description;
+                document.getElementById('fileType').textContent = selectedFile.type.toUpperCase();
+                document.getElementById('fileSize').textContent = selectedFile.size;
+                document.getElementById('fileUploaded').textContent = selectedFile.uploaded;
+                document.getElementById('fileDownloads').textContent = selectedFile.downloads;
+                
+                const modal = new bootstrap.Modal(document.getElementById('fileModal'));
+                modal.show();
+            }
+        }
+
+        function saveFileDetails() {
+            if (selectedFile) {
+                selectedFile.name = document.getElementById('fileName').value;
+                selectedFile.access = document.getElementById('fileAccess').value;
+                selectedFile.description = document.getElementById('fileDescription').value;
+                
+                loadFiles();
+                bootstrap.Modal.getInstance(document.getElementById('fileModal')).hide();
+                showNotification('File details updated successfully!', 'success');
+            }
+        }
+
+        function deleteFile() {
+            if (selectedFile) {
+                files = files.filter(f => f.id !== selectedFile.id);
+                loadFiles();
+                updateStats();
+                bootstrap.Modal.getInstance(document.getElementById('fileModal')).hide();
+                showNotification('File deleted successfully!', 'success');
+            }
+        }
+
+        function downloadFile(fileId) {
+            const file = files.find(f => f.id === fileId);
+            if (file) {
+                // Increment download count
+                file.downloads++;
+                loadFiles();
+                updateStats();
+                
+                // Simulate download
+                showNotification(`Downloading ${file.name}...`, 'info');
+            }
+        }
+
+        function shareFile(fileId) {
+            const file = files.find(f => f.id === fileId);
+            if (file) {
+                // Generate shareable link
+                const shareLink = `https://sirsinexus.com/share/${file.id}`;
+                
+                // Copy to clipboard
+                navigator.clipboard.writeText(shareLink).then(() => {
+                    showNotification('Share link copied to clipboard!', 'success');
+                });
+            }
+        }
+
+        function createFolder() {
+            const folderName = prompt('Enter folder name:');
+            if (folderName) {
+                // Add new folder to tree
+                const folderTree = document.getElementById('folderTree');
+                const newFolder = document.createElement('div');
+                newFolder.className = 'folder-item ms-3';
+                newFolder.dataset.folder = folderName.toLowerCase().replace(/\s+/g, '-');
+                newFolder.innerHTML = `<i class="fas fa-folder"></i> ${folderName}`;
+                folderTree.insertBefore(newFolder, folderTree.lastElementChild);
+                
+                // Reattach event listeners
+                setupFolderTree();
+                showNotification('Folder created successfully!', 'success');
+            }
+        }
+
+        function toggleView() {
+            // Toggle between list and grid view
+            const fileList = document.getElementById('fileList');
+            fileList.classList.toggle('grid-view');
+        }
+
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type} notification`;
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 9999;
+                animation: slideIn 0.3s ease;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        function logout() {
+            localStorage.removeItem('adminToken');
+            window.location.href = 'login.html';
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

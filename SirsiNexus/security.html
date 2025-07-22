@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Management - SirsiNexus Admin</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/admin-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .security-section {
+            background: var(--bg-primary);
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .threat-indicator {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .threat-low {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .threat-medium {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .threat-high {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        .security-log-item {
+            padding: 15px;
+            border-left: 3px solid var(--border-color);
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+        .security-log-item:hover {
+            border-left-color: var(--accent-primary);
+            background: rgba(255, 94, 0, 0.05);
+        }
+        .log-warning {
+            border-left-color: #f59e0b;
+        }
+        .log-danger {
+            border-left-color: #ef4444;
+        }
+        .log-success {
+            border-left-color: #10b981;
+        }
+        .access-rule {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        .ip-whitelist-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            background: var(--bg-secondary);
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .security-metric {
+            text-align: center;
+            padding: 20px;
+            background: var(--bg-secondary);
+            border-radius: 10px;
+        }
+        .security-metric h3 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        .firewall-rule {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        .firewall-rule.active {
+            border: 2px solid #10b981;
+        }
+        .firewall-rule.inactive {
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <span class="brand-highlight">Sirsi</span>Nexus Admin
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin-dashboard.html">
+                            <i class="fas fa-tachometer-alt"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-link nav-link" id="theme-toggle">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="logout()">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="mb-4">Security Management</h1>
+                
+                <!-- Threat Level Indicator -->
+                <div class="threat-indicator threat-low">
+                    <i class="fas fa-shield-alt fa-3x"></i>
+                    <div>
+                        <h4 class="mb-0">Current Threat Level: Low</h4>
+                        <p class="mb-0">No immediate security threats detected. System is secure.</p>
+                    </div>
+                </div>
+
+                <!-- Security Metrics -->
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="security-metric">
+                            <i class="fas fa-ban fa-2x text-danger mb-3"></i>
+                            <h3>23</h3>
+                            <p>Blocked Attempts Today</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="security-metric">
+                            <i class="fas fa-user-shield fa-2x text-success mb-3"></i>
+                            <h3>100%</h3>
+                            <p>Users with 2FA</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="security-metric">
+                            <i class="fas fa-lock fa-2x text-primary mb-3"></i>
+                            <h3>SSL A+</h3>
+                            <p>Security Rating</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="security-metric">
+                            <i class="fas fa-clock fa-2x text-warning mb-3"></i>
+                            <h3>2 days</h3>
+                            <p>Since Last Incident</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Access Control -->
+                <div class="security-section">
+                    <h3 class="mb-4">Access Control</h3>
+                    
+                    <div class="mb-4">
+                        <h5>Active Sessions</h5>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>User</th>
+                                        <th>IP Address</th>
+                                        <th>Location</th>
+                                        <th>Login Time</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>admin@sirsinexus.com</td>
+                                        <td>192.168.1.100</td>
+                                        <td>New York, US</td>
+                                        <td>2 hours ago</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-danger" onclick="terminateSession(1)">
+                                                <i class="fas fa-times"></i> Terminate
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>john.doe@example.com</td>
+                                        <td>192.168.1.101</td>
+                                        <td>Los Angeles, US</td>
+                                        <td>30 minutes ago</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-danger" onclick="terminateSession(2)">
+                                                <i class="fas fa-times"></i> Terminate
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <h5>Access Rules</h5>
+                        <div class="access-rule">
+                            <div>
+                                <strong>Admin Panel Access</strong>
+                                <p class="text-muted mb-0">Restrict admin panel to specific IPs</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="access-rule">
+                            <div>
+                                <strong>API Access</strong>
+                                <p class="text-muted mb-0">Require API key for all requests</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="access-rule">
+                            <div>
+                                <strong>File Download Restrictions</strong>
+                                <p class="text-muted mb-0">Limit downloads per user per day</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Firewall Settings -->
+                <div class="security-section">
+                    <h3 class="mb-4">Firewall & IP Management</h3>
+                    
+                    <div class="mb-4">
+                        <h5>IP Whitelist</h5>
+                        <div id="ipWhitelist">
+                            <div class="ip-whitelist-item">
+                                <span>192.168.1.100 - Admin Office</span>
+                                <button class="btn btn-sm btn-danger" onclick="removeIP(this)">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                            <div class="ip-whitelist-item">
+                                <span>10.0.0.0/24 - Corporate Network</span>
+                                <button class="btn btn-sm btn-danger" onclick="removeIP(this)">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="input-group mt-3">
+                            <input type="text" class="form-control" id="newIP" placeholder="Enter IP address or range">
+                            <button class="btn btn-primary" onclick="addIP()">
+                                <i class="fas fa-plus"></i> Add IP
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <h5>Firewall Rules</h5>
+                        <div class="firewall-rule active">
+                            <div>
+                                <strong>Block SQL Injection Attempts</strong>
+                                <p class="text-muted mb-0">Detect and block SQL injection patterns</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="firewall-rule active">
+                            <div>
+                                <strong>DDoS Protection</strong>
+                                <p class="text-muted mb-0">Rate limiting and traffic analysis</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="firewall-rule">
+                            <div>
+                                <strong>Geographic Restrictions</strong>
+                                <p class="text-muted mb-0">Block access from specific countries</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Security Audit Log -->
+                <div class="security-section">
+                    <h3 class="mb-4">Security Audit Log</h3>
+                    
+                    <div class="mb-3">
+                        <input type="text" class="form-control" placeholder="Search security logs..." id="logSearch">
+                    </div>
+
+                    <div id="securityLogs">
+                        <div class="security-log-item log-danger">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h6 class="mb-1">Failed Login Attempt</h6>
+                                    <p class="mb-1">Multiple failed login attempts from IP 45.142.182.112</p>
+                                    <small class="text-muted">10 minutes ago • IP: 45.142.182.112</small>
+                                </div>
+                                <div>
+                                    <span class="badge bg-danger">High Risk</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="security-log-item log-warning">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h6 class="mb-1">Suspicious API Request</h6>
+                                    <p class="mb-1">Unusual API request pattern detected</p>
+                                    <small class="text-muted">1 hour ago • User: unknown</small>
+                                </div>
+                                <div>
+                                    <span class="badge bg-warning">Medium Risk</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="security-log-item log-success">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h6 class="mb-1">Security Update Applied</h6>
+                                    <p class="mb-1">SSL certificate renewed successfully</p>
+                                    <small class="text-muted">2 hours ago • System</small>
+                                </div>
+                                <div>
+                                    <span class="badge bg-success">Info</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="security-log-item">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h6 class="mb-1">New Admin User Added</h6>
+                                    <p class="mb-1">Admin privileges granted to jane.smith@example.com</p>
+                                    <small class="text-muted">3 hours ago • By: admin@sirsinexus.com</small>
+                                </div>
+                                <div>
+                                    <span class="badge bg-info">Info</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button class="btn btn-secondary" onclick="loadMoreLogs()">
+                            <i class="fas fa-plus"></i> Load More Logs
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Security Settings -->
+                <div class="security-section">
+                    <h3 class="mb-4">Security Settings</h3>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="sessionTimeout" class="form-label">Session Timeout (minutes)</label>
+                            <input type="number" class="form-control" id="sessionTimeout" value="30">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="maxLoginAttempts" class="form-label">Max Login Attempts</label>
+                            <input type="number" class="form-control" id="maxLoginAttempts" value="5">
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="passwordPolicy" class="form-label">Password Policy</label>
+                            <select class="form-select" id="passwordPolicy">
+                                <option value="strong" selected>Strong (12+ chars, mixed case, numbers, symbols)</option>
+                                <option value="medium">Medium (8+ chars, mixed case, numbers)</option>
+                                <option value="basic">Basic (6+ chars)</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="passwordExpiry" class="form-label">Password Expiry (days)</label>
+                            <input type="number" class="form-control" id="passwordExpiry" value="90">
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <h5>Security Headers</h5>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="hsts" checked>
+                            <label class="form-check-label" for="hsts">
+                                Enable HSTS (HTTP Strict Transport Security)
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="csp" checked>
+                            <label class="form-check-label" for="csp">
+                                Enable CSP (Content Security Policy)
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="xframe" checked>
+                            <label class="form-check-label" for="xframe">
+                                Enable X-Frame-Options
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="text-end">
+                        <button class="btn btn-primary" onclick="saveSecuritySettings()">
+                            <i class="fas fa-save"></i> Save Security Settings
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Emergency Actions -->
+                <div class="security-section">
+                    <h3 class="mb-4 text-danger">Emergency Actions</h3>
+                    
+                    <div class="alert alert-danger">
+                        <i class="fas fa-exclamation-triangle"></i> Use these actions only in case of security breach or emergency
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <button class="btn btn-danger w-100" onclick="lockdownSite()">
+                                <i class="fas fa-lock"></i> Emergency Lockdown
+                            </button>
+                            <small class="text-muted">Block all non-admin access</small>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <button class="btn btn-danger w-100" onclick="forceLogoutAll()">
+                                <i class="fas fa-sign-out-alt"></i> Force Logout All Users
+                            </button>
+                            <small class="text-muted">Terminate all active sessions</small>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <button class="btn btn-danger w-100" onclick="resetAllPasswords()">
+                                <i class="fas fa-key"></i> Reset All Passwords
+                            </button>
+                            <small class="text-muted">Force password reset for all users</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/fresh-theme-toggle.js"></script>
+    <script>
+        function terminateSession(sessionId) {
+            if (confirm('Are you sure you want to terminate this session?')) {
+                showNotification('Session terminated successfully', 'success');
+                // Remove the row from table
+                event.target.closest('tr').remove();
+            }
+        }
+
+        function removeIP(element) {
+            if (confirm('Are you sure you want to remove this IP from whitelist?')) {
+                element.closest('.ip-whitelist-item').remove();
+                showNotification('IP removed from whitelist', 'success');
+            }
+        }
+
+        function addIP() {
+            const ipInput = document.getElementById('newIP');
+            const ip = ipInput.value.trim();
+            
+            if (ip) {
+                const ipList = document.getElementById('ipWhitelist');
+                const newItem = document.createElement('div');
+                newItem.className = 'ip-whitelist-item';
+                newItem.innerHTML = `
+                    <span>${ip}</span>
+                    <button class="btn btn-sm btn-danger" onclick="removeIP(this)">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                `;
+                ipList.appendChild(newItem);
+                ipInput.value = '';
+                showNotification('IP added to whitelist', 'success');
+            }
+        }
+
+        function loadMoreLogs() {
+            showNotification('Loading more security logs...', 'info');
+            
+            // Simulate loading more logs
+            setTimeout(() => {
+                const logsContainer = document.getElementById('securityLogs');
+                const newLog = document.createElement('div');
+                newLog.className = 'security-log-item';
+                newLog.innerHTML = `
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="mb-1">User Permission Changed</h6>
+                            <p class="mb-1">Permissions updated for user john.doe@example.com</p>
+                            <small class="text-muted">4 hours ago • By: admin@sirsinexus.com</small>
+                        </div>
+                        <div>
+                            <span class="badge bg-info">Info</span>
+                        </div>
+                    </div>
+                `;
+                logsContainer.appendChild(newLog);
+            }, 1000);
+        }
+
+        function saveSecuritySettings() {
+            const settings = {
+                sessionTimeout: document.getElementById('sessionTimeout').value,
+                maxLoginAttempts: document.getElementById('maxLoginAttempts').value,
+                passwordPolicy: document.getElementById('passwordPolicy').value,
+                passwordExpiry: document.getElementById('passwordExpiry').value,
+                hsts: document.getElementById('hsts').checked,
+                csp: document.getElementById('csp').checked,
+                xframe: document.getElementById('xframe').checked
+            };
+            
+            // Save settings to backend
+            showNotification('Security settings saved successfully', 'success');
+        }
+
+        function lockdownSite() {
+            if (confirm('Are you sure you want to initiate emergency lockdown? This will block all non-admin access to the site.')) {
+                showNotification('Emergency lockdown activated!', 'warning');
+                // Update threat indicator
+                const indicator = document.querySelector('.threat-indicator');
+                indicator.className = 'threat-indicator threat-high';
+                indicator.querySelector('h4').textContent = 'Current Threat Level: Critical - Lockdown Active';
+                indicator.querySelector('p').textContent = 'Emergency lockdown is active. Only administrators can access the site.';
+            }
+        }
+
+        function forceLogoutAll() {
+            if (confirm('Are you sure you want to force logout all users? This will terminate all active sessions immediately.')) {
+                showNotification('All users have been logged out', 'warning');
+                // Clear session table
+                const tbody = document.querySelector('tbody');
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center">No active sessions</td></tr>';
+            }
+        }
+
+        function resetAllPasswords() {
+            if (confirm('Are you sure you want to reset all user passwords? Users will need to reset their passwords on next login.')) {
+                showNotification('Password reset initiated for all users', 'warning');
+            }
+        }
+
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type} notification`;
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 9999;
+                animation: slideIn 0.3s ease;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        function logout() {
+            localStorage.removeItem('adminToken');
+            window.location.href = 'login.html';
+        }
+
+        // Search functionality
+        document.getElementById('logSearch').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const logs = document.querySelectorAll('.security-log-item');
+            
+            logs.forEach(log => {
+                const text = log.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    log.style.display = 'block';
+                } else {
+                    log.style.display = 'none';
+                }
+            });
+        });
+
+        // Simulate real-time security monitoring
+        setInterval(() => {
+            // Update blocked attempts
+            const blockedAttempts = document.querySelector('.security-metric h3');
+            const currentValue = parseInt(blockedAttempts.textContent);
+            if (Math.random() > 0.8) {
+                blockedAttempts.textContent = currentValue + 1;
+            }
+        }, 30000);
+    </script>
+</body>
+</html>
