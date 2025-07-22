@@ -46,7 +46,14 @@
     </script>
     
     <!-- Theme Toggle Script -->
-    <script src="js/fresh-theme-toggle.js"></script>
+    <script>
+        // Initialize theme
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark')
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+    </script>
     
     <!-- Override conflicting styles -->
     <link rel="stylesheet" href="css/admin-styles.css">
@@ -767,6 +774,18 @@
         // Initialize clock
         updateClock();
         setInterval(updateClock, 60000);
+        
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.addEventListener('click', function() {
+            if (localStorage.theme === 'dark') {
+                localStorage.theme = 'light';
+                document.documentElement.classList.remove('dark');
+            } else {
+                localStorage.theme = 'dark';
+                document.documentElement.classList.add('dark');
+            }
+        });
     </script>
 </body>
 </html>
