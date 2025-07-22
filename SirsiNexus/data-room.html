@@ -33,6 +33,9 @@
             }
         }
     </script>
+    
+    <!-- Theme Toggle Script -->
+    <script src="assets/js/fresh-theme-toggle.js"></script>
 
     <!-- Custom Styles -->
     <style>
@@ -101,168 +104,64 @@
             background: rgba(59, 130, 246, 0.1);
         }
         
-        /* Mobile Sidebar Toggle */
-        .sidebar-toggle {
-            display: none;
-            position: fixed;
-            bottom: 1rem;
-            right: 1rem;
-            z-index: 50;
-            background-color: #10b981;
-            color: white;
-            padding: 0.75rem;
-            border-radius: 9999px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        /* Active section styling */
+        .data-room-section.active .section-card {
+            border-color: #10b981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
         }
         
-        @media (max-width: 768px) {
-            .sidebar-toggle {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-            
-            #sidebar {
-                transform: translateX(-100%);
-                transition: transform 0.3s ease-in-out;
-            }
-            
-            #sidebar.translate-x-0 {
-                transform: translateX(0);
-            }
+        .dark .data-room-section.active .section-card {
+            border-color: #34d399;
+            box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.1);
+        }
+        
+        /* Section content styling */
+        /* Section expansion area */
+        .section-expansion {
+            grid-column: 1 / -1;
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.5s ease-out;
+        }
+        
+        .section-expansion.show {
+            max-height: 2000px;
+            transition: max-height 0.7s ease-in;
+        }
+        
+        /* Breadcrumb styling */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .breadcrumb-item {
+            color: #6b7280;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        
+        .breadcrumb-item:hover {
+            color: #10b981;
+        }
+        
+        .dark .breadcrumb-item {
+            color: #9ca3af;
+        }
+        
+        .dark .breadcrumb-item:hover {
+            color: #34d399;
         }
     </style>
 </head>
 <body class="font-inter bg-gray-50 dark:bg-slate-900 text-gray-900 dark:text-slate-100 transition-colors duration-300">
-    <!-- Skip Links for Accessibility -->
-    <div id="skip-links"></div>
-    
     <!-- Admin Header -->
-    <header class="bg-white dark:bg-slate-800 shadow-sm border-b border-gray-200 dark:border-slate-700 fixed top-0 left-0 right-0 z-50">
-        <div class="px-6 py-3">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-6">
-                    <!-- Logo/Brand -->
-                    <div class="flex items-center space-x-3">
-                        <div class="w-8 h-8 bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-lg flex items-center justify-center">
-                            <span class="text-white font-bold text-sm">S</span>
-                        </div>
-                        <div>
-                            <h1 class="text-base font-semibold text-gray-900 dark:text-white">SirsiNexus</h1>
-                            <p class="text-xs text-gray-500 dark:text-gray-400">ADMIN CONSOLE</p>
-                        </div>
-                    </div>
-                    <!-- Status Indicator -->
-                    <span class="inline-flex items-center text-xs text-green-600 dark:text-green-400">
-                        <span class="w-2 h-2 bg-green-600 rounded-full mr-1 animate-pulse"></span>
-                        Live
-                    </span>
-                </div>
-                <!-- Right Section -->
-                <div class="flex items-center space-x-6">
-                    <!-- Platform/Page Info -->
-                    <nav class="flex items-center text-sm text-gray-500 dark:text-gray-400">
-                        <span>Platform</span>
-                        <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                        <span class="text-gray-900 dark:text-white font-medium">Data Room</span>
-                    </nav>
-                    <!-- Clock -->
-                    <span class="clock text-sm font-mono text-gray-600 dark:text-gray-300">16:00</span>
-                    <!-- Theme Toggle -->
-                    <button id="theme-toggle" class="p-2 rounded-md bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 transition-colors">
-                        <i class="fas fa-moon text-gray-600 dark:text-gray-300"></i>
-                    </button>
-                    <!-- Exit/Logout Button -->
-                    <button class="p-2 rounded-md bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 transition-colors" onclick="handleLogout()">
-                        <svg class="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
-                        </svg>
-                    </button>
-                    <!-- User Info -->
-                    <div class="flex items-center space-x-3">
-                        <span class="text-sm font-medium text-gray-700 dark:text-gray-200">ADMIN</span>
-                        <div class="w-8 h-8 bg-gray-300 dark:bg-gray-600 rounded-full flex items-center justify-center">
-                            <svg class="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-    
-    <!-- Mobile Sidebar Toggle Button -->
-    <button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Toggle sidebar">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-        </svg>
-    </button>
-    
+    <header class="bg-white dark:bg-slate-800 shadow-sm border-b border-gray-200 dark:border-slate-700 fixed top-0 left-0 right-0 z-50"></header>
+
     <!-- Sidebar -->
-    <aside id="sidebar" class="bg-white dark:bg-slate-800 border-r border-gray-200 dark:border-slate-700 fixed left-0 top-16 bottom-0 w-64 z-40 overflow-y-auto">
-        <div class="p-4">
-            <div class="space-y-1">
-                <a href="admin-dashboard.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700 rounded-md">
-                    <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
-                    </svg>
-                    Dashboard
-                </a>
-                <a href="user-management.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700 rounded-md">
-                    <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
-                    </svg>
-                    User Management
-                </a>
-                <a href="data-room.html" class="flex items-center px-3 py-2 text-sm font-medium text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 rounded-md">
-                    <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                    </svg>
-                    Data Room
-                </a>
-                <a href="telemetry.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700 rounded-md">
-                    <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M3 6a3 3 0 013-3h10a1 1 0 01.8 1.6L14.25 8l2.55 3.4A1 1 0 0116 13H6a1 1 0 00-1 1v3a1 1 0 11-2 0V6z" clip-rule="evenodd"/>
-                    </svg>
-                    Telemetry
-                </a>
-                <a href="site-admin.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700 rounded-md">
-                    <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>
-                    </svg>
-                    Site Admin
-                </a>
-                <a href="security.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700 rounded-md">
-                    <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
-                    </svg>
-                    Security
-                </a>
-                <a href="system-logs.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700 rounded-md">
-                    <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
-                        <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
-                    </svg>
-                    System Logs
-                </a>
-            </div>
-            
-            <div class="mt-8">
-                <h3 class="px-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Quick Actions</h3>
-                <div class="mt-2 space-y-1">
-                    <button class="flex items-center w-full px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700 rounded-md" onclick="showAddUserModal()">
-                        <svg class="w-4 h-4 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z"/>
-                        </svg>
-                        Add User
-                    </button>
-                </div>
-            </div>
-        </div>
-    </aside>
+    <aside id="sidebar" class="bg-white dark:bg-slate-800 border-r border-gray-200 dark:border-slate-700 fixed left-0 top-16 bottom-0 w-64 z-40 overflow-y-auto"></aside>
 
     <!-- Main Content -->
     <main class="ml-64 pt-16 min-h-screen bg-gray-50 dark:bg-slate-900 p-6">
@@ -274,8 +173,8 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
                 <div class="bg-white dark:bg-slate-800 rounded-lg shadow p-6 border border-gray-200 dark:border-slate-700">
                     <div class="flex items-center">
-                        <div class="p-3 rounded-full bg-orange-100 dark:bg-orange-900/20 mr-4">
-                            <i class="fas fa-hdd text-orange-600 dark:text-orange-400 text-xl"></i>
+                        <div class="p-3 rounded-full bg-emerald-100 dark:bg-emerald-900/20 mr-4">
+                            <i class="fas fa-hdd text-emerald-600 dark:text-emerald-400 text-xl"></i>
                         </div>
                         <div>
                             <h3 class="text-2xl font-semibold text-gray-900 dark:text-white" id="total-storage">0.03 GB</h3>
@@ -285,8 +184,8 @@
                 </div>
                 <div class="bg-white dark:bg-slate-800 rounded-lg shadow p-6 border border-gray-200 dark:border-slate-700">
                     <div class="flex items-center">
-                        <div class="p-3 rounded-full bg-orange-100 dark:bg-orange-900/20 mr-4">
-                            <i class="fas fa-file text-orange-600 dark:text-orange-400 text-xl"></i>
+                        <div class="p-3 rounded-full bg-emerald-100 dark:bg-emerald-900/20 mr-4">
+                            <i class="fas fa-file text-emerald-600 dark:text-emerald-400 text-xl"></i>
                         </div>
                         <div>
                             <h3 class="text-2xl font-semibold text-gray-900 dark:text-white" id="total-files">4</h3>
@@ -296,8 +195,8 @@
                 </div>
                 <div class="bg-white dark:bg-slate-800 rounded-lg shadow p-6 border border-gray-200 dark:border-slate-700">
                     <div class="flex items-center">
-                        <div class="p-3 rounded-full bg-orange-100 dark:bg-orange-900/20 mr-4">
-                            <i class="fas fa-folder text-orange-600 dark:text-orange-400 text-xl"></i>
+                        <div class="p-3 rounded-full bg-emerald-100 dark:bg-emerald-900/20 mr-4">
+                            <i class="fas fa-folder text-emerald-600 dark:text-emerald-400 text-xl"></i>
                         </div>
                         <div>
                             <h3 class="text-2xl font-semibold text-gray-900 dark:text-white" id="total-folders">5</h3>
@@ -307,8 +206,8 @@
                 </div>
                 <div class="bg-white dark:bg-slate-800 rounded-lg shadow p-6 border border-gray-200 dark:border-slate-700">
                     <div class="flex items-center">
-                        <div class="p-3 rounded-full bg-orange-100 dark:bg-orange-900/20 mr-4">
-                            <i class="fas fa-download text-orange-600 dark:text-orange-400 text-xl"></i>
+                        <div class="p-3 rounded-full bg-emerald-100 dark:bg-emerald-900/20 mr-4">
+                            <i class="fas fa-download text-emerald-600 dark:text-emerald-400 text-xl"></i>
                         </div>
                         <div>
                             <h3 class="text-2xl font-semibold text-gray-900 dark:text-white" id="total-downloads">207</h3>
@@ -318,165 +217,115 @@
                 </div>
             </div>
 
-            <!-- Data Room Card View (Investor Style) -->
+            <!-- Data Room Card View with Integrated File Management -->
             <div class="mb-8">
                 <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Data Room Sections</h2>
                 <p class="text-gray-600 dark:text-gray-400 mb-6">Manage files and documents for each section. Click on any card to view and manage files.</p>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="dataRoomCards">
-                    <!-- Financial Reports -->
-                    <div class="bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-gray-200 dark:border-slate-700 p-6 cursor-pointer hover:shadow-xl transition-shadow" onclick="selectFolder('financials')">
-                        <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900/20 rounded-lg flex items-center justify-center mb-4">
-                            <i class="fas fa-chart-line text-2xl text-blue-600 dark:text-blue-400"></i>
-                        </div>
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Financial Reports</h3>
-                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-4"><span id="financials-count">0</span> documents</p>
-                        <div class="flex flex-wrap gap-2 text-xs">
-                            <span class="px-2 py-1 bg-blue-100 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400 rounded">PDF Reports</span>
-                            <span class="px-2 py-1 bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-400 rounded">Financial Data</span>
-                            <span class="px-2 py-1 bg-purple-100 text-purple-700 dark:bg-purple-900/20 dark:text-purple-400 rounded">Analysis</span>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-auto" id="dataRoomSections">
+                    <!-- Financial Reports Section -->
+                    <div class="data-room-section" data-section="financials">
+                        <div class="section-card bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-gray-200 dark:border-slate-700 p-6 cursor-pointer hover:shadow-xl transition-all" onclick="toggleSection('financials')">
+                            <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900/20 rounded-lg flex items-center justify-center mb-4">
+                                <i class="fas fa-chart-line text-2xl text-blue-600 dark:text-blue-400"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Financial Reports</h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 mb-4"><span id="financials-count">0</span> documents</p>
+                            <div class="flex flex-wrap gap-2 text-xs">
+                                <span class="px-2 py-1 bg-blue-100 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400 rounded">PDF Reports</span>
+                                <span class="px-2 py-1 bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-400 rounded">Financial Data</span>
+                                <span class="px-2 py-1 bg-purple-100 text-purple-700 dark:bg-purple-900/20 dark:text-purple-400 rounded">Analysis</span>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Business Metrics -->
-                    <div class="bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-gray-200 dark:border-slate-700 p-6 cursor-pointer hover:shadow-xl transition-shadow" onclick="selectFolder('business-metrics')">
-                        <div class="w-16 h-16 bg-green-100 dark:bg-green-900/20 rounded-lg flex items-center justify-center mb-4">
-                            <i class="fas fa-chart-bar text-2xl text-green-600 dark:text-green-400"></i>
-                        </div>
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Business Metrics</h3>
-                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-4"><span id="business-metrics-count">0</span> documents</p>
-                        <div class="flex flex-wrap gap-2 text-xs">
-                            <span class="px-2 py-1 bg-blue-100 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400 rounded">PDF Reports</span>
-                            <span class="px-2 py-1 bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-400 rounded">Financial Data</span>
-                            <span class="px-2 py-1 bg-purple-100 text-purple-700 dark:bg-purple-900/20 dark:text-purple-400 rounded">Analysis</span>
+                    <!-- Business Metrics Section -->
+                    <div class="data-room-section" data-section="business-metrics">
+                        <div class="section-card bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-gray-200 dark:border-slate-700 p-6 cursor-pointer hover:shadow-xl transition-all" onclick="toggleSection('business-metrics')">
+                            <div class="w-16 h-16 bg-green-100 dark:bg-green-900/20 rounded-lg flex items-center justify-center mb-4">
+                                <i class="fas fa-chart-bar text-2xl text-green-600 dark:text-green-400"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Business Metrics</h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 mb-4"><span id="business-metrics-count">0</span> documents</p>
+                            <div class="flex flex-wrap gap-2 text-xs">
+                                <span class="px-2 py-1 bg-blue-100 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400 rounded">KPIs</span>
+                                <span class="px-2 py-1 bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-400 rounded">Analytics</span>
+                                <span class="px-2 py-1 bg-purple-100 text-purple-700 dark:bg-purple-900/20 dark:text-purple-400 rounded">Reports</span>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Legal Documents -->
-                    <div class="bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-gray-200 dark:border-slate-700 p-6 cursor-pointer hover:shadow-xl transition-shadow" onclick="selectFolder('legal')">
-                        <div class="w-16 h-16 bg-purple-100 dark:bg-purple-900/20 rounded-lg flex items-center justify-center mb-4">
-                            <i class="fas fa-file-contract text-2xl text-purple-600 dark:text-purple-400"></i>
-                        </div>
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Legal Documents</h3>
-                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-4"><span id="legal-count">0</span> documents</p>
-                        <div class="flex flex-wrap gap-2 text-xs">
-                            <span class="px-2 py-1 bg-blue-100 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400 rounded">PDF Reports</span>
-                            <span class="px-2 py-1 bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-400 rounded">Financial Data</span>
-                            <span class="px-2 py-1 bg-purple-100 text-purple-700 dark:bg-purple-900/20 dark:text-purple-400 rounded">Analysis</span>
+                    <!-- Legal Documents Section -->
+                    <div class="data-room-section" data-section="legal">
+                        <div class="section-card bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-gray-200 dark:border-slate-700 p-6 cursor-pointer hover:shadow-xl transition-all" onclick="toggleSection('legal')">
+                            <div class="w-16 h-16 bg-purple-100 dark:bg-purple-900/20 rounded-lg flex items-center justify-center mb-4">
+                                <i class="fas fa-file-contract text-2xl text-purple-600 dark:text-purple-400"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Legal Documents</h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 mb-4"><span id="legal-count">0</span> documents</p>
+                            <div class="flex flex-wrap gap-2 text-xs">
+                                <span class="px-2 py-1 bg-blue-100 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400 rounded">Contracts</span>
+                                <span class="px-2 py-1 bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-400 rounded">Compliance</span>
+                                <span class="px-2 py-1 bg-purple-100 text-purple-700 dark:bg-purple-900/20 dark:text-purple-400 rounded">IP Docs</span>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Strategic Plans -->
-                    <div class="bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-gray-200 dark:border-slate-700 p-6 cursor-pointer hover:shadow-xl transition-shadow" onclick="selectFolder('strategic-plans')">
-                        <div class="w-16 h-16 bg-yellow-100 dark:bg-yellow-900/20 rounded-lg flex items-center justify-center mb-4">
-                            <i class="fas fa-lightbulb text-2xl text-yellow-600 dark:text-yellow-400"></i>
-                        </div>
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Strategic Plans</h3>
-                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-4"><span id="strategic-plans-count">0</span> documents</p>
-                        <div class="flex flex-wrap gap-2 text-xs">
-                            <span class="px-2 py-1 bg-blue-100 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400 rounded">PDF Reports</span>
-                            <span class="px-2 py-1 bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-400 rounded">Financial Data</span>
-                            <span class="px-2 py-1 bg-purple-100 text-purple-700 dark:bg-purple-900/20 dark:text-purple-400 rounded">Analysis</span>
+                    <!-- Strategic Plans Section -->
+                    <div class="data-room-section" data-section="strategic-plans">
+                        <div class="section-card bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-gray-200 dark:border-slate-700 p-6 cursor-pointer hover:shadow-xl transition-all" onclick="toggleSection('strategic-plans')">
+                            <div class="w-16 h-16 bg-yellow-100 dark:bg-yellow-900/20 rounded-lg flex items-center justify-center mb-4">
+                                <i class="fas fa-lightbulb text-2xl text-yellow-600 dark:text-yellow-400"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Strategic Plans</h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 mb-4"><span id="strategic-plans-count">0</span> documents</p>
+                            <div class="flex flex-wrap gap-2 text-xs">
+                                <span class="px-2 py-1 bg-blue-100 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400 rounded">Roadmaps</span>
+                                <span class="px-2 py-1 bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-400 rounded">Strategy</span>
+                                <span class="px-2 py-1 bg-purple-100 text-purple-700 dark:bg-purple-900/20 dark:text-purple-400 rounded">Growth</span>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Communications -->
-                    <div class="bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-gray-200 dark:border-slate-700 p-6 cursor-pointer hover:shadow-xl transition-shadow" onclick="selectFolder('communications')">
-                        <div class="w-16 h-16 bg-red-100 dark:bg-red-900/20 rounded-lg flex items-center justify-center mb-4">
-                            <i class="fas fa-envelope text-2xl text-red-600 dark:text-red-400"></i>
-                        </div>
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Communications</h3>
-                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-4"><span id="communications-count">0</span> documents</p>
-                        <div class="flex flex-wrap gap-2 text-xs">
-                            <span class="px-2 py-1 bg-blue-100 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400 rounded">PDF Reports</span>
-                            <span class="px-2 py-1 bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-400 rounded">Financial Data</span>
-                            <span class="px-2 py-1 bg-purple-100 text-purple-700 dark:bg-purple-900/20 dark:text-purple-400 rounded">Analysis</span>
+                    <!-- Communications Section -->
+                    <div class="data-room-section" data-section="communications">
+                        <div class="section-card bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-gray-200 dark:border-slate-700 p-6 cursor-pointer hover:shadow-xl transition-all" onclick="toggleSection('communications')">
+                            <div class="w-16 h-16 bg-red-100 dark:bg-red-900/20 rounded-lg flex items-center justify-center mb-4">
+                                <i class="fas fa-envelope text-2xl text-red-600 dark:text-red-400"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Communications</h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 mb-4"><span id="communications-count">0</span> documents</p>
+                            <div class="flex flex-wrap gap-2 text-xs">
+                                <span class="px-2 py-1 bg-blue-100 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400 rounded">Updates</span>
+                                <span class="px-2 py-1 bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-400 rounded">Meetings</span>
+                                <span class="px-2 py-1 bg-purple-100 text-purple-700 dark:bg-purple-900/20 dark:text-purple-400 rounded">Reports</span>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Investment Terms -->
-                    <div class="bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-gray-200 dark:border-slate-700 p-6 cursor-pointer hover:shadow-xl transition-shadow" onclick="selectFolder('investment-terms')">
-                        <div class="w-16 h-16 bg-green-100 dark:bg-green-900/20 rounded-lg flex items-center justify-center mb-4">
-                            <i class="fas fa-dollar-sign text-2xl text-green-600 dark:text-green-400"></i>
-                        </div>
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Investment Terms</h3>
-                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-4"><span id="investment-terms-count">0</span> documents</p>
-                        <div class="flex flex-wrap gap-2 text-xs">
-                            <span class="px-2 py-1 bg-blue-100 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400 rounded">PDF Reports</span>
-                            <span class="px-2 py-1 bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-400 rounded">Financial Data</span>
-                            <span class="px-2 py-1 bg-purple-100 text-purple-700 dark:bg-purple-900/20 dark:text-purple-400 rounded">Analysis</span>
+                    <!-- Investment Terms Section -->
+                    <div class="data-room-section" data-section="investment-terms">
+                        <div class="section-card bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-gray-200 dark:border-slate-700 p-6 cursor-pointer hover:shadow-xl transition-all" onclick="toggleSection('investment-terms')">
+                            <div class="w-16 h-16 bg-emerald-100 dark:bg-emerald-900/20 rounded-lg flex items-center justify-center mb-4">
+                                <i class="fas fa-dollar-sign text-2xl text-emerald-600 dark:text-emerald-400"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Investment Terms</h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 mb-4"><span id="investment-terms-count">0</span> documents</p>
+                            <div class="flex flex-wrap gap-2 text-xs">
+                                <span class="px-2 py-1 bg-blue-100 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400 rounded">Term Sheets</span>
+                                <span class="px-2 py-1 bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-400 rounded">Cap Tables</span>
+                                <span class="px-2 py-1 bg-purple-100 text-purple-700 dark:bg-purple-900/20 dark:text-purple-400 rounded">Valuations</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <!-- Upload Zone -->
-            <div class="upload-zone bg-white dark:bg-slate-800 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-12 text-center mb-6 transition-all" id="uploadZone">
-                <i class="fas fa-cloud-upload-alt text-5xl mb-4 text-gray-400 dark:text-gray-500"></i>
-                <h4 class="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-2">Drag & Drop Files Here</h4>
-                <p class="text-gray-500 dark:text-gray-400 mb-4">or click to browse</p>
-                <input type="file" id="fileInput" multiple style="display: none;">
-                <button class="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded-lg font-medium transition-colors" onclick="document.getElementById('fileInput').click()">
-                    <i class="fas fa-plus mr-2"></i> Select Files
-                </button>
-            </div>
-
-            <!-- File Manager -->
-            <div class="bg-white dark:bg-slate-800 rounded-lg shadow border border-gray-200 dark:border-slate-700">
-                <div class="grid grid-cols-1 lg:grid-cols-4">
-                    <!-- Folder Tree -->
-                    <div class="lg:col-span-1 border-r border-gray-200 dark:border-slate-700 p-4">
-                        <h5 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Folders</h5>
-                        <div class="space-y-2" id="folderTree">
-                            <div class="folder-item p-2 rounded cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-700 bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400" data-folder="root">
-                                <i class="fas fa-folder mr-2"></i> Root
-                            </div>
-                            <div class="folder-item p-2 ml-4 rounded cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-700" data-folder="financials">
-                                <i class="fas fa-folder mr-2"></i> Financials
-                            </div>
-                            <div class="folder-item p-2 ml-4 rounded cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-700" data-folder="legal">
-                                <i class="fas fa-folder mr-2"></i> Legal Documents
-                            </div>
-                            <div class="folder-item p-2 ml-4 rounded cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-700" data-folder="presentations">
-                                <i class="fas fa-folder mr-2"></i> Presentations
-                            </div>
-                            <div class="folder-item p-2 ml-4 rounded cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-700" data-folder="technical">
-                                <i class="fas fa-folder mr-2"></i> Technical Docs
-                            </div>
-                            <div class="folder-item p-2 ml-4 rounded cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-700" data-folder="business-metrics">
-                                <i class="fas fa-folder mr-2"></i> Business Metrics
-                            </div>
-                            <div class="folder-item p-2 ml-4 rounded cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-700" data-folder="strategic-plans">
-                                <i class="fas fa-folder mr-2"></i> Strategic Plans
-                            </div>
-                            <div class="folder-item p-2 ml-4 rounded cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-700" data-folder="communications">
-                                <i class="fas fa-folder mr-2"></i> Communications
-                            </div>
-                            <div class="folder-item p-2 ml-4 rounded cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-700" data-folder="investment-terms">
-                                <i class="fas fa-folder mr-2"></i> Investment Terms
-                            </div>
-                        </div>
-                        <button class="w-full mt-4 px-4 py-2 bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 rounded-lg text-sm font-medium transition-colors" onclick="createFolder()">
-                            <i class="fas fa-folder-plus mr-2"></i> New Folder
-                        </button>
-                    </div>
-
-                    <!-- File List -->
-                    <div class="lg:col-span-3 p-6">
-                        <div class="flex justify-between items-center mb-4">
-                            <h5 class="text-lg font-semibold text-gray-900 dark:text-white">Files in <span id="currentFolder">Root</span></h5>
-                            <div class="flex items-center gap-2">
-                                <input type="text" class="px-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-800 text-sm" 
-                                       placeholder="Search files..." id="fileSearch">
-                                <button class="p-2 bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 rounded-lg transition-colors" onclick="toggleView()">
-                                    <i class="fas fa-th"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="space-y-3" id="fileList">
-                            <!-- Files will be populated here -->
-                        </div>
-                    </div>
+                    
+                    <!-- Section Expansion Areas -->
+                    <div class="section-expansion" id="financials-expansion"></div>
+                    <div class="section-expansion" id="business-metrics-expansion"></div>
+                    <div class="section-expansion" id="legal-expansion"></div>
+                    <div class="section-expansion" id="strategic-plans-expansion"></div>
+                    <div class="section-expansion" id="communications-expansion"></div>
+                    <div class="section-expansion" id="investment-terms-expansion"></div>
                 </div>
             </div>
         </div>
@@ -544,249 +393,202 @@
                 <button type="button" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition-colors" onclick="deleteFile()">Delete File</button>
                 <div class="flex gap-2">
                     <button type="button" class="px-4 py-2 bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg font-medium transition-colors" onclick="closeModal()">Cancel</button>
-                    <button type="button" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors" onclick="saveFileDetails()">Save Changes</button>
+                <button type="button" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-medium transition-colors" onclick="saveFileDetails()">Save Changes</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Theme Toggle Script -->
-    <script src="assets/js/fresh-theme-toggle.js"></script>
-    
     <script>
-        // Apply theme class to html element
-        function applyTheme() {
-            const theme = localStorage.getItem('theme') || 'light';
-            if (theme === 'dark') {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
-        }
-        
-        // Apply theme immediately
-        applyTheme();
-        
-        // Listen for theme changes
-        document.addEventListener('theme-changed', function(e) {
-            applyTheme();
-        });
-        
-        // Clock update function
-        function updateClock() {
-            const now = new Date();
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            document.querySelector('.clock').textContent = `${hours}:${minutes}`;
-        }
-        
-        // Update clock immediately and then every minute
-        updateClock();
-        setInterval(updateClock, 60000);
-        
-        // Sidebar toggle for mobile
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.classList.toggle('translate-x-0');
-        }
-        
-        // Handle logout
-        function handleLogout() {
-            if (confirm('Are you sure you want to logout?')) {
-                localStorage.removeItem('adminToken');
-                window.location.href = 'login.html';
-            }
-        }
+        // Universal Header and Sidebar Loading
+        fetch('template-header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.querySelector('header').innerHTML = data;
+            });
+
+        fetch('template-sidebar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.querySelector('aside').innerHTML = data;
+                 // Set active link
+                const links = document.querySelectorAll('aside a');
+                links.forEach(link => {
+                    if (link.href.includes('data-room.html')) {
+                        link.classList.add('text-emerald-600', 'dark:text-emerald-400', 'bg-emerald-50', 'dark:bg-emerald-900/20');
+                    } else {
+                        link.classList.remove('text-emerald-600', 'dark:text-emerald-400', 'bg-emerald-50', 'dark:bg-emerald-900/20');
+                    }
+                });
+            });
+
+        // Update page title in header
+        setTimeout(() => {
+            const pageTitle = document.querySelector('.page-title');
+            if (pageTitle) pageTitle.textContent = 'Data Room Management';
+        }, 100);
 
         // Data Room Specific JS
-        // Sample file data matching the investor view
-        let files = [
-            {
-                id: 1,
-                name: 'Q4 2023 Financial Report.pdf',
-                folder: 'financials',
-                size: '2.5 MB',
-                type: 'pdf',
-                access: 'restricted',
-                uploaded: '2024-01-10',
-                downloads: 45,
-                description: 'Quarterly financial report for Q4 2023'
+        // Enhanced data structure with folders and subfolders
+        let fileStructure = {
+            'financials': {
+                files: [
+                    {
+                        id: 1,
+                        name: 'Q4 2023 Financial Report.pdf',
+                        path: 'financials',
+                        size: '2.5 MB',
+                        type: 'pdf',
+                        access: 'restricted',
+                        uploaded: '2024-01-10',
+                        downloads: 45,
+                        description: 'Quarterly financial report for Q4 2023'
+                    }
+                ],
+                folders: [
+                    { name: 'Quarterly Reports', path: 'financials/quarterly-reports' },
+                    { name: 'Annual Statements', path: 'financials/annual-statements' },
+                    { name: 'Audits', path: 'financials/audits' }
+                ]
             },
-            {
-                id: 2,
-                name: 'Investment Deck 2024.pptx',
-                folder: 'presentations',
-                size: '15.8 MB',
-                type: 'pptx',
-                access: 'public',
-                uploaded: '2024-01-16',
-                downloads: 127,
-                description: 'Latest investment deck for potential investors'
+            'business-metrics': {
+                files: [
+                    {
+                        id: 5,
+                        name: 'Market Analysis Report.pdf',
+                        path: 'business-metrics',
+                        size: '4.7 MB',
+                        type: 'pdf',
+                        access: 'public',
+                        uploaded: '2024-01-14',
+                        downloads: 89,
+                        description: 'Market analysis and competitive positioning'
+                    }
+                ],
+                folders: [
+                    { name: 'KPIs', path: 'business-metrics/kpis' },
+                    { name: 'Market Research', path: 'business-metrics/market-research' }
+                ]
             },
-            {
-                id: 3,
-                name: 'Term Sheet Template.docx',
-                folder: 'investment-terms',
-                size: '246 KB',
-                type: 'docx',
-                access: 'private',
-                uploaded: '2024-01-05',
-                downloads: 12,
-                description: 'Service terms and conditions'
+            'legal': {
+                files: [
+                    {
+                        id: 6,
+                        name: 'Privacy Policy.pdf',
+                        path: 'legal',
+                        size: '1.2 MB',
+                        type: 'pdf',
+                        access: 'public',
+                        uploaded: '2024-01-08',
+                        downloads: 34,
+                        description: 'Company privacy policy and data protection'
+                    }
+                ],
+                folders: [
+                    { name: 'Contracts', path: 'legal/contracts' },
+                    { name: 'Compliance', path: 'legal/compliance' },
+                    { name: 'IP Documents', path: 'legal/ip-documents' }
+                ]
             },
-            {
-                id: 4,
-                name: 'Technical Architecture.pdf',
-                folder: 'technical',
-                size: '8.3 MB',
-                type: 'pdf',
-                access: 'restricted',
-                uploaded: '2024-01-12',
-                downloads: 23,
-                description: 'System architecture documentation'
+            'strategic-plans': {
+                files: [
+                    {
+                        id: 7,
+                        name: 'Product Roadmap.pptx',
+                        path: 'strategic-plans',
+                        size: '6.5 MB',
+                        type: 'pptx',
+                        access: 'restricted',
+                        uploaded: '2024-01-15',
+                        downloads: 67,
+                        description: 'Product development roadmap and milestones'
+                    }
+                ],
+                folders: [
+                    { name: 'Product Strategy', path: 'strategic-plans/product-strategy' },
+                    { name: 'Growth Plans', path: 'strategic-plans/growth-plans' }
+                ]
             },
-            {
-                id: 5,
-                name: 'Market Analysis Report.pdf',
-                folder: 'business-metrics',
-                size: '4.7 MB',
-                type: 'pdf',
-                access: 'public',
-                uploaded: '2024-01-14',
-                downloads: 89,
-                description: 'Market analysis and competitive positioning'
+            'communications': {
+                files: [
+                    {
+                        id: 8,
+                        name: 'Committee Index.xlsx',
+                        path: 'communications',
+                        size: '890 KB',
+                        type: 'xlsx',
+                        access: 'restricted',
+                        uploaded: '2024-01-11',
+                        downloads: 23,
+                        description: 'Executive committee meeting index and summaries'
+                    }
+                ],
+                folders: [
+                    { name: 'Board Meetings', path: 'communications/board-meetings' },
+                    { name: 'Investor Updates', path: 'communications/investor-updates' }
+                ]
             },
-            {
-                id: 6,
-                name: 'Privacy Policy.pdf',
-                folder: 'legal',
-                size: '1.2 MB',
-                type: 'pdf',
-                access: 'public',
-                uploaded: '2024-01-08',
-                downloads: 34,
-                description: 'Company privacy policy and data protection'
-            },
-            {
-                id: 7,
-                name: 'Product Roadmap.pptx',
-                folder: 'strategic-plans',
-                size: '6.5 MB',
-                type: 'pptx',
-                access: 'restricted',
-                uploaded: '2024-01-15',
-                downloads: 67,
-                description: 'Product development roadmap and milestones'
-            },
-            {
-                id: 8,
-                name: 'Committee Index.xlsx',
-                folder: 'communications',
-                size: '890 KB',
-                type: 'xlsx',
-                access: 'restricted',
-                uploaded: '2024-01-11',
-                downloads: 23,
-                description: 'Executive committee meeting index and summaries'
+            'investment-terms': {
+                files: [
+                    {
+                        id: 3,
+                        name: 'Term Sheet Template.docx',
+                        path: 'investment-terms',
+                        size: '246 KB',
+                        type: 'docx',
+                        access: 'private',
+                        uploaded: '2024-01-05',
+                        downloads: 12,
+                        description: 'Service terms and conditions'
+                    }
+                ],
+                folders: [
+                    { name: 'Term Sheets', path: 'investment-terms/term-sheets' },
+                    { name: 'Cap Tables', path: 'investment-terms/cap-tables' }
+                ]
             }
-        ];
+        };
 
-        let currentFolder = 'root';
+        let currentSection = null;
+        let currentPath = '';
         let selectedFile = null;
+        let activeSection = null;
 
         function init() {
-            setupFolderTree();
-            setupUploadZone();
-            loadFiles();
             updateStats();
-            setupSearch();
-            updateCardCounts();
+            updateSectionCounts();
         }
 
         function updateStats() {
-            // Calculate total storage
+            // Calculate total storage and counts
             let totalSize = 0;
-            files.forEach(file => {
-                const size = parseFloat(file.size);
-                if (file.size.includes('MB')) {
-                    totalSize += size / 1024;
-                } else if (file.size.includes('KB')) {
-                    totalSize += size / (1024 * 1024);
-                } else if (file.size.includes('GB')) {
-                    totalSize += size;
-                }
+            let totalFiles = 0;
+            let totalFolders = 0;
+            let totalDownloads = 0;
+            
+            Object.values(fileStructure).forEach(section => {
+                totalFolders += section.folders.length;
+                section.files.forEach(file => {
+                    totalFiles++;
+                    totalDownloads += file.downloads;
+                    const size = parseFloat(file.size);
+                    if (file.size.includes('MB')) {
+                        totalSize += size / 1024;
+                    } else if (file.size.includes('KB')) {
+                        totalSize += size / (1024 * 1024);
+                    } else if (file.size.includes('GB')) {
+                        totalSize += size;
+                    }
+                });
             });
             
             document.getElementById('total-storage').textContent = totalSize.toFixed(2) + ' GB';
-            document.getElementById('total-files').textContent = files.length;
-            document.getElementById('total-folders').textContent = 9; // Updated for all folders
-            document.getElementById('total-downloads').textContent = files.reduce((sum, file) => sum + file.downloads, 0);
+            document.getElementById('total-files').textContent = totalFiles;
+            document.getElementById('total-folders').textContent = totalFolders + 6; // Including root sections
+            document.getElementById('total-downloads').textContent = totalDownloads;
         }
 
-        function setupFolderTree() {
-            const folderItems = document.querySelectorAll('.folder-item');
-            folderItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    // Remove active styling from all
-                    folderItems.forEach(f => {
-                        f.classList.remove('bg-orange-50', 'dark:bg-orange-900/20', 'text-orange-600', 'dark:text-orange-400');
-                    });
-                    // Add active styling to clicked
-                    this.classList.add('bg-orange-50', 'dark:bg-orange-900/20', 'text-orange-600', 'dark:text-orange-400');
-                    // Update current folder
-                    currentFolder = this.dataset.folder;
-                    document.getElementById('currentFolder').textContent = this.textContent.trim();
-                    // Reload files
-                    loadFiles();
-                });
-            });
-        }
-
-        function setupUploadZone() {
-            const uploadZone = document.getElementById('uploadZone');
-            const fileInput = document.getElementById('fileInput');
-
-            uploadZone.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                uploadZone.classList.add('dragover');
-            });
-
-            uploadZone.addEventListener('dragleave', () => {
-                uploadZone.classList.remove('dragover');
-            });
-
-            uploadZone.addEventListener('drop', (e) => {
-                e.preventDefault();
-                uploadZone.classList.remove('dragover');
-                handleFiles(e.dataTransfer.files);
-            });
-
-            fileInput.addEventListener('change', (e) => {
-                handleFiles(e.target.files);
-            });
-        }
-
-        function handleFiles(fileList) {
-            Array.from(fileList).forEach(file => {
-                // Create new file entry
-                const newFile = {
-                    id: files.length + 1,
-                    name: file.name,
-                    folder: currentFolder,
-                    size: formatFileSize(file.size),
-                    type: file.name.split('.').pop(),
-                    access: 'restricted',
-                    uploaded: new Date().toISOString().split('T')[0],
-                    downloads: 0,
-                    description: ''
-                };
-                files.push(newFile);
-            });
-            
-            loadFiles();
-            updateStats();
-            showNotification(`${fileList.length} file(s) uploaded successfully!`, 'success');
-        }
+        // Removed old folder tree and upload zone functions as they're now integrated into sections
 
         function formatFileSize(bytes) {
             if (bytes === 0) return '0 Bytes';
@@ -796,45 +598,7 @@
             return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
         }
 
-        function loadFiles() {
-            const fileList = document.getElementById('fileList');
-            fileList.innerHTML = '';
-
-            const folderFiles = currentFolder === 'root' ? files : files.filter(f => f.folder === currentFolder);
-
-            folderFiles.forEach(file => {
-                const fileItem = document.createElement('div');
-                fileItem.className = 'flex items-center justify-between p-4 bg-gray-50 dark:bg-slate-700 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-600 transition-colors';
-                fileItem.innerHTML = `
-                    <div class="flex items-center">
-                        <i class="${getFileIcon(file.type)} text-2xl mr-4"></i>
-                        <div>
-                            <h6 class="font-medium text-gray-900 dark:text-white">${file.name}</h6>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">${file.size} • Uploaded ${file.uploaded} • ${file.downloads} downloads</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-4">
-                        <span class="px-3 py-1 rounded-full text-xs font-medium ${getAccessBadgeClass(file.access)}">${file.access}</span>
-                        <div class="flex gap-2">
-                            <button class="p-2 hover:bg-gray-200 dark:hover:bg-slate-600 rounded transition-colors" onclick="editFile(${file.id})" title="Edit">
-                                <i class="fas fa-edit text-gray-600 dark:text-gray-300"></i>
-                            </button>
-                            <button class="p-2 hover:bg-gray-200 dark:hover:bg-slate-600 rounded transition-colors" onclick="downloadFile(${file.id})" title="Download">
-                                <i class="fas fa-download text-gray-600 dark:text-gray-300"></i>
-                            </button>
-                            <button class="p-2 hover:bg-gray-200 dark:hover:bg-slate-600 rounded transition-colors" onclick="shareFile(${file.id})" title="Share">
-                                <i class="fas fa-share text-gray-600 dark:text-gray-300"></i>
-                            </button>
-                        </div>
-                    </div>
-                `;
-                fileList.appendChild(fileItem);
-            });
-
-            if (folderFiles.length === 0) {
-                fileList.innerHTML = '<p class="text-center text-gray-500 dark:text-gray-400 py-8">No files in this folder</p>';
-            }
-        }
+        // Removed old loadFiles function as files are now loaded per section
 
         function getFileIcon(type) {
             const icons = {
@@ -843,8 +607,8 @@
                 'doc': 'fas fa-file-word text-blue-500',
                 'xlsx': 'fas fa-file-excel text-green-500',
                 'xls': 'fas fa-file-excel text-green-500',
-                'pptx': 'fas fa-file-powerpoint text-orange-500',
-                'ppt': 'fas fa-file-powerpoint text-orange-500',
+                'pptx': 'fas fa-file-powerpoint text-emerald-500',
+                'ppt': 'fas fa-file-powerpoint text-emerald-500',
                 'jpg': 'fas fa-file-image text-purple-500',
                 'jpeg': 'fas fa-file-image text-purple-500',
                 'png': 'fas fa-file-image text-purple-500',
@@ -863,38 +627,7 @@
             return classes[access] || '';
         }
 
-        function setupSearch() {
-            const searchInput = document.getElementById('fileSearch');
-            searchInput.addEventListener('input', (e) => {
-                const searchTerm = e.target.value.toLowerCase();
-                const fileItems = document.querySelectorAll('#fileList > div');
-                
-                fileItems.forEach(item => {
-                    const fileName = item.querySelector('h6').textContent.toLowerCase();
-                    if (fileName.includes(searchTerm)) {
-                        item.style.display = 'flex';
-                    } else {
-                        item.style.display = 'none';
-                    }
-                });
-            });
-        }
-
-        function editFile(fileId) {
-            selectedFile = files.find(f => f.id === fileId);
-            if (selectedFile) {
-                document.getElementById('fileId').value = selectedFile.id;
-                document.getElementById('fileName').value = selectedFile.name;
-                document.getElementById('fileAccess').value = selectedFile.access;
-                document.getElementById('fileDescription').value = selectedFile.description;
-                document.getElementById('fileType').textContent = selectedFile.type.toUpperCase();
-                document.getElementById('fileSize').textContent = selectedFile.size;
-                document.getElementById('fileUploaded').textContent = selectedFile.uploaded;
-                document.getElementById('fileDownloads').textContent = selectedFile.downloads;
-                
-                showModal();
-            }
-        }
+        // Removed old search and edit functions as they're now section-specific
 
         function showModal() {
             document.getElementById('modalBackdrop').classList.add('show');
@@ -907,65 +640,29 @@
         }
 
         function saveFileDetails() {
-            if (selectedFile) {
+            if (selectedFile && activeSection) {
                 selectedFile.name = document.getElementById('fileName').value;
                 selectedFile.access = document.getElementById('fileAccess').value;
                 selectedFile.description = document.getElementById('fileDescription').value;
                 
-                loadFiles();
+                loadSectionContent(activeSection, currentPath);
                 closeModal();
                 showNotification('File details updated successfully!', 'success');
             }
         }
 
         function deleteFile() {
-            if (selectedFile && confirm('Are you sure you want to delete this file?')) {
-                files = files.filter(f => f.id !== selectedFile.id);
-                loadFiles();
+            if (selectedFile && activeSection && confirm('Are you sure you want to delete this file?')) {
+                fileStructure[activeSection].files = fileStructure[activeSection].files.filter(f => f.id !== selectedFile.id);
                 updateStats();
+                updateSectionCounts();
+                loadSectionContent(activeSection, currentPath);
                 closeModal();
                 showNotification('File deleted successfully!', 'success');
             }
         }
 
-        function downloadFile(fileId) {
-            const file = files.find(f => f.id === fileId);
-            if (file) {
-                // Increment download count
-                file.downloads++;
-                loadFiles();
-                updateStats();
-                
-                // Simulate download
-                showNotification(`Downloading ${file.name}...`, 'info');
-            }
-        }
-
-        function shareFile(fileId) {
-            const file = files.find(f => f.id === fileId);
-            if (file) {
-                // Generate shareable link
-                const shareLink = `https://sirsinexus.com/share/${file.id}`;
-                
-                // Copy to clipboard
-                navigator.clipboard.writeText(shareLink).then(() => {
-                    showNotification('Share link copied to clipboard!', 'success');
-                });
-            }
-        }
-
-        function createFolder() {
-            const folderName = prompt('Enter folder name:');
-            if (folderName) {
-                showNotification('Folder created successfully!', 'success');
-            }
-        }
-
-        function toggleView() {
-            // Toggle between list and grid view
-            const fileList = document.getElementById('fileList');
-            showNotification('View toggled', 'info');
-        }
+        // Removed old file operations as they're now section-specific
 
         function showNotification(message, type) {
             const notification = document.createElement('div');
@@ -986,42 +683,266 @@
             }, 3000);
         }
 
-        function selectFolder(folder) {
-            const folderItems = document.querySelectorAll('.folder-item');
-            folderItems.forEach(item => {
-                if (item.dataset.folder === folder) {
-                    item.classList.add('bg-orange-50', 'dark:bg-orange-900/20', 'text-orange-600', 'dark:text-orange-400');
-                } else {
-                    item.classList.remove('bg-orange-50', 'dark:bg-orange-900/20', 'text-orange-600', 'dark:text-orange-400');
-                }
+        // Removed old selectFolder as sections now handle their own expansion
+
+        function updateSectionCounts() {
+            Object.keys(fileStructure).forEach(section => {
+                const fileCount = fileStructure[section].files.length;
+                const folderCount = fileStructure[section].folders.length;
+                
+                const fileElement = document.getElementById(section + '-count');
+                const folderElement = document.getElementById(section + '-folder-count');
+                
+                if (fileElement) fileElement.textContent = fileCount;
+                if (folderElement) folderElement.textContent = folderCount;
             });
-            currentFolder = folder;
-            document.getElementById('currentFolder').textContent = folder.charAt(0).toUpperCase() + folder.slice(1).replace(/-/g, ' ');
-            loadFiles();
-            
-            // Scroll to file manager
-            document.querySelector('.file-manager').scrollIntoView({ behavior: 'smooth' });
         }
 
-        function updateCardCounts() {
-            const folders = ['financials', 'business-metrics', 'legal', 'strategic-plans', 'communications', 'investment-terms'];
-            folders.forEach(folder => {
-                const count = files.filter(f => f.folder === folder).length;
-                const element = document.getElementById(folder + '-count');
-                if (element) {
-                    element.textContent = count;
+        function toggleSection(sectionId) {
+            const section = document.querySelector(`[data-section="${sectionId}"]`);
+            const expansion = document.getElementById(sectionId + '-expansion');
+            
+            // Get all sections and expansions
+            const allSections = document.querySelectorAll('.data-room-section');
+            const allExpansions = document.querySelectorAll('.section-expansion');
+            
+            // Close all other sections
+            allSections.forEach(s => {
+                if (s.dataset.section !== sectionId) {
+                    s.classList.remove('active');
                 }
             });
+            
+            allExpansions.forEach(exp => {
+                if (exp.id !== sectionId + '-expansion') {
+                    exp.classList.remove('show');
+                    exp.innerHTML = '';
+                }
+            });
+            
+            // Toggle current section
+            if (expansion.classList.contains('show')) {
+                // Close
+                section.classList.remove('active');
+                expansion.classList.remove('show');
+                setTimeout(() => {
+                    expansion.innerHTML = '';
+                }, 500);
+                currentSection = null;
+                currentPath = '';
+            } else {
+                // Open
+                section.classList.add('active');
+                
+                // Find the position to insert the expansion
+                const sectionIndex = Array.from(allSections).findIndex(s => s.dataset.section === sectionId);
+                const rowPosition = Math.floor(sectionIndex / 3) + 1;
+                expansion.style.gridRow = rowPosition + 1;
+                
+                expansion.classList.add('show');
+                currentSection = sectionId;
+                currentPath = sectionId;
+                loadSectionContent(sectionId);
+            }
+        }
+
+        function loadSectionContent(sectionId, path = null) {
+            const expansionDiv = document.getElementById(sectionId + '-expansion');
+            const section = fileStructure[sectionId];
+            currentPath = path || sectionId;
+            
+            // Build breadcrumb
+            const pathParts = currentPath.split('/');
+            const breadcrumb = pathParts.map((part, index) => {
+                const partPath = pathParts.slice(0, index + 1).join('/');
+                const displayName = part.charAt(0).toUpperCase() + part.slice(1).replace(/-/g, ' ');
+                return `<span class="breadcrumb-item" onclick="loadSectionContent('${sectionId}', '${partPath}')">${displayName}</span>`;
+            }).join(' <i class="fas fa-chevron-right text-xs text-gray-400"></i> ');
+            
+            // Build file manager content
+            expansionDiv.innerHTML = `
+                <div class="bg-gray-50 dark:bg-slate-700/50 rounded-lg p-6 mt-4">
+                    <div class="flex justify-between items-center mb-4">
+                        <div class="breadcrumb">
+                            ${breadcrumb}
+                        </div>
+                        <div class="flex gap-2">
+                            <button class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium transition-colors" onclick="uploadToSection('${sectionId}')">
+                                <i class="fas fa-upload mr-2"></i>Upload Files
+                            </button>
+                            <button class="px-3 py-1.5 bg-gray-600 hover:bg-gray-700 text-white rounded-lg text-sm font-medium transition-colors" onclick="createSectionFolder('${sectionId}')">
+                                <i class="fas fa-folder-plus mr-2"></i>New Folder
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Folders -->
+                    <div class="mb-4" id="${sectionId}-folders">
+                        ${renderFolders(section.folders, sectionId)}
+                    </div>
+                    
+                    <!-- Files -->
+                    <div class="space-y-2" id="${sectionId}-files">
+                        ${renderFiles(section.files, sectionId)}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderFolders(folders, sectionId) {
+            if (folders.length === 0) return '';
+            
+            return `
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3 mb-4">
+                    ${folders.map(folder => `
+                        <div class="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-600 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer" onclick="navigateToFolder('${sectionId}', '${folder.path}')">
+                            <i class="fas fa-folder text-3xl text-emerald-500 mb-2"></i>
+                            <p class="text-sm font-medium text-gray-900 dark:text-white truncate">${folder.name}</p>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function renderFiles(files, sectionId) {
+            if (files.length === 0) {
+                return '<p class="text-center text-gray-500 dark:text-gray-400 py-8">No files in this folder</p>';
+            }
+            
+            return files.map(file => `
+                <div class="flex items-center justify-between p-4 bg-white dark:bg-slate-800 rounded-lg border border-gray-200 dark:border-slate-600 hover:shadow-md transition-shadow">
+                    <div class="flex items-center">
+                        <i class="${getFileIcon(file.type)} text-2xl mr-4"></i>
+                        <div>
+                            <h6 class="font-medium text-gray-900 dark:text-white">${file.name}</h6>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">${file.size} • Uploaded ${file.uploaded} • ${file.downloads} downloads</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <span class="px-3 py-1 rounded-full text-xs font-medium ${getAccessBadgeClass(file.access)}">${file.access}</span>
+                        <div class="flex gap-2">
+                            <button class="p-2 hover:bg-gray-100 dark:hover:bg-slate-700 rounded transition-colors" onclick="editSectionFile(${file.id}, '${sectionId}')" title="Edit">
+                                <i class="fas fa-edit text-gray-600 dark:text-gray-300"></i>
+                            </button>
+                            <button class="p-2 hover:bg-gray-100 dark:hover:bg-slate-700 rounded transition-colors" onclick="downloadSectionFile(${file.id}, '${sectionId}')" title="Download">
+                                <i class="fas fa-download text-gray-600 dark:text-gray-300"></i>
+                            </button>
+                            <button class="p-2 hover:bg-gray-100 dark:hover:bg-slate-700 rounded transition-colors" onclick="shareSectionFile(${file.id}, '${sectionId}')" title="Share">
+                                <i class="fas fa-share text-gray-600 dark:text-gray-300"></i>
+                            </button>
+                            <button class="p-2 hover:bg-gray-100 dark:hover:bg-slate-700 rounded transition-colors" onclick="deleteSectionFile(${file.id}, '${sectionId}')" title="Delete">
+                                <i class="fas fa-trash text-gray-600 dark:text-gray-300"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function navigateToFolder(sectionId, folderPath) {
+            // In a real implementation, this would load the contents of the subfolder
+            showNotification(`Navigating to ${folderPath}`, 'info');
+            currentPath = folderPath;
+            loadSectionContent(sectionId, folderPath);
+        }
+
+        function uploadToSection(sectionId) {
+            // Create a temporary file input
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.multiple = true;
+            input.onchange = (e) => {
+                handleSectionFiles(e.target.files, sectionId);
+            };
+            input.click();
+        }
+
+        function handleSectionFiles(fileList, sectionId) {
+            Array.from(fileList).forEach(file => {
+                const newFile = {
+                    id: Date.now() + Math.random(),
+                    name: file.name,
+                    path: currentPath,
+                    size: formatFileSize(file.size),
+                    type: file.name.split('.').pop(),
+                    access: 'restricted',
+                    uploaded: new Date().toISOString().split('T')[0],
+                    downloads: 0,
+                    description: ''
+                };
+                fileStructure[sectionId].files.push(newFile);
+            });
+            
+            updateStats();
+            updateSectionCounts();
+            loadSectionContent(sectionId, currentPath);
+            showNotification(`${fileList.length} file(s) uploaded successfully!`, 'success');
+        }
+
+        function createSectionFolder(sectionId) {
+            const folderName = prompt('Enter folder name:');
+            if (folderName) {
+                const newFolder = {
+                    name: folderName,
+                    path: currentPath + '/' + folderName.toLowerCase().replace(/\s+/g, '-')
+                };
+                fileStructure[sectionId].folders.push(newFolder);
+                updateSectionCounts();
+                loadSectionContent(sectionId, currentPath);
+                showNotification('Folder created successfully!', 'success');
+            }
+        }
+
+        function editSectionFile(fileId, sectionId) {
+            selectedFile = fileStructure[sectionId].files.find(f => f.id === fileId);
+            if (selectedFile) {
+                document.getElementById('fileId').value = selectedFile.id;
+                document.getElementById('fileName').value = selectedFile.name;
+                document.getElementById('fileAccess').value = selectedFile.access;
+                document.getElementById('fileDescription').value = selectedFile.description;
+                document.getElementById('fileType').textContent = selectedFile.type.toUpperCase();
+                document.getElementById('fileSize').textContent = selectedFile.size;
+                document.getElementById('fileUploaded').textContent = selectedFile.uploaded;
+                document.getElementById('fileDownloads').textContent = selectedFile.downloads;
+                
+                activeSection = sectionId;
+                showModal();
+            }
+        }
+
+        function downloadSectionFile(fileId, sectionId) {
+            const file = fileStructure[sectionId].files.find(f => f.id === fileId);
+            if (file) {
+                file.downloads++;
+                updateStats();
+                loadSectionContent(sectionId, currentPath);
+                showNotification(`Downloading ${file.name}...`, 'info');
+            }
+        }
+
+        function shareSectionFile(fileId, sectionId) {
+            const file = fileStructure[sectionId].files.find(f => f.id === fileId);
+            if (file) {
+                const shareLink = `https://sirsinexus.com/share/${file.id}`;
+                navigator.clipboard.writeText(shareLink).then(() => {
+                    showNotification('Share link copied to clipboard!', 'success');
+                });
+            }
+        }
+
+        function deleteSectionFile(fileId, sectionId) {
+            if (confirm('Are you sure you want to delete this file?')) {
+                fileStructure[sectionId].files = fileStructure[sectionId].files.filter(f => f.id !== fileId);
+                updateStats();
+                updateSectionCounts();
+                loadSectionContent(sectionId, currentPath);
+                showNotification('File deleted successfully!', 'success');
+            }
         }
 
         function logout() {
             localStorage.removeItem('adminToken');
             window.location.href = 'login.html';
-        }
-        
-        // Show Add User Modal (placeholder)
-        function showAddUserModal() {
-            showNotification('Add User functionality would open here', 'info');
         }
 
         // Initialize on load
