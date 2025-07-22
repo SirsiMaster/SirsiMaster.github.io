@@ -37,8 +37,85 @@
     <!-- Theme Toggle Script -->
     <script src="assets/js/fresh-theme-toggle.js"></script>
     
+    <!-- Override conflicting styles -->
+    <link rel="stylesheet" href="css/admin-styles.css">
+    
     <!-- Custom Styles -->
     <style>
+        /* Override Bootstrap and admin-styles.css conflicts */
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: rgb(249 250 251) !important;
+            color: rgb(17 24 39) !important;
+            min-height: 100vh;
+        }
+        
+        .dark body {
+            background-color: rgb(15 23 42) !important;
+            color: rgb(241 245 249) !important;
+        }
+        
+        /* Fix main content layout */
+        main {
+            margin-left: 16rem !important;
+            padding-top: 4rem !important;
+        }
+        
+        @media (max-width: 768px) {
+            main {
+                margin-left: 0 !important;
+            }
+            
+            /* Hide sidebar on mobile */
+            aside {
+                display: none;
+            }
+            
+            aside.show {
+                display: block;
+            }
+        }
+        
+        /* Ensure filters section is visible */
+        #advanced-filters.hidden {
+            display: none !important;
+        }
+        
+        #advanced-filters:not(.hidden) {
+            display: block !important;
+        }
+        
+        /* Fix button styles */
+        button {
+            cursor: pointer;
+        }
+        
+        /* Ensure dropdowns are visible */
+        #bulk-actions-menu {
+            position: absolute;
+            right: 0;
+            margin-top: 0.5rem;
+            width: 12rem;
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+        
+        .dark #bulk-actions-menu {
+            background-color: rgb(30 41 59);
+        }
+        
+        #bulk-actions-menu.hidden {
+            display: none !important;
+        }
+        
+        #bulk-actions-menu:not(.hidden) {
+            display: block !important;
+        }
         /* Sidebar toggle for mobile */
         .sidebar-toggle {
             display: none;
@@ -581,7 +658,8 @@
                 role: 'investor',
                 permissions: ['view-data', 'download-files'],
                 lastLogin: '2024-01-15 14:30',
-                created: '2023-12-01'
+                created: '2023-12-01',
+                twoFactorEnabled: true
             },
             {
                 id: 2,
@@ -591,7 +669,8 @@
                 role: 'admin',
                 permissions: ['view-data', 'download-files', 'upload-files', 'manage-users'],
                 lastLogin: '2024-01-16 09:15',
-                created: '2023-11-15'
+                created: '2023-11-15',
+                twoFactorEnabled: true
             },
             {
                 id: 3,
@@ -601,7 +680,107 @@
                 role: 'partner',
                 permissions: ['view-data'],
                 lastLogin: 'Never',
-                created: '2024-01-14'
+                created: '2024-01-14',
+                twoFactorEnabled: false
+            },
+            {
+                id: 4,
+                name: 'Sarah Williams',
+                email: 'sarah.w@example.com',
+                status: 'active',
+                role: 'super_admin',
+                permissions: ['view-data', 'download-files', 'upload-files', 'manage-users', 'view-analytics', 'system-admin'],
+                lastLogin: '2024-01-16 16:45',
+                created: '2023-10-20',
+                twoFactorEnabled: true
+            },
+            {
+                id: 5,
+                name: 'Michael Brown',
+                email: 'michael.brown@example.com',
+                status: 'inactive',
+                role: 'investor',
+                permissions: ['view-data'],
+                lastLogin: '2023-12-28 11:20',
+                created: '2023-09-15',
+                twoFactorEnabled: false
+            },
+            {
+                id: 6,
+                name: 'Emily Davis',
+                email: 'emily.d@example.com',
+                status: 'active',
+                role: 'partner',
+                permissions: ['view-data', 'download-files', 'view-analytics'],
+                lastLogin: '2024-01-16 08:30',
+                created: '2023-11-01',
+                twoFactorEnabled: true
+            },
+            {
+                id: 7,
+                name: 'David Wilson',
+                email: 'david.wilson@example.com',
+                status: 'suspended',
+                role: 'investor',
+                permissions: ['view-data'],
+                lastLogin: '2024-01-10 15:00',
+                created: '2023-08-22',
+                twoFactorEnabled: false
+            },
+            {
+                id: 8,
+                name: 'Lisa Anderson',
+                email: 'lisa.a@example.com',
+                status: 'active',
+                role: 'admin',
+                permissions: ['view-data', 'download-files', 'upload-files', 'manage-users'],
+                lastLogin: '2024-01-16 10:00',
+                created: '2023-07-15',
+                twoFactorEnabled: true
+            },
+            {
+                id: 9,
+                name: 'James Taylor',
+                email: 'james.t@example.com',
+                status: 'pending',
+                role: 'investor',
+                permissions: ['view-data'],
+                lastLogin: 'Never',
+                created: '2024-01-15',
+                twoFactorEnabled: false
+            },
+            {
+                id: 10,
+                name: 'Patricia Martinez',
+                email: 'patricia.m@example.com',
+                status: 'active',
+                role: 'partner',
+                permissions: ['view-data', 'download-files'],
+                lastLogin: '2024-01-16 14:20',
+                created: '2023-12-10',
+                twoFactorEnabled: false
+            },
+            {
+                id: 11,
+                name: 'Christopher Lee',
+                email: 'chris.lee@example.com',
+                status: 'active',
+                role: 'investor',
+                permissions: ['view-data', 'download-files'],
+                lastLogin: '2024-01-16 09:45',
+                created: '2023-11-28',
+                twoFactorEnabled: true
+            },
+            {
+                id: 12,
+                name: 'Jennifer Garcia',
+                email: 'jennifer.g@example.com',
+                status: 'inactive',
+                role: 'partner',
+                permissions: ['view-data'],
+                lastLogin: '2023-11-30 16:00',
+                created: '2023-06-15',
+                twoFactorEnabled: false
             }
         ];
 
