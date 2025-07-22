@@ -4,215 +4,130 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Security Management - SirsiNexus Admin</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/admin-styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .security-section {
-            background: var(--bg-primary);
-            border-radius: 10px;
-            padding: 30px;
-            margin-bottom: 30px;
-        }
-        .threat-indicator {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-        .threat-low {
-            background: #d1fae5;
-            color: #065f46;
-        }
-        .threat-medium {
-            background: #fef3c7;
-            color: #92400e;
-        }
-        .threat-high {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-        .security-log-item {
-            padding: 15px;
-            border-left: 3px solid var(--border-color);
-            margin-bottom: 15px;
-            transition: all 0.3s ease;
-        }
-        .security-log-item:hover {
-            border-left-color: var(--accent-primary);
-            background: rgba(255, 94, 0, 0.05);
-        }
-        .log-warning {
-            border-left-color: #f59e0b;
-        }
-        .log-danger {
-            border-left-color: #ef4444;
-        }
-        .log-success {
-            border-left-color: #10b981;
-        }
-        .access-rule {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            margin-bottom: 10px;
-        }
-        .ip-whitelist-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 15px;
-            background: var(--bg-secondary);
-            border-radius: 5px;
-            margin-bottom: 10px;
-        }
-        .security-metric {
-            text-align: center;
-            padding: 20px;
-            background: var(--bg-secondary);
-            border-radius: 10px;
-        }
-        .security-metric h3 {
-            font-size: 36px;
-            margin-bottom: 10px;
-        }
-        .firewall-rule {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            background: var(--bg-secondary);
-            border-radius: 8px;
-            margin-bottom: 10px;
-        }
-        .firewall-rule.active {
-            border: 2px solid #10b981;
-        }
-        .firewall-rule.inactive {
-            opacity: 0.6;
-        }
-    </style>
 </head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <span class="brand-highlight">Sirsi</span>Nexus Admin
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="admin-dashboard.html">
-                            <i class="fas fa-tachometer-alt"></i> Dashboard
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <button class="btn btn-link nav-link" id="theme-toggle">
-                            <i class="fas fa-moon"></i>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="logout()">
-                            <i class="fas fa-sign-out-alt"></i> Logout
-                        </a>
-                    </li>
-                </ul>
+<body class="bg-gray-50 dark:bg-gray-900">
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-xl font-bold">
+                        <span class="text-orange-500">Sirsi</span><span class="text-gray-700 dark:text-gray-300">Nexus</span>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button id="theme-toggle" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <a href="#" onclick="logout()" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </div>
             </div>
         </div>
-    </nav>
+    </header>
 
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-12">
-                <h1 class="mb-4">Security Management</h1>
+    <div class="flex">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-white dark:bg-gray-800 shadow-sm h-screen sticky top-0">
+            <nav class="mt-5 px-2">
+                <a href="admin-dashboard.html" class="group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white">
+                    <i class="fas fa-tachometer-alt mr-3"></i>
+                    Dashboard
+                </a>
+                <a href="site-admin.html" class="group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white">
+                    <i class="fas fa-cog mr-3"></i>
+                    Site Settings
+                </a>
+                <a href="security.html" class="group flex items-center px-2 py-2 text-base font-medium rounded-md bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-white">
+                    <i class="fas fa-shield-alt mr-3"></i>
+                    Security
+                </a>
+                <a href="telemetry.html" class="group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white">
+                    <i class="fas fa-chart-line mr-3"></i>
+                    Telemetry
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-8">Security Management</h1>
                 
                 <!-- Threat Level Indicator -->
-                <div class="threat-indicator threat-low">
-                    <i class="fas fa-shield-alt fa-3x"></i>
+                <div class="bg-green-100 dark:bg-green-900 rounded-lg p-6 mb-8 flex items-center gap-4">
+                    <i class="fas fa-shield-alt text-5xl text-green-700 dark:text-green-300"></i>
                     <div>
-                        <h4 class="mb-0">Current Threat Level: Low</h4>
-                        <p class="mb-0">No immediate security threats detected. System is secure.</p>
+                        <h4 class="text-xl font-semibold text-green-900 dark:text-green-100">Current Threat Level: Low</h4>
+                        <p class="text-green-700 dark:text-green-300">No immediate security threats detected. System is secure.</p>
                     </div>
                 </div>
 
                 <!-- Security Metrics -->
-                <div class="row mb-4">
-                    <div class="col-md-3">
-                        <div class="security-metric">
-                            <i class="fas fa-ban fa-2x text-danger mb-3"></i>
-                            <h3>23</h3>
-                            <p>Blocked Attempts Today</p>
-                        </div>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 text-center">
+                        <i class="fas fa-ban text-3xl text-red-500 mb-3"></i>
+                        <h3 class="text-4xl font-bold text-gray-900 dark:text-white mb-2">23</h3>
+                        <p class="text-gray-600 dark:text-gray-400">Blocked Attempts Today</p>
                     </div>
-                    <div class="col-md-3">
-                        <div class="security-metric">
-                            <i class="fas fa-user-shield fa-2x text-success mb-3"></i>
-                            <h3>100%</h3>
-                            <p>Users with 2FA</p>
-                        </div>
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 text-center">
+                        <i class="fas fa-user-shield text-3xl text-green-500 mb-3"></i>
+                        <h3 class="text-4xl font-bold text-gray-900 dark:text-white mb-2">100%</h3>
+                        <p class="text-gray-600 dark:text-gray-400">Users with 2FA</p>
                     </div>
-                    <div class="col-md-3">
-                        <div class="security-metric">
-                            <i class="fas fa-lock fa-2x text-primary mb-3"></i>
-                            <h3>SSL A+</h3>
-                            <p>Security Rating</p>
-                        </div>
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 text-center">
+                        <i class="fas fa-lock text-3xl text-blue-500 mb-3"></i>
+                        <h3 class="text-4xl font-bold text-gray-900 dark:text-white mb-2">SSL A+</h3>
+                        <p class="text-gray-600 dark:text-gray-400">Security Rating</p>
                     </div>
-                    <div class="col-md-3">
-                        <div class="security-metric">
-                            <i class="fas fa-clock fa-2x text-warning mb-3"></i>
-                            <h3>2 days</h3>
-                            <p>Since Last Incident</p>
-                        </div>
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 text-center">
+                        <i class="fas fa-clock text-3xl text-yellow-500 mb-3"></i>
+                        <h3 class="text-4xl font-bold text-gray-900 dark:text-white mb-2">2 days</h3>
+                        <p class="text-gray-600 dark:text-gray-400">Since Last Incident</p>
                     </div>
                 </div>
 
                 <!-- Access Control -->
-                <div class="security-section">
-                    <h3 class="mb-4">Access Control</h3>
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 mb-8">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-6">Access Control</h3>
                     
-                    <div class="mb-4">
-                        <h5>Active Sessions</h5>
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
+                    <div class="mb-6">
+                        <h5 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Active Sessions</h5>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                <thead class="bg-gray-50 dark:bg-gray-700">
                                     <tr>
-                                        <th>User</th>
-                                        <th>IP Address</th>
-                                        <th>Location</th>
-                                        <th>Login Time</th>
-                                        <th>Actions</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">User</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">IP Address</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Location</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Login Time</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                                     <tr>
-                                        <td>admin@sirsinexus.com</td>
-                                        <td>192.168.1.100</td>
-                                        <td>New York, US</td>
-                                        <td>2 hours ago</td>
-                                        <td>
-                                            <button class="btn btn-sm btn-danger" onclick="terminateSession(1)">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-300">admin@sirsinexus.com</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-300">192.168.1.100</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-300">New York, US</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-300">2 hours ago</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                            <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm" onclick="terminateSession(1)">
                                                 <i class="fas fa-times"></i> Terminate
                                             </button>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>john.doe@example.com</td>
-                                        <td>192.168.1.101</td>
-                                        <td>Los Angeles, US</td>
-                                        <td>30 minutes ago</td>
-                                        <td>
-                                            <button class="btn btn-sm btn-danger" onclick="terminateSession(2)">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-300">john.doe@example.com</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-300">192.168.1.101</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-300">Los Angeles, US</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-300">30 minutes ago</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                            <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm" onclick="terminateSession(2)">
                                                 <i class="fas fa-times"></i> Terminate
                                             </button>
                                         </td>
@@ -222,263 +137,257 @@
                         </div>
                     </div>
 
-                    <div class="mb-4">
-                        <h5>Access Rules</h5>
-                        <div class="access-rule">
-                            <div>
-                                <strong>Admin Panel Access</strong>
-                                <p class="text-muted mb-0">Restrict admin panel to specific IPs</p>
+                    <div>
+                        <h5 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Access Rules</h5>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
+                                <div>
+                                    <p class="font-medium text-gray-900 dark:text-white">Admin Panel Access</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">Restrict admin panel to specific IPs</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
                             </div>
-                            <label class="toggle-switch">
-                                <input type="checkbox" checked>
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                        <div class="access-rule">
-                            <div>
-                                <strong>API Access</strong>
-                                <p class="text-muted mb-0">Require API key for all requests</p>
+                            <div class="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
+                                <div>
+                                    <p class="font-medium text-gray-900 dark:text-white">API Access</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">Require API key for all requests</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
                             </div>
-                            <label class="toggle-switch">
-                                <input type="checkbox" checked>
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                        <div class="access-rule">
-                            <div>
-                                <strong>File Download Restrictions</strong>
-                                <p class="text-muted mb-0">Limit downloads per user per day</p>
+                            <div class="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
+                                <div>
+                                    <p class="font-medium text-gray-900 dark:text-white">File Download Restrictions</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">Limit downloads per user per day</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox">
+                                    <span class="slider"></span>
+                                </label>
                             </div>
-                            <label class="toggle-switch">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>
                         </div>
                     </div>
                 </div>
 
                 <!-- Firewall Settings -->
-                <div class="security-section">
-                    <h3 class="mb-4">Firewall & IP Management</h3>
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 mb-8">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-6">Firewall & IP Management</h3>
                     
-                    <div class="mb-4">
-                        <h5>IP Whitelist</h5>
-                        <div id="ipWhitelist">
-                            <div class="ip-whitelist-item">
-                                <span>192.168.1.100 - Admin Office</span>
-                                <button class="btn btn-sm btn-danger" onclick="removeIP(this)">
+                    <div class="mb-6">
+                        <h5 class="text-lg font-medium text-gray-900 dark:text-white mb-4">IP Whitelist</h5>
+                        <div id="ipWhitelist" class="space-y-2 mb-4">
+                            <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded">
+                                <span class="text-gray-900 dark:text-gray-300">192.168.1.100 - Admin Office</span>
+                                <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm" onclick="removeIP(this)">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </div>
-                            <div class="ip-whitelist-item">
-                                <span>10.0.0.0/24 - Corporate Network</span>
-                                <button class="btn btn-sm btn-danger" onclick="removeIP(this)">
+                            <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded">
+                                <span class="text-gray-900 dark:text-gray-300">10.0.0.0/24 - Corporate Network</span>
+                                <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm" onclick="removeIP(this)">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </div>
                         </div>
-                        <div class="input-group mt-3">
-                            <input type="text" class="form-control" id="newIP" placeholder="Enter IP address or range">
-                            <button class="btn btn-primary" onclick="addIP()">
+                        <div class="flex gap-2">
+                            <input type="text" class="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-white" id="newIP" placeholder="Enter IP address or range">
+                            <button class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md" onclick="addIP()">
                                 <i class="fas fa-plus"></i> Add IP
                             </button>
                         </div>
                     </div>
 
-                    <div class="mb-4">
-                        <h5>Firewall Rules</h5>
-                        <div class="firewall-rule active">
-                            <div>
-                                <strong>Block SQL Injection Attempts</strong>
-                                <p class="text-muted mb-0">Detect and block SQL injection patterns</p>
+                    <div>
+                        <h5 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Firewall Rules</h5>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border-2 border-green-500">
+                                <div>
+                                    <p class="font-medium text-gray-900 dark:text-white">Block SQL Injection Attempts</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">Detect and block SQL injection patterns</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
                             </div>
-                            <label class="toggle-switch">
-                                <input type="checkbox" checked>
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                        <div class="firewall-rule active">
-                            <div>
-                                <strong>DDoS Protection</strong>
-                                <p class="text-muted mb-0">Rate limiting and traffic analysis</p>
+                            <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border-2 border-green-500">
+                                <div>
+                                    <p class="font-medium text-gray-900 dark:text-white">DDoS Protection</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">Rate limiting and traffic analysis</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
                             </div>
-                            <label class="toggle-switch">
-                                <input type="checkbox" checked>
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-                        <div class="firewall-rule">
-                            <div>
-                                <strong>Geographic Restrictions</strong>
-                                <p class="text-muted mb-0">Block access from specific countries</p>
+                            <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg opacity-60">
+                                <div>
+                                    <p class="font-medium text-gray-900 dark:text-white">Geographic Restrictions</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">Block access from specific countries</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox">
+                                    <span class="slider"></span>
+                                </label>
                             </div>
-                            <label class="toggle-switch">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>
                         </div>
                     </div>
                 </div>
 
                 <!-- Security Audit Log -->
-                <div class="security-section">
-                    <h3 class="mb-4">Security Audit Log</h3>
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 mb-8">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-6">Security Audit Log</h3>
                     
-                    <div class="mb-3">
-                        <input type="text" class="form-control" placeholder="Search security logs..." id="logSearch">
+                    <div class="mb-4">
+                        <input type="text" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-white" placeholder="Search security logs..." id="logSearch">
                     </div>
 
-                    <div id="securityLogs">
-                        <div class="security-log-item log-danger">
-                            <div class="d-flex justify-content-between">
+                    <div id="securityLogs" class="space-y-4">
+                        <div class="border-l-4 border-red-500 p-4 hover:bg-gray-50 dark:hover:bg-gray-700">
+                            <div class="flex justify-between items-start">
                                 <div>
-                                    <h6 class="mb-1">Failed Login Attempt</h6>
-                                    <p class="mb-1">Multiple failed login attempts from IP 45.142.182.112</p>
-                                    <small class="text-muted">10 minutes ago • IP: 45.142.182.112</small>
+                                    <h6 class="font-semibold text-gray-900 dark:text-white">Failed Login Attempt</h6>
+                                    <p class="text-gray-600 dark:text-gray-400">Multiple failed login attempts from IP 45.142.182.112</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-500">10 minutes ago • IP: 45.142.182.112</p>
                                 </div>
-                                <div>
-                                    <span class="badge bg-danger">High Risk</span>
-                                </div>
+                                <span class="px-2 py-1 text-xs font-semibold bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200 rounded">High Risk</span>
                             </div>
                         </div>
-                        <div class="security-log-item log-warning">
-                            <div class="d-flex justify-content-between">
+                        <div class="border-l-4 border-yellow-500 p-4 hover:bg-gray-50 dark:hover:bg-gray-700">
+                            <div class="flex justify-between items-start">
                                 <div>
-                                    <h6 class="mb-1">Suspicious API Request</h6>
-                                    <p class="mb-1">Unusual API request pattern detected</p>
-                                    <small class="text-muted">1 hour ago • User: unknown</small>
+                                    <h6 class="font-semibold text-gray-900 dark:text-white">Suspicious API Request</h6>
+                                    <p class="text-gray-600 dark:text-gray-400">Unusual API request pattern detected</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-500">1 hour ago • User: unknown</p>
                                 </div>
-                                <div>
-                                    <span class="badge bg-warning">Medium Risk</span>
-                                </div>
+                                <span class="px-2 py-1 text-xs font-semibold bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200 rounded">Medium Risk</span>
                             </div>
                         </div>
-                        <div class="security-log-item log-success">
-                            <div class="d-flex justify-content-between">
+                        <div class="border-l-4 border-green-500 p-4 hover:bg-gray-50 dark:hover:bg-gray-700">
+                            <div class="flex justify-between items-start">
                                 <div>
-                                    <h6 class="mb-1">Security Update Applied</h6>
-                                    <p class="mb-1">SSL certificate renewed successfully</p>
-                                    <small class="text-muted">2 hours ago • System</small>
+                                    <h6 class="font-semibold text-gray-900 dark:text-white">Security Update Applied</h6>
+                                    <p class="text-gray-600 dark:text-gray-400">SSL certificate renewed successfully</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-500">2 hours ago • System</p>
                                 </div>
-                                <div>
-                                    <span class="badge bg-success">Info</span>
-                                </div>
+                                <span class="px-2 py-1 text-xs font-semibold bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 rounded">Info</span>
                             </div>
                         </div>
-                        <div class="security-log-item">
-                            <div class="d-flex justify-content-between">
+                        <div class="border-l-4 border-gray-300 p-4 hover:bg-gray-50 dark:hover:bg-gray-700">
+                            <div class="flex justify-between items-start">
                                 <div>
-                                    <h6 class="mb-1">New Admin User Added</h6>
-                                    <p class="mb-1">Admin privileges granted to jane.smith@example.com</p>
-                                    <small class="text-muted">3 hours ago • By: admin@sirsinexus.com</small>
+                                    <h6 class="font-semibold text-gray-900 dark:text-white">New Admin User Added</h6>
+                                    <p class="text-gray-600 dark:text-gray-400">Admin privileges granted to jane.smith@example.com</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-500">3 hours ago • By: admin@sirsinexus.com</p>
                                 </div>
-                                <div>
-                                    <span class="badge bg-info">Info</span>
-                                </div>
+                                <span class="px-2 py-1 text-xs font-semibold bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 rounded">Info</span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="text-center mt-4">
-                        <button class="btn btn-secondary" onclick="loadMoreLogs()">
+                    <div class="text-center mt-6">
+                        <button class="bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-md" onclick="loadMoreLogs()">
                             <i class="fas fa-plus"></i> Load More Logs
                         </button>
                     </div>
                 </div>
 
                 <!-- Security Settings -->
-                <div class="security-section">
-                    <h3 class="mb-4">Security Settings</h3>
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 mb-8">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-6">Security Settings</h3>
                     
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="sessionTimeout" class="form-label">Session Timeout (minutes)</label>
-                            <input type="number" class="form-control" id="sessionTimeout" value="30">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label for="sessionTimeout" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Session Timeout (minutes)</label>
+                            <input type="number" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-white" id="sessionTimeout" value="30">
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="maxLoginAttempts" class="form-label">Max Login Attempts</label>
-                            <input type="number" class="form-control" id="maxLoginAttempts" value="5">
+                        <div>
+                            <label for="maxLoginAttempts" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Max Login Attempts</label>
+                            <input type="number" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-white" id="maxLoginAttempts" value="5">
                         </div>
                     </div>
                     
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="passwordPolicy" class="form-label">Password Policy</label>
-                            <select class="form-select" id="passwordPolicy">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label for="passwordPolicy" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Password Policy</label>
+                            <select class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-white" id="passwordPolicy">
                                 <option value="strong" selected>Strong (12+ chars, mixed case, numbers, symbols)</option>
                                 <option value="medium">Medium (8+ chars, mixed case, numbers)</option>
                                 <option value="basic">Basic (6+ chars)</option>
                             </select>
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="passwordExpiry" class="form-label">Password Expiry (days)</label>
-                            <input type="number" class="form-control" id="passwordExpiry" value="90">
+                        <div>
+                            <label for="passwordExpiry" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Password Expiry (days)</label>
+                            <input type="number" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-white" id="passwordExpiry" value="90">
                         </div>
                     </div>
                     
-                    <div class="mb-3">
-                        <h5>Security Headers</h5>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="hsts" checked>
-                            <label class="form-check-label" for="hsts">
-                                Enable HSTS (HTTP Strict Transport Security)
+                    <div class="mb-6">
+                        <h5 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Security Headers</h5>
+                        <div class="space-y-3">
+                            <label class="flex items-center">
+                                <input type="checkbox" class="mr-2 rounded" id="hsts" checked>
+                                <span class="text-gray-700 dark:text-gray-300">Enable HSTS (HTTP Strict Transport Security)</span>
                             </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="csp" checked>
-                            <label class="form-check-label" for="csp">
-                                Enable CSP (Content Security Policy)
+                            <label class="flex items-center">
+                                <input type="checkbox" class="mr-2 rounded" id="csp" checked>
+                                <span class="text-gray-700 dark:text-gray-300">Enable CSP (Content Security Policy)</span>
                             </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="xframe" checked>
-                            <label class="form-check-label" for="xframe">
-                                Enable X-Frame-Options
+                            <label class="flex items-center">
+                                <input type="checkbox" class="mr-2 rounded" id="xframe" checked>
+                                <span class="text-gray-700 dark:text-gray-300">Enable X-Frame-Options</span>
                             </label>
                         </div>
                     </div>
                     
-                    <div class="text-end">
-                        <button class="btn btn-primary" onclick="saveSecuritySettings()">
+                    <div class="text-right">
+                        <button class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-md" onclick="saveSecuritySettings()">
                             <i class="fas fa-save"></i> Save Security Settings
                         </button>
                     </div>
                 </div>
 
                 <!-- Emergency Actions -->
-                <div class="security-section">
-                    <h3 class="mb-4 text-danger">Emergency Actions</h3>
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                    <h3 class="text-xl font-semibold text-red-600 dark:text-red-400 mb-6">Emergency Actions</h3>
                     
-                    <div class="alert alert-danger">
-                        <i class="fas fa-exclamation-triangle"></i> Use these actions only in case of security breach or emergency
+                    <div class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4 mb-6">
+                        <p class="text-red-700 dark:text-red-300">
+                            <i class="fas fa-exclamation-triangle mr-2"></i>
+                            Use these actions only in case of security breach or emergency
+                        </p>
                     </div>
                     
-                    <div class="row">
-                        <div class="col-md-4 mb-3">
-                            <button class="btn btn-danger w-100" onclick="lockdownSite()">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="text-center">
+                            <button class="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-md mb-2" onclick="lockdownSite()">
                                 <i class="fas fa-lock"></i> Emergency Lockdown
                             </button>
-                            <small class="text-muted">Block all non-admin access</small>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Block all non-admin access</p>
                         </div>
-                        <div class="col-md-4 mb-3">
-                            <button class="btn btn-danger w-100" onclick="forceLogoutAll()">
+                        <div class="text-center">
+                            <button class="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-md mb-2" onclick="forceLogoutAll()">
                                 <i class="fas fa-sign-out-alt"></i> Force Logout All Users
                             </button>
-                            <small class="text-muted">Terminate all active sessions</small>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Terminate all active sessions</p>
                         </div>
-                        <div class="col-md-4 mb-3">
-                            <button class="btn btn-danger w-100" onclick="resetAllPasswords()">
+                        <div class="text-center">
+                            <button class="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-md mb-2" onclick="resetAllPasswords()">
                                 <i class="fas fa-key"></i> Reset All Passwords
                             </button>
-                            <small class="text-muted">Force password reset for all users</small>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Force password reset for all users</p>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </main>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/fresh-theme-toggle.js"></script>
     <script>
         function terminateSession(sessionId) {
@@ -491,7 +400,7 @@
 
         function removeIP(element) {
             if (confirm('Are you sure you want to remove this IP from whitelist?')) {
-                element.closest('.ip-whitelist-item').remove();
+                element.closest('div').remove();
                 showNotification('IP removed from whitelist', 'success');
             }
         }
@@ -503,10 +412,10 @@
             if (ip) {
                 const ipList = document.getElementById('ipWhitelist');
                 const newItem = document.createElement('div');
-                newItem.className = 'ip-whitelist-item';
+                newItem.className = 'flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded';
                 newItem.innerHTML = `
-                    <span>${ip}</span>
-                    <button class="btn btn-sm btn-danger" onclick="removeIP(this)">
+                    <span class="text-gray-900 dark:text-gray-300">${ip}</span>
+                    <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm" onclick="removeIP(this)">
                         <i class="fas fa-trash"></i>
                     </button>
                 `;
@@ -523,17 +432,15 @@
             setTimeout(() => {
                 const logsContainer = document.getElementById('securityLogs');
                 const newLog = document.createElement('div');
-                newLog.className = 'security-log-item';
+                newLog.className = 'border-l-4 border-gray-300 p-4 hover:bg-gray-50 dark:hover:bg-gray-700';
                 newLog.innerHTML = `
-                    <div class="d-flex justify-content-between">
+                    <div class="flex justify-between items-start">
                         <div>
-                            <h6 class="mb-1">User Permission Changed</h6>
-                            <p class="mb-1">Permissions updated for user john.doe@example.com</p>
-                            <small class="text-muted">4 hours ago • By: admin@sirsinexus.com</small>
+                            <h6 class="font-semibold text-gray-900 dark:text-white">User Permission Changed</h6>
+                            <p class="text-gray-600 dark:text-gray-400">Permissions updated for user john.doe@example.com</p>
+                            <p class="text-sm text-gray-500 dark:text-gray-500">4 hours ago • By: admin@sirsinexus.com</p>
                         </div>
-                        <div>
-                            <span class="badge bg-info">Info</span>
-                        </div>
+                        <span class="px-2 py-1 text-xs font-semibold bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 rounded">Info</span>
                     </div>
                 `;
                 logsContainer.appendChild(newLog);
@@ -559,8 +466,8 @@
             if (confirm('Are you sure you want to initiate emergency lockdown? This will block all non-admin access to the site.')) {
                 showNotification('Emergency lockdown activated!', 'warning');
                 // Update threat indicator
-                const indicator = document.querySelector('.threat-indicator');
-                indicator.className = 'threat-indicator threat-high';
+                const indicator = document.querySelector('.bg-green-100');
+                indicator.className = 'bg-red-100 dark:bg-red-900 rounded-lg p-6 mb-8 flex items-center gap-4';
                 indicator.querySelector('h4').textContent = 'Current Threat Level: Critical - Lockdown Active';
                 indicator.querySelector('p').textContent = 'Emergency lockdown is active. Only administrators can access the site.';
             }
@@ -571,7 +478,7 @@
                 showNotification('All users have been logged out', 'warning');
                 // Clear session table
                 const tbody = document.querySelector('tbody');
-                tbody.innerHTML = '<tr><td colspan="5" class="text-center">No active sessions</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="5" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">No active sessions</td></tr>';
             }
         }
 
@@ -583,15 +490,15 @@
 
         function showNotification(message, type) {
             const notification = document.createElement('div');
-            notification.className = `alert alert-${type} notification`;
+            const bgColors = {
+                success: 'bg-green-500',
+                warning: 'bg-yellow-500',
+                error: 'bg-red-500',
+                info: 'bg-blue-500'
+            };
+            
+            notification.className = `${bgColors[type] || bgColors.info} text-white px-6 py-3 rounded-lg shadow-lg fixed top-4 right-4 z-50`;
             notification.textContent = message;
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                z-index: 9999;
-                animation: slideIn 0.3s ease;
-            `;
             
             document.body.appendChild(notification);
             
@@ -608,7 +515,7 @@
         // Search functionality
         document.getElementById('logSearch').addEventListener('input', function(e) {
             const searchTerm = e.target.value.toLowerCase();
-            const logs = document.querySelectorAll('.security-log-item');
+            const logs = document.querySelectorAll('#securityLogs > div');
             
             logs.forEach(log => {
                 const text = log.textContent.toLowerCase();
@@ -623,7 +530,7 @@
         // Simulate real-time security monitoring
         setInterval(() => {
             // Update blocked attempts
-            const blockedAttempts = document.querySelector('.security-metric h3');
+            const blockedAttempts = document.querySelector('.grid h3');
             const currentValue = parseInt(blockedAttempts.textContent);
             if (Math.random() > 0.8) {
                 blockedAttempts.textContent = currentValue + 1;
