@@ -39,6 +39,52 @@
     
     <!-- Custom Styles -->
     <style>
+        /* Sidebar toggle for mobile */
+        .sidebar-toggle {
+            display: none;
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            width: 3rem;
+            height: 3rem;
+            background: #3b82f6;
+            color: white;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            z-index: 40;
+            cursor: pointer;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar-toggle {
+                display: flex;
+            }
+            
+            aside {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            
+            aside.show {
+                transform: translateX(0);
+            }
+        }
+        
+        /* Enhanced notification dropdown animation */
+        .notifications-dropdown {
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            pointer-events: none;
+        }
+        
+        .notifications-dropdown.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
         /* Dark mode styling */
         .dark .quick-action-btn {
             background: #1a1f29;
@@ -552,8 +598,15 @@
         </div>
     </header>
     
+    <!-- Mobile Sidebar Toggle Button -->
+    <button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Toggle sidebar">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+    </button>
+    
     <!-- Sidebar -->
-    <nav class="bg-white dark:bg-slate-800 border-r border-gray-200 dark:border-slate-700 fixed left-0 top-16 bottom-0 w-64 z-40 overflow-y-auto">
+    <aside id="sidebar" class="bg-white dark:bg-slate-800 border-r border-gray-200 dark:border-slate-700 fixed left-0 top-16 bottom-0 w-64 z-40 overflow-y-auto">
         <div class="p-4">
             <div class="space-y-1">
                 <a href="#" class="flex items-center px-3 py-2 text-sm font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 rounded-md">
@@ -613,7 +666,7 @@
                 </div>
             </div>
         </div>
-    </nav>
+    </aside>
     
     <!-- Main Dashboard Content -->
     <main class="ml-64 pt-16 min-h-screen bg-gray-50 dark:bg-slate-900 p-6" role="main" aria-label="Admin Dashboard">
@@ -880,9 +933,9 @@
     </div>
     
     <!-- Load Core Services -->
-    <script src="../assets/js/session-manager.js"></script>
-    <script src="../assets/js/api-service.js"></script>
-    <script src="../assets/js/dashboard-api.js"></script>
+    <script src="assets/js/session-manager.js"></script>
+    <script src="assets/js/api-service.js"></script>
+    <script src="assets/js/dashboard-api.js"></script>
     
     <!-- Load Admin Components -->
     <script src="components/admin-header.js"></script>
@@ -2001,13 +2054,17 @@
             
             if (isOpen) {
                 dropdown.classList.remove('show');
+                document.removeEventListener('click', closeNotificationsOnClickOutside);
             } else {
+                // Close any other open dropdowns
+                document.querySelectorAll('.dropdown.show').forEach(d => {
+                    if (d !== dropdown) d.classList.remove('show');
+                });
+                
                 dropdown.classList.add('show');
                 loadNotificationsDropdown();
-            }
-            
-            // Close dropdown when clicking outside
-            if (!isOpen) {
+                
+                // Close dropdown when clicking outside
                 setTimeout(() => {
                     document.addEventListener('click', closeNotificationsOnClickOutside);
                 }, 100);
@@ -2079,10 +2136,19 @@
         }
 
         function handleLogout() {
-            if (window.adminDashboard) {
-                window.adminDashboard.handleLogout();
-            } else {
-                window.location.href = 'investor-login.html';
+            if (confirm('Are you sure you want to logout?')) {
+                // Clear session data
+                localStorage.removeItem('authToken');
+                localStorage.removeItem('userRole');
+                sessionStorage.clear();
+                
+                // Show logout message
+                showToast('Logging out...', 'info');
+                
+                // Redirect after short delay
+                setTimeout(() => {
+                    window.location.href = 'investor-login.html';
+                }, 1000);
             }
         }
 
@@ -2288,12 +2354,27 @@
         function handleQuickAction(action) {
             console.log('Quick action:', action);
             
+            // Close any open dropdowns
+            document.querySelectorAll('.dropdown.show').forEach(d => {
+                d.classList.remove('show');
+            });
+            
             switch(action) {
                 case 'add-user':
                     openModal('addUserModal');
+                    // Focus first input
+                    setTimeout(() => {
+                        const firstInput = document.querySelector('#addUserModal input');
+                        if (firstInput) firstInput.focus();
+                    }, 100);
                     break;
                 case 'send-invite':
                     openModal('sendInviteModal');
+                    // Focus email input
+                    setTimeout(() => {
+                        const emailInput = document.getElementById('inviteEmail');
+                        if (emailInput) emailInput.focus();
+                    }, 100);
                     break;
                 case 'generate-qr':
                     openModal('qrCodeModal');
@@ -2301,10 +2382,14 @@
                     break;
                 case 'role-management':
                     // Navigate to role management page
-                    window.location.href = 'role-management.html';
+                    showToast('Navigating to Role Management...', 'info');
+                    setTimeout(() => {
+                        window.location.href = 'role-management.html';
+                    }, 500);
                     break;
                 default:
                     console.log('Unknown action:', action);
+                    showToast('Feature coming soon!', 'info');
             }
         }
 
@@ -2399,6 +2484,43 @@
             }, 3000);
         }
 
+        // Sidebar toggle function for mobile
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const isOpen = sidebar.classList.contains('show');
+            
+            if (isOpen) {
+                sidebar.classList.remove('show');
+            } else {
+                sidebar.classList.add('show');
+            }
+        }
+        
+        // Close sidebar on mobile when clicking outside
+        document.addEventListener('click', function(e) {
+            const sidebar = document.getElementById('sidebar');
+            const toggleBtn = document.querySelector('.sidebar-toggle');
+            
+            if (window.innerWidth <= 768 && 
+                sidebar.classList.contains('show') && 
+                !sidebar.contains(e.target) && 
+                !toggleBtn.contains(e.target)) {
+                sidebar.classList.remove('show');
+            }
+        });
+        
+        // Handle keyboard navigation for notifications dropdown
+        document.addEventListener('keydown', function(e) {
+            const notifDropdown = document.getElementById('notificationsDropdown');
+            
+            if (notifDropdown.classList.contains('show')) {
+                if (e.key === 'Escape') {
+                    notifDropdown.classList.remove('show');
+                    document.querySelector('button[onclick="toggleNotifications()"]').focus();
+                }
+            }
+        });
+        
         // Cleanup on page unload
         window.addEventListener('beforeunload', () => {
             if (window.adminDashboard) {
