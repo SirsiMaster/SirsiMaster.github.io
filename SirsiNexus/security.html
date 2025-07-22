@@ -74,7 +74,6 @@
         /* Fix main content layout */
         main {
             margin-left: 16rem !important;
-            padding-top: 5rem !important;
             min-height: 100vh;
         }
         
@@ -155,12 +154,15 @@
         }
     </style>
 </head>
-<body class="bg-gray-50 dark:bg-gray-900">
+<body class="bg-gray-50 dark:bg-gray-900 h-full">
     <!-- Header -->
-    <header class="bg-white dark:bg-gray-800 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <header class="bg-white dark:bg-gray-800 shadow-sm fixed top-0 left-0 right-0 z-40">
+        <div class="max-w-full px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center">
+                    <button id="sidebar-toggle" class="md:hidden mr-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                        <i class="fas fa-bars"></i>
+                    </button>
                     <a href="index.html" class="text-xl font-bold">
                         <span class="text-orange-500">Sirsi</span><span class="text-gray-700 dark:text-gray-300">Nexus</span>
                     </a>
@@ -177,9 +179,9 @@
         </div>
     </header>
 
-    <div class="flex">
+    <div class="flex h-full pt-16">
         <!-- Sidebar -->
-        <aside class="w-64 bg-white dark:bg-gray-800 shadow-sm h-screen sticky top-0">
+        <aside class="w-64 bg-white dark:bg-gray-800 shadow-sm min-h-screen fixed left-0 top-16 bottom-0 overflow-y-auto">
             <nav class="mt-5 px-2">
                 <a href="admin-dashboard.html" class="group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white">
                     <i class="fas fa-tachometer-alt mr-3"></i>
