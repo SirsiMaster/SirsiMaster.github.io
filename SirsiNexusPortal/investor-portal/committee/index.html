@@ -117,6 +117,7 @@
         -moz-osx-font-smoothing: grayscale;
         position: relative;
         overflow-x: hidden;
+        min-height: 100vh;
       }
       
       /* Dark mode support */
@@ -125,93 +126,52 @@
         color: #e2e8f0;
       }
       
-      /* Strong Geometric Background Patterns */
-      body::before {
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: -1;
-        opacity: 0.4;
-        background-image: 
-          url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2310b981' fill-opacity='0.7'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"),
-          url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%233b82f6' fill-opacity='0.3'%3E%3Cpolygon points='50 5, 90 25, 90 75, 50 95, 10 75, 10 25' fill='none' stroke='%233b82f6' stroke-width='1.5'/%3E%3Cpolygon points='50 20, 75 35, 75 65, 50 80, 25 65, 25 35' fill='none' stroke='%233b82f6' stroke-width='1'/%3E%3C/g%3E%3C/svg%3E"),
-          url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23a855f7' fill-opacity='0.3'%3E%3Ccircle cx='40' cy='40' r='35' fill='none' stroke='%23a855f7' stroke-width='1'/%3E%3Ccircle cx='40' cy='40' r='25' fill='none' stroke='%23a855f7' stroke-width='0.8'/%3E%3Ccircle cx='40' cy='40' r='15' fill='none' stroke='%23a855f7' stroke-width='0.6'/%3E%3C/g%3E%3C/svg%3E");
-        background-position: 0 0, 50px 50px, 100px 25px;
-        background-size: 60px 60px, 100px 100px, 80px 80px;
-        animation: floatPattern 30s ease-in-out infinite;
-      }
-      
-      /* Alternative pattern for sections */
-      .pattern-section::before {
-        content: '';
+      /* Subtle Geometric Accents */
+      .geometric-accent {
         position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: -1;
-        opacity: 0.25;
-        background-image: 
-          url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2310b981' fill-opacity='0.6'%3E%3Cpath d='M0 20L20 0L40 20L20 40z'/%3E%3C/g%3E%3C/svg%3E"),
-          url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cpath d='M30 5 L50 20 L50 40 L30 55 L10 40 L10 20 Z' stroke='%233b82f6' stroke-width='1' fill='none'/%3E%3C/g%3E%3C/svg%3E");
-        background-position: 0 0, 30px 30px;
-        background-size: 40px 40px, 60px 60px;
+        pointer-events: none;
       }
       
-      @keyframes floatPattern {
-        0%, 100% {
-          transform: translate(0, 0) rotate(0deg);
-        }
-        33% {
-          transform: translate(-10px, -10px) rotate(1deg);
-        }
-        66% {
-          transform: translate(10px, -5px) rotate(-1deg);
-        }
+      .geometric-accent-1 {
+        top: 10%;
+        right: -50px;
+        width: 100px;
+        height: 100px;
+        background: linear-gradient(45deg, #10b981 0%, transparent 70%);
+        transform: rotate(45deg);
+        opacity: 0.1;
       }
       
-      /* Alternative patterns for dark mode */
-      .dark body::before {
-        opacity: 0.3;
-        background-image: 
-          url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2322c55e' fill-opacity='0.8'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"),
-          url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2360a5fa' fill-opacity='0.4'%3E%3Cpolygon points='50 5, 90 25, 90 75, 50 95, 10 75, 10 25' fill='none' stroke='%2360a5fa' stroke-width='2'/%3E%3C/g%3E%3C/svg%3E"),
-          url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23c084fc' fill-opacity='0.4'%3E%3Cpath d='M60 10 L90 30 L90 70 L60 90 L30 70 L30 30 Z' fill='none' stroke='%23c084fc' stroke-width='1.5'/%3E%3C/g%3E%3C/svg%3E");
-        background-position: 0 0, 40px 40px, 80px 20px;
-        background-size: 60px 60px, 100px 100px, 120px 120px;
+      .geometric-accent-2 {
+        bottom: 20%;
+        left: -30px;
+        width: 60px;
+        height: 60px;
+        border: 2px solid #3b82f6;
+        transform: rotate(15deg);
+        opacity: 0.15;
       }
       
-      /* Zigzag pattern overlay for headers */
-      header::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: repeating-linear-gradient(
-          45deg,
-          transparent,
-          transparent 10px,
-          #10b981 10px,
-          #10b981 20px
-        );
-        opacity: 0.5;
+      .dark .geometric-accent-1 {
+        background: linear-gradient(45deg, #22c55e 0%, transparent 70%);
+        opacity: 0.08;
       }
       
-      /* Professional Card Styling */
+      .dark .geometric-accent-2 {
+        border-color: #60a5fa;
+        opacity: 0.1;
+      }
+      
+      /* Modern Card Styling */
       .committee-card {
-        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-        border: 1px solid #e2e8f0;
-        border-radius: 16px;
-        padding: 2rem;
+        background: white;
+        border-radius: 20px;
+        padding: 1.5rem;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         position: relative;
         overflow: hidden;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(0, 0, 0, 0.05);
       }
       
       .committee-card::before {
@@ -220,16 +180,15 @@
         top: 0;
         left: 0;
         right: 0;
-        height: 4px;
-        background: linear-gradient(90deg, #16a34a 0%, #15803d 100%);
-        opacity: 0.8;
+        height: 3px;
+        background: linear-gradient(90deg, var(--card-color, #10b981) 0%, var(--card-color-end, #059669) 100%);
+        opacity: 0;
         transition: opacity 0.3s ease;
       }
       
       .committee-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
-        border-color: #16a34a;
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.04);
       }
       
       .committee-card:hover::before {
@@ -237,113 +196,135 @@
       }
       
       .dark .committee-card {
-        background: linear-gradient(135deg, #1e293b 0%, #2d3748 100%);
-        border: 1px solid #4a5568;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        background: linear-gradient(135deg, #1e293b 0%, #1e293b 100%);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.1);
       }
       
-      .dark .committee-card::before {
-        background: linear-gradient(90deg, #22c55e 0%, #16a34a 100%);
+      /* Compact Layout Styles */
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+        margin-bottom: 2rem;
       }
       
-      .dark .committee-card:hover {
-        border-color: #22c55e;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-        background: linear-gradient(135deg, #2d3748 0%, #374151 100%);
+      @media (max-width: 768px) {
+        .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
       }
       
-      /* Professional Button Styling */
-      .committee-button {
-        background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
-        color: white;
-        border: none;
-        padding: 1rem 2rem;
+      .stat-card {
+        background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
         border-radius: 12px;
-        font-weight: 600;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        text-decoration: none;
-        display: inline-flex;
+        padding: 1.25rem;
+        text-align: center;
+        border: 1px solid #bbf7d0;
+      }
+      
+      .dark .stat-card {
+        background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
+        border-color: #10b981;
+      }
+      
+      .stat-value {
+        font-size: 1.875rem;
+        font-weight: 700;
+        color: #059669;
+        line-height: 1;
+      }
+      
+      .dark .stat-value {
+        color: #34d399;
+      }
+      
+      .stat-label {
+        font-size: 0.75rem;
+        color: #6b7280;
+        margin-top: 0.25rem;
+      }
+      
+      .dark .stat-label {
+        color: #9ca3af;
+      }
+      
+      /* Document Grid */
+      .document-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+      }
+      
+      @media (max-width: 1024px) {
+        .document-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      
+      @media (max-width: 640px) {
+        .document-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      
+      /* Icon containers with subtle gradients */
+      .icon-container {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        display: flex;
         align-items: center;
-        gap: 0.75rem;
-        box-shadow: 0 4px 15px rgba(22, 163, 74, 0.3);
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
       }
       
-      .committee-button:hover {
-        background: linear-gradient(135deg, #15803d 0%, #166534 100%);
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(22, 163, 74, 0.4);
-      }
-      
-      /* Add geometric pattern to cards on hover */
-      .committee-card::after {
+      .icon-container::after {
         content: '';
         position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+        transform: rotate(45deg);
+        transition: transform 0.6s;
+      }
+      
+      .committee-card:hover .icon-container::after {
+        transform: rotate(45deg) translate(50%, 50%);
+      }
+      
+      /* Subtle hover effects */
+      .hover-lift {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      
+      .hover-lift:hover {
+        transform: translateY(-2px);
+      }
+      
+      /* Clean section styling */
+      .section-header {
+        position: relative;
+        padding-bottom: 0.75rem;
+        margin-bottom: 1.5rem;
+      }
+      
+      .section-header::after {
+        content: '';
+        position: absolute;
         bottom: 0;
-        background-image: 
-          url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2310b981' fill-opacity='0.1'%3E%3Cpolygon points='15 0, 30 15, 15 30, 0 15'/%3E%3C/g%3E%3C/svg%3E");
-        background-size: 30px 30px;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-        pointer-events: none;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(90deg, #10b981 0%, transparent 100%);
+        border-radius: 3px;
       }
       
-      .committee-card:hover::after {
-        opacity: 1;
-      }
-      
-      /* Metrics Grid */
-      .metrics-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 2rem;
-        margin: 3rem 0;
-      }
-      
-      .metric-card {
-        background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-        border: 1px solid #0ea5e9;
-        border-radius: 16px;
-        padding: 2rem;
-        text-align: center;
-        transition: all 0.3s ease;
-      }
-      
-      .metric-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 30px rgba(14, 165, 233, 0.2);
-      }
-      
-      .dark .metric-card {
-        background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
-        border-color: #3b82f6;
-      }
-      
-      .metric-value {
-        font-size: 2.5rem;
-        font-weight: 800;
-        color: #0ea5e9;
-        margin-bottom: 0.5rem;
-      }
-      
-      .dark .metric-value {
-        color: #93c5fd;
-      }
-      
-      .metric-label {
-        font-size: 0.875rem;
-        font-weight: 600;
-        color: #1e40af;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-      }
-      
-      .dark .metric-label {
-        color: #dbeafe;
+      .dark .section-header::after {
+        background: linear-gradient(90deg, #34d399 0%, transparent 100%);
       }
     </style>
 </head>
