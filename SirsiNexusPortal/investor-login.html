@@ -392,7 +392,7 @@
                     if (validCredential.role === 'admin') {
                         successDiv.innerHTML = `
                             <strong>✅ Admin Login Successful!</strong><br>
-                            Redirecting to <a href="admin-dashboard.html" class="underline" target="_blank">Admin Dashboard</a><br>
+                            Redirecting to <a href="admin/" class="underline" target="_blank">Admin Dashboard</a><br>
                             <em>If redirect fails, click the link above</em>
                         `;
                     } else {
@@ -409,7 +409,7 @@
                         console.log('Attempting redirect...');
                         try {
                             if (validCredential.role === 'admin') {
-                                window.location.href = 'admin-dashboard.html';
+                                window.location.href = 'admin/';
                             } else {
                                 window.location.href = 'investor-portal/index.html';
                             }
@@ -417,7 +417,7 @@
                             console.error('Redirect failed:', error);
                             // Fallback: open in new tab
                             if (validCredential.role === 'admin') {
-                                window.open('admin-dashboard.html', '_blank');
+                                window.open('admin/', '_blank');
                             } else {
                                 window.open('investor-portal/index.html', '_blank');
                             }
