@@ -14,8 +14,7 @@
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chart.js removed for performance -->
     
     <!-- Heatmap.js -->
     <script src="https://cdn.jsdelivr.net/npm/heatmap.js@2.0.5/build/heatmap.min.js"></script>
@@ -35,6 +34,12 @@
     
     <style>
         /* Custom styles */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        
         .metric-card {
             background: white;
             border-radius: 12px;
@@ -117,7 +122,7 @@
         }
     </style>
 </head>
-<body class="font-inter bg-gray-50 dark:bg-slate-900 text-gray-900 dark:text-slate-100 transition-colors duration-300">
+<body class="font-inter bg-gray-50 dark:bg-slate-900 text-gray-900 dark:text-slate-100 transition-colors duration-300 h-full overflow-hidden">
     <!-- Admin Header -->
     <header class="bg-white dark:bg-slate-800 shadow-sm border-b border-gray-200 dark:border-slate-700 fixed top-0 left-0 right-0 z-50">
         <div class="px-6 py-3">
@@ -239,62 +244,62 @@
     </aside>
 
     <!-- Main Content -->
-    <main class="ml-64 pt-16 min-h-screen bg-gray-50 dark:bg-slate-900 p-6">
+    <main class="ml-64 pt-16 h-full overflow-y-auto bg-gray-50 dark:bg-slate-900 p-6">
         <div class="max-w-7xl mx-auto">
             <h1 class="text-3xl font-bold mb-8">Enhanced Telemetry Analytics</h1>
             
             <!-- Real-time Metrics Overview -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                <div class="metric-card">
+                <div class="metric-card cursor-pointer hover:shadow-lg transition-shadow" onclick="showMetricDetails('users')">
                     <div class="flex items-center justify-between mb-4">
                         <div class="p-3 bg-blue-100 dark:bg-blue-900/20 rounded-lg">
                             <i class="fas fa-users text-blue-600 dark:text-blue-400 text-xl"></i>
                         </div>
                         <span class="text-xs text-green-600">+12.5%</span>
                     </div>
-                    <h3 class="text-2xl font-bold counter-animate" id="active-users">0</h3>
+                    <h3 class="text-2xl font-bold" id="active-users">247</h3>
                     <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Active Users Now</p>
                     <div class="mt-3 text-xs text-gray-500">
                         <span id="user-locations">Across 12 countries</span>
                     </div>
                 </div>
                 
-                <div class="metric-card">
+                <div class="metric-card cursor-pointer hover:shadow-lg transition-shadow" onclick="showMetricDetails('pageviews')">
                     <div class="flex items-center justify-between mb-4">
                         <div class="p-3 bg-green-100 dark:bg-green-900/20 rounded-lg">
                             <i class="fas fa-eye text-green-600 dark:text-green-400 text-xl"></i>
                         </div>
                         <span class="text-xs text-green-600">+8.3%</span>
                     </div>
-                    <h3 class="text-2xl font-bold counter-animate" id="page-views">0</h3>
+                    <h3 class="text-2xl font-bold" id="page-views">15,832</h3>
                     <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Page Views Today</p>
                     <div class="mt-3 text-xs text-gray-500">
                         <span id="avg-session">Avg. session: 12m 34s</span>
                     </div>
                 </div>
                 
-                <div class="metric-card">
+                <div class="metric-card cursor-pointer hover:shadow-lg transition-shadow" onclick="showMetricDetails('interactions')">
                     <div class="flex items-center justify-between mb-4">
                         <div class="p-3 bg-yellow-100 dark:bg-yellow-900/20 rounded-lg">
                             <i class="fas fa-mouse-pointer text-yellow-600 dark:text-yellow-400 text-xl"></i>
                         </div>
                         <span class="text-xs text-red-600">-3.2%</span>
                     </div>
-                    <h3 class="text-2xl font-bold counter-animate" id="total-clicks">0</h3>
+                    <h3 class="text-2xl font-bold" id="total-clicks">9,421</h3>
                     <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Total Interactions</p>
                     <div class="mt-3 text-xs text-gray-500">
                         <span id="click-rate">CTR: 4.2%</span>
                     </div>
                 </div>
                 
-                <div class="metric-card">
+                <div class="metric-card cursor-pointer hover:shadow-lg transition-shadow" onclick="showMetricDetails('downloads')">
                     <div class="flex items-center justify-between mb-4">
                         <div class="p-3 bg-purple-100 dark:bg-purple-900/20 rounded-lg">
                             <i class="fas fa-download text-purple-600 dark:text-purple-400 text-xl"></i>
                         </div>
                         <span class="text-xs text-green-600">+22.1%</span>
                     </div>
-                    <h3 class="text-2xl font-bold counter-animate" id="downloads">0</h3>
+                    <h3 class="text-2xl font-bold" id="downloads">523</h3>
                     <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Downloads Today</p>
                     <div class="mt-3 text-xs text-gray-500">
                         <span id="popular-file">Top: Report_Q4.pdf</span>
@@ -315,23 +320,46 @@
                 
                 <div class="metric-card">
                     <h2 class="text-lg font-semibold mb-4">Scroll Depth Analysis</h2>
-                    <canvas id="scroll-depth-chart" height="150"></canvas>
-                    <div class="mt-4 grid grid-cols-4 gap-2 text-center text-sm">
-                        <div>
-                            <p class="font-semibold text-lg">82%</p>
-                            <p class="text-gray-500">25% depth</p>
+                    <div class="space-y-3">
+                        <div class="cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 p-3 rounded-lg transition-colors" onclick="showScrollDepthDetails('25')">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-medium">0-25% Page Depth</span>
+                                <span class="text-2xl font-bold text-green-600">82%</span>
+                            </div>
+                            <div class="mt-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                <div class="bg-green-500 h-2 rounded-full" style="width: 82%"></div>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">Users reached this depth</p>
                         </div>
-                        <div>
-                            <p class="font-semibold text-lg">64%</p>
-                            <p class="text-gray-500">50% depth</p>
+                        <div class="cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 p-3 rounded-lg transition-colors" onclick="showScrollDepthDetails('50')">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-medium">25-50% Page Depth</span>
+                                <span class="text-2xl font-bold text-blue-600">64%</span>
+                            </div>
+                            <div class="mt-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                <div class="bg-blue-500 h-2 rounded-full" style="width: 64%"></div>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">Users reached this depth</p>
                         </div>
-                        <div>
-                            <p class="font-semibold text-lg">41%</p>
-                            <p class="text-gray-500">75% depth</p>
+                        <div class="cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 p-3 rounded-lg transition-colors" onclick="showScrollDepthDetails('75')">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-medium">50-75% Page Depth</span>
+                                <span class="text-2xl font-bold text-yellow-600">41%</span>
+                            </div>
+                            <div class="mt-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                <div class="bg-yellow-500 h-2 rounded-full" style="width: 41%"></div>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">Users reached this depth</p>
                         </div>
-                        <div>
-                            <p class="font-semibold text-lg">23%</p>
-                            <p class="text-gray-500">100% depth</p>
+                        <div class="cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 p-3 rounded-lg transition-colors" onclick="showScrollDepthDetails('100')">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-medium">75-100% Page Depth</span>
+                                <span class="text-2xl font-bold text-red-600">23%</span>
+                            </div>
+                            <div class="mt-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                <div class="bg-red-500 h-2 rounded-full" style="width: 23%"></div>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">Users reached this depth</p>
                         </div>
                     </div>
                 </div>
@@ -526,29 +554,114 @@
     </main>
 
     <script>
-        // Initialize counters with animation
-        function animateCounter(id, target, duration = 1000) {
-            const element = document.getElementById(id);
-            const start = 0;
-            const increment = target / (duration / 16);
-            let current = start;
-            
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= target) {
-                    current = target;
-                    clearInterval(timer);
-                }
-                element.textContent = Math.floor(current).toLocaleString();
-            }, 16);
+        // Click handlers for metric drill-downs
+        function showMetricDetails(metric) {
+            let details = '';
+            switch(metric) {
+                case 'users':
+                    details = 'Active Users by Location:\n\n' +
+                             'United States: 89 users\n' +
+                             'United Kingdom: 45 users\n' +
+                             'Canada: 31 users\n' +
+                             'Germany: 28 users\n' +
+                             'France: 22 users\n' +
+                             'Japan: 18 users\n' +
+                             'Australia: 14 users\n\n' +
+                             'Device Types:\n' +
+                             'Desktop: 68%\n' +
+                             'Mobile: 24%\n' +
+                             'Tablet: 8%';
+                    break;
+                case 'pageviews':
+                    details = 'Page Views Breakdown:\n\n' +
+                             'Dashboard: 4,521 views\n' +
+                             'Data Room: 3,892 views\n' +
+                             'Reports Section: 2,134 views\n' +
+                             'User Profile: 1,823 views\n' +
+                             'Settings: 1,462 views\n' +
+                             'Help Center: 1,000 views\n\n' +
+                             'Peak Hours:\n' +
+                             '9-10 AM: 2,341 views\n' +
+                             '2-3 PM: 2,189 views\n' +
+                             '4-5 PM: 1,892 views';
+                    break;
+                case 'interactions':
+                    details = 'User Interactions Detail:\n\n' +
+                             'Button Clicks: 3,421\n' +
+                             'Form Submissions: 1,892\n' +
+                             'File Downloads: 1,654\n' +
+                             'Link Clicks: 1,234\n' +
+                             'Video Plays: 876\n' +
+                             'Share Actions: 344\n\n' +
+                             'Most Clicked Elements:\n' +
+                             '1. Download Report Button\n' +
+                             '2. View Details Link\n' +
+                             '3. Export Data Button';
+                    break;
+                case 'downloads':
+                    details = 'Download Statistics:\n\n' +
+                             'Top Downloads Today:\n' +
+                             '1. Q4_Financial_Report.pdf - 142 downloads\n' +
+                             '2. Investment_Summary.xlsx - 98 downloads\n' +
+                             '3. Board_Presentation.pptx - 87 downloads\n' +
+                             '4. Market_Analysis.pdf - 76 downloads\n' +
+                             '5. Due_Diligence_Checklist.docx - 65 downloads\n\n' +
+                             'File Types:\n' +
+                             'PDF: 298 (57%)\n' +
+                             'Excel: 134 (26%)\n' +
+                             'PowerPoint: 67 (13%)\n' +
+                             'Other: 24 (4%)';
+                    break;
+            }
+            alert(details);
         }
 
-        // Simulate real-time data updates
-        function updateMetrics() {
-            animateCounter('active-users', Math.floor(Math.random() * 100) + 150);
-            animateCounter('page-views', Math.floor(Math.random() * 5000) + 12000);
-            animateCounter('total-clicks', Math.floor(Math.random() * 2000) + 8000);
-            animateCounter('downloads', Math.floor(Math.random() * 200) + 450);
+        // Click handler for scroll depth details
+        function showScrollDepthDetails(depth) {
+            let details = '';
+            switch(depth) {
+                case '25':
+                    details = 'Users Reaching 0-25% Depth:\n\n' +
+                             'Total: 82% of all users\n' +
+                             'Average time to reach: 2.3 seconds\n' +
+                             'Most common exit point: Hero section\n\n' +
+                             'User Behavior:\n' +
+                             '- 68% continue scrolling\n' +
+                             '- 14% click navigation\n' +
+                             '- 18% exit page';
+                    break;
+                case '50':
+                    details = 'Users Reaching 25-50% Depth:\n\n' +
+                             'Total: 64% of all users\n' +
+                             'Average time to reach: 8.7 seconds\n' +
+                             'Most engaged content: Feature overview\n\n' +
+                             'Actions at this depth:\n' +
+                             '- 42% click on features\n' +
+                             '- 31% read testimonials\n' +
+                             '- 27% continue scrolling';
+                    break;
+                case '75':
+                    details = 'Users Reaching 50-75% Depth:\n\n' +
+                             'Total: 41% of all users\n' +
+                             'Average time to reach: 24.5 seconds\n' +
+                             'High engagement zone\n\n' +
+                             'Common actions:\n' +
+                             '- 56% view pricing\n' +
+                             '- 28% click CTA buttons\n' +
+                             '- 16% fill contact forms';
+                    break;
+                case '100':
+                    details = 'Users Reaching 75-100% Depth:\n\n' +
+                             'Total: 23% of all users\n' +
+                             'Average time to reach: 45.2 seconds\n' +
+                             'Highly engaged users\n\n' +
+                             'Footer interactions:\n' +
+                             '- 67% click footer links\n' +
+                             '- 43% subscribe to newsletter\n' +
+                             '- 31% share content';
+                    break;
+            }
+            alert(details);
         }
 
         // Initialize heatmap
@@ -559,54 +672,37 @@
                 maxOpacity: 0.6
             });
 
-            // Generate sample heatmap data
+            // Generate static heatmap data
             const points = [];
-            for (let i = 0; i < 200; i++) {
+            // Simulate click concentrations
+            // Top navigation area
+            for (let i = 0; i < 50; i++) {
                 points.push({
-                    x: Math.floor(Math.random() * 400),
-                    y: Math.floor(Math.random() * 400),
-                    value: Math.floor(Math.random() * 100)
+                    x: Math.floor(Math.random() * 100) + 20,
+                    y: Math.floor(Math.random() * 30) + 10,
+                    value: Math.floor(Math.random() * 50) + 50
+                });
+            }
+            // Main CTA area
+            for (let i = 0; i < 80; i++) {
+                points.push({
+                    x: Math.floor(Math.random() * 150) + 125,
+                    y: Math.floor(Math.random() * 100) + 150,
+                    value: Math.floor(Math.random() * 70) + 30
+                });
+            }
+            // Secondary interaction zones
+            for (let i = 0; i < 40; i++) {
+                points.push({
+                    x: Math.floor(Math.random() * 100) + 250,
+                    y: Math.floor(Math.random() * 80) + 200,
+                    value: Math.floor(Math.random() * 40) + 20
                 });
             }
 
             heatmapInstance.setData({
                 max: 100,
                 data: points
-            });
-        }
-
-        // Initialize scroll depth chart
-        function initScrollDepthChart() {
-            const ctx = document.getElementById('scroll-depth-chart').getContext('2d');
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['0-25%', '25-50%', '50-75%', '75-100%'],
-                    datasets: [{
-                        label: 'Users Reached',
-                        data: [82, 64, 41, 23],
-                        backgroundColor: ['#10b981', '#3b82f6', '#f59e0b', '#ef4444'],
-                        borderRadius: 8
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            max: 100,
-                            ticks: {
-                                callback: function(value) {
-                                    return value + '%';
-                                }
-                            }
-                        }
-                    }
-                }
             });
         }
 
@@ -638,20 +734,9 @@
 
         // Initialize everything
         document.addEventListener('DOMContentLoaded', () => {
-            updateMetrics();
             initHeatmap();
-            initScrollDepthChart();
             setInterval(updateClock, 1000);
             updateClock();
-            
-            // Simulate real-time updates
-            setInterval(() => {
-                // Add small random changes to metrics
-                const activeUsers = document.getElementById('active-users');
-                const current = parseInt(activeUsers.textContent.replace(/,/g, ''));
-                const change = Math.floor(Math.random() * 10) - 5;
-                activeUsers.textContent = (current + change).toLocaleString();
-            }, 5000);
         });
     </script>
 </body>
