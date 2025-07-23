@@ -1561,7 +1561,8 @@
                 if (window.sessionManager) {
                     sessionManager.logout();
                 } else {
-                    window.location.href = 'investor-login.html';
+                    window.location.href = '../investor-login.html';
+';
                 }
             }
 
@@ -2216,7 +2217,7 @@
                     qrData = `${window.location.origin}/invite?role=${role}&expiry=${expiry}&code=${generateInviteCode()}`;
                     break;
                 case 'login':
-                    qrData = `${window.location.origin}/investor-login.html`;
+                    qrData = `${window.location.origin}/SirsiNexusPortal/investor-login.html`;
                     break;
                 case 'document':
                     const docId = document.getElementById('qrDocumentId')?.value || 'sample';
