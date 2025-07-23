@@ -79,6 +79,70 @@
       // Make mobile menu function available globally
       window.toggleMobileMenu = toggleMobileMenu;
     </script>
+    <style>
+      /* Subtle geometric background patterns */
+      .geometric-pattern {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        opacity: 0.03;
+        pointer-events: none;
+      }
+      
+      .geometric-pattern::before {
+        content: '';
+        position: absolute;
+        width: 200%;
+        height: 200%;
+        top: -50%;
+        left: -50%;
+        background-image: 
+          repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(16, 185, 129, 0.1) 35px, rgba(16, 185, 129, 0.1) 70px),
+          repeating-linear-gradient(-45deg, transparent, transparent 35px, rgba(59, 130, 246, 0.1) 35px, rgba(59, 130, 246, 0.1) 70px);
+      }
+      
+      .wavy-lines {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        opacity: 0.05;
+        pointer-events: none;
+      }
+      
+      .wavy-lines::before {
+        content: '';
+        position: absolute;
+        width: 200%;
+        height: 200%;
+        top: -50%;
+        left: -50%;
+        background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><path d="M0,50 Q25,30 50,50 T100,50" stroke="rgba(16,185,129,0.2)" fill="none" stroke-width="0.5"/><path d="M0,30 Q25,10 50,30 T100,30" stroke="rgba(59,130,246,0.2)" fill="none" stroke-width="0.5"/><path d="M0,70 Q25,50 50,70 T100,70" stroke="rgba(16,185,129,0.2)" fill="none" stroke-width="0.5"/></svg>') repeat;
+      }
+      
+      .dots-pattern {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0.02;
+        pointer-events: none;
+        background-image: radial-gradient(circle, rgba(16, 185, 129, 0.4) 1px, transparent 1px);
+        background-size: 40px 40px;
+      }
+      
+      .mesh-gradient {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0.15;
+        pointer-events: none;
+        background: 
+          radial-gradient(at 20% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
+          radial-gradient(at 80% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+          radial-gradient(at 40% 40%, rgba(168, 85, 247, 0.05) 0%, transparent 50%);
+      }
+    </style>
   </head>
   
   <body class="font-inter bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100">
@@ -113,7 +177,7 @@
             <a href="https://github.com/SirsiMaster/SirsiNexusApp" target="_blank" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">App Repository</a>
             <a href="https://github.com/SirsiMaster/SirsiNexusApp/wiki" target="_blank" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">Documentation</a>
             <a href="/SirsiNexusPortal/investor-portal/index.html" class="text-sm font-medium text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors">Investor Portal</a>
-            <button data-theme-toggle class="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors border border-slate-300 dark:border-slate-600" title="Toggle theme">
+            <button id="theme-toggle" class="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors border border-slate-300 dark:border-slate-600" title="Toggle theme">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
               </svg>
@@ -139,7 +203,9 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="relative bg-gradient-to-br from-slate-50 via-emerald-50 to-emerald-100 dark:from-slate-900 dark:via-emerald-900 dark:to-emerald-800 py-24">
+    <section class="relative bg-gradient-to-br from-slate-50 via-emerald-50 to-emerald-100 dark:from-slate-900 dark:via-emerald-900 dark:to-emerald-800 py-24 overflow-hidden">
+      <!-- Geometric Pattern Overlay -->
+      <div class="geometric-pattern"></div>
       <div class="max-w-7xl mx-auto px-6">
         <div class="text-center">
           <div class="inline-flex items-center gap-2 bg-emerald-100 dark:bg-emerald-900/30 px-4 py-2 rounded-full mb-6">
@@ -178,7 +244,9 @@
     </section>
 
     <!-- Dual Path Section -->
-    <section class="py-20 bg-gradient-to-br from-white via-slate-50 to-emerald-50/20 dark:from-slate-900 dark:via-slate-800 dark:to-emerald-900/20">
+    <section class="relative py-20 bg-gradient-to-br from-white via-slate-50 to-emerald-50/20 dark:from-slate-900 dark:via-slate-800 dark:to-emerald-900/20 overflow-hidden">
+      <!-- Wavy Lines Pattern -->
+      <div class="wavy-lines"></div>
       <div class="max-w-7xl mx-auto px-6">
         <div class="text-center mb-12">
           <h2 class="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-4">Choose Your Path to Revolutionary Infrastructure</h2>
@@ -434,7 +502,9 @@
     </section>
 
     <!-- Traditional Features Section -->
-    <section id="features" class="py-20 bg-gradient-to-br from-white via-emerald-50/30 to-white dark:from-slate-900 dark:via-emerald-950/50 dark:to-slate-900">
+    <section id="features" class="relative py-20 bg-gradient-to-br from-white via-emerald-50/30 to-white dark:from-slate-900 dark:via-emerald-950/50 dark:to-slate-900 overflow-hidden">
+      <!-- Dots Pattern -->
+      <div class="dots-pattern"></div>
       <div class="max-w-7xl mx-auto px-6">
         <div class="text-center mb-16">
           <h2 class="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-4">Core Platform Capabilities</h2>
@@ -473,7 +543,9 @@
     </section>
 
     <!-- Platform Section -->
-    <section id="platform" class="py-20 bg-gradient-to-tr from-slate-50 via-white to-emerald-50/40 dark:from-slate-800 dark:via-slate-900 dark:to-emerald-950/60">
+    <section id="platform" class="relative py-20 bg-gradient-to-tr from-slate-50 via-white to-emerald-50/40 dark:from-slate-800 dark:via-slate-900 dark:to-emerald-950/60 overflow-hidden">
+      <!-- Mesh Gradient -->
+      <div class="mesh-gradient"></div>
       <div class="max-w-7xl mx-auto px-6">
         <div class="text-center mb-16">
           <h2 class="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-4">Multi-Cloud Platform</h2>
