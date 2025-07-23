@@ -306,8 +306,12 @@
         </div>
     </header>
 
+    
+    <!-- Investor Sidebar Container -->
+    <div id="investor-sidebar-container"></div>
+    
     <!-- Content -->
-    <main class="max-w-7xl mx-auto px-6 py-12">
+    <main class="max-w-7xl mx-auto px-6 py-12 with-sidebar">
         <!-- Executive Summary -->
                 <section class="mb-16 bg-gradient-to-br from-primary-50 via-white to-primary-100/50 dark:from-primary-900/10 dark:via-secondary-900 dark:to-primary-800/5 rounded-2xl p-8 border border-primary-100 dark:border-primary-800">
             <h2 class="text-3xl font-bold mb-4">Performance Summary</h2>
@@ -865,5 +869,44 @@
         window.logout = logout;
     </script>
 <script src="../js/telemetry.js"></script>
+
+    <!-- Load Investor Sidebar -->
+    <script>
+        // Load sidebar component
+        fetch('components/investor-sidebar.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('investor-sidebar-container').innerHTML = html;
+                
+                // Re-run sidebar initialization after loading
+                if (typeof initializeSidebar === 'function') {
+                    initializeSidebar();
+                }
+            })
+            .catch(error => console.error('Error loading sidebar:', error));
+            
+        // For committee pages, adjust the path
+        if (window.location.pathname.includes('/committee/')) {
+            fetch('../components/investor-sidebar.html')
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('investor-sidebar-container').innerHTML = html;
+                    
+                    // Adjust sidebar links for committee subdirectory
+                    const sidebarLinks = document.querySelectorAll('#investor-sidebar-container a');
+                    sidebarLinks.forEach(link => {
+                        const href = link.getAttribute('href');
+                        if (href && !href.startsWith('http') && !href.startsWith('#')) {
+                            if (href.startsWith('committee/')) {
+                                link.setAttribute('href', href.replace('committee/', ''));
+                            } else if (!href.startsWith('../')) {
+                                link.setAttribute('href', '../' + href);
+                            }
+                        }
+                    });
+                })
+                .catch(error => console.error('Error loading sidebar:', error));
+        }
+    </script>
 </body>
 </html>
