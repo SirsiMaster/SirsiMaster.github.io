@@ -540,12 +540,12 @@
                 <div class="flex items-center space-x-6">
                     <!-- Platform/Page Info -->
                     <nav class="flex items-center text-sm text-gray-500 dark:text-gray-400">
-                        <span>Platform</span>
-                        <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                        <span class="text-gray-900 dark:text-white font-medium">Admin Console</span>
-                    </nav>
+                    <a href="../index.html" class="hover:text-gray-900 dark:hover:text-white">SirsiNexusPortal</a>
+                    <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                    <span class="text-gray-900 dark:text-white font-medium">Admin Portal</span>
+                </nav>
                     <!-- Clock -->
                     <span class="clock text-sm font-mono text-gray-600 dark:text-gray-300">16:00</span>
                     <!-- Notifications Dropdown -->
@@ -1561,7 +1561,7 @@
                 if (window.sessionManager) {
                     sessionManager.logout();
                 } else {
-                    window.location.href = '../investor-login.html';
+                    window.location.href = '../index.html';
 ';
                 }
             }
@@ -2148,7 +2148,7 @@
                 
                 // Redirect after short delay
                 setTimeout(() => {
-                    window.location.href = 'investor-login.html';
+                    window.location.href = '../index.html';
                 }, 1000);
             }
         }
