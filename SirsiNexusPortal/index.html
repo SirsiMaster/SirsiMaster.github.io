@@ -58,8 +58,25 @@
       })();
     </script>
 
-    <!-- Fresh Theme Toggle Script -->
-    <script src="/SirsiNexusPortal/assets/js/fresh-theme-toggle.js"></script>
+    <!-- Theme Toggle Script -->
+    <script>
+      // Theme toggle functionality
+      document.addEventListener('DOMContentLoaded', function() {
+        const themeToggle = document.getElementById('theme-toggle');
+        if (themeToggle) {
+          themeToggle.addEventListener('click', function() {
+            const isDark = document.documentElement.classList.contains('dark');
+            if (isDark) {
+              document.documentElement.classList.remove('dark');
+              localStorage.setItem('theme', 'light');
+            } else {
+              document.documentElement.classList.add('dark');
+              localStorage.setItem('theme', 'dark');
+            }
+          });
+        }
+      });
+    </script>
     
     <!-- Mobile menu functionality -->
     <script>
@@ -86,7 +103,7 @@
         width: 100%;
         height: 100%;
         overflow: hidden;
-        opacity: 0.03;
+        opacity: 0.08;
         pointer-events: none;
       }
       
@@ -107,7 +124,7 @@
         width: 100%;
         height: 100%;
         overflow: hidden;
-        opacity: 0.05;
+        opacity: 0.1;
         pointer-events: none;
       }
       
@@ -125,7 +142,7 @@
         position: absolute;
         width: 100%;
         height: 100%;
-        opacity: 0.02;
+        opacity: 0.06;
         pointer-events: none;
         background-image: radial-gradient(circle, rgba(16, 185, 129, 0.4) 1px, transparent 1px);
         background-size: 40px 40px;
@@ -135,7 +152,7 @@
         position: absolute;
         width: 100%;
         height: 100%;
-        opacity: 0.15;
+        opacity: 0.25;
         pointer-events: none;
         background: 
           radial-gradient(at 20% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
