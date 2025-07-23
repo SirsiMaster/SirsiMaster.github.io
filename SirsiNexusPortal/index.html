@@ -64,14 +64,21 @@
       document.addEventListener('DOMContentLoaded', function() {
         const themeToggle = document.getElementById('theme-toggle');
         if (themeToggle) {
-          themeToggle.addEventListener('click', function() {
-            const isDark = document.documentElement.classList.contains('dark');
+          themeToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            const html = document.documentElement;
+            const isDark = html.classList.contains('dark');
+            
+            console.log('Theme toggle clicked. Current isDark:', isDark);
+            
             if (isDark) {
-              document.documentElement.classList.remove('dark');
+              html.classList.remove('dark');
               localStorage.setItem('theme', 'light');
+              console.log('Switched to light mode');
             } else {
-              document.documentElement.classList.add('dark');
+              html.classList.add('dark');
               localStorage.setItem('theme', 'dark');
+              console.log('Switched to dark mode');
             }
           });
         }
@@ -103,7 +110,6 @@
         width: 100%;
         height: 100%;
         overflow: hidden;
-        opacity: 0.08;
         pointer-events: none;
       }
       
@@ -115,8 +121,9 @@
         top: -50%;
         left: -50%;
         background-image: 
-          repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(16, 185, 129, 0.1) 35px, rgba(16, 185, 129, 0.1) 70px),
-          repeating-linear-gradient(-45deg, transparent, transparent 35px, rgba(59, 130, 246, 0.1) 35px, rgba(59, 130, 246, 0.1) 70px);
+          repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(16, 185, 129, 0.5) 35px, rgba(16, 185, 129, 0.5) 36px, transparent 36px, transparent 70px),
+          repeating-linear-gradient(-45deg, transparent, transparent 35px, rgba(59, 130, 246, 0.4) 35px, rgba(59, 130, 246, 0.4) 36px, transparent 36px, transparent 70px);
+        opacity: 0.3;
       }
       
       .wavy-lines {
@@ -124,7 +131,6 @@
         width: 100%;
         height: 100%;
         overflow: hidden;
-        opacity: 0.1;
         pointer-events: none;
       }
       
@@ -135,29 +141,33 @@
         height: 200%;
         top: -50%;
         left: -50%;
-        background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><path d="M0,50 Q25,30 50,50 T100,50" stroke="rgba(16,185,129,0.2)" fill="none" stroke-width="0.5"/><path d="M0,30 Q25,10 50,30 T100,30" stroke="rgba(59,130,246,0.2)" fill="none" stroke-width="0.5"/><path d="M0,70 Q25,50 50,70 T100,70" stroke="rgba(16,185,129,0.2)" fill="none" stroke-width="0.5"/></svg>') repeat;
+        background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><path d="M0,50 Q25,30 50,50 T100,50" stroke="rgba(16,185,129,0.8)" fill="none" stroke-width="2"/><path d="M0,30 Q25,10 50,30 T100,30" stroke="rgba(59,130,246,0.6)" fill="none" stroke-width="1.5"/><path d="M0,70 Q25,50 50,70 T100,70" stroke="rgba(16,185,129,0.8)" fill="none" stroke-width="2"/></svg>') repeat;
+        opacity: 0.25;
       }
       
       .dots-pattern {
         position: absolute;
         width: 100%;
         height: 100%;
-        opacity: 0.06;
         pointer-events: none;
-        background-image: radial-gradient(circle, rgba(16, 185, 129, 0.4) 1px, transparent 1px);
-        background-size: 40px 40px;
+        background-image: 
+          radial-gradient(circle, rgba(16, 185, 129, 0.8) 2px, transparent 2px),
+          radial-gradient(circle, rgba(59, 130, 246, 0.6) 1px, transparent 1px);
+        background-size: 50px 50px, 25px 25px;
+        background-position: 0 0, 12.5px 12.5px;
+        opacity: 0.2;
       }
       
       .mesh-gradient {
         position: absolute;
         width: 100%;
         height: 100%;
-        opacity: 0.25;
         pointer-events: none;
         background: 
-          radial-gradient(at 20% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
-          radial-gradient(at 80% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-          radial-gradient(at 40% 40%, rgba(168, 85, 247, 0.05) 0%, transparent 50%);
+          radial-gradient(ellipse at 20% 80%, rgba(16, 185, 129, 0.3) 0%, transparent 40%),
+          radial-gradient(ellipse at 80% 20%, rgba(59, 130, 246, 0.25) 0%, transparent 40%),
+          radial-gradient(ellipse at 40% 40%, rgba(168, 85, 247, 0.15) 0%, transparent 30%);
+        opacity: 0.5;
       }
     </style>
   </head>
