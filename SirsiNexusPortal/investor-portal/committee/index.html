@@ -127,7 +127,7 @@
         color: #e2e8f0;
       }
       
-      /* Subtle Geometric Accents */
+      /* Prominent Geometric Accents */
       .geometric-accent {
         position: absolute;
         pointer-events: none;
@@ -136,31 +136,47 @@
       .geometric-accent-1 {
         top: 10%;
         right: -50px;
-        width: 100px;
-        height: 100px;
-        background: linear-gradient(45deg, #10b981 0%, transparent 70%);
+        width: 200px;
+        height: 200px;
+        background: linear-gradient(45deg, #10b981 0%, #3b82f6 50%, transparent 70%);
         transform: rotate(45deg);
-        opacity: 0.1;
+        opacity: 0.3;
+        filter: blur(40px);
       }
       
       .geometric-accent-2 {
         bottom: 20%;
         left: -30px;
-        width: 60px;
-        height: 60px;
-        border: 2px solid #3b82f6;
-        transform: rotate(15deg);
-        opacity: 0.15;
+        width: 150px;
+        height: 150px;
+        background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 50%, transparent 70%);
+        border-radius: 50%;
+        opacity: 0.25;
+        filter: blur(30px);
+      }
+      
+      .geometric-accent-3 {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, rgba(34, 197, 94, 0.1) 0%, rgba(59, 130, 246, 0.05) 50%, transparent 70%);
+        opacity: 0.5;
       }
       
       .dark .geometric-accent-1 {
-        background: linear-gradient(45deg, #22c55e 0%, transparent 70%);
-        opacity: 0.08;
+        background: linear-gradient(45deg, #22c55e 0%, #60a5fa 50%, transparent 70%);
+        opacity: 0.2;
       }
       
       .dark .geometric-accent-2 {
-        border-color: #60a5fa;
-        opacity: 0.1;
+        background: linear-gradient(135deg, #a78bfa 0%, #f472b6 50%, transparent 70%);
+        opacity: 0.15;
+      }
+      
+      .dark .geometric-accent-3 {
+        background: radial-gradient(circle, rgba(52, 211, 153, 0.15) 0%, rgba(96, 165, 250, 0.1) 50%, transparent 70%);
       }
       
       /* Modern Card Styling */
@@ -188,9 +204,10 @@
       }
       
       .committee-card:hover {
-        transform: translateY(-6px) scale(1.02);
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        transform: translateY(-8px) scale(1.03);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 10px 20px -5px rgba(0, 0, 0, 0.1);
         border-color: var(--card-color, #10b981);
+        border-width: 2px;
       }
       
       .committee-card:hover::before {
@@ -218,14 +235,15 @@
       }
       
       .stat-card {
-        background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-        border-radius: 16px;
-        padding: 1.5rem;
+        background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 50%, #bbf7d0 100%);
+        border-radius: 20px;
+        padding: 2rem 1.5rem;
         text-align: center;
-        border: 2px solid #86efac;
+        border: 3px solid #10b981;
         position: relative;
         overflow: hidden;
         transition: all 0.3s ease;
+        box-shadow: 0 10px 30px -5px rgba(16, 185, 129, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.5);
       }
       
       .stat-card::before {
@@ -235,14 +253,20 @@
         right: -50%;
         width: 100%;
         height: 100%;
-        background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, transparent 70%);
+        background: radial-gradient(circle, rgba(16, 185, 129, 0.3) 0%, transparent 60%);
         transform: scale(2);
+        animation: pulse 3s ease-in-out infinite;
+      }
+      
+      @keyframes pulse {
+        0%, 100% { opacity: 0.3; transform: scale(2); }
+        50% { opacity: 0.6; transform: scale(2.2); }
       }
       
       .stat-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 10px 20px rgba(16, 185, 129, 0.15);
-        border-color: #10b981;
+        transform: translateY(-5px) scale(1.05);
+        box-shadow: 0 20px 40px -10px rgba(16, 185, 129, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        border-color: #059669;
       }
       
       .dark .stat-card {
@@ -252,10 +276,16 @@
       }
       
       .stat-value {
-        font-size: 1.875rem;
-        font-weight: 700;
-        color: #059669;
+        font-size: 2.5rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
         line-height: 1;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        position: relative;
+        z-index: 1;
       }
       
       .dark .stat-value {
@@ -352,7 +382,7 @@
       }
     </style>
 </head>
-<body class="h-full bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
+<body class="h-full bg-gradient-to-br from-slate-50 via-emerald-50/10 to-blue-50/10 dark:from-slate-900 dark:via-emerald-950/20 dark:to-blue-950/20">
     <!-- Header -->
     <header class="bg-white dark:bg-gray-800/95 sticky top-0 z-50 border-b border-slate-200 dark:border-slate-700 backdrop-blur-sm">
       <div class="max-w-7xl mx-auto px-6">
@@ -483,17 +513,29 @@
 
     
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative">
-        <!-- Subtle geometric accents -->
+        <!-- Prominent geometric accents -->
         <div class="geometric-accent geometric-accent-1"></div>
         <div class="geometric-accent geometric-accent-2"></div>
+        <div class="geometric-accent geometric-accent-3"></div>
         
-        <!-- Background pattern -->
+        <!-- Enhanced background pattern -->
         <div class="absolute inset-0 -z-10 overflow-hidden">
-            <div class="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-emerald-200 to-blue-200 dark:from-emerald-900 dark:to-blue-900 opacity-20 rounded-full blur-3xl"></div>
-            <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-purple-200 to-pink-200 dark:from-purple-900 dark:to-pink-900 opacity-20 rounded-full blur-3xl"></div>
+            <div class="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-br from-emerald-300 to-blue-400 dark:from-emerald-800 dark:to-blue-900 opacity-30 rounded-full blur-3xl animate-pulse"></div>
+            <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-tr from-purple-300 to-pink-400 dark:from-purple-800 dark:to-pink-900 opacity-30 rounded-full blur-3xl animate-pulse" style="animation-delay: 2s;"></div>
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-indigo-200 via-purple-200 to-pink-200 dark:from-indigo-900 dark:via-purple-900 dark:to-pink-900 opacity-20 rounded-full blur-3xl"></div>
         </div>
         
         <div class="space-y-6">
+            <!-- New Design Banner -->
+            <div class="bg-gradient-to-r from-purple-600 to-pink-600 text-white p-4 rounded-xl shadow-2xl mb-6 animate-pulse">
+                <div class="flex items-center justify-center gap-3">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="text-lg font-bold">✨ NEW ENHANCED DESIGN WITH PROMINENT VISUAL ELEMENTS ✨</span>
+                </div>
+            </div>
+            
             <!-- Compact Header -->
             <div class="text-center mb-8">
                 <h1 class="text-3xl font-bold text-slate-900 dark:text-white mb-2">Investment Committee Dashboard</h1>
@@ -559,8 +601,9 @@
                 
                 <div class="document-grid">
                     <div class="committee-card group cursor-pointer hover-lift" style="--card-color: #3b82f6; --card-color-end: #2563eb;" onclick="window.location.href='market-analysis.html'">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-400/20 to-blue-600/20 rounded-full -mr-16 -mt-16 blur-2xl"></div>
                         <div class="flex items-center gap-3 mb-3">
-                            <div class="icon-container bg-gradient-to-br from-blue-500 to-blue-600">
+                            <div class="icon-container bg-gradient-to-br from-blue-500 to-blue-600 shadow-lg shadow-blue-500/25">
                                 <svg class="w-6 h-6 text-white relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                                 </svg>
