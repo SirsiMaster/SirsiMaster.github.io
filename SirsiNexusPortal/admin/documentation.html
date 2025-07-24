@@ -11,6 +11,9 @@
     <!-- TailwindCSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
+    <!-- Documentation Search System -->
+    <script src="/SirsiNexusPortal/assets/js/documentation-search.js"></script>
+    
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
@@ -256,6 +259,8 @@
                     <a href="#telemetry" class="doc-nav-item block text-sm">Telemetry & Analytics</a>
                     <a href="#settings" class="doc-nav-item block text-sm">Site Settings</a>
                     <a href="#security" class="doc-nav-item block text-sm">Security Configuration</a>
+                    <a href="#security-docs" class="doc-nav-item block ml-4 text-sm">→ Integration Guide</a>
+                    <a href="#security-docs" class="doc-nav-item block ml-4 text-sm">→ Quick Reference</a>
                     <a href="#logs" class="doc-nav-item block text-sm">System Logs</a>
                     <a href="#api" class="doc-nav-item block text-sm">API Reference</a>
                     <a href="#troubleshooting" class="doc-nav-item block text-sm">Troubleshooting</a>
@@ -270,6 +275,18 @@
                     <p class="text-gray-600 dark:text-gray-400 mb-6">
                         Welcome to the SirsiNexus Admin Console documentation. This guide will help you understand and effectively use all features of the admin portal.
                     </p>
+                    
+                    <!-- Search Bar -->
+                    <div class="mb-8 relative search-container">
+                        <input type="text" 
+                               id="docSearch" 
+                               data-doc-search
+                               placeholder="Search documentation, features, components, and guides..." 
+                               class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:bg-slate-700 dark:text-white">
+                        <div class="absolute right-3 top-2.5 text-gray-400 text-sm">
+                            <kbd class="px-2 py-1 bg-gray-100 dark:bg-slate-600 rounded text-xs">Ctrl+K</kbd>
+                        </div>
+                    </div>
                     
                     <div class="card mb-6">
                         <h2 class="text-xl font-semibold mb-4">Quick Start</h2>
@@ -458,6 +475,81 @@ Viewer - Limited viewing permissions
                             <p class="text-sm text-yellow-800 dark:text-yellow-200">
                                 <strong>Important:</strong> Always test security changes in a staging environment before applying to production.
                             </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Security Integration Documentation -->
+                    <div class="card mb-6" id="security-docs">
+                        <h3 class="text-lg font-semibold mb-3">Security Integration Documentation</h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-gray-50 dark:bg-slate-700 rounded-lg p-4">
+                                <h4 class="font-semibold mb-2 flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                    </svg>
+                                    Implementation Guide
+                                </h4>
+                                <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                                    Comprehensive guide for implementing security features including architecture, configuration, and best practices.
+                                </p>
+                                <a href="/SirsiNexusPortal/docs/security-integration-guide.html" 
+                                   class="inline-flex items-center text-emerald-600 hover:text-emerald-700 text-sm font-medium">
+                                    View Guide
+                                    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                    </svg>
+                                </a>
+                            </div>
+                            
+                            <div class="bg-gray-50 dark:bg-slate-700 rounded-lg p-4">
+                                <h4 class="font-semibold mb-2 flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                    </svg>
+                                    Quick Reference
+                                </h4>
+                                <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                                    Quick reference for security implementation with console commands and testing procedures.
+                                </p>
+                                <a href="/SirsiNexusPortal/docs/security-quick-reference.html" 
+                                   class="inline-flex items-center text-blue-600 hover:text-blue-700 text-sm font-medium">
+                                    View Reference
+                                    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4 p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg">
+                            <h4 class="font-semibold mb-2">Key Security Features:</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                                <div class="flex items-center gap-2">
+                                    <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    <span>Automatic CSRF Protection</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    <span>Session Management</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    <span>XSS Prevention</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    <span>Comprehensive Audit Logging</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
