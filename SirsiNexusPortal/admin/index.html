@@ -190,6 +190,12 @@
                     </svg>
                     System Logs
                 </a>
+                <a href="/SirsiNexusPortal/admin/documentation.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700 rounded-md">
+                    <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"/>
+                    </svg>
+                    Documentation
+                </a>
             </div>
             
             <!-- Quick Actions Section -->
@@ -200,6 +206,31 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                     </svg>
                     Add User
+                </a>
+                <a href="/SirsiNexusPortal/admin/security/" class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700 rounded-md">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                    </svg>
+                    Security Settings
+                </a>
+                <a href="/SirsiNexusPortal/admin/dashboard/system-logs.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700 rounded-md">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    View Logs
+                </a>
+                <a href="/SirsiNexusPortal/admin/data-room.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700 rounded-md">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                    </svg>
+                    Upload Documents
+                </a>
+                <a href="/SirsiNexusPortal/admin/site-settings.html" class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700 rounded-md">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                    Configure Site
                 </a>
             </div>
         </div>
@@ -214,7 +245,7 @@
         </div>
 
         <!-- Quick Actions Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-8">
             <a href="/SirsiNexusPortal/admin/users/" class="quick-action-btn">
                 <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mb-3">
                     <i class="fas fa-user-plus text-blue-600 dark:text-blue-400 text-xl"></i>
@@ -238,6 +269,54 @@
                     <i class="fas fa-user-cog text-orange-600 dark:text-orange-400 text-xl"></i>
                 </div>
                 <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Role Management</span>
+            </a>
+            <a href="/SirsiNexusPortal/admin/security/" class="quick-action-btn">
+                <div class="w-12 h-12 bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center mb-3">
+                    <i class="fas fa-shield-alt text-red-600 dark:text-red-400 text-xl"></i>
+                </div>
+                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Security</span>
+            </a>
+            <a href="/SirsiNexusPortal/admin/data-room.html" class="quick-action-btn">
+                <div class="w-12 h-12 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center mb-3">
+                    <i class="fas fa-folder-open text-indigo-600 dark:text-indigo-400 text-xl"></i>
+                </div>
+                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Data Room</span>
+            </a>
+            <a href="/SirsiNexusPortal/admin/dashboard/telemetry.html" class="quick-action-btn">
+                <div class="w-12 h-12 bg-teal-100 dark:bg-teal-900 rounded-full flex items-center justify-center mb-3">
+                    <i class="fas fa-chart-line text-teal-600 dark:text-teal-400 text-xl"></i>
+                </div>
+                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Analytics</span>
+            </a>
+            <a href="/SirsiNexusPortal/admin/dashboard/system-logs.html" class="quick-action-btn">
+                <div class="w-12 h-12 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mb-3">
+                    <i class="fas fa-file-alt text-gray-600 dark:text-gray-400 text-xl"></i>
+                </div>
+                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">System Logs</span>
+            </a>
+            <a href="/SirsiNexusPortal/admin/documentation.html" class="quick-action-btn">
+                <div class="w-12 h-12 bg-emerald-100 dark:bg-emerald-900 rounded-full flex items-center justify-center mb-3">
+                    <i class="fas fa-book text-emerald-600 dark:text-emerald-400 text-xl"></i>
+                </div>
+                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Documentation</span>
+            </a>
+            <a href="/SirsiNexusPortal/admin/site-settings.html" class="quick-action-btn">
+                <div class="w-12 h-12 bg-yellow-100 dark:bg-yellow-900 rounded-full flex items-center justify-center mb-3">
+                    <i class="fas fa-cog text-yellow-600 dark:text-yellow-400 text-xl"></i>
+                </div>
+                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Settings</span>
+            </a>
+            <a href="/SirsiNexusPortal/admin/users/" class="quick-action-btn">
+                <div class="w-12 h-12 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center mb-3">
+                    <i class="fas fa-users text-pink-600 dark:text-pink-400 text-xl"></i>
+                </div>
+                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Manage Team</span>
+            </a>
+            <a href="/SirsiNexusPortal/qr-code-manager.html" class="quick-action-btn">
+                <div class="w-12 h-12 bg-cyan-100 dark:bg-cyan-900 rounded-full flex items-center justify-center mb-3">
+                    <i class="fas fa-download text-cyan-600 dark:text-cyan-400 text-xl"></i>
+                </div>
+                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Export Data</span>
             </a>
         </div>
 
