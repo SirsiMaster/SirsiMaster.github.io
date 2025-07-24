@@ -10,7 +10,7 @@
         batchSize: 50, // Number of events to batch before sending
         flushInterval: 30000, // Send data every 30 seconds
         sessionTimeout: 1800000, // 30 minutes
-        trackingEnabled: true,
+        trackingEnabled: false, // Disabled for GitHub Pages
         debugMode: false
     };
 
