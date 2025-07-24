@@ -384,38 +384,36 @@
 </head>
 <body class="h-full bg-gradient-to-br from-slate-50 via-emerald-50/10 to-blue-50/10 dark:from-slate-900 dark:via-emerald-950/20 dark:to-blue-950/20">
     <!-- Header -->
-    <header class="bg-white dark:bg-gray-800/95 sticky top-0 z-50 border-b border-slate-200 dark:border-slate-700 backdrop-blur-sm">
-      <div class="max-w-7xl mx-auto px-6">
+    <header class="bg-white dark:bg-gray-800 sticky top-0 z-50 border-b border-gray-200 dark:border-gray-700">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
-          <div class="flex items-center gap-6">
-            <div class="flex items-center gap-3">
+          <div class="flex items-center">
+            <div class="flex items-center space-x-3">
               <div class="w-12 h-12 flex items-center justify-center">
                 <img src="/SirsiNexusPortal/assets/images/Sirsi_Logo_300ppi_cguiyg.png" alt="Sirsi Logo" class="w-12 h-12 object-contain dark:hidden">
                 <img src="/SirsiNexusPortal/assets/images/Sirsi_Logo_300ppi_Inverted_lt7asx.png" alt="Sirsi Logo" class="w-12 h-12 object-contain hidden dark:block">
               </div>
               <div>
-                <h1 class="text-lg font-semibold text-slate-900 dark:text-slate-100">
+                <h1 class="text-xl font-semibold text-gray-900 dark:text-white">
                   SirsiNexus
                 </h1>
-                <div class="flex items-center gap-2">
-                  <span class="text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded">
-                    Committee Access
-                  </span>
-                  <div class="flex items-center gap-1">
-                    <div class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></div>
-                    <span class="text-xs text-slate-600 dark:text-slate-300">Live</span>
-                  </div>
-                </div>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Committee Dashboard</p>
+              </div>
+            </div>
+            <div class="ml-10 flex items-center space-x-1">
+              <span class="px-3 py-1 text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/20 dark:text-emerald-400 rounded-full">Committee Access</span>
+              <div class="flex items-center space-x-1 px-3 py-1 text-xs">
+                <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                <span class="text-gray-600 dark:text-gray-300">Live</span>
               </div>
             </div>
           </div>
-          <nav class="flex items-center gap-6">
-            <a href="/SirsiNexusPortal/index.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">Home</a>
-            <a href="/SirsiNexusPortal/investor-portal/index.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">← Back to Investor Dashboard</a>
-            <span class="text-sm text-emerald-600 dark:text-emerald-400 font-medium">Committee Dashboard</span>
-            <button onclick="logout()" class="text-sm text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-200 transition-colors">Logout</button>
-            <button onclick="toggleTheme()" class="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors border border-slate-300 dark:border-slate-600">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <nav class="flex items-center space-x-6">
+            <a href="/SirsiNexusPortal/index.html" class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">Home</a>
+            <a href="/SirsiNexusPortal/investor-portal/index.html" class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">← Back to Portal</a>
+            <button onclick="logout()" class="text-sm text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 transition-colors">Logout</button>
+            <button onclick="toggleTheme()" class="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
               </svg>
             </button>
@@ -526,21 +524,11 @@
         </div>
         
         <div class="space-y-6">
-            <!-- New Design Banner -->
-            <div class="bg-gradient-to-r from-purple-600 to-pink-600 text-white p-4 rounded-xl shadow-2xl mb-6 animate-pulse">
-                <div class="flex items-center justify-center gap-3">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
-                    </svg>
-                    <span class="text-lg font-bold">✨ NEW ENHANCED DESIGN WITH PROMINENT VISUAL ELEMENTS ✨</span>
-                </div>
-            </div>
-            
             <!-- Compact Header -->
             <div class="text-center mb-8">
                 <h1 class="text-3xl font-bold text-slate-900 dark:text-white mb-2">Investment Committee Dashboard</h1>
                 <p class="text-base text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-                    Strategic documentation for Series B evaluation • $45M target Q2 2025
+                    Strategic documentation for Pre-Seed and Seed funding • $1.5M + $4.5M target Q3 2025
                 </p>
             </div>
             
@@ -569,9 +557,10 @@
                 <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-emerald-300 to-blue-300 dark:from-emerald-700 dark:to-blue-700 opacity-10 rounded-full -mr-20 -mt-20 blur-2xl"></div>
                 <h2 class="section-header text-xl font-semibold text-slate-900 dark:text-slate-100 relative z-10">Executive Summary</h2>
                 <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed relative z-10">
-                    SirsiNexus leverages proprietary Graph of Thought AI architecture integrated with Hedera Hashgraph to deliver 
-                    autonomous cloud infrastructure optimization. Strategic partnerships with NVIDIA Inception, AWS MAP, and 
-                    Techstars Universe create unfair competitive advantages in the $78.8B cloud optimization market.
+                    SirsiNexus leverages a proprietary AI architecture unifying Large Language Models with Knowledge Graphs based on 
+                    the Hedera Hashgraph architecture to deliver autonomous cloud infrastructure optimization. Strategic partnerships 
+                    with NVIDIA Inception, AWS MAP, and Techstars Universe create unfair competitive advantages in the $78.8B cloud 
+                    optimization market.
                 </p>
                 <div class="mt-4 flex flex-wrap gap-3 relative z-10">
                     <span class="inline-flex items-center px-4 py-2 rounded-full text-xs font-semibold bg-emerald-200 text-emerald-900 dark:bg-emerald-900/50 dark:text-emerald-300 shadow-sm hover:shadow-md transition-shadow cursor-default">
