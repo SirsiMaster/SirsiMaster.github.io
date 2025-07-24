@@ -10,8 +10,9 @@
         batchSize: 50, // Number of events to batch before sending
         flushInterval: 30000, // Send data every 30 seconds
         sessionTimeout: 1800000, // 30 minutes
-        trackingEnabled: false, // Disabled for GitHub Pages
-        debugMode: false
+        trackingEnabled: true, // Re-enabled but with local storage only
+        debugMode: false,
+        useLocalStorage: true // Store telemetry locally instead of sending to API
     };
 
     // Telemetry class
@@ -515,6 +516,22 @@
                     duration: Date.now() - this.pageLoadTime
                 }
             };
+            
+            // Store telemetry locally instead of sending to API
+            if (TELEMETRY_CONFIG.useLocalStorage) {
+                try {
+                    const existingData = JSON.parse(localStorage.getItem('sirsi_telemetry') || '[]');
+                    existingData.push(payload);
+                    // Keep only last 100 payloads
+                    if (existingData.length > 100) {
+                        existingData.shift();
+                    }
+                    localStorage.setItem('sirsi_telemetry', JSON.stringify(existingData));
+                } catch (e) {
+                    console.error('Failed to store telemetry locally:', e);
+                }
+                return;
+            }
             
             if (sync && navigator.sendBeacon) {
                 // Use sendBeacon for synchronous sends (page unload)
