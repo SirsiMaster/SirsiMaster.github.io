@@ -262,6 +262,7 @@
                     <a href="#security-docs" class="doc-nav-item block ml-4 text-sm">→ Integration Guide</a>
                     <a href="#security-docs" class="doc-nav-item block ml-4 text-sm">→ Quick Reference</a>
                     <a href="#logs" class="doc-nav-item block text-sm">System Logs</a>
+                    <a href="#workflow-assessment" class="doc-nav-item block text-sm">Workflow Assessment</a>
                     <a href="#api" class="doc-nav-item block text-sm">API Reference</a>
                     <a href="#troubleshooting" class="doc-nav-item block text-sm">Troubleshooting</a>
                 </div>
@@ -647,6 +648,63 @@ POST   /api/settings       - Update settings
                                 <strong>Need Help?</strong> Contact support at support@sirsinexus.com or check our knowledge base.
                             </p>
                         </div>
+                    </div>
+                </section>
+
+                <!-- Workflow Assessment -->
+                <section id="workflow-assessment" class="mb-12">
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Workflow Assessment</h2>
+                    
+                    <div class="card mb-6">
+                        <h3 class="text-lg font-semibold mb-3">Portal Workflow Analysis</h3>
+                        
+                        <p class="text-gray-700 dark:text-gray-300 mb-4">
+                            Comprehensive analysis of all portal workflows, navigation paths, and user journeys to ensure seamless end-to-end functionality.
+                        </p>
+                        
+                        <div class="bg-emerald-50 dark:bg-emerald-900/20 rounded-lg p-6">
+                            <h4 class="font-semibold mb-3 flex items-center gap-2">
+                                <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                Latest Assessment Results
+                            </h4>
+                            
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                                <div class="text-center">
+                                    <div class="text-2xl font-bold text-emerald-600 dark:text-emerald-400">11/11</div>
+                                    <div class="text-sm text-gray-600 dark:text-gray-400">Critical Pages</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-2xl font-bold text-blue-600 dark:text-blue-400">389</div>
+                                    <div class="text-sm text-gray-600 dark:text-gray-400">Links Verified</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-2xl font-bold text-purple-600 dark:text-purple-400">100%</div>
+                                    <div class="text-sm text-gray-600 dark:text-gray-400">Workflows Pass</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-2xl font-bold text-orange-600 dark:text-orange-400">0</div>
+                                    <div class="text-sm text-gray-600 dark:text-gray-400">Critical Issues</div>
+                                </div>
+                            </div>
+                            
+                            <a href="/SirsiNexusPortal/docs/workflow-assessment.html" 
+                               class="inline-flex items-center text-emerald-600 hover:text-emerald-700 font-medium">
+                                View Full Workflow Assessment Report
+                                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </a>
+                        </div>
+                        
+                        <h4 class="font-semibold mb-2 mt-4">Key Workflows Verified:</h4>
+                        <ul class="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300">
+                            <li><strong>Visitor to Investor Journey:</strong> Homepage → Signup → Login → Portal Access</li>
+                            <li><strong>Visitor to Developer Journey:</strong> Homepage → Developer Signup → GitHub/Documentation</li>
+                            <li><strong>Admin Navigation:</strong> Dashboard → Users/Security/Telemetry → Specific Functions</li>
+                            <li><strong>Authentication Flows:</strong> Login forms, session management, logout procedures</li>
+                        </ul>
                     </div>
                 </section>
             </div>

@@ -91,6 +91,22 @@ class DocumentationSearch {
                 keywords: ['logs', 'events', 'monitoring', 'errors', 'debugging', 'audit']
             },
             {
+                title: 'Workflow Assessment',
+                category: 'documentation',
+                subcategory: 'analysis',
+                content: 'Comprehensive analysis of portal workflows and user journeys',
+                url: '#workflow-assessment',
+                keywords: ['workflow', 'assessment', 'analysis', 'navigation', 'user journey', 'testing']
+            },
+            {
+                title: 'Workflow Assessment Report',
+                category: 'documentation',
+                subcategory: 'reports',
+                content: 'Detailed workflow assessment with critical pages, links, and user flow verification',
+                url: '/SirsiNexusPortal/docs/workflow-assessment.html',
+                keywords: ['workflow', 'report', 'assessment', 'critical paths', 'verification', 'testing', 'quality']
+            },
+            {
                 title: 'API Reference',
                 category: 'documentation',
                 subcategory: 'api',
