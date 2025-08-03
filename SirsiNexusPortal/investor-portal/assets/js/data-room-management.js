@@ -4,14 +4,30 @@
  */
 class DataRoomManager {
     constructor() {
+        console.log('Initializing DataRoomManager...');
         this.documents = this.loadDocuments();
         this.currentFilter = 'all';
         this.searchTerm = '';
         this.selectedFiles = [];
         
-        // Initialize sub-systems
-        this.accessControl = new AccessControlManager();
-        this.searchEngine = new DocumentSearchEngine(this.documents);
+        // Initialize sub-systems if available
+        try {
+            if (typeof AccessControlManager !== 'undefined') {
+                this.accessControl = new AccessControlManager();
+                console.log('AccessControlManager initialized');
+            } else {
+                console.warn('AccessControlManager not found');
+            }
+            
+            if (typeof DocumentSearchEngine !== 'undefined') {
+                this.searchEngine = new DocumentSearchEngine(this.documents);
+                console.log('DocumentSearchEngine initialized');
+            } else {
+                console.warn('DocumentSearchEngine not found');
+            }
+        } catch (error) {
+            console.error('Error initializing sub-systems:', error);
+        }
         
         this.init();
         this.loadSampleData();
@@ -102,7 +118,9 @@ class DataRoomManager {
 
     loadSampleData() {
         // Add some sample documents if none exist
+        console.log('Loading sample data. Current documents:', this.documents.length);
         if (this.documents.length === 0) {
+            console.log('No documents found, adding sample data...');
             const sampleDocs = [
                 {
                     id: 'doc_1',
@@ -207,6 +225,9 @@ class DataRoomManager {
 
             this.documents = sampleDocs;
             this.saveDocuments();
+            console.log('Sample data loaded successfully. Documents:', this.documents.length);
+        } else {
+            console.log('Documents already exist:', this.documents);
         }
     }
 
