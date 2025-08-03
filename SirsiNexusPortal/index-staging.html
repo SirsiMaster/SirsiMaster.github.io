@@ -923,43 +923,43 @@ services:
             return messageDiv;
           }
           
-          function runConversation() {
-            chatContainer.innerHTML = ''; // Clear previous messages
-            let overallProgress = 0;
-            
-            conversationFlow.forEach((item, index) => {
+  function runConversation() {
+    chatContainer.innerHTML = ''; // Clear previous messages
+    let overallProgress = 0;
+    
+    conversationFlow.forEach((item, index) => {
+      setTimeout(() => {
+        if (item.type === 'progress') {
+          addMessage(item.type, { message: item.message, progress: item.progress });
+          // Update overall progress
+          updateOverallProgress(item.progress);
+        } else {
+          // Handle typing and direct message display
+          if (item.typing) {
+            const messageDiv = addMessage(item.type, '', true);
+            const textElement = messageDiv.querySelector('p');
+            typeMessage(textElement, item.message, 50);
+          } else {
+            if (item.type === 'sirsi') {
+              addMessage('sirsi', '', true);
               setTimeout(() => {
-                if (item.type === 'progress') {
-                  addMessage(item.type, { message: item.message, progress: item.progress });
-                  // Update overall progress
-                  overallProgress = Math.min(100, overallProgress + 5);
-                  updateOverallProgress(overallProgress);
-                } else {
-                  // Show typing indicator for Sirsi messages
-                  if (item.type === 'sirsi') {
-                    addMessage('sirsi', '', true);
-                    setTimeout(() => {
-                      chatContainer.lastElementChild.remove();
-                      addMessage(item.type, item.message.replace(/\n/g, '<br>'));
-                    }, 1000);
-                  } else if (item.type === 'user' && item.typing) {
-                    // Simulate user typing
-                    const messageDiv = addMessage(item.type, '', true);
-                    const textElement = messageDiv.querySelector('p');
-                    typeMessage(textElement, item.message, 50);
-                  } else {
-                    addMessage(item.type, item.message);
-                  }
-                  
-                  // Update overall progress based on conversation flow
-                  if (item.type === 'notification' || item.type === 'log') {
-                    overallProgress = Math.min(100, overallProgress + 2);
-                    updateOverallProgress(overallProgress);
-                  }
-                }
-              }, item.delay);
-            });
+                chatContainer.lastElementChild.remove();
+                addMessage(item.type, item.message.replace(/\n/g, '<br>'));
+              }, 1000);
+            } else {
+              addMessage(item.type, item.message);
+            }
           }
+          
+          // Update overall progress based on conversation flow
+          if (item.type === 'notification' || item.type === 'log') {
+            overallProgress = Math.min(100, overallProgress + 4);
+            updateOverallProgress(overallProgress);
+          }
+        }
+      }, item.delay);
+    });
+  }
           
           function typeMessage(element, text, speed) {
             element.innerHTML = '';
