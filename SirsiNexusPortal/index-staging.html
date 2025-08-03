@@ -382,12 +382,13 @@
 │  └────────┬──────────┬──────────┬──────┘   │
 │           │          │          │           │
 │      ┌────▼───┐ ┌───▼────┐ ┌───▼────┐     │
-│      │  ECS   │ │  ECS    │ │  ECS    │     │
-│      │ React  │ │ Node.js │ │ Workers │     │
+│      │  EC2   │ │  EC2    │ │  EC2    │     │
+│      │ t3.large│ │t3.large │ │t3.large │     │
 │      └────┬───┘ └────┬────┘ └────┬────┘     │
 │           │          │           │          │
 │      ┌────▼────────────────────▼────┐      │
-│      │     RDS PostgreSQL Multi-AZ   │      │
+│      │  RDS PostgreSQL Multi-AZ    │      │
+│      │    db.m5.2xlarge             │      │
 │      └───────────────────────────────┘      │
 │      ┌─────────────┐  ┌──────────────┐     │
 │      │ Redis Cache │  │ S3 + CDN     │     │
@@ -401,7 +402,7 @@
               <div class="p-6 border-t border-slate-700 hidden" id="deliverables-section">
                 <h4 class="text-white text-sm font-semibold mb-3">Generated Deliverables</h4>
                 <div class="space-y-3">
-                  <div class="bg-slate-900/50 rounded-lg p-3 hover:bg-slate-900/70 cursor-pointer transition-colors">
+                  <div class="bg-slate-900/50 rounded-lg p-3 hover:bg-slate-900/70 cursor-pointer transition-colors" onclick="toggleCodePreview('terraform')">
                     <div class="flex items-center justify-between">
                       <div class="flex items-center gap-2">
                         <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -409,10 +410,27 @@
                         </svg>
                         <span class="text-sm text-white">terraform-main.tf</span>
                       </div>
-                      <span class="text-xs text-slate-400">2.4 KB</span>
+                      <span class="text-xs text-slate-400">3.7 KB</span>
+                    </div>
+                    <div id="terraform-preview" class="hidden mt-3 p-3 bg-slate-950 rounded text-xs font-mono text-slate-300 overflow-x-auto">
+                      <pre>provider "aws" {
+  region = "us-east-1"
+}
+
+module "vpc" {
+  source = "terraform-aws-modules/vpc/aws"
+  name = "prod-vpc"
+  cidr = "10.0.0.0/16"
+  azs = ["us-east-1a", "us-east-1b", "us-east-1c"]
+  private_subnets = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
+  public_subnets = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
+  enable_nat_gateway = true
+  enable_vpn_gateway = true
+  enable_dns_hostnames = true
+}</pre>
                     </div>
                   </div>
-                  <div class="bg-slate-900/50 rounded-lg p-3 hover:bg-slate-900/70 cursor-pointer transition-colors">
+                  <div class="bg-slate-900/50 rounded-lg p-3 hover:bg-slate-900/70 cursor-pointer transition-colors" onclick="toggleCodePreview('docker')">
                     <div class="flex items-center justify-between">
                       <div class="flex items-center gap-2">
                         <svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -420,7 +438,21 @@
                         </svg>
                         <span class="text-sm text-white">docker-compose.yml</span>
                       </div>
-                      <span class="text-xs text-slate-400">1.8 KB</span>
+                      <span class="text-xs text-slate-400">2.1 KB</span>
+                    </div>
+                    <div id="docker-preview" class="hidden mt-3 p-3 bg-slate-950 rounded text-xs font-mono text-slate-300 overflow-x-auto">
+                      <pre>version: '3.8'
+services:
+  web:
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/app:latest
+    ports:
+      - "80:3000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://user:pass@db:5432/prod
+    depends_on:
+      - db
+      - redis</pre>
                     </div>
                   </div>
                   <div class="bg-slate-900/50 rounded-lg p-3 hover:bg-slate-900/70 cursor-pointer transition-colors">
@@ -431,7 +463,7 @@
                         </svg>
                         <span class="text-sm text-white">deployment-guide.md</span>
                       </div>
-                      <span class="text-xs text-slate-400">4.1 KB</span>
+                      <span class="text-xs text-slate-400">5.2 KB</span>
                     </div>
                   </div>
                   <div class="bg-slate-900/50 rounded-lg p-3 hover:bg-slate-900/70 cursor-pointer transition-colors">
@@ -440,9 +472,20 @@
                         <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                         </svg>
-                        <span class="text-sm text-white">monitoring-config.yaml</span>
+                        <span class="text-sm text-white">cloudwatch-dashboard.json</span>
                       </div>
-                      <span class="text-xs text-slate-400">1.2 KB</span>
+                      <span class="text-xs text-slate-400">2.8 KB</span>
+                    </div>
+                  </div>
+                  <div class="bg-slate-900/50 rounded-lg p-3 hover:bg-slate-900/70 cursor-pointer transition-colors">
+                    <div class="flex items-center justify-between">
+                      <div class="flex items-center gap-2">
+                        <svg class="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                        <span class="text-sm text-white">rollback-plan.sh</span>
+                      </div>
+                      <span class="text-xs text-slate-400">1.5 KB</span>
                     </div>
                   </div>
                 </div>
@@ -645,7 +688,7 @@
         
         /* Apply looping to the container with synchronized reset */
         #demo > div:first-child, #demo > div:last-child {
-          animation: resetAnimation 45s infinite;
+          animation: resetAnimation 65s infinite;
         }
       </style>
       
@@ -657,61 +700,117 @@
           const percentElement = document.querySelector('.percentage-animation');
           const chatContainer = document.getElementById('chat-container');
           
-          // Sirsi conversation flow
+          // Sirsi conversation flow - Realistic infrastructure deployment
           const conversationFlow = [
             // Initial greeting
             { type: 'sirsi', message: 'Hello! I\'m Sirsi, your AI Infrastructure Assistant. How can I help you today?', delay: 500 },
-            { type: 'user', message: 'I need to deploy a scalable web application on AWS with high availability', delay: 2000 },
-            { type: 'sirsi', message: 'I understand you need a scalable, highly available web application on AWS. Let me analyze your requirements and create an optimal infrastructure plan.', delay: 3500 },
+            { type: 'user', message: 'I need to migrate our e-commerce platform from on-premise to AWS. Currently running 3 web servers, PostgreSQL database, and Redis cache.', delay: 2000 },
+            { type: 'sirsi', message: 'I\'ll help you migrate your e-commerce platform to AWS. Let me start by analyzing your current infrastructure to create an optimal migration plan.', delay: 3500 },
             
-            // Planning phase
-            { type: 'notification', message: '🔍 Analyzing requirements...', delay: 5000 },
-            { type: 'sirsi', message: 'Based on your needs, I recommend a multi-AZ deployment with:\n• Load-balanced ECS services\n• RDS PostgreSQL with Multi-AZ\n• ElastiCache for Redis\n• S3 + CloudFront for static assets\n\nShall I proceed with this architecture?', delay: 6500 },
-            { type: 'user', message: 'Yes, that looks perfect. Please proceed.', delay: 8500 },
+            // Discovery phase
+            { type: 'notification', message: '🔍 Running infrastructure discovery...', delay: 5000 },
+            { type: 'log', message: '[DISCOVERY] Scanning network 192.168.1.0/24', delay: 5500 },
+            { type: 'log', message: '[DISCOVERY] Found 3 web servers: nginx/1.21.6 (2 vCPU, 4GB RAM each)', delay: 6000 },
+            { type: 'log', message: '[DISCOVERY] Found PostgreSQL 14.5: 8 vCPU, 32GB RAM, 500GB storage', delay: 6500 },
+            { type: 'log', message: '[DISCOVERY] Found Redis 6.2.7: 2 vCPU, 8GB RAM', delay: 7000 },
+            { type: 'log', message: '[DISCOVERY] Detected 847 GB total data, 50 MB/s average traffic', delay: 7500 },
             
-            // Specification phase
-            { type: 'notification', message: '📋 Creating infrastructure specification...', delay: 9500 },
-            { type: 'sirsi', message: 'Great! I\'m now specifying the infrastructure:\n• VPC: 10.0.0.0/16 across 3 availability zones\n• ECS cluster with auto-scaling (2-10 instances)\n• Application Load Balancer with health checks\n• RDS db.t3.medium with automated backups\n• Redis cache.t3.micro cluster', delay: 10500 },
+            // Analysis phase
+            { type: 'sirsi', message: 'Discovery complete. I\'ve identified your infrastructure:\n\n📊 Current Setup:\n• 3x Web Servers (6 vCPU, 12GB RAM total)\n• PostgreSQL Database (8 vCPU, 32GB RAM, 500GB data)\n• Redis Cache (2 vCPU, 8GB RAM)\n• Network Traffic: ~50 MB/s average\n\nNow analyzing optimal AWS architecture...', delay: 8000 },
             
-            // Testing phase
-            { type: 'notification', message: '🧪 Validating configuration...', delay: 13000 },
-            { type: 'sirsi', message: 'Configuration validated successfully. All components are compatible and meet AWS best practices. Ready to build?', delay: 14000 },
-            { type: 'user', message: 'Yes, please build the infrastructure.', delay: 15500 },
+            // Cost estimation
+            { type: 'notification', message: '💰 Calculating cost optimization...', delay: 10000 },
+            { type: 'sirsi', message: 'Here\'s my recommended AWS architecture with cost breakdown:\n\n🏗️ Proposed Architecture:\n• 3x t3.large EC2 instances (behind ALB)\n• RDS PostgreSQL db.m5.2xlarge Multi-AZ\n• ElastiCache Redis cache.m5.large\n• CloudFront CDN for static assets\n\n💵 Estimated Monthly Cost: $1,847\n(37% savings vs on-demand pricing through Reserved Instances)\n\nShall I proceed with this architecture?', delay: 11500 },
+            { type: 'user', message: 'Yes, looks good. What about security and compliance?', delay: 13500 },
             
-            // Building phase
-            { type: 'notification', message: '🔨 Building infrastructure...', delay: 16500 },
-            { type: 'progress', message: 'Creating VPC and network components...', progress: 20, delay: 17000 },
-            { type: 'progress', message: 'Setting up availability zones...', progress: 35, delay: 18500 },
-            { type: 'progress', message: 'Deploying load balancer...', progress: 45, delay: 20000 },
-            { type: 'progress', message: 'Launching ECS services...', progress: 60, delay: 21500 },
-            { type: 'progress', message: 'Configuring databases...', progress: 75, delay: 23000 },
-            { type: 'progress', message: 'Setting up caching layer...', progress: 85, delay: 24500 },
-            { type: 'progress', message: 'Configuring CDN...', progress: 95, delay: 26000 },
-            { type: 'notification', message: '✅ Infrastructure build complete!', delay: 27500 },
+            // Security planning
+            { type: 'sirsi', message: 'Excellent question. I\'ll implement comprehensive security:\n\n🔒 Security Configuration:\n• VPC with private subnets for databases\n• AWS WAF on CloudFront and ALB\n• Encryption at rest (AES-256) and in transit (TLS 1.3)\n• AWS Secrets Manager for credentials\n• GuardDuty for threat detection\n• Automated security patching\n\nThis meets SOC 2, PCI-DSS, and HIPAA requirements. Ready to begin deployment?', delay: 15000 },
+            { type: 'user', message: 'Perfect. Please proceed with the deployment.', delay: 17000 },
             
-            // Sample test phase
-            { type: 'sirsi', message: 'Infrastructure is ready! Running automated tests to ensure everything is working correctly...', delay: 28500 },
-            { type: 'notification', message: '🧪 Running health checks...', delay: 29500 },
-            { type: 'test', message: '✓ Load balancer: Healthy', delay: 30000 },
-            { type: 'test', message: '✓ ECS services: Running (3/3)', delay: 30500 },
-            { type: 'test', message: '✓ Database: Connected', delay: 31000 },
-            { type: 'test', message: '✓ Cache: Operational', delay: 31500 },
-            { type: 'test', message: '✓ CDN: Active', delay: 32000 },
+            // Pre-deployment validation
+            { type: 'notification', message: '🔐 Running security pre-checks...', delay: 18000 },
+            { type: 'log', message: '[SECURITY] Validating IAM policies...', delay: 18500 },
+            { type: 'log', message: '[SECURITY] Checking network ACLs...', delay: 19000 },
+            { type: 'log', message: '[SECURITY] Verifying encryption settings...', delay: 19500 },
+            { type: 'log', message: '[SECURITY] All checks passed ✓', delay: 20000 },
             
-            // Validation phase
-            { type: 'sirsi', message: 'All systems passed health checks! Your application is now live and serving traffic. Would you like me to set up monitoring and alerts?', delay: 33000 },
-            { type: 'user', message: 'Yes, please set up comprehensive monitoring.', delay: 34500 },
+            // Infrastructure deployment - Real provisioning
+            { type: 'notification', message: '🚀 Starting infrastructure deployment...', delay: 21000 },
             
-            // Security & Monitoring setup
-            { type: 'notification', message: '🔐 Configuring security policies...', delay: 35500 },
-            { type: 'notification', message: '📊 Setting up monitoring dashboards...', delay: 36500 },
-            { type: 'sirsi', message: 'Security and monitoring configured:\n• CloudWatch dashboards created\n• Alerts set for CPU, memory, and errors\n• AWS WAF rules applied\n• Automated backups scheduled\n• Cost optimization rules enabled', delay: 38000 },
+            // VPC Creation
+            { type: 'log', message: '[DEPLOY] Creating VPC vpc-0a1b2c3d4e5f6g7h8 (10.0.0.0/16)...', delay: 22000 },
+            { type: 'log', message: '[DEPLOY] Creating Internet Gateway igw-0987654321fedcba...', delay: 22500 },
+            { type: 'log', message: '[DEPLOY] Creating subnets in us-east-1a, us-east-1b, us-east-1c...', delay: 23000 },
+            { type: 'log', message: '[DEPLOY] ✓ Subnet subnet-1a2b3c4d (10.0.1.0/24) in us-east-1a', delay: 23500 },
+            { type: 'log', message: '[DEPLOY] ✓ Subnet subnet-5e6f7g8h (10.0.2.0/24) in us-east-1b', delay: 24000 },
+            { type: 'log', message: '[DEPLOY] ✓ Subnet subnet-9i0j1k2l (10.0.3.0/24) in us-east-1c', delay: 24500 },
             
-            // Final summary
-            { type: 'notification', message: '🎉 Deployment complete!', delay: 40000 },
-            { type: 'sirsi', message: 'Your infrastructure is fully deployed and optimized! Here\'s the summary:\n\n• Total deployment time: 45 seconds (realistic example)\n• Resources created: 12\n• Estimated monthly cost: $1230\n• Availability: 99.95%\n\nI\'ll continue monitoring and optimizing your infrastructure 24/7. Is there anything else you need?', delay: 41000 },
-            { type: 'user', message: 'This is perfect! Thank you, Sirsi.', delay: 43000 },
-            { type: 'sirsi', message: 'You\'re welcome! I\'m here whenever you need infrastructure assistance. Have a great day! 🚀', delay: 44000 }
+            // Load Balancer
+            { type: 'log', message: '[DEPLOY] Creating Application Load Balancer...', delay: 25500 },
+            { type: 'log', message: '[DEPLOY] ✓ ALB arn:aws:elasticloadbalancing:us-east-1:123456789012:loadbalancer/app/prod-alb/50dc6c495c0c9188', delay: 26500 },
+            { type: 'log', message: '[DEPLOY] ALB DNS: prod-alb-1234567890.us-east-1.elb.amazonaws.com', delay: 27000 },
+            
+            // EC2 Instances
+            { type: 'progress', message: 'Launching EC2 instances...', progress: 40, delay: 28000 },
+            { type: 'log', message: '[DEPLOY] Launching EC2 instance i-0a1b2c3d4e5f6g7h8 (t3.large)...', delay: 28500 },
+            { type: 'log', message: '[DEPLOY] ✓ Instance i-0a1b2c3d4e5f6g7h8 running at 10.0.1.45', delay: 29500 },
+            { type: 'log', message: '[DEPLOY] Launching EC2 instance i-1b2c3d4e5f6g7h8i (t3.large)...', delay: 30000 },
+            { type: 'log', message: '[DEPLOY] ✓ Instance i-1b2c3d4e5f6g7h8i running at 10.0.2.67', delay: 31000 },
+            { type: 'log', message: '[DEPLOY] Launching EC2 instance i-2c3d4e5f6g7h8i9j (t3.large)...', delay: 31500 },
+            { type: 'log', message: '[DEPLOY] ✓ Instance i-2c3d4e5f6g7h8i9j running at 10.0.3.89', delay: 32500 },
+            
+            // Database
+            { type: 'progress', message: 'Creating RDS PostgreSQL instance...', progress: 60, delay: 33500 },
+            { type: 'log', message: '[DEPLOY] Creating RDS instance prod-db-instance (db.m5.2xlarge)...', delay: 34000 },
+            { type: 'log', message: '[DEPLOY] Configuring Multi-AZ replication...', delay: 35000 },
+            { type: 'log', message: '[DEPLOY] ✓ RDS endpoint: prod-db-instance.c9akciq32.us-east-1.rds.amazonaws.com:5432', delay: 36000 },
+            
+            // Cache
+            { type: 'progress', message: 'Setting up ElastiCache Redis...', progress: 75, delay: 37000 },
+            { type: 'log', message: '[DEPLOY] Creating ElastiCache cluster prod-redis-cluster...', delay: 37500 },
+            { type: 'log', message: '[DEPLOY] ✓ Redis endpoint: prod-redis-cluster.ng74lk.ng.0001.use1.cache.amazonaws.com:6379', delay: 38500 },
+            
+            // CDN
+            { type: 'progress', message: 'Configuring CloudFront distribution...', progress: 85, delay: 39500 },
+            { type: 'log', message: '[DEPLOY] Creating CloudFront distribution...', delay: 40000 },
+            { type: 'log', message: '[DEPLOY] ✓ CloudFront domain: d1a2b3c4d5e6f7.cloudfront.net', delay: 41000 },
+            { type: 'notification', message: '✅ Infrastructure deployment complete!', delay: 42000 },
+            
+            // Post-deployment verification
+            { type: 'notification', message: '🧪 Running post-deployment tests...', delay: 43000 },
+            { type: 'log', message: '[TEST] Checking ALB health checks...', delay: 43500 },
+            { type: 'log', message: '[TEST] ✓ All target groups healthy (3/3 instances)', delay: 44000 },
+            { type: 'log', message: '[TEST] Testing database connectivity...', delay: 44500 },
+            { type: 'log', message: '[TEST] ✓ PostgreSQL accepting connections (12ms latency)', delay: 45000 },
+            { type: 'log', message: '[TEST] Testing Redis cache...', delay: 45500 },
+            { type: 'log', message: '[TEST] ✓ Redis responding (2ms latency)', delay: 46000 },
+            { type: 'log', message: '[TEST] Running synthetic transaction...', delay: 46500 },
+            { type: 'log', message: '[TEST] ✓ End-to-end response time: 127ms', delay: 47500 },
+            
+            // Migration readiness
+            { type: 'sirsi', message: 'Infrastructure is ready for migration! Here\'s your migration plan:\n\n📋 Migration Steps:\n1. Database migration using AWS DMS (estimated 4 hours)\n2. Application deployment via CodeDeploy\n3. DNS cutover with Route 53\n4. Monitoring and rollback plan ready\n\nWould you like me to start the data migration?', delay: 48500 },
+            { type: 'user', message: 'Yes, please start the database migration.', delay: 50500 },
+            
+            // Data migration
+            { type: 'notification', message: '🔄 Starting database migration...', delay: 51500 },
+            { type: 'log', message: '[DMS] Creating replication instance dms-prod-instance...', delay: 52000 },
+            { type: 'log', message: '[DMS] Configuring source endpoint (PostgreSQL 14.5)...', delay: 52500 },
+            { type: 'log', message: '[DMS] Configuring target endpoint (RDS PostgreSQL)...', delay: 53000 },
+            { type: 'log', message: '[DMS] Starting full load migration task...', delay: 53500 },
+            { type: 'progress', message: 'Migrating database (500GB)...', progress: 25, delay: 54000 },
+            { type: 'log', message: '[DMS] Migrated 125GB of 500GB (25%)', delay: 54500 },
+            { type: 'progress', message: 'Migrating database (500GB)...', progress: 50, delay: 55000 },
+            { type: 'log', message: '[DMS] Migrated 250GB of 500GB (50%)', delay: 55500 },
+            { type: 'progress', message: 'Migrating database (500GB)...', progress: 75, delay: 56000 },
+            { type: 'log', message: '[DMS] Migrated 375GB of 500GB (75%)', delay: 56500 },
+            { type: 'progress', message: 'Migrating database (500GB)...', progress: 100, delay: 57000 },
+            { type: 'log', message: '[DMS] ✓ Migration complete! Starting CDC replication...', delay: 57500 },
+            
+            // Final summary with real metrics
+            { type: 'notification', message: '🎉 Migration complete!', delay: 58500 },
+            { type: 'sirsi', message: 'Your infrastructure migration is complete! Here\'s the detailed summary:\n\n📊 Migration Results:\n• Total time: 58 seconds (simulated)\n• Data migrated: 500GB\n• Downtime: 0 minutes (CDC replication active)\n• Resources created: 15\n• Monthly cost: $1,847 (37% savings)\n\n🔗 Access Points:\n• Load Balancer: prod-alb-1234567890.us-east-1.elb.amazonaws.com\n• CloudFront: d1a2b3c4d5e6f7.cloudfront.net\n• Monitoring: CloudWatch Dashboard\n\n📈 Performance Metrics:\n• Response time: 127ms (improved from 340ms)\n• Availability: 99.99% (Multi-AZ)\n• Auto-scaling: 3-9 instances\n\nYour application is now running on AWS!', delay: 59500 },
+            { type: 'user', message: 'Excellent work! This is exactly what we needed.', delay: 61500 },
+            { type: 'sirsi', message: 'You\'re welcome! I\'m continuously monitoring your infrastructure. You can access detailed metrics in your CloudWatch dashboard. Feel free to ask me about performance optimization, cost analysis, or scaling adjustments anytime. 🚀', delay: 62500 }
           ];
           
           function addMessage(type, message, isTyping = false) {
@@ -767,6 +866,14 @@
                   </div>
                 </div>
               `;
+            } else if (type === 'log') {
+              messageDiv.innerHTML = `
+                <div class="w-full">
+                  <div class="bg-slate-900/50 rounded p-2 pl-4">
+                    <p class="text-slate-400 text-xs font-mono">${message}</p>
+                  </div>
+                </div>
+              `;
             }
             
             chatContainer.appendChild(messageDiv);
@@ -798,8 +905,8 @@
           
           function animateCount() {
             let count = 0;
-            const target = 23;
-            const increment = target / 100;
+            const target = 58;
+            const increment = target / 200;
             const timer = setInterval(() => {
               count += increment;
               if (count >= target) {
@@ -861,15 +968,15 @@
           const deploySection = document.getElementById('deploy-section');
           
           const components = [
-            { name: 'VPC Network', icon: '🌐', delay: 17000 },
-            { name: 'Availability Zones (3)', icon: '🏢', delay: 18500 },
-            { name: 'Application Load Balancer', icon: '⚡', delay: 20000 },
-            { name: 'ECS Service - React Frontend', icon: '⚛️', delay: 21500 },
-            { name: 'ECS Service - Node.js API', icon: '🟢', delay: 22000 },
-            { name: 'ECS Service - API Workers', icon: '⚙️', delay: 22500 },
-            { name: 'RDS PostgreSQL Multi-AZ', icon: '🗄️', delay: 23000 },
-            { name: 'ElastiCache Redis Cluster', icon: '💾', delay: 24500 },
-            { name: 'S3 Bucket + CloudFront CDN', icon: '☁️', delay: 26000 }
+            { name: 'VPC vpc-0a1b2c3d4e5f6g7h8', icon: '🌐', status: '10.0.0.0/16', delay: 22000 },
+            { name: 'Subnets (3 AZs)', icon: '🏢', status: 'us-east-1a/b/c', delay: 23500 },
+            { name: 'ALB prod-alb-1234567890', icon: '⚡', status: 'DNS provisioning...', delay: 26000 },
+            { name: 'EC2 i-0a1b2c3d4e5f6g7h8', icon: '💻', status: '10.0.1.45', delay: 29000 },
+            { name: 'EC2 i-1b2c3d4e5f6g7h8i', icon: '💻', status: '10.0.2.67', delay: 30500 },
+            { name: 'EC2 i-2c3d4e5f6g7h8i9j', icon: '💻', status: '10.0.3.89', delay: 32000 },
+            { name: 'RDS prod-db-instance', icon: '🗄️', status: 'Multi-AZ standby', delay: 35000 },
+            { name: 'ElastiCache prod-redis', icon: '💾', status: 'Cluster mode', delay: 38000 },
+            { name: 'CloudFront d1a2b3c4d5e6f7', icon: '☁️', status: 'Global', delay: 40500 }
           ];
           
           function addComponent(component) {
@@ -881,10 +988,13 @@
                   <span class="text-2xl">${component.icon}</span>
                   <span class="text-sm text-white">${component.name}</span>
                 </div>
-                <div class="flex items-center gap-2">
-                  <div class="text-xs text-slate-400">Building...</div>
-                  <div class="w-16 h-2 bg-slate-700 rounded-full overflow-hidden">
-                    <div class="h-full bg-emerald-500 rounded-full transition-all duration-1000 component-progress" style="width: 0%"></div>
+                <div class="flex flex-col items-end gap-1">
+                  <div class="text-xs text-slate-500">${component.status || 'Provisioning...'}</div>
+                  <div class="flex items-center gap-2">
+                    <div class="text-xs text-slate-400 status-text">Provisioning...</div>
+                    <div class="w-16 h-2 bg-slate-700 rounded-full overflow-hidden">
+                      <div class="h-full bg-emerald-500 rounded-full transition-all duration-1000 component-progress" style="width: 0%"></div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -899,11 +1009,11 @@
             
             // Animate progress
             const progressBar = componentDiv.querySelector('.component-progress');
-            const statusText = componentDiv.querySelector('.text-slate-400');
+            const statusText = componentDiv.querySelector('.status-text');
             setTimeout(() => {
               progressBar.style.width = '100%';
               setTimeout(() => {
-                statusText.textContent = 'Complete';
+                statusText.textContent = 'Active';
                 statusText.classList.remove('text-slate-400');
                 statusText.classList.add('text-emerald-400');
               }, 1000);
@@ -931,10 +1041,11 @@
             deploySection.classList.add('hidden');
             
             // Update status during conversation
-            setTimeout(() => updateBuildStatus('Analyzing requirements...'), 5000);
-            setTimeout(() => updateBuildStatus('Creating specification...'), 9500);
-            setTimeout(() => updateBuildStatus('Validating configuration...'), 13000);
-            setTimeout(() => updateBuildStatus('Building infrastructure...'), 16500);
+            setTimeout(() => updateBuildStatus('Running discovery scan...'), 5000);
+            setTimeout(() => updateBuildStatus('Analyzing architecture...'), 8000);
+            setTimeout(() => updateBuildStatus('Calculating costs...'), 10000);
+            setTimeout(() => updateBuildStatus('Validating security...'), 18000);
+            setTimeout(() => updateBuildStatus('Deploying infrastructure...'), 21000);
             
             // Add components progressively
             components.forEach(component => {
@@ -943,23 +1054,23 @@
             
             // Show architecture after build
             setTimeout(() => {
-              updateBuildStatus('Build Complete!');
+              updateBuildStatus('Infrastructure Active');
               architectureSection.classList.remove('hidden');
               architectureSection.classList.add('animate-fade-in');
-            }, 28000);
+            }, 42000);
             
             // Show deliverables
             setTimeout(() => {
               deliverablesSection.classList.remove('hidden');
               deliverablesSection.classList.add('animate-fade-in');
-            }, 38000);
+            }, 52000);
             
             // Show deploy options
             setTimeout(() => {
               deploySection.classList.remove('hidden');
               deploySection.classList.add('animate-fade-in');
-              updateBuildStatus('Ready to Deploy');
-            }, 40000);
+              updateBuildStatus('Migration Complete');
+            }, 58000);
           }
           
           // Add fade-in animation
@@ -990,7 +1101,7 @@
           setTimeout(animateCount, 16500);
           setTimeout(animatePercentage, 20000);
           
-          // Loop the entire animation every 45 seconds
+          // Loop the entire animation every 65 seconds (to accommodate longer realistic flow)
           setInterval(() => {
             // Reset all animations
             const animatedElements = document.querySelectorAll('#demo [class*="-"]');
@@ -1011,8 +1122,18 @@
             // Restart counting animations
             setTimeout(animateCount, 16500);
             setTimeout(animatePercentage, 20000);
-          }, 45000);
+          }, 65000);
         });
+      </script>
+      
+      <script>
+        // Code preview toggle function
+        function toggleCodePreview(type) {
+          const preview = document.getElementById(type + '-preview');
+          if (preview) {
+            preview.classList.toggle('hidden');
+          }
+        }
       </script>
     </section>
 
