@@ -308,7 +308,7 @@
         </div>
         
         <!-- Sirsi Console Interface -->
-        <div class="grid lg:grid-cols-2 gap-8">
+        <div class="grid lg:grid-cols-[1fr_1.2fr] gap-8">
           <!-- Sirsi Chat Interface -->
           <div class="bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-700 overflow-hidden">
             <div class="bg-gradient-to-r from-emerald-600 to-emerald-700 p-4">
@@ -356,6 +356,16 @@
                 <div class="flex items-center gap-2">
                   <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
                   <span class="text-emerald-400 text-sm" id="build-status">Initializing...</span>
+                </div>
+              </div>
+              <!-- Overall Progress Bar -->
+              <div class="mt-3">
+                <div class="flex justify-between text-xs text-slate-400 mb-1">
+                  <span>Overall Progress</span>
+                  <span id="overall-progress-text">0%</span>
+                </div>
+                <div class="w-full bg-slate-600 rounded-full h-2">
+                  <div id="overall-progress-bar" class="bg-emerald-500 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
                 </div>
               </div>
             </div>
@@ -559,6 +569,37 @@ services:
           to { width: 100%; }
         }
         
+        /* User typing effect */
+        .user-typing {
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .user-typing p {
+          display: inline-block;
+          animation: typeText 2s steps(40) forwards;
+        }
+        
+        @keyframes typeText {
+          from { 
+            width: 0;
+          }
+          to { 
+            width: 100%;
+          }
+        }
+        
+        .typing-cursor::after {
+          content: '|';
+          position: absolute;
+          animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0; }
+        }
+        
         /* Component appearance animations */
         .cloud-container {
           animation: fadeIn 1s ease-out 0.5s forwards;
@@ -704,7 +745,7 @@ services:
           const conversationFlow = [
             // Initial greeting
             { type: 'sirsi', message: 'Hello! I\'m Sirsi, your AI Infrastructure Assistant. How can I help you today?', delay: 500 },
-            { type: 'user', message: 'I need to migrate our e-commerce platform from on-premise to AWS. Currently running 3 web servers, PostgreSQL database, and Redis cache.', delay: 2000 },
+            { type: 'user', message: 'I need to migrate our e-commerce platform from on-premise to AWS. Currently running 3 web servers, PostgreSQL database, and Redis cache.', delay: 3000, typing: true },
             { type: 'sirsi', message: 'I\'ll help you migrate your e-commerce platform to AWS. Let me start by analyzing your current infrastructure to create an optimal migration plan.', delay: 3500 },
             
             // Discovery phase
@@ -721,11 +762,11 @@ services:
             // Cost estimation
             { type: 'notification', message: '💰 Calculating cost optimization...', delay: 10000 },
             { type: 'sirsi', message: 'Here\'s my recommended AWS architecture with cost breakdown:\n\n🏗️ Proposed Architecture:\n• 3x t3.large EC2 instances (behind ALB)\n• RDS PostgreSQL db.m5.2xlarge Multi-AZ\n• ElastiCache Redis cache.m5.large\n• CloudFront CDN for static assets\n\n💵 Estimated Monthly Cost: $1,847\n(37% savings vs on-demand pricing through Reserved Instances)\n\nShall I proceed with this architecture?', delay: 11500 },
-            { type: 'user', message: 'Yes, looks good. What about security and compliance?', delay: 13500 },
+            { type: 'user', message: 'Yes, looks good. What about security and compliance?', delay: 15500, typing: true },
             
             // Security planning
             { type: 'sirsi', message: 'Excellent question. I\'ll implement comprehensive security:\n\n🔒 Security Configuration:\n• VPC with private subnets for databases\n• AWS WAF on CloudFront and ALB\n• Encryption at rest (AES-256) and in transit (TLS 1.3)\n• AWS Secrets Manager for credentials\n• GuardDuty for threat detection\n• Automated security patching\n\nThis meets SOC 2, PCI-DSS, and HIPAA requirements. Ready to begin deployment?', delay: 15000 },
-            { type: 'user', message: 'Perfect. Please proceed with the deployment.', delay: 17000 },
+            { type: 'user', message: 'Perfect. Please proceed with the deployment.', delay: 19500, typing: true },
             
             // Pre-deployment validation
             { type: 'notification', message: '🔐 Running security pre-checks...', delay: 18000 },
@@ -789,7 +830,7 @@ services:
             
             // Migration readiness
             { type: 'sirsi', message: 'Infrastructure is ready for migration! Here\'s your migration plan:\n\n📋 Migration Steps:\n1. Database migration using AWS DMS (estimated 4 hours)\n2. Application deployment via CodeDeploy\n3. DNS cutover with Route 53\n4. Monitoring and rollback plan ready\n\nWould you like me to start the data migration?', delay: 48500 },
-            { type: 'user', message: 'Yes, please start the database migration.', delay: 50500 },
+            { type: 'user', message: 'Yes, please start the database migration.', delay: 52500, typing: true },
             
             // Data migration
             { type: 'notification', message: '🔄 Starting database migration...', delay: 51500 },
@@ -809,7 +850,7 @@ services:
             // Final summary with real metrics
             { type: 'notification', message: '🎉 Migration complete!', delay: 58500 },
             { type: 'sirsi', message: 'Your infrastructure migration is complete! Here\'s the detailed summary:\n\n📊 Migration Results:\n• Total time: 58 seconds (simulated)\n• Data migrated: 500GB\n• Downtime: 0 minutes (CDC replication active)\n• Resources created: 15\n• Monthly cost: $1,847 (37% savings)\n\n🔗 Access Points:\n• Load Balancer: prod-alb-1234567890.us-east-1.elb.amazonaws.com\n• CloudFront: d1a2b3c4d5e6f7.cloudfront.net\n• Monitoring: CloudWatch Dashboard\n\n📈 Performance Metrics:\n• Response time: 127ms (improved from 340ms)\n• Availability: 99.99% (Multi-AZ)\n• Auto-scaling: 3-9 instances\n\nYour application is now running on AWS!', delay: 59500 },
-            { type: 'user', message: 'Excellent work! This is exactly what we needed.', delay: 61500 },
+            { type: 'user', message: 'Excellent work! This is exactly what we needed.', delay: 64500, typing: true },
             { type: 'sirsi', message: 'You\'re welcome! I\'m continuously monitoring your infrastructure. You can access detailed metrics in your CloudWatch dashboard. Feel free to ask me about performance optimization, cost analysis, or scaling adjustments anytime. 🚀', delay: 62500 }
           ];
           
@@ -834,7 +875,7 @@ services:
               messageDiv.innerHTML = `
                 <div class="max-w-md">
                   <div class="bg-emerald-600 rounded-lg p-3">
-                    <p class="text-white text-sm">${message}</p>
+                    <p class="text-white text-sm ${isTyping ? 'typing-cursor' : ''}">${message}</p>
                   </div>
                 </div>
               `;
@@ -878,15 +919,21 @@ services:
             
             chatContainer.appendChild(messageDiv);
             chatContainer.scrollTop = chatContainer.scrollHeight;
+            
+            return messageDiv;
           }
           
           function runConversation() {
             chatContainer.innerHTML = ''; // Clear previous messages
+            let overallProgress = 0;
             
             conversationFlow.forEach((item, index) => {
               setTimeout(() => {
                 if (item.type === 'progress') {
                   addMessage(item.type, { message: item.message, progress: item.progress });
+                  // Update overall progress
+                  overallProgress = Math.min(100, overallProgress + 5);
+                  updateOverallProgress(overallProgress);
                 } else {
                   // Show typing indicator for Sirsi messages
                   if (item.type === 'sirsi') {
@@ -895,12 +942,50 @@ services:
                       chatContainer.lastElementChild.remove();
                       addMessage(item.type, item.message.replace(/\n/g, '<br>'));
                     }, 1000);
+                  } else if (item.type === 'user' && item.typing) {
+                    // Simulate user typing
+                    const messageDiv = addMessage(item.type, '', true);
+                    const textElement = messageDiv.querySelector('p');
+                    typeMessage(textElement, item.message, 50);
                   } else {
                     addMessage(item.type, item.message);
+                  }
+                  
+                  // Update overall progress based on conversation flow
+                  if (item.type === 'notification' || item.type === 'log') {
+                    overallProgress = Math.min(100, overallProgress + 2);
+                    updateOverallProgress(overallProgress);
                   }
                 }
               }, item.delay);
             });
+          }
+          
+          function typeMessage(element, text, speed) {
+            element.innerHTML = '';
+            element.classList.add('user-typing');
+            let i = 0;
+            
+            function type() {
+              if (i < text.length) {
+                element.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(type, speed);
+              } else {
+                element.classList.remove('user-typing');
+                element.classList.remove('typing-cursor');
+              }
+            }
+            
+            type();
+          }
+          
+          function updateOverallProgress(progress) {
+            const progressBar = document.getElementById('overall-progress-bar');
+            const progressText = document.getElementById('overall-progress-text');
+            
+            progressBar.style.width = progress + '%';
+            progressText.textContent = progress + '%';
           }
           
           function animateCount() {
@@ -1040,12 +1125,25 @@ services:
             deliverablesSection.classList.add('hidden');
             deploySection.classList.add('hidden');
             
-            // Update status during conversation
+            // Update status during conversation - more granular updates
             setTimeout(() => updateBuildStatus('Running discovery scan...'), 5000);
+            setTimeout(() => updateBuildStatus('Scanning network endpoints...'), 6000);
             setTimeout(() => updateBuildStatus('Analyzing architecture...'), 8000);
+            setTimeout(() => updateBuildStatus('Mapping dependencies...'), 9000);
             setTimeout(() => updateBuildStatus('Calculating costs...'), 10000);
+            setTimeout(() => updateBuildStatus('Optimizing resource allocation...'), 12000);
+            setTimeout(() => updateBuildStatus('Preparing security blueprint...'), 16000);
             setTimeout(() => updateBuildStatus('Validating security...'), 18000);
+            setTimeout(() => updateBuildStatus('Security checks passed ✓'), 20500);
             setTimeout(() => updateBuildStatus('Deploying infrastructure...'), 21000);
+            setTimeout(() => updateBuildStatus('Creating VPC network...'), 22000);
+            setTimeout(() => updateBuildStatus('Launching compute instances...'), 28000);
+            setTimeout(() => updateBuildStatus('Setting up databases...'), 33500);
+            setTimeout(() => updateBuildStatus('Configuring cache layer...'), 37000);
+            setTimeout(() => updateBuildStatus('Establishing CDN...'), 39500);
+            setTimeout(() => updateBuildStatus('Running health checks...'), 43000);
+            setTimeout(() => updateBuildStatus('Initiating data migration...'), 51500);
+            setTimeout(() => updateBuildStatus('Migration in progress...'), 54000);
             
             // Add components progressively
             components.forEach(component => {
@@ -1101,7 +1199,7 @@ services:
           setTimeout(animateCount, 16500);
           setTimeout(animatePercentage, 20000);
           
-          // Loop the entire animation every 65 seconds (to accommodate longer realistic flow)
+          // Loop the entire animation every 75 seconds (to accommodate longer realistic flow with typing)
           setInterval(() => {
             // Reset all animations
             const animatedElements = document.querySelectorAll('#demo [class*="-"]');
@@ -1111,9 +1209,13 @@ services:
               setTimeout(() => el.setAttribute('class', classes), 100);
             });
             
-            // Reset counters
+            // Reset counters and progress
             countElement.textContent = '0';
             percentElement.textContent = '0%';
+            const progressBar = document.getElementById('overall-progress-bar');
+            const progressText = document.getElementById('overall-progress-text');
+            progressBar.style.width = '0%';
+            progressText.textContent = '0%';
             
             // Restart conversation and build visualization
             runConversation();
@@ -1122,7 +1224,7 @@ services:
             // Restart counting animations
             setTimeout(animateCount, 16500);
             setTimeout(animatePercentage, 20000);
-          }, 65000);
+          }, 75000);
         });
       </script>
       
