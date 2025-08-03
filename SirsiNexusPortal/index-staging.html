@@ -348,176 +348,138 @@
             </div>
           </div>
           
-          <!-- Infrastructure Visualization Panel -->
+          <!-- Build Progress & Accomplishments Panel -->
           <div class="bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-700 overflow-hidden">
             <div class="bg-slate-700/50 p-4 border-b border-slate-600">
               <div class="flex items-center justify-between">
-                <h3 class="text-white font-semibold">Infrastructure Visualization</h3>
-                <div class="flex items-center gap-4">
-                  <div class="flex items-center gap-2 text-sm">
-                    <div class="w-3 h-3 bg-emerald-400 rounded-full"></div>
-                    <span class="text-slate-400">Active</span>
-                  </div>
-                  <div class="flex items-center gap-2 text-sm">
-                    <div class="w-3 h-3 bg-blue-400 rounded-full"></div>
-                    <span class="text-slate-400">Building</span>
-                  </div>
-                  <div class="flex items-center gap-2 text-sm">
-                    <div class="w-3 h-3 bg-slate-600 rounded-full"></div>
-                    <span class="text-slate-400">Planned</span>
-                  </div>
+                <h3 class="text-white font-semibold">Build Progress & Deliverables</h3>
+                <div class="flex items-center gap-2">
+                  <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+                  <span class="text-emerald-400 text-sm" id="build-status">Initializing...</span>
                 </div>
               </div>
             </div>
             
-            <!-- Infrastructure Display Area -->
-            <div class="h-[500px] p-6" id="infrastructure-display">
-              <svg viewBox="0 0 1200 500" class="w-full h-full">
-                <!-- AWS Cloud Container -->
-                <g class="cloud-container" opacity="0">
-                  <rect x="50" y="30" width="1100" height="440" rx="20" fill="none" stroke="#374151" stroke-width="2" stroke-dasharray="10,5"/>
-                  <text x="70" y="60" fill="#9ca3af" font-size="14" font-weight="bold">AWS Cloud</text>
-                </g>
-            
-            <!-- VPC Container -->
-            <g class="vpc" opacity="0">
-              <rect x="100" y="120" width="1000" height="400" rx="15" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
-              <text x="120" y="145" fill="#10b981" font-size="12" font-weight="600">VPC (10.0.0.0/16)</text>
-            </g>
-            
-            <!-- Availability Zones -->
-            <g class="az-1" opacity="0">
-              <rect x="130" y="170" width="300" height="320" rx="10" fill="#0f172a" stroke="#6366f1" stroke-width="1" stroke-dasharray="5,3"/>
-              <text x="150" y="195" fill="#6366f1" font-size="11">Availability Zone 1</text>
-            </g>
-            
-            <g class="az-2" opacity="0">
-              <rect x="450" y="170" width="300" height="320" rx="10" fill="#0f172a" stroke="#6366f1" stroke-width="1" stroke-dasharray="5,3"/>
-              <text x="470" y="195" fill="#6366f1" font-size="11">Availability Zone 2</text>
-            </g>
-            
-            <g class="az-3" opacity="0">
-              <rect x="770" y="170" width="300" height="320" rx="10" fill="#0f172a" stroke="#6366f1" stroke-width="1" stroke-dasharray="5,3"/>
-              <text x="790" y="195" fill="#6366f1" font-size="11">Availability Zone 3</text>
-            </g>
-            
-            <!-- Load Balancer -->
-            <g class="load-balancer" opacity="0">
-              <rect x="500" y="80" width="200" height="60" rx="8" fill="#fbbf24" stroke="#f59e0b" stroke-width="2"/>
-              <text x="530" y="115" fill="#1f2937" font-size="12" font-weight="600">Load Balancer</text>
-              <circle cx="520" cy="110" r="5" fill="#10b981" class="blink"/>
-              <circle cx="680" cy="110" r="5" fill="#10b981" class="blink" style="animation-delay: 0.5s"/>
-            </g>
-            
-            <!-- ECS Services -->
-            <g class="ecs-1" opacity="0">
-              <rect x="180" y="250" width="200" height="80" rx="6" fill="#3b82f6" stroke="#2563eb" stroke-width="2"/>
-              <text x="200" y="275" fill="white" font-size="11" font-weight="500">React Frontend</text>
-              <text x="200" y="295" fill="#93bbfc" font-size="10">ECS Service</text>
-              <rect x="190" y="305" width="180" height="15" rx="3" fill="#1e40af"/>
-              <rect x="190" y="305" width="120" height="15" rx="3" fill="#10b981" class="scale-x"/>
-            </g>
-            
-            <g class="ecs-2" opacity="0">
-              <rect x="500" y="250" width="200" height="80" rx="6" fill="#3b82f6" stroke="#2563eb" stroke-width="2"/>
-              <text x="520" y="275" fill="white" font-size="11" font-weight="500">Node.js API</text>
-              <text x="520" y="295" fill="#93bbfc" font-size="10">ECS Service</text>
-              <rect x="510" y="305" width="180" height="15" rx="3" fill="#1e40af"/>
-              <rect x="510" y="305" width="150" height="15" rx="3" fill="#10b981" class="scale-x" style="animation-delay: 0.3s"/>
-            </g>
-            
-            <g class="ecs-3" opacity="0">
-              <rect x="820" y="250" width="200" height="80" rx="6" fill="#3b82f6" stroke="#2563eb" stroke-width="2"/>
-              <text x="840" y="275" fill="white" font-size="11" font-weight="500">API Workers</text>
-              <text x="840" y="295" fill="#93bbfc" font-size="10">ECS Service</text>
-              <rect x="830" y="305" width="180" height="15" rx="3" fill="#1e40af"/>
-              <rect x="830" y="305" width="140" height="15" rx="3" fill="#10b981" class="scale-x" style="animation-delay: 0.6s"/>
-            </g>
-            
-            <!-- RDS Database -->
-            <g class="rds" opacity="0">
-              <rect x="180" y="370" width="200" height="80" rx="6" fill="#8b5cf6" stroke="#7c3aed" stroke-width="2"/>
-              <text x="200" y="395" fill="white" font-size="11" font-weight="500">PostgreSQL</text>
-              <text x="200" y="415" fill="#c4b5fd" font-size="10">RDS Multi-AZ</text>
-              <circle cx="370" cy="410" r="4" fill="#10b981" class="pulse"/>
-            </g>
-            
-            <!-- ElastiCache -->
-            <g class="elasticache" opacity="0">
-              <rect x="500" y="370" width="200" height="80" rx="6" fill="#ef4444" stroke="#dc2626" stroke-width="2"/>
-              <text x="520" y="395" fill="white" font-size="11" font-weight="500">Redis Cache</text>
-              <text x="520" y="415" fill="#fca5a5" font-size="10">ElastiCache</text>
-              <circle cx="690" cy="410" r="4" fill="#10b981" class="pulse" style="animation-delay: 0.2s"/>
-            </g>
-            
-            <!-- S3 Storage -->
-            <g class="s3" opacity="0">
-              <rect x="820" y="370" width="200" height="80" rx="6" fill="#10b981" stroke="#059669" stroke-width="2"/>
-              <text x="840" y="395" fill="white" font-size="11" font-weight="500">Static Assets</text>
-              <text x="840" y="415" fill="#a7f3d0" font-size="10">S3 + CloudFront</text>
-              <circle cx="1010" cy="410" r="4" fill="#fbbf24" class="pulse" style="animation-delay: 0.4s"/>
-            </g>
-            
-            <!-- Connection Lines -->
-            <g class="connections">
-              <!-- Load Balancer to ECS Services -->
-              <line x1="600" y1="140" x2="280" y2="250" stroke="#4b5563" stroke-width="2" class="draw-line" stroke-dasharray="300" stroke-dashoffset="300" opacity="0"/>
-              <line x1="600" y1="140" x2="600" y2="250" stroke="#4b5563" stroke-width="2" class="draw-line" stroke-dasharray="110" stroke-dashoffset="110" opacity="0" style="animation-delay: 0.2s"/>
-              <line x1="600" y1="140" x2="920" y2="250" stroke="#4b5563" stroke-width="2" class="draw-line" stroke-dasharray="300" stroke-dashoffset="300" opacity="0" style="animation-delay: 0.4s"/>
+            <!-- Build Display Area -->
+            <div class="h-[600px] overflow-y-auto" id="build-display">
+              <!-- Components Build Status -->
+              <div class="p-6 space-y-4" id="components-section">
+                <h4 class="text-white text-sm font-semibold mb-3">Infrastructure Components</h4>
+                <div class="space-y-3" id="component-list">
+                  <!-- Components will be dynamically added here -->
+                </div>
+              </div>
               
-              <!-- ECS to Databases -->
-              <line x1="280" y1="330" x2="280" y2="370" stroke="#4b5563" stroke-width="2" class="draw-line" stroke-dasharray="40" stroke-dashoffset="40" opacity="0" style="animation-delay: 0.6s"/>
-              <line x1="600" y1="330" x2="600" y2="370" stroke="#4b5563" stroke-width="2" class="draw-line" stroke-dasharray="40" stroke-dashoffset="40" opacity="0" style="animation-delay: 0.8s"/>
-              <line x1="920" y1="330" x2="920" y2="370" stroke="#4b5563" stroke-width="2" class="draw-line" stroke-dasharray="40" stroke-dashoffset="40" opacity="0" style="animation-delay: 1s"/>
-            </g>
-            
-            <!-- Data Flow Particles -->
-            <g class="particles">
-              <circle r="3" fill="#10b981" class="particle-1">
-                <animateMotion dur="3s" repeatCount="indefinite" begin="5s">
-                  <mpath href="#flow-path-1"/>
-                </animateMotion>
-              </circle>
-              <circle r="3" fill="#fbbf24" class="particle-2">
-                <animateMotion dur="2.5s" repeatCount="indefinite" begin="5.5s">
-                  <mpath href="#flow-path-2"/>
-                </animateMotion>
-              </circle>
-              <circle r="3" fill="#3b82f6" class="particle-3">
-                <animateMotion dur="3.5s" repeatCount="indefinite" begin="6s">
-                  <mpath href="#flow-path-3"/>
-                </animateMotion>
-              </circle>
-            </g>
-            
-            <!-- Flow Paths (hidden) -->
-            <defs>
-              <path id="flow-path-1" d="M 600 140 L 280 250 L 280 370 L 280 450"/>
-              <path id="flow-path-2" d="M 600 140 L 600 250 L 600 370 L 600 450"/>
-              <path id="flow-path-3" d="M 600 140 L 920 250 L 920 370 L 920 450"/>
-            </defs>
-          </svg>
-          
-          <!-- Status Messages -->
-          <div class="absolute bottom-8 right-8 space-y-2 max-w-sm">
-            <div class="status-message opacity-0 bg-slate-900/80 rounded-lg px-4 py-2 flex items-center gap-2">
-              <div class="w-2 h-2 bg-emerald-400 rounded-full"></div>
-              <span class="text-emerald-400 text-sm">Creating VPC and network infrastructure...</span>
-            </div>
-            <div class="status-message opacity-0 bg-slate-900/80 rounded-lg px-4 py-2 flex items-center gap-2" style="animation-delay: 3s">
-              <div class="w-2 h-2 bg-blue-400 rounded-full"></div>
-              <span class="text-blue-400 text-sm">Deploying containerized services...</span>
-            </div>
-            <div class="status-message opacity-0 bg-slate-900/80 rounded-lg px-4 py-2 flex items-center gap-2" style="animation-delay: 6s">
-              <div class="w-2 h-2 bg-purple-400 rounded-full"></div>
-              <span class="text-purple-400 text-sm">Configuring databases and caching...</span>
-            </div>
-            <div class="status-message opacity-0 bg-slate-900/80 rounded-lg px-4 py-2 flex items-center gap-2" style="animation-delay: 9s">
-              <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-              <span class="text-emerald-400 text-sm font-semibold">Infrastructure ready! 🚀</span>
+              <!-- Architecture Diagram -->
+              <div class="p-6 border-t border-slate-700 hidden" id="architecture-section">
+                <h4 class="text-white text-sm font-semibold mb-3">Deployed Architecture</h4>
+                <div class="bg-slate-900/50 rounded-lg p-4">
+                  <pre class="text-xs text-slate-300 font-mono">
+┌─────────────────────────────────────────────┐
+│                 AWS Cloud                    │
+│  ┌─────────────────────────────────────┐   │
+│  │         Application Load Balancer     │   │
+│  └────────┬──────────┬──────────┬──────┘   │
+│           │          │          │           │
+│      ┌────▼───┐ ┌───▼────┐ ┌───▼────┐     │
+│      │  ECS   │ │  ECS    │ │  ECS    │     │
+│      │ React  │ │ Node.js │ │ Workers │     │
+│      └────┬───┘ └────┬────┘ └────┬────┘     │
+│           │          │           │          │
+│      ┌────▼────────────────────▼────┐      │
+│      │     RDS PostgreSQL Multi-AZ   │      │
+│      └───────────────────────────────┘      │
+│      ┌─────────────┐  ┌──────────────┐     │
+│      │ Redis Cache │  │ S3 + CDN     │     │
+│      └─────────────┘  └──────────────┘     │
+└─────────────────────────────────────────────┘
+                  </pre>
+                </div>
+              </div>
+              
+              <!-- Generated Scripts & Documents -->
+              <div class="p-6 border-t border-slate-700 hidden" id="deliverables-section">
+                <h4 class="text-white text-sm font-semibold mb-3">Generated Deliverables</h4>
+                <div class="space-y-3">
+                  <div class="bg-slate-900/50 rounded-lg p-3 hover:bg-slate-900/70 cursor-pointer transition-colors">
+                    <div class="flex items-center justify-between">
+                      <div class="flex items-center gap-2">
+                        <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                        <span class="text-sm text-white">terraform-main.tf</span>
+                      </div>
+                      <span class="text-xs text-slate-400">2.4 KB</span>
+                    </div>
+                  </div>
+                  <div class="bg-slate-900/50 rounded-lg p-3 hover:bg-slate-900/70 cursor-pointer transition-colors">
+                    <div class="flex items-center justify-between">
+                      <div class="flex items-center gap-2">
+                        <svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                        <span class="text-sm text-white">docker-compose.yml</span>
+                      </div>
+                      <span class="text-xs text-slate-400">1.8 KB</span>
+                    </div>
+                  </div>
+                  <div class="bg-slate-900/50 rounded-lg p-3 hover:bg-slate-900/70 cursor-pointer transition-colors">
+                    <div class="flex items-center justify-between">
+                      <div class="flex items-center gap-2">
+                        <svg class="w-4 h-4 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                        <span class="text-sm text-white">deployment-guide.md</span>
+                      </div>
+                      <span class="text-xs text-slate-400">4.1 KB</span>
+                    </div>
+                  </div>
+                  <div class="bg-slate-900/50 rounded-lg p-3 hover:bg-slate-900/70 cursor-pointer transition-colors">
+                    <div class="flex items-center justify-between">
+                      <div class="flex items-center gap-2">
+                        <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                        <span class="text-sm text-white">monitoring-config.yaml</span>
+                      </div>
+                      <span class="text-xs text-slate-400">1.2 KB</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Deploy Options -->
+              <div class="p-6 border-t border-slate-700 hidden" id="deploy-section">
+                <h4 class="text-white text-sm font-semibold mb-3">Deploy to Cloud Provider</h4>
+                <div class="grid grid-cols-3 gap-3">
+                  <button class="bg-orange-500/20 hover:bg-orange-500/30 border border-orange-500/50 rounded-lg p-4 transition-all">
+                    <svg class="w-8 h-8 mx-auto mb-2 text-orange-400" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    </svg>
+                    <span class="text-xs text-orange-400">AWS</span>
+                  </button>
+                  <button class="bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/50 rounded-lg p-4 transition-all">
+                    <svg class="w-8 h-8 mx-auto mb-2 text-blue-400" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                    <span class="text-xs text-blue-400">Azure</span>
+                  </button>
+                  <button class="bg-red-500/20 hover:bg-red-500/30 border border-red-500/50 rounded-lg p-4 transition-all">
+                    <svg class="w-8 h-8 mx-auto mb-2 text-red-400" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    </svg>
+                    <span class="text-xs text-red-400">GCP</span>
+                  </button>
+                </div>
+                <button class="w-full mt-4 bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-3 rounded-lg transition-colors flex items-center justify-center gap-2">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                  </svg>
+                  Deploy Infrastructure
+                </button>
+              </div>
             </div>
           </div>
-        </div>
         
         <!-- Result Summary -->
         <div class="mt-12 text-center">
@@ -891,8 +853,138 @@
           `;
           document.head.appendChild(style);
           
+          // Build progress functionality
+          const buildStatus = document.getElementById('build-status');
+          const componentList = document.getElementById('component-list');
+          const architectureSection = document.getElementById('architecture-section');
+          const deliverablesSection = document.getElementById('deliverables-section');
+          const deploySection = document.getElementById('deploy-section');
+          
+          const components = [
+            { name: 'VPC Network', icon: '🌐', delay: 17000 },
+            { name: 'Availability Zones (3)', icon: '🏢', delay: 18500 },
+            { name: 'Application Load Balancer', icon: '⚡', delay: 20000 },
+            { name: 'ECS Service - React Frontend', icon: '⚛️', delay: 21500 },
+            { name: 'ECS Service - Node.js API', icon: '🟢', delay: 22000 },
+            { name: 'ECS Service - API Workers', icon: '⚙️', delay: 22500 },
+            { name: 'RDS PostgreSQL Multi-AZ', icon: '🗄️', delay: 23000 },
+            { name: 'ElastiCache Redis Cluster', icon: '💾', delay: 24500 },
+            { name: 'S3 Bucket + CloudFront CDN', icon: '☁️', delay: 26000 }
+          ];
+          
+          function addComponent(component) {
+            const componentDiv = document.createElement('div');
+            componentDiv.className = 'bg-slate-900/50 rounded-lg p-3 border border-slate-700 opacity-0 transition-all duration-500';
+            componentDiv.innerHTML = `
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <span class="text-2xl">${component.icon}</span>
+                  <span class="text-sm text-white">${component.name}</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <div class="text-xs text-slate-400">Building...</div>
+                  <div class="w-16 h-2 bg-slate-700 rounded-full overflow-hidden">
+                    <div class="h-full bg-emerald-500 rounded-full transition-all duration-1000 component-progress" style="width: 0%"></div>
+                  </div>
+                </div>
+              </div>
+            `;
+            componentList.appendChild(componentDiv);
+            
+            // Fade in
+            setTimeout(() => {
+              componentDiv.classList.remove('opacity-0');
+              componentDiv.classList.add('opacity-100');
+            }, 100);
+            
+            // Animate progress
+            const progressBar = componentDiv.querySelector('.component-progress');
+            const statusText = componentDiv.querySelector('.text-slate-400');
+            setTimeout(() => {
+              progressBar.style.width = '100%';
+              setTimeout(() => {
+                statusText.textContent = 'Complete';
+                statusText.classList.remove('text-slate-400');
+                statusText.classList.add('text-emerald-400');
+              }, 1000);
+            }, 200);
+          }
+          
+          function updateBuildStatus(status) {
+            buildStatus.textContent = status;
+            buildStatus.className = buildStatus.className.replace(/text-\w+-400/g, '');
+            
+            if (status.includes('Complete')) {
+              buildStatus.classList.add('text-emerald-400');
+            } else if (status.includes('Building')) {
+              buildStatus.classList.add('text-blue-400');
+            } else {
+              buildStatus.classList.add('text-slate-400');
+            }
+          }
+          
+          function runBuildVisualization() {
+            // Clear previous components
+            componentList.innerHTML = '';
+            architectureSection.classList.add('hidden');
+            deliverablesSection.classList.add('hidden');
+            deploySection.classList.add('hidden');
+            
+            // Update status during conversation
+            setTimeout(() => updateBuildStatus('Analyzing requirements...'), 5000);
+            setTimeout(() => updateBuildStatus('Creating specification...'), 9500);
+            setTimeout(() => updateBuildStatus('Validating configuration...'), 13000);
+            setTimeout(() => updateBuildStatus('Building infrastructure...'), 16500);
+            
+            // Add components progressively
+            components.forEach(component => {
+              setTimeout(() => addComponent(component), component.delay);
+            });
+            
+            // Show architecture after build
+            setTimeout(() => {
+              updateBuildStatus('Build Complete!');
+              architectureSection.classList.remove('hidden');
+              architectureSection.classList.add('animate-fade-in');
+            }, 28000);
+            
+            // Show deliverables
+            setTimeout(() => {
+              deliverablesSection.classList.remove('hidden');
+              deliverablesSection.classList.add('animate-fade-in');
+            }, 38000);
+            
+            // Show deploy options
+            setTimeout(() => {
+              deploySection.classList.remove('hidden');
+              deploySection.classList.add('animate-fade-in');
+              updateBuildStatus('Ready to Deploy');
+            }, 40000);
+          }
+          
+          // Add fade-in animation
+          const fadeStyle = document.createElement('style');
+          fadeStyle.textContent = `
+            .animate-fade-in {
+              animation: fadeIn 0.5s ease-out;
+            }
+            
+            @keyframes fadeIn {
+              from {
+                opacity: 0;
+                transform: translateY(10px);
+              }
+              to {
+                opacity: 1;
+                transform: translateY(0);
+              }
+            }
+          `;
+          document.head.appendChild(fadeStyle);
+          
           // Start the demo
           runConversation();
+          runBuildVisualization();
           
           // Start animations after conversation begins
           setTimeout(animateCount, 16500);
@@ -912,8 +1004,9 @@
             countElement.textContent = '0';
             percentElement.textContent = '0%';
             
-            // Restart conversation
+            // Restart conversation and build visualization
             runConversation();
+            runBuildVisualization();
             
             // Restart counting animations
             setTimeout(animateCount, 16500);
