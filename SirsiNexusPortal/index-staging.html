@@ -643,8 +643,8 @@
           100% { opacity: 0; }
         }
         
-        /* Apply looping to the container after 45 seconds */
-        #demo > div:last-child {
+        /* Apply looping to the container with synchronized reset */
+        #demo > div:first-child, #demo > div:last-child {
           animation: resetAnimation 45s infinite;
         }
       </style>
@@ -709,7 +709,7 @@
             
             // Final summary
             { type: 'notification', message: '🎉 Deployment complete!', delay: 40000 },
-            { type: 'sirsi', message: 'Your infrastructure is fully deployed and optimized! Here\'s the summary:\n\n• Total deployment time: 23 seconds\n• Resources created: 15\n• Estimated monthly cost: $847\n• Availability: 99.99%\n\nI\'ll continue monitoring and optimizing your infrastructure 24/7. Is there anything else you need?', delay: 41000 },
+            { type: 'sirsi', message: 'Your infrastructure is fully deployed and optimized! Here\'s the summary:\n\n• Total deployment time: 45 seconds (realistic example)\n• Resources created: 12\n• Estimated monthly cost: $1230\n• Availability: 99.95%\n\nI\'ll continue monitoring and optimizing your infrastructure 24/7. Is there anything else you need?', delay: 41000 },
             { type: 'user', message: 'This is perfect! Thank you, Sirsi.', delay: 43000 },
             { type: 'sirsi', message: 'You\'re welcome! I\'m here whenever you need infrastructure assistance. Have a great day! 🚀', delay: 44000 }
           ];
