@@ -296,35 +296,88 @@
       <div class="absolute bottom-10 right-10 w-32 h-32 bg-blue-200 dark:bg-blue-800 rounded-full opacity-20 animate-pulse" style="animation-delay: 1s;"></div>
     </section>
 
-    <!-- Live Demo Section - Complex Animated Cloud Architecture -->
+    <!-- Live Demo Section - Sirsi Persona Interactive Demo -->
     <section id="demo" class="relative py-32 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 overflow-hidden">
       <div class="absolute inset-0 bg-grid-white/[0.05] bg-[size:50px_50px]"></div>
       <div class="max-w-7xl mx-auto px-6">
         <!-- Simple Header -->
         <div class="text-center mb-16">
-          <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">See the Magic</h2>
-          <div class="w-20 h-1 bg-emerald-500 mx-auto"></div>
+          <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Meet Sirsi</h2>
+          <p class="text-xl text-slate-400">Your AI Infrastructure Assistant</p>
+          <div class="w-20 h-1 bg-emerald-500 mx-auto mt-4"></div>
         </div>
         
-        <!-- Animated Cloud Architecture -->
-        <div class="relative bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700">
-          <!-- User Input Display -->
-          <div class="absolute top-8 left-8 bg-slate-900/80 rounded-lg p-4 max-w-sm z-20">
-            <div class="flex items-start gap-3">
-              <span class="text-blue-400 font-mono">></span>
-              <p class="text-white text-sm typewriter">
-                "Deploy web app with React, Node.js, PostgreSQL, Redis on AWS"
-              </p>
+        <!-- Sirsi Console Interface -->
+        <div class="grid lg:grid-cols-2 gap-8">
+          <!-- Sirsi Chat Interface -->
+          <div class="bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-700 overflow-hidden">
+            <div class="bg-gradient-to-r from-emerald-600 to-emerald-700 p-4">
+              <div class="flex items-center gap-3">
+                <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                  <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="text-white font-bold text-lg">Sirsi Assistant</h3>
+                  <p class="text-emerald-100 text-sm">Infrastructure Builder v2.1</p>
+                </div>
+                <div class="ml-auto flex gap-2">
+                  <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                  <span class="text-emerald-100 text-sm">Active</span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Chat Messages Container -->
+            <div class="h-[600px] overflow-y-auto p-6 space-y-4" id="chat-container">
+              <!-- Messages will be dynamically added here -->
+            </div>
+            
+            <!-- Input Area -->
+            <div class="border-t border-slate-700 p-4">
+              <div class="flex items-center gap-3">
+                <input type="text" placeholder="Describe your infrastructure needs..." class="flex-1 bg-slate-700/50 border border-slate-600 rounded-lg px-4 py-2 text-white placeholder-slate-400 focus:outline-none focus:border-emerald-500" disabled>
+                <button class="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors flex items-center gap-2" disabled>
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                  </svg>
+                  Send
+                </button>
+              </div>
             </div>
           </div>
           
-          <!-- SVG Cloud Architecture Animation -->
-          <svg viewBox="0 0 1200 600" class="w-full h-full" style="min-height: 500px;">
-            <!-- AWS Cloud Container -->
-            <g class="cloud-container" opacity="0">
-              <rect x="50" y="50" width="1100" height="500" rx="20" fill="none" stroke="#374151" stroke-width="2" stroke-dasharray="10,5"/>
-              <text x="70" y="80" fill="#9ca3af" font-size="14" font-weight="bold">AWS Cloud</text>
-            </g>
+          <!-- Infrastructure Visualization Panel -->
+          <div class="bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-700 overflow-hidden">
+            <div class="bg-slate-700/50 p-4 border-b border-slate-600">
+              <div class="flex items-center justify-between">
+                <h3 class="text-white font-semibold">Infrastructure Visualization</h3>
+                <div class="flex items-center gap-4">
+                  <div class="flex items-center gap-2 text-sm">
+                    <div class="w-3 h-3 bg-emerald-400 rounded-full"></div>
+                    <span class="text-slate-400">Active</span>
+                  </div>
+                  <div class="flex items-center gap-2 text-sm">
+                    <div class="w-3 h-3 bg-blue-400 rounded-full"></div>
+                    <span class="text-slate-400">Building</span>
+                  </div>
+                  <div class="flex items-center gap-2 text-sm">
+                    <div class="w-3 h-3 bg-slate-600 rounded-full"></div>
+                    <span class="text-slate-400">Planned</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Infrastructure Display Area -->
+            <div class="h-[500px] p-6" id="infrastructure-display">
+              <svg viewBox="0 0 1200 500" class="w-full h-full">
+                <!-- AWS Cloud Container -->
+                <g class="cloud-container" opacity="0">
+                  <rect x="50" y="30" width="1100" height="440" rx="20" fill="none" stroke="#374151" stroke-width="2" stroke-dasharray="10,5"/>
+                  <text x="70" y="60" fill="#9ca3af" font-size="14" font-weight="bold">AWS Cloud</text>
+                </g>
             
             <!-- VPC Container -->
             <g class="vpc" opacity="0">
@@ -640,6 +693,146 @@
           // Counting animation for time
           const countElement = document.querySelector('.counting-animation');
           const percentElement = document.querySelector('.percentage-animation');
+          const chatContainer = document.getElementById('chat-container');
+          
+          // Sirsi conversation flow
+          const conversationFlow = [
+            // Initial greeting
+            { type: 'sirsi', message: 'Hello! I\'m Sirsi, your AI Infrastructure Assistant. How can I help you today?', delay: 500 },
+            { type: 'user', message: 'I need to deploy a scalable web application on AWS with high availability', delay: 2000 },
+            { type: 'sirsi', message: 'I understand you need a scalable, highly available web application on AWS. Let me analyze your requirements and create an optimal infrastructure plan.', delay: 3500 },
+            
+            // Planning phase
+            { type: 'notification', message: '🔍 Analyzing requirements...', delay: 5000 },
+            { type: 'sirsi', message: 'Based on your needs, I recommend a multi-AZ deployment with:\n• Load-balanced ECS services\n• RDS PostgreSQL with Multi-AZ\n• ElastiCache for Redis\n• S3 + CloudFront for static assets\n\nShall I proceed with this architecture?', delay: 6500 },
+            { type: 'user', message: 'Yes, that looks perfect. Please proceed.', delay: 8500 },
+            
+            // Specification phase
+            { type: 'notification', message: '📋 Creating infrastructure specification...', delay: 9500 },
+            { type: 'sirsi', message: 'Great! I\'m now specifying the infrastructure:\n• VPC: 10.0.0.0/16 across 3 availability zones\n• ECS cluster with auto-scaling (2-10 instances)\n• Application Load Balancer with health checks\n• RDS db.t3.medium with automated backups\n• Redis cache.t3.micro cluster', delay: 10500 },
+            
+            // Testing phase
+            { type: 'notification', message: '🧪 Validating configuration...', delay: 13000 },
+            { type: 'sirsi', message: 'Configuration validated successfully. All components are compatible and meet AWS best practices. Ready to build?', delay: 14000 },
+            { type: 'user', message: 'Yes, please build the infrastructure.', delay: 15500 },
+            
+            // Building phase
+            { type: 'notification', message: '🔨 Building infrastructure...', delay: 16500 },
+            { type: 'progress', message: 'Creating VPC and network components...', progress: 20, delay: 17000 },
+            { type: 'progress', message: 'Setting up availability zones...', progress: 35, delay: 18500 },
+            { type: 'progress', message: 'Deploying load balancer...', progress: 45, delay: 20000 },
+            { type: 'progress', message: 'Launching ECS services...', progress: 60, delay: 21500 },
+            { type: 'progress', message: 'Configuring databases...', progress: 75, delay: 23000 },
+            { type: 'progress', message: 'Setting up caching layer...', progress: 85, delay: 24500 },
+            { type: 'progress', message: 'Configuring CDN...', progress: 95, delay: 26000 },
+            { type: 'notification', message: '✅ Infrastructure build complete!', delay: 27500 },
+            
+            // Sample test phase
+            { type: 'sirsi', message: 'Infrastructure is ready! Running automated tests to ensure everything is working correctly...', delay: 28500 },
+            { type: 'notification', message: '🧪 Running health checks...', delay: 29500 },
+            { type: 'test', message: '✓ Load balancer: Healthy', delay: 30000 },
+            { type: 'test', message: '✓ ECS services: Running (3/3)', delay: 30500 },
+            { type: 'test', message: '✓ Database: Connected', delay: 31000 },
+            { type: 'test', message: '✓ Cache: Operational', delay: 31500 },
+            { type: 'test', message: '✓ CDN: Active', delay: 32000 },
+            
+            // Validation phase
+            { type: 'sirsi', message: 'All systems passed health checks! Your application is now live and serving traffic. Would you like me to set up monitoring and alerts?', delay: 33000 },
+            { type: 'user', message: 'Yes, please set up comprehensive monitoring.', delay: 34500 },
+            
+            // Security & Monitoring setup
+            { type: 'notification', message: '🔐 Configuring security policies...', delay: 35500 },
+            { type: 'notification', message: '📊 Setting up monitoring dashboards...', delay: 36500 },
+            { type: 'sirsi', message: 'Security and monitoring configured:\n• CloudWatch dashboards created\n• Alerts set for CPU, memory, and errors\n• AWS WAF rules applied\n• Automated backups scheduled\n• Cost optimization rules enabled', delay: 38000 },
+            
+            // Final summary
+            { type: 'notification', message: '🎉 Deployment complete!', delay: 40000 },
+            { type: 'sirsi', message: 'Your infrastructure is fully deployed and optimized! Here\'s the summary:\n\n• Total deployment time: 23 seconds\n• Resources created: 15\n• Estimated monthly cost: $847\n• Availability: 99.99%\n\nI\'ll continue monitoring and optimizing your infrastructure 24/7. Is there anything else you need?', delay: 41000 },
+            { type: 'user', message: 'This is perfect! Thank you, Sirsi.', delay: 43000 },
+            { type: 'sirsi', message: 'You\'re welcome! I\'m here whenever you need infrastructure assistance. Have a great day! 🚀', delay: 44000 }
+          ];
+          
+          function addMessage(type, message, isTyping = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `flex gap-3 ${type === 'user' ? 'justify-end' : ''} message-animation`;
+            
+            if (type === 'sirsi') {
+              messageDiv.innerHTML = `
+                <div class="w-8 h-8 bg-emerald-600 rounded-full flex items-center justify-center flex-shrink-0">
+                  <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                  </svg>
+                </div>
+                <div class="flex-1 max-w-md">
+                  <div class="bg-slate-700/50 rounded-lg p-3">
+                    <p class="text-white text-sm ${isTyping ? 'typing-indicator' : ''}">${isTyping ? '...' : message}</p>
+                  </div>
+                </div>
+              `;
+            } else if (type === 'user') {
+              messageDiv.innerHTML = `
+                <div class="max-w-md">
+                  <div class="bg-emerald-600 rounded-lg p-3">
+                    <p class="text-white text-sm">${message}</p>
+                  </div>
+                </div>
+              `;
+            } else if (type === 'notification') {
+              messageDiv.innerHTML = `
+                <div class="w-full flex justify-center">
+                  <div class="bg-slate-800/80 rounded-full px-4 py-2 text-sm text-slate-300 flex items-center gap-2">
+                    ${message}
+                  </div>
+                </div>
+              `;
+            } else if (type === 'progress') {
+              const progress = message.progress || 0;
+              messageDiv.innerHTML = `
+                <div class="w-full">
+                  <div class="bg-slate-800/50 rounded-lg p-3">
+                    <p class="text-slate-300 text-sm mb-2">${message.message}</p>
+                    <div class="w-full bg-slate-700 rounded-full h-2">
+                      <div class="bg-emerald-500 h-2 rounded-full transition-all duration-500" style="width: ${progress}%"></div>
+                    </div>
+                  </div>
+                </div>
+              `;
+            } else if (type === 'test') {
+              messageDiv.innerHTML = `
+                <div class="w-full">
+                  <div class="bg-slate-800/30 rounded-lg p-2 pl-8">
+                    <p class="text-emerald-400 text-sm font-mono">${message}</p>
+                  </div>
+                </div>
+              `;
+            }
+            
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+          }
+          
+          function runConversation() {
+            chatContainer.innerHTML = ''; // Clear previous messages
+            
+            conversationFlow.forEach((item, index) => {
+              setTimeout(() => {
+                if (item.type === 'progress') {
+                  addMessage(item.type, { message: item.message, progress: item.progress });
+                } else {
+                  // Show typing indicator for Sirsi messages
+                  if (item.type === 'sirsi') {
+                    addMessage('sirsi', '', true);
+                    setTimeout(() => {
+                      chatContainer.lastElementChild.remove();
+                      addMessage(item.type, item.message.replace(/\n/g, '<br>'));
+                    }, 1000);
+                  } else {
+                    addMessage(item.type, item.message);
+                  }
+                }
+              }, item.delay);
+            });
+          }
           
           function animateCount() {
             let count = 0;
@@ -668,9 +861,42 @@
             }, 50);
           }
           
-          // Start animations after a delay
-          setTimeout(animateCount, 3000);
-          setTimeout(animatePercentage, 5000);
+          // Add CSS for animations
+          const style = document.createElement('style');
+          style.textContent = `
+            .message-animation {
+              animation: slideInUp 0.3s ease-out;
+            }
+            
+            @keyframes slideInUp {
+              from {
+                opacity: 0;
+                transform: translateY(10px);
+              }
+              to {
+                opacity: 1;
+                transform: translateY(0);
+              }
+            }
+            
+            .typing-indicator {
+              display: inline-block;
+              animation: typing 1.5s infinite;
+            }
+            
+            @keyframes typing {
+              0%, 60%, 100% { opacity: 1; }
+              30% { opacity: 0.3; }
+            }
+          `;
+          document.head.appendChild(style);
+          
+          // Start the demo
+          runConversation();
+          
+          // Start animations after conversation begins
+          setTimeout(animateCount, 16500);
+          setTimeout(animatePercentage, 20000);
           
           // Loop the entire animation every 45 seconds
           setInterval(() => {
@@ -686,9 +912,12 @@
             countElement.textContent = '0';
             percentElement.textContent = '0%';
             
+            // Restart conversation
+            runConversation();
+            
             // Restart counting animations
-            setTimeout(animateCount, 3000);
-            setTimeout(animatePercentage, 5000);
+            setTimeout(animateCount, 16500);
+            setTimeout(animatePercentage, 20000);
           }, 45000);
         });
       </script>
