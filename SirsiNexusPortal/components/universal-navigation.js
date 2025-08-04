@@ -88,65 +88,97 @@ renderNavigation() {
         }
     }
 
+    /**
+     * Generate Navigation HTML
+     */
     generateNavigationHTML() {
         const backUrl = this.getBackUrl();
         const breadcrumb = this.getBreadcrumb();
         
         return `
-            <div class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-50">
-                <div class="max-w-7xl mx-auto px-6 py-4">
-                    <nav class="flex items-center gap-4">
-                ${backUrl ? `
-                    <a href="${backUrl}" class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-                        </svg>
-                        Back
-                    </a>
-                    <span class="text-slate-300 dark:text-slate-600">|</span>
-                ` : ''}
-                
-                <!-- Breadcrumb -->
-                <div class="flex items-center gap-2">
-                    ${breadcrumb.map((item, index) => `
-                        <a href="${item.url}" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">
-                            ${item.name}
-                        </a>
-                        ${index < breadcrumb.length - 1 ? '<span class="text-slate-400 dark:text-slate-600">/</span>' : ''}
-                    `).join('')}
-                </div>
-                
-                <!-- Universal Search Bar -->
-                <div class="flex-1 max-w-xl mx-4">
-                    <div class="relative">
-                        <input 
-                            type="text" 
-                            id="universal-search" 
-                            placeholder="Search documents, metrics, users..." 
-                            class="w-full px-4 py-2 pl-10 pr-4 text-sm bg-gray-100 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
-                        >
-                        <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                        </svg>
-                        <kbd class="absolute right-3 top-1/2 transform -translate-y-1/2 hidden sm:inline-flex px-2 py-1 text-xs font-semibold text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-600 rounded">⌘K</kbd>
+            <div class="bg-white dark:bg-gray-800/95 sticky top-0 z-50 border-b border-slate-200 dark:border-slate-700 backdrop-blur-sm">
+                <div class="max-w-7xl mx-auto px-6">
+                    <div class="flex h-16 items-center justify-between">
+                      <!-- Logo and Site Name -->
+                      <div class="flex items-center gap-6">
+                        <div class="flex items-center gap-3">
+                          <div class="w-12 h-12 flex items-center justify-center">
+                            <img src="/SirsiNexusPortal/assets/images/Sirsi_Logo_300ppi_cguiyg.png" alt="Sirsi Logo" class="w-12 h-12 object-contain dark:hidden">
+                            <img src="/SirsiNexusPortal/assets/images/Sirsi_Logo_300ppi_Inverted_lt7asx.png" alt="Sirsi Logo" class="w-12 h-12 object-contain hidden dark:block">
+                          </div>
+                          <div>
+                            <h1 class="text-lg font-semibold text-slate-900 dark:text-slate-100">SirsiNexus</h1>
+                            <div class="flex items-center gap-2">
+                              <span class="version-badge text-xs text-secondary-500 dark:text-secondary-400 bg-secondary-100 dark:bg-secondary-800 px-2 py-0.5 rounded">v0.7.9-alpha</span>
+                              <div class="flex items-center gap-1">
+                                <div class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></div>
+                                <span class="status-indicator text-xs text-slate-600 dark:text-slate-300">Live</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <!-- Navigation and Search Container -->
+                      <div class="flex items-center gap-4 flex-1">
+                        <!-- Navigation -->
+                        <nav class="flex items-center gap-4">
+                        ${backUrl ? `
+                            <a href="${backUrl}" class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                                </svg>
+                                Back
+                            </a>
+                            <span class="text-slate-300 dark:text-slate-600">|</span>
+                        ` : ''}
+                        
+                        <!-- Breadcrumb -->
+                        <div class="flex items-center gap-2">
+                            ${breadcrumb.map((item, index) => `
+                                <a href="${item.url}" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">
+                                    ${item.name}
+                                </a>
+                                ${index < breadcrumb.length - 1 ? '<span class="text-slate-400 dark:text-slate-600">/</span>' : ''}
+                            `).join('')}
+                        </div>
+                        </nav>
+                        
+                        <!-- Search Bar -->
+                        <div class="flex-1 max-w-md mx-8">
+                          <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                              <svg class="h-5 w-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                              </svg>
+                            </div>
+                            <input
+                              type="text"
+                              id="documentSearch"
+                              class="block w-full pl-10 pr-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"
+                              placeholder="Search documents, reports, and data..."
+                              onkeyup="performSearch(this.value)"
+                            />
+                          </div>
+                          <div id="searchResults" class="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-lg hidden z-50 max-h-96 overflow-y-auto"></div>
+                        </div>
+                      </div>
+                      
+                      <!-- Right side buttons -->
+                      <div class="flex items-center gap-4">
+                        <button onclick="logout()" class="text-sm text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-200 transition-colors">
+                            Logout
+                        </button>
+                        <button onclick="toggleTheme()" class="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors border border-slate-300 dark:border-slate-600" style="min-width: 40px; min-height: 40px;">
+                            <svg class="w-4 h-4 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 818 0z"></path>
+                            </svg>
+                            <svg class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                            </svg>
+                        </button>
+                      </div>
                     </div>
-                    <!-- Search Results Dropdown -->
-                    <div id="search-results" class="absolute mt-2 w-full bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-gray-200 dark:border-slate-700 hidden max-h-96 overflow-y-auto z-50">
-                        <!-- Results will be populated here -->
-                    </div>
-                </div>
-                
-                <div class="flex items-center gap-4 ml-auto">
-                    <button onclick="logout()" class="text-sm text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-200 transition-colors">
-                        Logout
-                    </button>
-                    <button onclick="toggleTheme()" class="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors border border-slate-300 dark:border-slate-600" style="min-width: 40px; min-height: 40px;">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 818 0z"></path>
-                        </svg>
-                    </button>
-                </div>
-                    </nav>
                 </div>
             </div>
         `;
@@ -184,6 +216,7 @@ renderNavigation() {
         window.toggleTheme = this.toggleTheme.bind(this);
         window.logout = this.logout.bind(this);
         window.goBack = this.goBack.bind(this);
+        window.performSearch = this.performSearch.bind(this);
     }
 
     /**
@@ -200,6 +233,10 @@ renderNavigation() {
             html.classList.add('dark');
             localStorage.setItem('theme', 'dark');
         }
+        
+        // Re-render navigation to update theme toggle icon
+        this.renderNavigation();
+        this.setupSearch();
     }
 
     /**
@@ -224,13 +261,80 @@ renderNavigation() {
     }
 
     /**
+     * Perform search - exposed as global function
+     */
+    performSearch(query) {
+        const searchResults = document.getElementById('searchResults');
+        if (!searchResults) return;
+        
+        // Sample data for search (in production, this would come from an API)
+        const searchData = [
+            // Documents
+            { type: 'document', title: 'Annual Report 2023', path: '/documents/annual-report-2023.pdf', icon: '📄' },
+            { type: 'document', title: 'Investment Prospectus', path: '/documents/investment-prospectus.pdf', icon: '📄' },
+            { type: 'document', title: 'Portfolio Performance Q4', path: '/documents/portfolio-q4.pdf', icon: '📄' },
+            { type: 'document', title: 'Risk Assessment Report', path: '/documents/risk-assessment.pdf', icon: '📄' },
+            
+            // Metrics & Analytics
+            { type: 'metric', title: 'Portfolio Performance', path: '/investor-portal/portfolio-overview.html', icon: '📊' },
+            { type: 'metric', title: 'KPI Metrics', path: '/investor-portal/committee/kpi-metrics.html', icon: '📈' },
+            { type: 'metric', title: 'Market Analysis', path: '/investor-portal/market-analysis.html', icon: '📉' },
+            { type: 'metric', title: 'ROI Dashboard', path: '/investor-portal/roi-dashboard.html', icon: '💹' },
+            
+            // Users & Committee
+            { type: 'user', title: 'John Smith - Committee Chair', path: '/investor-portal/committee/members.html', icon: '👤' },
+            { type: 'user', title: 'Sarah Johnson - Investment Director', path: '/investor-portal/committee/members.html', icon: '👤' },
+            { type: 'user', title: 'Michael Brown - Risk Manager', path: '/investor-portal/committee/members.html', icon: '👤' },
+            
+            // Pages
+            { type: 'page', title: 'Committee Dashboard', path: '/investor-portal/committee/index.html', icon: '🏢' },
+            { type: 'page', title: 'Data Room', path: '/investor-portal/data-room.html', icon: '🗄️' },
+            { type: 'page', title: 'Company Updates', path: '/investor-portal/company-updates.html', icon: '📰' },
+            { type: 'page', title: 'Investor Relations', path: '/investor-portal/investor-relations.html', icon: '🤝' }
+        ];
+        
+        if (!query.trim()) {
+            searchResults.classList.add('hidden');
+            return;
+        }
+
+        const results = searchData.filter(item => 
+            item.title.toLowerCase().includes(query.toLowerCase())
+        );
+
+        if (results.length === 0) {
+            searchResults.innerHTML = `
+                <div class="p-4 text-sm text-gray-500 dark:text-gray-400">
+                    No results found for "${query}"
+                </div>
+            `;
+        } else {
+            searchResults.innerHTML = results.map((item, index) => `
+                <a href="${item.path}" 
+                   class="search-result-item block px-4 py-3 hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors"
+                   data-index="${index}">
+                    <div class="flex items-center gap-3">
+                        <span class="text-lg">${item.icon}</span>
+                        <div>
+                            <div class="text-sm font-medium text-gray-900 dark:text-gray-100">${item.title}</div>
+                            <div class="text-xs text-gray-500 dark:text-gray-400">${item.type.charAt(0).toUpperCase() + item.type.slice(1)}</div>
+                        </div>
+                    </div>
+                </a>
+            `).join('');
+        }
+
+        searchResults.classList.remove('hidden');
+    }
+
+    /**
      * Setup universal search functionality
      */
     setupSearch() {
         // Wait for DOM to be ready
         setTimeout(() => {
-            const searchInput = document.getElementById('universal-search');
-            const searchResults = document.getElementById('search-results');
+            const searchInput = document.getElementById('documentSearch');
+            const searchResults = document.getElementById('searchResults');
             
             if (!searchInput || !searchResults) return;
 
