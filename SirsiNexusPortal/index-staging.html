@@ -745,77 +745,77 @@ services:
           const conversationFlow = [
             // Initial greeting
             { type: 'sirsi', message: 'Hello! I\'m Sirsi, your AI Infrastructure Assistant. How can I help you today?', delay: 500 },
-            { type: 'user', message: 'I need to migrate our e-commerce platform from on-premise to AWS. Currently running 3 web servers, PostgreSQL database, and Redis cache.', delay: 3000, typing: true },
-            { type: 'sirsi', message: 'I\'ll help you migrate your e-commerce platform to AWS. Let me start by analyzing your current infrastructure to create an optimal migration plan.', delay: 3500 },
+            { type: 'user', message: 'I need to migrate our e-commerce platform from on-premise to AWS. Currently running 3 web servers, PostgreSQL database, and Redis cache.', delay: 2000, typing: true, typingDuration: 3500 },
+            { type: 'sirsi', message: 'I\'ll help you migrate your e-commerce platform to AWS. Let me start by analyzing your current infrastructure to create an optimal migration plan.', delay: 6000 },
             
             // Discovery phase
-            { type: 'notification', message: '🔍 Running infrastructure discovery...', delay: 5000 },
-            { type: 'log', message: '[DISCOVERY] Scanning network 192.168.1.0/24', delay: 5500 },
-            { type: 'log', message: '[DISCOVERY] Found 3 web servers: nginx/1.21.6 (2 vCPU, 4GB RAM each)', delay: 6000 },
-            { type: 'log', message: '[DISCOVERY] Found PostgreSQL 14.5: 8 vCPU, 32GB RAM, 500GB storage', delay: 6500 },
-            { type: 'log', message: '[DISCOVERY] Found Redis 6.2.7: 2 vCPU, 8GB RAM', delay: 7000 },
-            { type: 'log', message: '[DISCOVERY] Detected 847 GB total data, 50 MB/s average traffic', delay: 7500 },
+            { type: 'notification', message: '🔍 Running infrastructure discovery...', delay: 8000 },
+            { type: 'log', message: '[DISCOVERY] Scanning network 192.168.1.0/24', delay: 8500 },
+            { type: 'log', message: '[DISCOVERY] Found 3 web servers: nginx/1.21.6 (2 vCPU, 4GB RAM each)', delay: 9000 },
+            { type: 'log', message: '[DISCOVERY] Found PostgreSQL 14.5: 8 vCPU, 32GB RAM, 500GB storage', delay: 9500 },
+            { type: 'log', message: '[DISCOVERY] Found Redis 6.2.7: 2 vCPU, 8GB RAM', delay: 10000 },
+            { type: 'log', message: '[DISCOVERY] Detected 847 GB total data, 50 MB/s average traffic', delay: 10500 },
             
             // Analysis phase
-            { type: 'sirsi', message: 'Discovery complete. I\'ve identified your infrastructure:\n\n📊 Current Setup:\n• 3x Web Servers (6 vCPU, 12GB RAM total)\n• PostgreSQL Database (8 vCPU, 32GB RAM, 500GB data)\n• Redis Cache (2 vCPU, 8GB RAM)\n• Network Traffic: ~50 MB/s average\n\nNow analyzing optimal AWS architecture...', delay: 8000 },
+            { type: 'sirsi', message: 'Discovery complete. I\'ve identified your infrastructure:\n\n📊 Current Setup:\n• 3x Web Servers (6 vCPU, 12GB RAM total)\n• PostgreSQL Database (8 vCPU, 32GB RAM, 500GB data)\n• Redis Cache (2 vCPU, 8GB RAM)\n• Network Traffic: ~50 MB/s average\n\nNow analyzing optimal AWS architecture...', delay: 11500 },
             
             // Cost estimation
-            { type: 'notification', message: '💰 Calculating cost optimization...', delay: 10000 },
-            { type: 'sirsi', message: 'Here\'s my recommended AWS architecture with cost breakdown:\n\n🏗️ Proposed Architecture:\n• 3x t3.large EC2 instances (behind ALB)\n• RDS PostgreSQL db.m5.2xlarge Multi-AZ\n• ElastiCache Redis cache.m5.large\n• CloudFront CDN for static assets\n\n💵 Estimated Monthly Cost: $1,847\n(37% savings vs on-demand pricing through Reserved Instances)\n\nShall I proceed with this architecture?', delay: 11500 },
-            { type: 'user', message: 'Yes, looks good. What about security and compliance?', delay: 15500, typing: true },
+            { type: 'notification', message: '💰 Calculating cost optimization...', delay: 13500 },
+            { type: 'sirsi', message: 'Here\'s my recommended AWS architecture with cost breakdown:\n\n🏗️ Proposed Architecture:\n• 3x t3.large EC2 instances (behind ALB)\n• RDS PostgreSQL db.m5.2xlarge Multi-AZ\n• ElastiCache Redis cache.m5.large\n• CloudFront CDN for static assets\n\n💵 Estimated Monthly Cost: $1,847\n(37% savings vs on-demand pricing through Reserved Instances)\n\nShall I proceed with this architecture?', delay: 15000 },
+            { type: 'user', message: 'Yes, looks good. What about security and compliance?', delay: 17000, typing: true, typingDuration: 2000 },
             
             // Security planning
-            { type: 'sirsi', message: 'Excellent question. I\'ll implement comprehensive security:\n\n🔒 Security Configuration:\n• VPC with private subnets for databases\n• AWS WAF on CloudFront and ALB\n• Encryption at rest (AES-256) and in transit (TLS 1.3)\n• AWS Secrets Manager for credentials\n• GuardDuty for threat detection\n• Automated security patching\n\nThis meets SOC 2, PCI-DSS, and HIPAA requirements. Ready to begin deployment?', delay: 15000 },
-            { type: 'user', message: 'Perfect. Please proceed with the deployment.', delay: 19500, typing: true },
+            { type: 'sirsi', message: 'Excellent question. I\'ll implement comprehensive security:\n\n🔒 Security Configuration:\n• VPC with private subnets for databases\n• AWS WAF on CloudFront and ALB\n• Encryption at rest (AES-256) and in transit (TLS 1.3)\n• AWS Secrets Manager for credentials\n• GuardDuty for threat detection\n• Automated security patching\n\nThis meets SOC 2, PCI-DSS, and HIPAA requirements. Ready to begin deployment?', delay: 20000 },
+            { type: 'user', message: 'Perfect. Please proceed with the deployment.', delay: 22000, typing: true, typingDuration: 1500 },
             
             // Pre-deployment validation
-            { type: 'notification', message: '🔐 Running security pre-checks...', delay: 18000 },
-            { type: 'log', message: '[SECURITY] Validating IAM policies...', delay: 18500 },
-            { type: 'log', message: '[SECURITY] Checking network ACLs...', delay: 19000 },
-            { type: 'log', message: '[SECURITY] Verifying encryption settings...', delay: 19500 },
-            { type: 'log', message: '[SECURITY] All checks passed ✓', delay: 20000 },
+            { type: 'notification', message: '🔐 Running security pre-checks...', delay: 24500 },
+            { type: 'log', message: '[SECURITY] Validating IAM policies...', delay: 25000 },
+            { type: 'log', message: '[SECURITY] Checking network ACLs...', delay: 25500 },
+            { type: 'log', message: '[SECURITY] Verifying encryption settings...', delay: 26000 },
+            { type: 'log', message: '[SECURITY] All checks passed ✓', delay: 26500 },
             
             // Infrastructure deployment - Real provisioning
-            { type: 'notification', message: '🚀 Starting infrastructure deployment...', delay: 21000 },
+            { type: 'notification', message: '🚀 Starting infrastructure deployment...', delay: 27500 },
             
             // VPC Creation
-            { type: 'log', message: '[DEPLOY] Creating VPC vpc-0a1b2c3d4e5f6g7h8 (10.0.0.0/16)...', delay: 22000 },
-            { type: 'log', message: '[DEPLOY] Creating Internet Gateway igw-0987654321fedcba...', delay: 22500 },
-            { type: 'log', message: '[DEPLOY] Creating subnets in us-east-1a, us-east-1b, us-east-1c...', delay: 23000 },
-            { type: 'log', message: '[DEPLOY] ✓ Subnet subnet-1a2b3c4d (10.0.1.0/24) in us-east-1a', delay: 23500 },
-            { type: 'log', message: '[DEPLOY] ✓ Subnet subnet-5e6f7g8h (10.0.2.0/24) in us-east-1b', delay: 24000 },
-            { type: 'log', message: '[DEPLOY] ✓ Subnet subnet-9i0j1k2l (10.0.3.0/24) in us-east-1c', delay: 24500 },
+            { type: 'log', message: '[DEPLOY] Creating VPC vpc-0a1b2c3d4e5f6g7h8 (10.0.0.0/16)...', delay: 28500 },
+            { type: 'log', message: '[DEPLOY] Creating Internet Gateway igw-0987654321fedcba...', delay: 29000 },
+            { type: 'log', message: '[DEPLOY] Creating subnets in us-east-1a, us-east-1b, us-east-1c...', delay: 29500 },
+            { type: 'log', message: '[DEPLOY] ✓ Subnet subnet-1a2b3c4d (10.0.1.0/24) in us-east-1a', delay: 30000 },
+            { type: 'log', message: '[DEPLOY] ✓ Subnet subnet-5e6f7g8h (10.0.2.0/24) in us-east-1b', delay: 30500 },
+            { type: 'log', message: '[DEPLOY] ✓ Subnet subnet-9i0j1k2l (10.0.3.0/24) in us-east-1c', delay: 31000 },
             
             // Load Balancer
-            { type: 'log', message: '[DEPLOY] Creating Application Load Balancer...', delay: 25500 },
-            { type: 'log', message: '[DEPLOY] ✓ ALB arn:aws:elasticloadbalancing:us-east-1:123456789012:loadbalancer/app/prod-alb/50dc6c495c0c9188', delay: 26500 },
-            { type: 'log', message: '[DEPLOY] ALB DNS: prod-alb-1234567890.us-east-1.elb.amazonaws.com', delay: 27000 },
+            { type: 'log', message: '[DEPLOY] Creating Application Load Balancer...', delay: 31500 },
+            { type: 'log', message: '[DEPLOY] ✓ ALB arn:aws:elasticloadbalancing:us-east-1:123456789012:loadbalancer/app/prod-alb/50dc6c495c0c9188', delay: 32500 },
+            { type: 'log', message: '[DEPLOY] ALB DNS: prod-alb-1234567890.us-east-1.elb.amazonaws.com', delay: 33000 },
             
             // EC2 Instances
-            { type: 'progress', message: 'Launching EC2 instances...', progress: 40, delay: 28000 },
-            { type: 'log', message: '[DEPLOY] Launching EC2 instance i-0a1b2c3d4e5f6g7h8 (t3.large)...', delay: 28500 },
-            { type: 'log', message: '[DEPLOY] ✓ Instance i-0a1b2c3d4e5f6g7h8 running at 10.0.1.45', delay: 29500 },
-            { type: 'log', message: '[DEPLOY] Launching EC2 instance i-1b2c3d4e5f6g7h8i (t3.large)...', delay: 30000 },
-            { type: 'log', message: '[DEPLOY] ✓ Instance i-1b2c3d4e5f6g7h8i running at 10.0.2.67', delay: 31000 },
-            { type: 'log', message: '[DEPLOY] Launching EC2 instance i-2c3d4e5f6g7h8i9j (t3.large)...', delay: 31500 },
-            { type: 'log', message: '[DEPLOY] ✓ Instance i-2c3d4e5f6g7h8i9j running at 10.0.3.89', delay: 32500 },
+            { type: 'progress', message: 'Launching EC2 instances...', progress: 40, delay: 34000 },
+            { type: 'log', message: '[DEPLOY] Launching EC2 instance i-0a1b2c3d4e5f6g7h8 (t3.large)...', delay: 34500 },
+            { type: 'log', message: '[DEPLOY] ✓ Instance i-0a1b2c3d4e5f6g7h8 running at 10.0.1.45', delay: 35500 },
+            { type: 'log', message: '[DEPLOY] Launching EC2 instance i-1b2c3d4e5f6g7h8i (t3.large)...', delay: 36000 },
+            { type: 'log', message: '[DEPLOY] ✓ Instance i-1b2c3d4e5f6g7h8i running at 10.0.2.67', delay: 37000 },
+            { type: 'log', message: '[DEPLOY] Launching EC2 instance i-2c3d4e5f6g7h8i9j (t3.large)...', delay: 37500 },
+            { type: 'log', message: '[DEPLOY] ✓ Instance i-2c3d4e5f6g7h8i9j running at 10.0.3.89', delay: 38500 },
             
             // Database
-            { type: 'progress', message: 'Creating RDS PostgreSQL instance...', progress: 60, delay: 33500 },
-            { type: 'log', message: '[DEPLOY] Creating RDS instance prod-db-instance (db.m5.2xlarge)...', delay: 34000 },
-            { type: 'log', message: '[DEPLOY] Configuring Multi-AZ replication...', delay: 35000 },
-            { type: 'log', message: '[DEPLOY] ✓ RDS endpoint: prod-db-instance.c9akciq32.us-east-1.rds.amazonaws.com:5432', delay: 36000 },
+            { type: 'progress', message: 'Creating RDS PostgreSQL instance...', progress: 60, delay: 39500 },
+            { type: 'log', message: '[DEPLOY] Creating RDS instance prod-db-instance (db.m5.2xlarge)...', delay: 40000 },
+            { type: 'log', message: '[DEPLOY] Configuring Multi-AZ replication...', delay: 41000 },
+            { type: 'log', message: '[DEPLOY] ✓ RDS endpoint: prod-db-instance.c9akciq32.us-east-1.rds.amazonaws.com:5432', delay: 42000 },
             
             // Cache
-            { type: 'progress', message: 'Setting up ElastiCache Redis...', progress: 75, delay: 37000 },
-            { type: 'log', message: '[DEPLOY] Creating ElastiCache cluster prod-redis-cluster...', delay: 37500 },
-            { type: 'log', message: '[DEPLOY] ✓ Redis endpoint: prod-redis-cluster.ng74lk.ng.0001.use1.cache.amazonaws.com:6379', delay: 38500 },
+            { type: 'progress', message: 'Setting up ElastiCache Redis...', progress: 75, delay: 43000 },
+            { type: 'log', message: '[DEPLOY] Creating ElastiCache cluster prod-redis-cluster...', delay: 43500 },
+            { type: 'log', message: '[DEPLOY] ✓ Redis endpoint: prod-redis-cluster.ng74lk.ng.0001.use1.cache.amazonaws.com:6379', delay: 44500 },
             
             // CDN
-            { type: 'progress', message: 'Configuring CloudFront distribution...', progress: 85, delay: 39500 },
-            { type: 'log', message: '[DEPLOY] Creating CloudFront distribution...', delay: 40000 },
-            { type: 'log', message: '[DEPLOY] ✓ CloudFront domain: d1a2b3c4d5e6f7.cloudfront.net', delay: 41000 },
-            { type: 'notification', message: '✅ Infrastructure deployment complete!', delay: 42000 },
+            { type: 'progress', message: 'Configuring CloudFront distribution...', progress: 85, delay: 45500 },
+            { type: 'log', message: '[DEPLOY] Creating CloudFront distribution...', delay: 46000 },
+            { type: 'log', message: '[DEPLOY] ✓ CloudFront domain: d1a2b3c4d5e6f7.cloudfront.net', delay: 47000 },
+            { type: 'notification', message: '✅ Infrastructure deployment complete!', delay: 48000 },
             
             // Post-deployment verification
             { type: 'notification', message: '🧪 Running post-deployment tests...', delay: 43000 },
