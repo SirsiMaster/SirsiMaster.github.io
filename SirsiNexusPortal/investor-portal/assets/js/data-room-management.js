@@ -116,9 +116,68 @@ class DataRoomManager {
         localStorage.setItem('sirsi_data_room_documents', JSON.stringify(this.documents));
     }
 
-    loadSampleData() {
+    async loadSampleData() {
         // Add some sample documents if none exist
         console.log('Loading sample data. Current documents:', this.documents.length);
+        
+        // First, try to load documents from config file
+        try {
+            const response = await fetch('assets/data-room-config.json');
+            if (response.ok) {
+                const config = await response.json();
+                console.log('Loaded config:', config);
+                
+                // Convert config documents to the format we need
+                const configDocs = [];
+                let docId = 1;
+                
+                for (const [sectionKey, section] of Object.entries(config.sections)) {
+                    if (section.files && Array.isArray(section.files)) {
+                        for (const file of section.files) {
+                            // Determine category based on section
+                            let category = 'strategic';
+                            if (sectionKey.includes('financial')) category = 'financial';
+                            else if (sectionKey.includes('legal')) category = 'legal';
+                            else if (sectionKey.includes('technical')) category = 'technical';
+                            else if (sectionKey.includes('marketing')) category = 'marketing';
+                            else if (sectionKey.includes('metrics')) category = 'operations';
+                            
+                            configDocs.push({
+                                id: 'doc_config_' + docId++,
+                                name: file.name,
+                                category: category,
+                                size: 1024 * 1024, // Default 1MB
+                                type: 'text/html',
+                                uploadDate: new Date().toISOString(),
+                                lastModified: new Date().toISOString(),
+                                description: file.description || '',
+                                accessLevel: 'public',
+                                version: 1,
+                                versions: [{
+                                    version: 1,
+                                    date: new Date().toISOString(),
+                                    uploadedBy: 'System',
+                                    notes: 'Initial document'
+                                }],
+                                tags: [category, 'committee'],
+                                downloadCount: 0,
+                                isConfidential: false,
+                                url: file.path // Use the path from config
+                            });
+                        }
+                    }
+                }
+                
+                if (configDocs.length > 0) {
+                    this.documents = [...configDocs, ...this.documents];
+                    this.saveDocuments();
+                    console.log('Loaded documents from config:', configDocs.length);
+                }
+            }
+        } catch (error) {
+            console.error('Error loading config:', error);
+        }
+        
         if (this.documents.length === 0) {
             console.log('No documents found, adding sample data...');
             const sampleDocs = [
@@ -141,7 +200,8 @@ class DataRoomManager {
                     }],
                     tags: ['quarterly', 'revenue', 'financial'],
                     downloadCount: 15,
-                    isConfidential: false
+                    isConfidential: false,
+                    url: 'documents/financial-report-q4-2024.pdf' // Direct URL for static file
                 },
                 {
                     id: 'doc_2',
@@ -636,21 +696,31 @@ class DataRoomManager {
 
                 <!-- Preview Area -->
                 <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded-lg p-6 min-h-96">
-                    <div class="text-center py-12">
-                        <div class="w-16 h-16 ${categoryColor.bg} rounded-xl flex items-center justify-center mx-auto mb-4">
-                            <i data-lucide="${this.getFileIcon(doc.type)}" class="w-8 h-8 ${categoryColor.text}"></i>
+                    ${doc.url && (doc.url.endsWith('.html') || doc.url.endsWith('.htm')) ? `
+                        <iframe src="${doc.url}" class="w-full h-96 border-0 rounded-lg" title="${doc.name} Preview"></iframe>
+                        <div class="mt-4 text-center">
+                            <button onclick="window.dataRoom.printDocument('${doc.id}')" class="px-4 py-2 bg-primary-600 text-white text-sm font-medium rounded-lg hover:bg-primary-700 transition-colors">
+                                <i data-lucide="printer" class="w-4 h-4 inline mr-2"></i>
+                                Print / Save as PDF
+                            </button>
                         </div>
-                        <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-2">Document Preview</h3>
-                        <p class="text-slate-600 dark:text-slate-400 mb-4">
-                            Preview functionality is available for this document type.
-                        </p>
-                        <div class="space-y-2 text-sm text-slate-500 dark:text-slate-400">
-                            <p><strong>Type:</strong> ${doc.type}</p>
-                            <p><strong>Category:</strong> ${doc.category.charAt(0).toUpperCase() + doc.category.slice(1)}</p>
-                            <p><strong>Access Level:</strong> ${doc.accessLevel.charAt(0).toUpperCase() + doc.accessLevel.slice(1)}</p>
-                            <p><strong>Downloads:</strong> ${doc.downloadCount || 0}</p>
+                    ` : `
+                        <div class="text-center py-12">
+                            <div class="w-16 h-16 ${categoryColor.bg} rounded-xl flex items-center justify-center mx-auto mb-4">
+                                <i data-lucide="${this.getFileIcon(doc.type)}" class="w-8 h-8 ${categoryColor.text}"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-2">Document Preview</h3>
+                            <p class="text-slate-600 dark:text-slate-400 mb-4">
+                                Preview functionality is available for this document type.
+                            </p>
+                            <div class="space-y-2 text-sm text-slate-500 dark:text-slate-400">
+                                <p><strong>Type:</strong> ${doc.type}</p>
+                                <p><strong>Category:</strong> ${doc.category.charAt(0).toUpperCase() + doc.category.slice(1)}</p>
+                                <p><strong>Access Level:</strong> ${doc.accessLevel.charAt(0).toUpperCase() + doc.accessLevel.slice(1)}</p>
+                                <p><strong>Downloads:</strong> ${doc.downloadCount || 0}</p>
+                            </div>
                         </div>
-                    </div>
+                    `}
                 </div>
 
                 <!-- Version History -->
@@ -695,8 +765,31 @@ class DataRoomManager {
         // Simulate file download
         this.showNotification(`Downloading ${doc.name}...`, 'info');
         
-        // In a real implementation, this would trigger actual file download
-        console.log(`Downloading document: ${doc.name}`);
+        // If it's an HTML file, open it in a new window for printing
+        if (doc.url && (doc.url.endsWith('.html') || doc.url.endsWith('.htm'))) {
+            window.open(doc.url, '_blank');
+        } else {
+            // In a real implementation, this would trigger actual file download
+            console.log(`Downloading document: ${doc.name}`);
+        }
+    }
+
+    printDocument(docId) {
+        const doc = this.documents.find(d => d.id === docId);
+        if (!doc || !doc.url) return;
+
+        // Open the HTML file in a new window for printing
+        const printWindow = window.open(doc.url, '_blank');
+        
+        if (printWindow) {
+            printWindow.onload = function() {
+                setTimeout(() => {
+                    printWindow.print();
+                }, 500);
+            };
+        }
+        
+        this.showNotification('Opening document for printing. Use your browser\'s print dialog to save as PDF.', 'info');
     }
 
     showVersionHistory(docId) {
