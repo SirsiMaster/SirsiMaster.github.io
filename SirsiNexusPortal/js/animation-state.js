@@ -156,15 +156,18 @@ class InfrastructureAnimationController {
   }
 }
 
-// Initialize and export
-const stateMachine = new AnimationStateMachine();
-const animationController = new InfrastructureAnimationController(stateMachine);
+// Initialize state machine and controller
+function initializeAnimation() {
+  const stateMachine = new AnimationStateMachine();
+  const animationController = new InfrastructureAnimationController(stateMachine);
 
-// Make stateMachine globally available
-window.stateMachine = stateMachine;
-window.animationController = animationController;
+  // Make stateMachine globally available
+  window.stateMachine = stateMachine;
+  window.animationController = animationController;
 
-window.addEventListener('DOMContentLoaded', () => {
+  // Initialize immediately
   animationController.initialize();
-  // Sync with instruction canvas
-});
+}
+
+// Run initialization when DOM is loaded
+document.addEventListener('DOMContentLoaded', initializeAnimation);
