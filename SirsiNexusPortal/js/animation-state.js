@@ -158,6 +158,7 @@ class InfrastructureAnimationController {
 
 // Initialize state machine and controller
 function initializeAnimation() {
+  console.log('Initializing animation...');
   const stateMachine = new AnimationStateMachine();
   const animationController = new InfrastructureAnimationController(stateMachine);
 
@@ -167,6 +168,23 @@ function initializeAnimation() {
 
   // Initialize immediately
   animationController.initialize();
+
+  // Add button click handler
+  const demoButton = document.querySelector('button[onclick="window.stateMachine.start()"]');
+  if (demoButton) {
+    console.log('Found demo button, adding click handler');
+    demoButton.onclick = () => {
+      console.log('Demo button clicked');
+      if (window.stateMachine) {
+        console.log('Starting state machine...');
+        window.stateMachine.start();
+      } else {
+        console.error('State machine not found');
+      }
+    };
+  } else {
+    console.error('Demo button not found');
+  }
 }
 
 // Run initialization when DOM is loaded
