@@ -1,4 +1,5 @@
 // Animation State Machine
+// Handles infrastructure deployment visualization
 class AnimationStateMachine {
   constructor() {
     this.currentState = 'idle';
