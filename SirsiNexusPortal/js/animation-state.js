@@ -160,8 +160,11 @@ class InfrastructureAnimationController {
 const stateMachine = new AnimationStateMachine();
 const animationController = new InfrastructureAnimationController(stateMachine);
 
+// Make stateMachine globally available
+window.stateMachine = stateMachine;
+window.animationController = animationController;
+
 window.addEventListener('DOMContentLoaded', () => {
   animationController.initialize();
+  // Sync with instruction canvas
 });
-
-export { stateMachine, animationController };
