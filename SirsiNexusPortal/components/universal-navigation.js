@@ -98,84 +98,85 @@ renderNavigation() {
         return `
             <div class="bg-white dark:bg-gray-800/95 sticky top-0 z-50 border-b border-slate-200 dark:border-slate-700 backdrop-blur-sm">
                 <div class="max-w-7xl mx-auto px-6">
-                    <div class="flex h-16 items-center justify-between">
-                      <!-- Logo and Site Name -->
-                      <div class="flex items-center gap-6">
-                        <div class="flex items-center gap-3">
-                          <div class="w-12 h-12 flex items-center justify-center">
-                            <img src="/SirsiNexusPortal/assets/images/Sirsi_Logo_300ppi_cguiyg.png" alt="Sirsi Logo" class="w-12 h-12 object-contain dark:hidden">
-                            <img src="/SirsiNexusPortal/assets/images/Sirsi_Logo_300ppi_Inverted_lt7asx.png" alt="Sirsi Logo" class="w-12 h-12 object-contain hidden dark:block">
+                    <div class="flex h-16 items-center">
+                      <!-- Left Section: Logo and Site Name (Fixed Position) -->
+                      <div class="flex-none w-64 flex items-center gap-3">
+                          <div class="w-10 h-10 flex items-center justify-center">
+                            <img src="/SirsiNexusPortal/assets/images/Sirsi_Logo_300ppi_cguiyg.png" alt="Sirsi Logo" class="w-10 h-10 object-contain dark:hidden">
+                            <img src="/SirsiNexusPortal/assets/images/Sirsi_Logo_300ppi_Inverted_lt7asx.png" alt="Sirsi Logo" class="w-10 h-10 object-contain hidden dark:block">
                           </div>
                           <div>
-                            <h1 class="text-lg font-semibold text-slate-900 dark:text-slate-100">SirsiNexus</h1>
+                            <h1 class="text-base font-semibold text-slate-900 dark:text-slate-100">SirsiNexus</h1>
                             <div class="flex items-center gap-2">
-                              <span class="version-badge text-xs text-secondary-500 dark:text-secondary-400 bg-secondary-100 dark:bg-secondary-800 px-2 py-0.5 rounded">v0.7.9-alpha</span>
+                              <span class="version-badge text-xs text-secondary-500 dark:text-secondary-400 bg-secondary-100 dark:bg-secondary-800 px-1.5 py-0.5 rounded">v0.7.9</span>
                               <div class="flex items-center gap-1">
                                 <div class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></div>
                                 <span class="status-indicator text-xs text-slate-600 dark:text-slate-300">Live</span>
                               </div>
                             </div>
                           </div>
-                        </div>
                       </div>
                       
-                      <!-- Navigation and Search Container -->
-                      <div class="flex items-center gap-4 flex-1">
-                        <!-- Navigation -->
-                        <nav class="flex items-center gap-4">
-                        ${backUrl ? `
-                            <a href="${backUrl}" class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-                                </svg>
-                                Back
-                            </a>
-                            <span class="text-slate-300 dark:text-slate-600">|</span>
-                        ` : ''}
-                        
-                        <!-- Breadcrumb -->
-                        <div class="flex items-center gap-2">
-                            ${breadcrumb.map((item, index) => `
-                                <a href="${item.url}" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">
-                                    ${item.name}
-                                </a>
-                                ${index < breadcrumb.length - 1 ? '<span class="text-slate-400 dark:text-slate-600">/</span>' : ''}
-                            `).join('')}
+                      <!-- Center Section: Navigation and Custom Elements -->
+                      <div class="flex-1 flex items-center justify-between ml-8">
+                        <!-- Navigation and Custom Elements Container -->
+                        <div class="flex items-center gap-6">
+                          <!-- Back Navigation when available -->
+                          ${backUrl ? `
+                              <a href="${backUrl}" class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">
+                                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                                  </svg>
+                                  Back
+                              </a>
+                          ` : ''}
+                          
+                          <!-- Breadcrumb -->
+                          <div class="flex items-center gap-2">
+                              ${breadcrumb.map((item, index) => `
+                                  <a href="${item.url}" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">
+                                      ${item.name}
+                                  </a>
+                                  ${index < breadcrumb.length - 1 ? '<span class="text-slate-400 dark:text-slate-600">/</span>' : ''}
+                              `).join('')}
+                          </div>
+                          
+                          <!-- Custom Elements Slot -->
+                          <div id="custom-nav-elements"></div>
                         </div>
-                        </nav>
                         
                         <!-- Search Bar -->
-                        <div class="flex-1 max-w-md mx-8">
+                        <div class="max-w-xs relative">
                           <div class="relative">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                              <svg class="h-5 w-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <svg class="h-4 w-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                               </svg>
                             </div>
                             <input
                               type="text"
                               id="documentSearch"
-                              class="block w-full pl-10 pr-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"
-                              placeholder="Search documents, reports, and data..."
+                              class="block w-full pl-9 pr-3 py-1.5 text-sm border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                              placeholder="Search..."
                               onkeyup="performSearch(this.value)"
                             />
                           </div>
-                          <div id="searchResults" class="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-lg hidden z-50 max-h-96 overflow-y-auto"></div>
+                          <div id="searchResults" class="absolute top-full right-0 w-72 mt-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-lg hidden z-50 max-h-96 overflow-y-auto"></div>
                         </div>
                       </div>
                       
-                      <!-- Right side buttons -->
-                      <div class="flex items-center gap-4">
-                        <button onclick="logout()" class="text-sm text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-200 transition-colors">
-                            Logout
-                        </button>
-                        <button onclick="toggleTheme()" class="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors border border-slate-300 dark:border-slate-600" style="min-width: 40px; min-height: 40px;">
+                      <!-- Right Section: Theme and Logout (Fixed Position) -->
+                      <div class="flex-none flex items-center gap-4 ml-8">
+                        <button onclick="toggleTheme()" class="p-1.5 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors">
                             <svg class="w-4 h-4 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 818 0z"></path>
                             </svg>
                             <svg class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
                             </svg>
+                        </button>
+                        <button onclick="logout()" class="text-sm text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-200 transition-colors">
+                            Logout
                         </button>
                       </div>
                     </div>

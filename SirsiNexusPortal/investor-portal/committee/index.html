@@ -383,53 +383,77 @@
     </style>
 </head>
 <body class="h-full bg-gradient-to-br from-slate-50 via-emerald-50/10 to-blue-50/10 dark:from-slate-900 dark:via-emerald-950/20 dark:to-blue-950/20">
+<!-- Navigation and Layout Header -->
+<div id="unified-header"></div>
+
+<!-- Page Scripts -->
+<script src="/SirsiNexusPortal/components/universal-navigation.js"></script>
+<script src="/SirsiNexusPortal/components/navigation-customizer.js"></script>
+<script src="/SirsiNexusPortal/assets/js/shared-theme-toggle.js"></script>
+
+<!-- Authentication Check -->
+<script>
+    (function() {
+        const auth = sessionStorage.getItem('investorAuth');
+        if (!auth) {
+            window.location.href = '/SirsiNexusPortal/investor-login.html';
+            return;
+        }
+        
+        try {
+            const authData = JSON.parse(auth);
+            const loginTime = new Date(authData.loginTime);
+            const now = new Date();
+            const hoursSinceLogin = (now - loginTime) / (1000 * 60 * 60);
+            
+            if (hoursSinceLogin > 24) {
+                sessionStorage.removeItem('investorAuth');
+                window.location.href = '/SirsiNexusPortal/investor-login.html';
+                return;
+            }
+        } catch (error) {
+            console.error('Authentication error:', error);
+            sessionStorage.removeItem('investorAuth');
+            window.location.href = '/SirsiNexusPortal/investor-login.html';
+            return;
+        }
+    })();
+</script>
+
+<!-- Page-specific customization -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Get the current page from URL
+        const path = window.location.pathname;
+        const pageName = path.split('/').pop().replace('.html', '');
+        
+        // Add committee menu if we're in the committee section
+        if (path.includes('/committee/')) {
+            navCustomizer.addCommitteeMenu(pageName);
+        }
+        
+        // Add action buttons based on page
+        switch(pageName) {
+            case 'data-room':
+                navCustomizer.addActionButtons([{
+                    label: 'Upload Document',
+                    className: 'bg-emerald-600 text-white px-3 py-1.5 rounded-lg hover:bg-emerald-700 transition-colors',
+                    onClick: () => showUploadModal()
+                }]);
+                break;
+            case 'kpi-metrics':
+                navCustomizer.addActionButtons([{
+                    label: 'Export Report',
+                    className: 'bg-blue-600 text-white px-3 py-1.5 rounded-lg hover:bg-blue-700 transition-colors',
+                    onClick: () => exportMetrics()
+                }]);
+                break;
+        }
+    });
+</script>
+
     <!-- Header -->
-    <header class="bg-white dark:bg-gray-800 sticky top-0 z-50 border-b border-gray-200 dark:border-gray-700">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex h-16 items-center justify-between">
-          <div class="flex items-center">
-            <div class="flex items-center space-x-3">
-              <div class="w-12 h-12 flex items-center justify-center">
-                <img src="/SirsiNexusPortal/assets/images/Sirsi_Logo_300ppi_cguiyg.png" alt="Sirsi Logo" class="w-12 h-12 object-contain dark:hidden">
-                <img src="/SirsiNexusPortal/assets/images/Sirsi_Logo_300ppi_Inverted_lt7asx.png" alt="Sirsi Logo" class="w-12 h-12 object-contain hidden dark:block">
-              </div>
-              <div>
-                <h1 class="text-xl font-semibold text-gray-900 dark:text-white">
-                  SirsiNexus
-                </h1>
-                <p class="text-sm text-gray-500 dark:text-gray-400">Committee Dashboard</p>
-              </div>
-            </div>
-            <div class="ml-10 flex items-center space-x-1">
-              <span class="px-3 py-1 text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/20 dark:text-emerald-400 rounded-full">Committee Access</span>
-              <div class="flex items-center space-x-1 px-3 py-1 text-xs">
-                <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                <span class="text-gray-600 dark:text-gray-300">Live</span>
-              </div>
-            </div>
-          </div>
-          <nav class="flex items-center space-x-6">
-            <a href="/SirsiNexusPortal/index.html" class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">Home</a>
-            <a href="/SirsiNexusPortal/investor-portal/index.html" class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">← Back to Portal</a>
-            <!-- Theme Toggle -->
-                <button id="theme-toggle" class="p-2 rounded-md bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 transition-colors mr-2">
-                    <svg class="w-5 h-5 text-gray-600 dark:text-gray-300 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 818 0z"></path>
-                    </svg>
-                    <svg class="w-5 h-5 text-gray-300 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
-                    </svg>
-                </button>
-                <button onclick="logout()" class="text-sm text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 transition-colors">Logout</button>
-            <button onclick="toggleTheme()" class="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
-              </svg>
-            </button>
-          </nav>
-        </div>
-      </div>
-    </header>
+    <div id="unified-header"></div>
     <!-- Sidebar Navigation -->
     <aside class="fixed left-0 top-16 bottom-0 w-52 bg-white dark:bg-slate-800 border-r border-gray-200 dark:border-slate-700 overflow-y-auto hidden lg:block">
         <div class="p-4">
@@ -820,7 +844,7 @@
     </script>
 
 <!-- Theme Toggle and Navigation Scripts -->
-    <script src="/SirsiNexusPortal/assets/js/shared-theme-toggle.js"></script>
-    <script src="/SirsiNexusPortal/components/universal-navigation.js"></script>
+    
+    
 </body>
 </html>

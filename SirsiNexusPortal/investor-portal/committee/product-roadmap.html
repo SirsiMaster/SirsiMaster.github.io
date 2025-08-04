@@ -87,59 +87,77 @@
     <link rel="stylesheet" href="/SirsiNexusPortal/assets/css/shared.css">
 </head>
 <body class="font-inter bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100">
+<!-- Navigation and Layout Header -->
+<div id="unified-header"></div>
+
+<!-- Page Scripts -->
+<script src="/SirsiNexusPortal/components/universal-navigation.js"></script>
+<script src="/SirsiNexusPortal/components/navigation-customizer.js"></script>
+<script src="/SirsiNexusPortal/assets/js/shared-theme-toggle.js"></script>
+
+<!-- Authentication Check -->
+<script>
+    (function() {
+        const auth = sessionStorage.getItem('investorAuth');
+        if (!auth) {
+            window.location.href = '/SirsiNexusPortal/investor-login.html';
+            return;
+        }
+        
+        try {
+            const authData = JSON.parse(auth);
+            const loginTime = new Date(authData.loginTime);
+            const now = new Date();
+            const hoursSinceLogin = (now - loginTime) / (1000 * 60 * 60);
+            
+            if (hoursSinceLogin > 24) {
+                sessionStorage.removeItem('investorAuth');
+                window.location.href = '/SirsiNexusPortal/investor-login.html';
+                return;
+            }
+        } catch (error) {
+            console.error('Authentication error:', error);
+            sessionStorage.removeItem('investorAuth');
+            window.location.href = '/SirsiNexusPortal/investor-login.html';
+            return;
+        }
+    })();
+</script>
+
+<!-- Page-specific customization -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Get the current page from URL
+        const path = window.location.pathname;
+        const pageName = path.split('/').pop().replace('.html', '');
+        
+        // Add committee menu if we're in the committee section
+        if (path.includes('/committee/')) {
+            navCustomizer.addCommitteeMenu(pageName);
+        }
+        
+        // Add action buttons based on page
+        switch(pageName) {
+            case 'data-room':
+                navCustomizer.addActionButtons([{
+                    label: 'Upload Document',
+                    className: 'bg-emerald-600 text-white px-3 py-1.5 rounded-lg hover:bg-emerald-700 transition-colors',
+                    onClick: () => showUploadModal()
+                }]);
+                break;
+            case 'kpi-metrics':
+                navCustomizer.addActionButtons([{
+                    label: 'Export Report',
+                    className: 'bg-blue-600 text-white px-3 py-1.5 rounded-lg hover:bg-blue-700 transition-colors',
+                    onClick: () => exportMetrics()
+                }]);
+                break;
+        }
+    });
+</script>
+
     <!-- Header -->
-    <header class="bg-white dark:bg-gray-800/95 sticky top-0 z-50 border-b border-slate-200 dark:border-slate-700 backdrop-blur-sm">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="flex h-16 items-center justify-between">
-                <div class="flex items-center gap-6">
-                    <div class="flex items-center gap-3">
-                        <div class="w-12 h-12 flex items-center justify-center">
-                            <img src="/SirsiNexusPortal/assets/images/Sirsi_Logo_300ppi_cguiyg.png" alt="Sirsi Logo" class="w-12 h-12 object-contain dark:hidden">
-                            <img src="/SirsiNexusPortal/assets/images/Sirsi_Logo_300ppi_Inverted_lt7asx.png" alt="Sirsi Logo" class="w-12 h-12 object-contain hidden dark:block">
-                        </div>
-                        <div>
-                            <h1 class="text-lg font-semibold text-slate-900 dark:text-slate-100">SirsiNexus</h1>
-                            <div class="flex items-center gap-2">
-                                <span class="text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded">v0.7.10-alpha</span>
-                                <div class="flex items-center gap-1">
-                                    <div class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></div>
-                                    <span class="text-xs text-slate-600 dark:text-slate-300">Live</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <nav class="flex items-center gap-6">
-                    <a href="/SirsiNexusPortal/index.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">← Back to Home</a>
-                    <a href="/SirsiNexusPortal/investor-portal/index.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">← Back to Investor Dashboard</a>
-                    <div class="relative group">
-                        <button class="text-sm text-emerald-600 dark:text-emerald-400 font-medium hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors flex items-center gap-1">
-                            Committee
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                            </svg>
-                        </button>
-                        <div class="absolute top-full left-0 mt-2 w-56 bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-slate-200 dark:border-slate-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                            <div class="py-2">
-                                <a href="/SirsiNexusPortal/investor-portal/committee/index.html" class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">Committee Dashboard</a>
-                                <div class="border-t border-slate-200 dark:border-slate-700 my-1"></div>
-                                <a href="market-analysis.html" class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">Market Analysis</a>
-                                <span class="block px-4 py-2 text-sm text-emerald-600 dark:text-emerald-400 font-medium bg-emerald-50 dark:bg-emerald-900/20">Product Roadmap</span>
-                                <a href="sales-strategy.html" class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">Sales Strategy</a>
-                                <a href="kpi-metrics.html" class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">KPI & Metrics</a>
-                                <a href="go-to-market.html" class="block px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">Go-to-Market</a>
-                            </div>
-                        </div>
-                    </div>
-                    <button onclick="toggleTheme()" class="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                        </svg>
-                    </button>
-                </nav>
-            </div>
-        </div>
-    </header>
+    <div id="unified-header"></div>
     <!-- Sidebar Navigation -->
     <aside class="fixed left-0 top-16 bottom-0 w-52 bg-white dark:bg-slate-800 border-r border-gray-200 dark:border-slate-700 overflow-y-auto hidden lg:block">
         <div class="p-4">
