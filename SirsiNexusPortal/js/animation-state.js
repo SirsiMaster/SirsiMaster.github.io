@@ -1,61 +1,31 @@
 // Animation State Machine
-// Handles infrastructure deployment visualization and instruction sync
-
-// Event emitter for canvas synchronization
-class EventEmitter {
-  constructor() {
-    this.events = {};
-  }
-
-  on(event, callback) {
-    if (!this.events[event]) {
-      this.events[event] = [];
-    }
-    this.events[event].push(callback);
-  }
-
-  emit(event, data) {
-    if (this.events[event]) {
-      this.events[event].forEach(callback => callback(data));
-    }
-  }
-}
-
-const eventEmitter = new EventEmitter();
-
 class AnimationStateMachine {
   constructor() {
     this.currentState = 'idle';
     this.states = {
       idle: {
         next: 'analyzing',
-        timeout: 0,
-        instruction: 'Starting infrastructure analysis...'
+        timeout: 0
       },
       analyzing: {
         next: 'planning',
-        timeout: 3000,
-        instruction: 'Analyzing current infrastructure and dependencies...'
+        timeout: 3000
       },
       planning: {
         next: 'deploying',
-        timeout: 4000,
-        instruction: 'Planning optimal deployment strategy...'
+        timeout: 4000
       },
       deploying: {
         next: 'monitoring',
-        timeout: 5000,
-        instruction: 'Deploying infrastructure components...'
+        timeout: 5000
       },
       monitoring: {
         next: 'optimizing',
-        timeout: 4000,
-        instruction: 'Monitoring system health and performance...'
+        timeout: 4000
       },
       optimizing: {
         next: 'idle',
-        timeout: 3000,
-        instruction: 'Optimizing resource allocation...'
+        timeout: 3000
       }
     };
     
@@ -77,14 +47,9 @@ class AnimationStateMachine {
     }
 
     this.currentState = targetState;
-    const stateData = {
-      timestamp: new Date().toISOString(),
-      state: targetState,
-      instruction: this.states[targetState].instruction
-    };
-    
-    this.notify(targetState, stateData);
-    eventEmitter.emit('stateChange', stateData);
+    this.notify(targetState, {
+      timestamp: new Date().toISOString()
+    });
 
     if (this.states[targetState].timeout > 0) {
       await new Promise(resolve => setTimeout(resolve, this.states[targetState].timeout));
@@ -197,25 +162,6 @@ const animationController = new InfrastructureAnimationController(stateMachine);
 
 window.addEventListener('DOMContentLoaded', () => {
   animationController.initialize();
-
-  // Sync with instruction canvas if it exists
-  const instructionCanvas = document.getElementById('instruction-canvas');
-  if (instructionCanvas) {
-    eventEmitter.on('stateChange', (data) => {
-      instructionCanvas.dispatchEvent(new CustomEvent('infrastructureStateChange', { detail: data }));
-    });
-  }
-
-  // Sync with build canvas if it exists
-  const buildCanvas = document.getElementById('build-canvas');
-  if (buildCanvas) {
-    eventEmitter.on('stateChange', (data) => {
-      buildCanvas.dispatchEvent(new CustomEvent('infrastructureStateChange', { detail: data }));
-    });
-  }
-
-  // Make stateMachine globally available
-  window.stateMachine = stateMachine;
 });
 
-export { stateMachine, animationController, eventEmitter };
+export { stateMachine, animationController };
