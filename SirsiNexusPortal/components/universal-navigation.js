@@ -14,6 +14,7 @@ class UniversalNavigation {
         this.setupTheme();
         this.setupBackNavigation();
         this.bindEvents();
+        this.renderNavigation();
         this.setupSearch();
     }
 
@@ -80,12 +81,21 @@ class UniversalNavigation {
     /**
      * Render navigation HTML
      */
-    renderNavigation() {
+renderNavigation() {
+        const header = document.getElementById('unified-header');
+        if (header) {
+            header.innerHTML = this.generateNavigationHTML();
+        }
+    }
+
+    generateNavigationHTML() {
         const backUrl = this.getBackUrl();
         const breadcrumb = this.getBreadcrumb();
         
         return `
-            <nav class="flex items-center gap-4">
+            <div class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-50">
+                <div class="max-w-7xl mx-auto px-6 py-4">
+                    <nav class="flex items-center gap-4">
                 ${backUrl ? `
                     <a href="${backUrl}" class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -136,7 +146,9 @@ class UniversalNavigation {
                         </svg>
                     </button>
                 </div>
-            </nav>
+                    </nav>
+                </div>
+            </div>
         `;
     }
 
