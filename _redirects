@@ -1,0 +1,11 @@
+# Clean URLs
+/SirsiNexusPortal/investor-portal/index.html  /SirsiNexusPortal/investor-portal/  301
+/SirsiNexusPortal/investor-portal/data-room.html  /SirsiNexusPortal/investor-portal/data-room/  301
+
+# Handle trailing slashes
+/SirsiNexusPortal/investor-portal  /SirsiNexusPortal/investor-portal/  301
+/SirsiNexusPortal/investor-portal/data-room  /SirsiNexusPortal/investor-portal/data-room/  301
+
+# Redirect old URLs to new structure
+/investor-portal/  /SirsiNexusPortal/investor-portal/  301
+/investor-login.html  /SirsiNexusPortal/investor-login/  301

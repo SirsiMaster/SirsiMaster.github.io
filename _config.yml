@@ -4,6 +4,14 @@ description: SirsiNexus revolutionizes cloud infrastructure management through G
 
 # Build settings
 permalink: pretty
+baseurl: "/SirsiNexusPortal"
+url: "https://sirsimaster.github.io"
+
+# Directory structure
+source: .
+destination: ./_site
+
+# File handling
 exclude: [
   "README.md",
   "Gemfile",
@@ -12,10 +20,14 @@ exclude: [
   "package.json",
   "package-lock.json"
 ]
-
-# Jekyll settings
-include: [".htaccess"]
-keep_files: [".git"]
+include: [
+  ".htaccess",
+  "_redirects"
+]
+keep_files: [
+  ".git",
+  "CNAME"
+]
 
 # Default front matter
 defaults:
@@ -24,3 +36,6 @@ defaults:
       path: "" # Apply to all files
     values:
       layout: "default"
+
+# URL handling
+force_https: true

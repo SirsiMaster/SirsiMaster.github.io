@@ -2,6 +2,7 @@
 layout: default
 title: SirsiNexus - Investor Portal
 permalink: /SirsiNexusPortal/investor-portal/
+base_url: /SirsiNexusPortal
 ---
 <!DOCTYPE html>
 <html lang="en" class="h-full">
@@ -12,7 +13,7 @@ permalink: /SirsiNexusPortal/investor-portal/
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Security Integration -->
-    <script src="/SirsiNexusPortal/assets/js/security-init.js"></script>
+<script src="{{ page.base_url }}/assets/js/security-init.js"></script>
     <!-- Cache buster: 1752716245 -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
@@ -29,7 +30,7 @@ permalink: /SirsiNexusPortal/investor-portal/
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     
     <!-- Dynamic Version Loader -->
-    <script src="/SirsiNexusPortal/assets/js/version-loader.js"></script>
+<script src="{{ page.base_url }}/assets/js/version-loader.js"></script>
     <script>
       tailwind.config = {
         darkMode: 'class',
@@ -397,9 +398,9 @@ permalink: /SirsiNexusPortal/investor-portal/
 <div id="unified-header"></div>
 
 <!-- Page Scripts -->
-<script src="/SirsiNexusPortal/components/universal-navigation.js"></script>
-<script src="/SirsiNexusPortal/components/navigation-customizer.js"></script>
-<script src="/SirsiNexusPortal/assets/js/shared-theme-toggle.js"></script>
+<script src="{{ page.base_url }}/components/universal-navigation.js"></script>
+<script src="{{ page.base_url }}/components/navigation-customizer.js"></script>
+<script src="{{ page.base_url }}/assets/js/shared-theme-toggle.js"></script>
 
 <!-- Authentication Check -->
 <script>
