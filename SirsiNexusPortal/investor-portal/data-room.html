@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@floating-ui/dom@1.5.3"></script>
     <script>
       // Authentication check
       (function() {
@@ -177,41 +178,97 @@
     <div id="unified-header"></div>
 
             <!-- Page Content -->
-            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 dark:bg-gray-900">
+            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-slate-50 dark:bg-slate-900">
                 <div class="container mx-auto px-6 py-8">
-                    <!-- Statistics Bar -->
-                    <div class="bg-white dark:bg-slate-800 rounded-lg p-6 mb-8 shadow-sm">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-                            <div class="text-center">
-                                <div class="text-3xl font-bold text-primary-600 dark:text-primary-400" id="totalDocuments">0</div>
-                                <div class="text-sm text-slate-600 dark:text-slate-400 mt-1">Total Documents</div>
-                            </div>
-                            <div class="text-center">
-                                <div class="text-3xl font-bold text-blue-600 dark:text-blue-400" id="recentUploads">0</div>
-                                <div class="text-sm text-slate-600 dark:text-slate-400 mt-1">Recent Uploads</div>
-                            </div>
-                            <div class="text-center">
-                                <div class="text-3xl font-bold text-yellow-600 dark:text-yellow-400" id="totalSize">0 B</div>
-                                <div class="text-sm text-slate-600 dark:text-slate-400 mt-1">Total Size</div>
-                            </div>
-                            <div class="text-center">
-                                <div class="text-3xl font-bold text-green-600 dark:text-green-400" id="activeUsers">1</div>
-                                <div class="text-sm text-slate-600 dark:text-slate-400 mt-1">Active Users</div>
-                            </div>
+                    <!-- Page Header -->
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+                        <div>
+                            <h1 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Data Room</h1>
+                            <p class="text-sm text-slate-600 dark:text-slate-400 mt-1">Access and manage your secure documents</p>
                         </div>
-                    </div>
-
-                    <!-- Category Filter -->
-                    <div class="bg-white dark:bg-slate-800 rounded-lg p-6 mb-8 shadow-sm">
-                        <div class="flex items-center justify-between mb-4">
-                            <h2 class="text-lg font-semibold">Category</h2>
+                        <div class="flex items-center gap-3">
+                            <div class="relative">
+                                <input type="text" id="searchInput" placeholder="Search documents..." class="w-64 px-4 py-2 pr-10 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                                <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2"></i>
+                            </div>
                             <button id="uploadBtn" class="flex items-center gap-2 px-4 py-2 bg-primary-600 text-white text-sm font-medium rounded-lg hover:bg-primary-700 transition-colors">
                                 <i data-lucide="upload" class="w-4 h-4"></i>
                                 Upload Document
                             </button>
                         </div>
-                        <div class="flex flex-wrap gap-3" id="categoryFilters">
-                            <!-- Category buttons will be dynamically populated -->
+                    </div>
+
+                    <!-- Statistics Cards -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                        <!-- Total Documents -->
+                        <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-primary-100 dark:bg-primary-900/20 rounded-lg flex items-center justify-center">
+                                    <i data-lucide="files" class="w-6 h-6 text-primary-600 dark:text-primary-400"></i>
+                                </div>
+                                <div>
+                                    <div class="text-2xl font-bold text-slate-900 dark:text-slate-100" id="totalDocuments">0</div>
+                                    <div class="text-sm text-slate-600 dark:text-slate-400">Total Documents</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Recent Uploads -->
+                        <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/20 rounded-lg flex items-center justify-center">
+                                    <i data-lucide="upload" class="w-6 h-6 text-blue-600 dark:text-blue-400"></i>
+                                </div>
+                                <div>
+                                    <div class="text-2xl font-bold text-slate-900 dark:text-slate-100" id="recentUploads">0</div>
+                                    <div class="text-sm text-slate-600 dark:text-slate-400">Recent Uploads</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Total Size -->
+                        <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-yellow-100 dark:bg-yellow-900/20 rounded-lg flex items-center justify-center">
+                                    <i data-lucide="hard-drive" class="w-6 h-6 text-yellow-600 dark:text-yellow-400"></i>
+                                </div>
+                                <div>
+                                    <div class="text-2xl font-bold text-slate-900 dark:text-slate-100" id="totalSize">0 B</div>
+                                    <div class="text-sm text-slate-600 dark:text-slate-400">Total Size</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Active Users -->
+                        <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-green-100 dark:bg-green-900/20 rounded-lg flex items-center justify-center">
+                                    <i data-lucide="users" class="w-6 h-6 text-green-600 dark:text-green-400"></i>
+                                </div>
+                                <div>
+                                    <div class="text-2xl font-bold text-slate-900 dark:text-slate-100" id="activeUsers">1</div>
+                                    <div class="text-sm text-slate-600 dark:text-slate-400">Active Users</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Filters & Quick Actions -->
+                    <div class="bg-white dark:bg-slate-800 rounded-xl p-6 mb-8 shadow-sm">
+                        <div class="flex flex-col md:flex-row md:items-center gap-4">
+                            <!-- Categories -->
+                            <div class="flex-1">
+                                <div class="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Categories</div>
+                                <div class="flex flex-wrap gap-2" id="categoryFilters">
+                                    <!-- Category filters will be populated by JavaScript -->
+                                </div>
+                            </div>
+                            <!-- View Toggle -->
+                            <div class="flex items-center gap-2 ml-auto">
+                                <button class="p-2 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors" data-view="grid">
+                                    <i data-lucide="grid" class="w-5 h-5"></i>
+                                </button>
+                                <button class="p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors" data-view="list">
+                                    <i data-lucide="list" class="w-5 h-5"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
 
