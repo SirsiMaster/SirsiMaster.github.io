@@ -2,41 +2,24 @@ name: GitHub Pages deployment
 
 on:
   push:
-    branches: [ main, staging/infrastructure-animation ]
-  pull_request:
-    branches: [ main, staging/infrastructure-animation ]
+    branches:
+      - main
+      - staging/infrastructure-animation
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
-
 jobs:
   deploy:
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
-
-      # No need to copy files - both index.html and index-staging.html stay in SirsiNexusPortal
-      - name: Verify files
-        run: |
-          if [[ "${GITHUB_REF#refs/heads/}" == "staging/infrastructure-animation" ]]; then
-            echo "Verifying staging deployment..."
-            test -f SirsiNexusPortal/index-staging.html || (echo "index-staging.html not found" && exit 1)
-          else
-            echo "Verifying production deployment..."
-            test -f SirsiNexusPortal/index.html || (echo "index.html not found" && exit 1)
-          fi
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -49,5 +32,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        with:
-          token: ${{ github.token }}
