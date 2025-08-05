@@ -24,22 +24,24 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
-      - name: Verify files exist
+      - name: Create deployment structure
         run: |
-          echo "Checking SirsiNexusPortal directory contents:"
-          ls -la SirsiNexusPortal/
-          echo "Verifying index files exist:"
-          ls -la SirsiNexusPortal/index*.html
+          echo "Creating deployment structure with SirsiNexusPortal directory"
+          mkdir -p _site
+          cp -r SirsiNexusPortal _site/
+          echo "Verifying structure:"
+          ls -la _site/
+          ls -la _site/SirsiNexusPortal/index*.html
       
       - name: Copy index to staging for non-main branches
         if: github.ref != 'refs/heads/main'
         run: |
-          cp SirsiNexusPortal/index.html SirsiNexusPortal/index-staging.html
+          cp _site/SirsiNexusPortal/index.html _site/SirsiNexusPortal/index-staging.html
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'SirsiNexusPortal'
+          path: '_site'
 
       - name: Deploy to GitHub Pages
         id: deployment
