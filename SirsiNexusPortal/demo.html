@@ -652,7 +652,11 @@
         const environmentDetails = document.getElementById('environment-details');
         const sourceEnv = document.getElementById('source-env');
         const targetEnv = document.getElementById('target-env');
-        const startButton = document.getElementById('start-deployment');
+const startButton = document.getElementById('start-deployment');
+if (!startButton) {
+  console.error('Start button not found');
+  return;
+}
         const startButtonText = document.getElementById('start-button-text');
         const overallStatus = document.getElementById('overall-status');
         
@@ -691,8 +695,11 @@
             sourceEnv.textContent = scenario.source;
             targetEnv.textContent = scenario.target;
             startButton.disabled = false;
+            startButton.removeAttribute('disabled');
             startButton.classList.remove('disabled:bg-slate-600', 'disabled:cursor-not-allowed');
-            startButtonText.textContent = `Deploy ${scenario.title}`;
+            if (startButtonText) {
+              startButtonText.textContent = `Deploy ${scenario.title}`;
+            }
             
             overallStatus.innerHTML = `
               <div class="w-3 h-3 bg-emerald-400 rounded-full animate-pulse"></div>
@@ -938,64 +945,7 @@ function startCommandOutput(scenario) {
         return triggerMap[scenario] || triggerMap['onprem-to-aws'];
       }
       
-      function activateAgent(componentName) {
-        console.log(`Activating agent: ${componentName}`);
-        const agentData = agentTemplateData[componentName];
-        const componentElement = document.getElementById(`component-${componentName}`);
-        const statusElement = document.getElementById(`${componentName}-status`);
-        const taskElement = document.getElementById(`${componentName}-task`);
-        const durationElement = document.getElementById(`${componentName}-duration`);
-        const runtimeElement = document.getElementById(`${componentName}-runtime`);
-
-        if (!componentElement || !statusElement) return;
-
-        componentElement.classList.remove('opacity-50');
-        componentElement.classList.add('opacity-100', 'border-emerald-500/50', 'shadow-lg');
-
-        statusElement.textContent = 'Active';
-        statusElement.className = 'text-emerald-400';
-
-        let logIndex = 0;
-        const logInterval = setInterval(() => {
-          if (logIndex < agentData.logs.length) {
-            const currentTask = agentData.logs[logIndex];
-            taskElement.textContent = currentTask;
-
-            const taskStartTime = Date.now();
-
-            const taskDurationInterval = setInterval(() => {
-              const elapsed = Math.floor((Date.now() - taskStartTime) / 1000);
-              const minutes = Math.floor(elapsed / 60);
-              const seconds = elapsed % 60;
-              durationElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            }, 1000);
-
-            window[`${componentName}TaskInterval`] = taskDurationInterval;
-
-            logIndex++;
-          } else {
-            clearInterval(logInterval);
-            componentElement.classList.add('border-green-500/50');
-            componentElement.classList.remove('border-emerald-500/50');
-            statusElement.textContent = 'Complete';
-            statusElement.className = 'text-green-400';
-            taskElement.textContent = 'All tasks completed';
-            clearInterval(window[`${componentName}TaskInterval`]);
-            durationElement.textContent = '--:--';
-          }
-        }, Math.random() * 2000 + 3000);
-
-        const animation = setInterval(() => {
-          const totalElapsed = Math.floor((Date.now() - taskStartTime) / 1000);
-          const totalMinutes = Math.floor(totalElapsed / 60);
-          const totalSeconds = totalElapsed % 60;
-          runtimeElement.textContent = `${totalMinutes.toString().padStart(2, '0')}:${totalSeconds.toString().padStart(2, '0')}`;
-        }, 1000);
-
-        window[`${componentName}RuntimeInterval`] = animation;
-      }
-
-      
+      function activateAgent(componentName, message) {
         console.log(`🚀 Activating agent: ${componentName} with message: ${message}`);
         
         const element = document.getElementById(`component-${componentName}`);
@@ -1004,59 +954,62 @@ function startCommandOutput(scenario) {
         const durationElement = document.getElementById(`${componentName}-duration`);
         const runtimeElement = document.getElementById(`${componentName}-runtime`);
         
-        if (element && statusElement) {
-          // Activate component visually
-          element.classList.remove('opacity-50');
-          element.classList.add('opacity-100', 'border-emerald-500/50', 'shadow-lg');
-          
-          // Update status
-          statusElement.textContent = 'Active';
-          statusElement.className = 'text-emerald-400';
-          
-          // Extract task from message - improved parsing
-          const taskMatch = message.match(/- (.+)/);
-          let taskName = taskMatch ? taskMatch[1] : message.replace(/🚀|🌐|🗄️|📊|activated/g, '').trim();
-          taskName = taskName.replace(/agent\s+/, '').replace(/\s+agent/, '').trim();
-            // Show full verbose task - no truncation
-            taskElement.textContent = taskName;
-          
-          // Start task timer
-          const startTime = Date.now();
-          window[`${componentName}StartTime`] = startTime;
-          window[`${componentName}TotalStart`] = window[`${componentName}TotalStart`] || startTime;
-          
-          // Update duration timer
-          const durationInterval = setInterval(() => {
-            const elapsed = Math.floor((Date.now() - startTime) / 1000);
-            const minutes = Math.floor(elapsed / 60);
-            const seconds = elapsed % 60;
-            durationElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-          }, 1000);
-          
-          // Update total runtime timer
-          const runtimeInterval = setInterval(() => {
-            const totalElapsed = Math.floor((Date.now() - window[`${componentName}TotalStart`]) / 1000);
-            const totalMinutes = Math.floor(totalElapsed / 60);
-            const totalSeconds = totalElapsed % 60;
-            runtimeElement.textContent = `${totalMinutes.toString().padStart(2, '0')}:${totalSeconds.toString().padStart(2, '0')}`;
-          }, 1000);
-          
-          // Store intervals for cleanup
-          window[`${componentName}DurationInterval`] = durationInterval;
-          window[`${componentName}RuntimeInterval`] = runtimeInterval;
-          
-          // Update active agents count
-          const activeAgentsCount = document.getElementById('active-agents-count');
-          if (activeAgentsCount) {
-            const current = parseInt(activeAgentsCount.textContent.split('/')[0]);
-            activeAgentsCount.textContent = `${current + 1}/6`;
-          }
-          
-          // Start component-specific task animation
-          setTimeout(() => {
-            startComponentTaskAnimation(componentName);
-          }, 2000);
+        if (!element || !statusElement) {
+          console.error(`Cannot find agent elements for: ${componentName}`);
+          return;
         }
+        
+        // Activate component visually
+        element.classList.remove('opacity-50');
+        element.classList.add('opacity-100', 'border-emerald-500/50', 'shadow-lg');
+        
+        // Update status
+        statusElement.textContent = 'Active';
+        statusElement.className = 'text-emerald-400';
+        
+        // Extract task from message - improved parsing
+        const taskMatch = message.match(/- (.+)/);
+        let taskName = taskMatch ? taskMatch[1] : message.replace(/🚀|🌐|🗄️|📊|activated/g, '').trim();
+        taskName = taskName.replace(/agent\s+/, '').replace(/\s+agent/, '').trim();
+        // Show full verbose task - no truncation
+        if (taskElement) taskElement.textContent = taskName;
+        
+        // Start task timer
+        const startTime = Date.now();
+        window[`${componentName}StartTime`] = startTime;
+        window[`${componentName}TotalStart`] = window[`${componentName}TotalStart`] || startTime;
+        
+        // Update duration timer
+        const durationInterval = setInterval(() => {
+          const elapsed = Math.floor((Date.now() - startTime) / 1000);
+          const minutes = Math.floor(elapsed / 60);
+          const seconds = elapsed % 60;
+          if (durationElement) durationElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }, 1000);
+        
+        // Update total runtime timer
+        const runtimeInterval = setInterval(() => {
+          const totalElapsed = Math.floor((Date.now() - window[`${componentName}TotalStart`]) / 1000);
+          const totalMinutes = Math.floor(totalElapsed / 60);
+          const totalSeconds = totalElapsed % 60;
+          if (runtimeElement) runtimeElement.textContent = `${totalMinutes.toString().padStart(2, '0')}:${totalSeconds.toString().padStart(2, '0')}`;
+        }, 1000);
+        
+        // Store intervals for cleanup
+        window[`${componentName}DurationInterval`] = durationInterval;
+        window[`${componentName}RuntimeInterval`] = runtimeInterval;
+        
+        // Update active agents count
+        const activeAgentsCount = document.getElementById('active-agents-count');
+        if (activeAgentsCount) {
+          const current = parseInt(activeAgentsCount.textContent.split('/')[0]);
+          activeAgentsCount.textContent = `${current + 1}/6`;
+        }
+        
+        // Start component-specific task animation
+        setTimeout(() => {
+          startComponentTaskAnimation(componentName);
+        }, 2000);
       }
       
       function updateSystemCounters(cmd, index) {
@@ -1534,6 +1487,11 @@ function initializeAgents() {
         };
         
         return componentData[scenario] || componentData['onprem-to-aws'];
+      }
+
+      function startComponentAnimations(scenarioKey) {
+        // This function doesn't need to do anything since agents are activated by command triggers
+        console.log('Component animations started for:', scenarioKey);
       }
 
       function startDiscoveryPhase(scenarioKey) {
