@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="SirsiNexus Infrastructure Demo - Live deployment simulation" />
+    <meta name="theme-color" content="#059669" />
+    
+    <title>SirsiNexus Infrastructure Demo - Live Deployment Simulation</title>
+    
+    <!-- Preload critical resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              'inter': ['Inter', 'sans-serif'],
+            },
+            colors: {
+              emerald: {
+                600: '#059669',
+                700: '#047857',
+              },
+            },
+          },
+        },
+      }
+    </script>
+    
+    <!-- Theme Toggle Script -->
+    <script>
+      (function() {
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const shouldBeDark = savedTheme ? savedTheme === 'dark' : prefersDark;
+        
+        if (shouldBeDark) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      })();
+    </script>
+  </head>
+  
+  <body class="font-inter bg-slate-900 text-white h-full overflow-hidden">
+    <!-- Header -->
+    <header class="bg-slate-800/90 backdrop-blur-sm border-b border-slate-700 z-50">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="flex h-16 items-center justify-between">
+          <div class="flex items-center gap-6">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 flex items-center justify-center">
+                <img src="/SirsiNexusPortal/assets/images/Sirsi_Logo_300ppi_Inverted_lt7asx.png" alt="Sirsi Logo" class="w-10 h-10 object-contain">
+              </div>
+              <div>
+                <h1 class="text-lg font-semibold text-white">SirsiNexus Demo</h1>
+                <div class="flex items-center gap-2">
+                  <span class="text-xs text-white bg-emerald-600 px-2 py-0.5 rounded font-semibold">
+                    Live Infrastructure Deployment
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <nav class="flex items-center gap-4">
+            <a href="/SirsiNexusPortal/index-staging.html" class="text-sm text-slate-300 hover:text-white transition-colors">← Back to Home</a>
+            <button id="theme-toggle" class="p-2 text-slate-400 hover:text-white hover:bg-slate-700 rounded-lg transition-colors border border-slate-600" title="Toggle theme">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+              </svg>
+            </button>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Demo Interface -->
+    <main class="flex-1 h-full">
+      <div class="h-full flex flex-col">
+        <!-- Control Panel -->
+        <div class="bg-slate-800/50 border-b border-slate-700 p-6">
+          <div class="max-w-7xl mx-auto">
+            <div class="flex items-center justify-between mb-6">
+              <div>
+                <h2 class="text-2xl font-bold text-white mb-2">Infrastructure Deployment Simulator</h2>
+                <p class="text-slate-400">Select a deployment scenario and watch SirsiNexus agents work in real-time</p>
+              </div>
+              <div id="overall-status" class="flex items-center gap-2">
+                <div class="w-3 h-3 bg-slate-400 rounded-full"></div>
+                <span class="text-slate-400 font-medium">Ready to Deploy</span>
+              </div>
+            </div>
+            
+            <!-- Scenario Selection -->
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-sm font-medium text-slate-300 mb-3">Choose Deployment Scenario</label>
+                <select id="scenario-select" class="w-full bg-slate-700 border border-slate-600 text-white rounded-lg p-4 text-lg">
+                  <option value="">Select your infrastructure scenario...</option>
+                  <option value="onprem-to-aws">🏢 → ☁️ On-Premises to AWS Migration</option>
+                  <option value="hybrid-multicloud">🌐 Hybrid Multi-Cloud Setup</option>
+                  <option value="azure-modernization">🔄 Azure Legacy Modernization</option>
+                  <option value="gcp-ml-platform">🤖 GCP AI/ML Platform</option>
+                </select>
+              </div>
+              
+              <div id="environment-details" class="hidden">
+                <label class="block text-sm font-medium text-slate-300 mb-3">Deployment Details</label>
+                <div class="bg-slate-700/50 rounded-lg p-4 space-y-2">
+                  <div>
+                    <span class="text-xs text-slate-400">Source:</span>
+                    <div id="source-env" class="text-sm text-emerald-400 font-mono"></div>
+                  </div>
+                  <div>
+                    <span class="text-xs text-slate-400">Target:</span>
+                    <div id="target-env" class="text-sm text-emerald-400 font-mono"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Start Button -->
+            <div class="mt-6 flex justify-center">
+              <button id="start-deployment" 
+                      class="bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-600 disabled:cursor-not-allowed text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg text-lg flex items-center gap-3"
+                      disabled>
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+                <span id="start-button-text">Select Scenario to Begin</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Demo Content -->
+        <div class="flex-1 overflow-hidden">
+          <div class="h-full grid lg:grid-cols-2 gap-6 p-6 max-w-7xl mx-auto">
+            <!-- Left Column: Live Command Output -->
+            <div class="flex flex-col h-full">
+              <div class="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50 flex-1 flex flex-col">
+                <div class="flex items-center justify-between p-4 border-b border-slate-700/50">
+                  <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                    <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3"></path>
+                    </svg>
+                    Live Command Output
+                  </h3>
+                  <div id="deployment-status" class="flex items-center gap-2">
+                    <div class="w-2 h-2 bg-slate-400 rounded-full"></div>
+                    <span class="text-sm text-slate-400">Standby</span>
+                  </div>
+                </div>
+                <div id="command-output" class="flex-1 bg-slate-950/70 m-4 rounded-lg p-4 overflow-y-auto font-mono text-sm">
+                  <div class="text-slate-500">$ sirsi-nexus --version</div>
+                  <div class="text-emerald-400">SirsiNexus v0.7.10-alpha (Build: 2025.08.05)</div>
+                  <div class="text-slate-500 mt-2">$ # Ready for deployment. Select a scenario above to begin.</div>
+                  <div class="text-slate-400 mt-1">$ # Available scenarios:</div>
+                  <div class="text-slate-400">$ # - onprem-to-aws: VMware to AWS EKS migration</div>
+                  <div class="text-slate-400">$ # - hybrid-multicloud: Multi-cloud federation</div>
+                  <div class="text-slate-400">$ # - azure-modernization: Azure Classic to ARM</div>
+                  <div class="text-slate-400">$ # - gcp-ml-platform: Vertex AI + BigQuery ML</div>
+                  <div class="text-slate-500 mt-2">Waiting for scenario selection...</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Column: Active Components & Metrics -->
+            <div class="flex flex-col h-full space-y-6">
+              <!-- Active SirsiNexus Agents -->
+              <div class="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50 flex-1">
+                <div class="flex items-center justify-between p-4 border-b border-slate-700/50">
+                  <h3 class="text-lg font-bold text-white">Active SirsiNexus Agents</h3>
+                  <div id="agents-status" class="flex items-center gap-2">
+                    <div class="w-2 h-2 bg-slate-400 rounded-full"></div>
+                    <span class="text-sm text-slate-400">Awaiting Deployment</span>
+                  </div>
+                </div>
+                
+                <!-- Component Grid -->
+                <div class="p-4">
+                  <div class="grid md:grid-cols-2 gap-4 mb-4">
+                    <!-- Containers -->
+                    <div id="component-containers" class="bg-slate-900/50 rounded-lg p-4 border border-slate-600/30 opacity-50 transition-all duration-500">
+                      <div class="flex items-center gap-3 mb-3">
+                        <div class="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                          <svg class="w-4 h-4 text-blue-400" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M13.5 3a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0ZM15 3a3 3 0 1 0-6 0 3 3 0 0 0 6 0Zm6 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm1.5 0a3 3 0 1 0-6 0 3 3 0 0 0 6 0ZM6 7.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0ZM7.5 7.5a3 3 0 1 0-6 0 3 3 0 0 0 6 0Zm13.5 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm1.5 0a3 3 0 1 0-6 0 3 3 0 0 0 6 0Zm-12 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm1.5 0a3 3 0 1 0-6 0 3 3 0 0 0 6 0Z"/>
+                          </svg>
+                        </div>
+                        <div>
+                          <h4 class="font-semibold text-blue-400">Container Orchestration</h4>
+                          <p class="text-xs text-slate-500">Kubernetes • Docker • Pods</p>
+                        </div>
+                      </div>
+                      <div id="container-logs" class="bg-slate-950/50 rounded p-2 text-xs font-mono text-slate-500 h-16 overflow-hidden">
+                        <div>⏸ Waiting for deployment...</div>
+                      </div>
+                    </div>
+
+                    <!-- Networking -->
+                    <div id="component-networking" class="bg-slate-900/50 rounded-lg p-4 border border-slate-600/30 opacity-50 transition-all duration-500">
+                      <div class="flex items-center gap-3 mb-3">
+                        <div class="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center">
+                          <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+                          </svg>
+                        </div>
+                        <div>
+                          <h4 class="font-semibold text-purple-400">Network & DNS</h4>
+                          <p class="text-xs text-slate-500">Load Balancer • Ingress • DNS</p>
+                        </div>
+                      </div>
+                      <div id="network-logs" class="bg-slate-950/50 rounded p-2 text-xs font-mono text-slate-500 h-16 overflow-hidden">
+                        <div>⏸ Waiting for deployment...</div>
+                      </div>
+                    </div>
+
+                    <!-- Database -->
+                    <div id="component-database" class="bg-slate-900/50 rounded-lg p-4 border border-slate-600/30 opacity-50 transition-all duration-500">
+                      <div class="flex items-center gap-3 mb-3">
+                        <div class="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center">
+                          <svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path>
+                          </svg>
+                        </div>
+                        <div>
+                          <h4 class="font-semibold text-green-400">Database Cluster</h4>
+                          <p class="text-xs text-slate-500">PostgreSQL • Redis • Backups</p>
+                        </div>
+                      </div>
+                      <div id="database-logs" class="bg-slate-950/50 rounded p-2 text-xs font-mono text-slate-500 h-16 overflow-hidden">
+                        <div>⏸ Waiting for deployment...</div>
+                      </div>
+                    </div>
+
+                    <!-- Monitoring -->
+                    <div id="component-monitoring" class="bg-slate-900/50 rounded-lg p-4 border border-slate-600/30 opacity-50 transition-all duration-500">
+                      <div class="flex items-center gap-3 mb-3">
+                        <div class="w-8 h-8 bg-orange-500/20 rounded-lg flex items-center justify-center">
+                          <svg class="w-4 h-4 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                          </svg>
+                        </div>
+                        <div>
+                          <h4 class="font-semibold text-orange-400">Observability</h4>
+                          <p class="text-xs text-slate-500">Prometheus • Grafana • Logs</p>
+                        </div>
+                      </div>
+                      <div id="monitoring-logs" class="bg-slate-950/50 rounded p-2 text-xs font-mono text-slate-500 h-16 overflow-hidden">
+                        <div>⏸ Waiting for deployment...</div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Overall Progress -->
+                  <div class="mb-4">
+                    <div class="flex justify-between items-center mb-2">
+                      <span class="text-sm font-medium text-slate-300">Deployment Progress</span>
+                      <span id="overall-progress-text" class="text-sm text-slate-400">0%</span>
+                    </div>
+                    <div class="h-2 bg-slate-700 rounded-full overflow-hidden">
+                      <div id="overall-progress-bar" class="h-full bg-gradient-to-r from-emerald-500 to-emerald-400 w-0 transition-all duration-500 ease-out"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Live Resource Metrics -->
+              <div class="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50 p-4">
+                <h3 class="text-lg font-bold text-white mb-4">Live Resource Metrics</h3>
+                <div class="space-y-4">
+                  <div class="flex justify-between items-center">
+                    <span class="text-sm text-slate-300">CPU Usage</span>
+                    <span id="cpu-usage" class="text-sm font-mono text-emerald-400">0%</span>
+                  </div>
+                  <div class="h-2 bg-slate-700 rounded-full overflow-hidden">
+                    <div id="cpu-bar" class="h-full bg-blue-500 w-0 transition-all duration-300"></div>
+                  </div>
+                  
+                  <div class="flex justify-between items-center">
+                    <span class="text-sm text-slate-300">Memory</span>
+                    <span id="memory-usage" class="text-sm font-mono text-emerald-400">0/16 GB</span>
+                  </div>
+                  <div class="h-2 bg-slate-700 rounded-full overflow-hidden">
+                    <div id="memory-bar" class="h-full bg-purple-500 w-0 transition-all duration-300"></div>
+                  </div>
+                  
+                  <div class="flex justify-between items-center">
+                    <span class="text-sm text-slate-300">Network I/O</span>
+                    <span id="network-usage" class="text-sm font-mono text-emerald-400">0 MB/s</span>
+                  </div>
+                  <div class="h-2 bg-slate-700 rounded-full overflow-hidden">
+                    <div id="network-bar" class="h-full bg-green-500 w-0 transition-all duration-300"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Demo Logic Script -->
+    <script>
+      // Theme toggle functionality
+      document.addEventListener('DOMContentLoaded', function() {
+        const themeToggle = document.getElementById('theme-toggle');
+        if (themeToggle) {
+          themeToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            const html = document.documentElement;
+            const isDark = html.classList.contains('dark');
+            
+            if (isDark) {
+              html.classList.remove('dark');
+              localStorage.setItem('theme', 'light');
+            } else {
+              html.classList.add('dark');
+              localStorage.setItem('theme', 'dark');
+            }
+          });
+        }
+
+        // Demo initialization
+        initializeDemo();
+      });
+
+      function initializeDemo() {
+        console.log('🚀 Initializing SirsiNexus Demo');
+        
+        const scenarioSelect = document.getElementById('scenario-select');
+        const environmentDetails = document.getElementById('environment-details');
+        const sourceEnv = document.getElementById('source-env');
+        const targetEnv = document.getElementById('target-env');
+        const startButton = document.getElementById('start-deployment');
+        const startButtonText = document.getElementById('start-button-text');
+        const overallStatus = document.getElementById('overall-status');
+        
+        const scenarios = {
+          'onprem-to-aws': {
+            source: 'On-Premises DataCenter (VMware vSphere 7.0)',
+            target: 'AWS (us-west-2, us-east-1)',
+            title: 'On-Premises to AWS Migration',
+            description: 'Legacy application migration with zero downtime'
+          },
+          'hybrid-multicloud': {
+            source: 'Hybrid (On-Prem + Azure)',
+            target: 'Multi-Cloud (AWS + GCP + Azure)',
+            title: 'Hybrid Multi-Cloud Setup',
+            description: 'Enterprise-grade hybrid cloud expansion'
+          },
+          'azure-modernization': {
+            source: 'Azure Classic (Legacy Resources)',
+            target: 'Azure Resource Manager + AKS',
+            title: 'Azure Legacy Modernization',
+            description: 'Legacy Azure infrastructure modernization'
+          },
+          'gcp-ml-platform': {
+            source: 'Traditional ML Infrastructure',
+            target: 'GCP Vertex AI + BigQuery ML',
+            title: 'GCP AI/ML Platform Setup',
+            description: 'AI/ML platform deployment and optimization'
+          }
+        };
+        
+        // Scenario selection handler
+        scenarioSelect.addEventListener('change', function(e) {
+          const scenario = scenarios[e.target.value];
+          if (scenario) {
+            environmentDetails.classList.remove('hidden');
+            sourceEnv.textContent = scenario.source;
+            targetEnv.textContent = scenario.target;
+            startButton.disabled = false;
+            startButton.classList.remove('disabled:bg-slate-600', 'disabled:cursor-not-allowed');
+            startButtonText.textContent = `Deploy ${scenario.title}`;
+            
+            overallStatus.innerHTML = `
+              <div class="w-3 h-3 bg-emerald-400 rounded-full animate-pulse"></div>
+              <span class="text-emerald-400 font-medium">Ready to Deploy: ${scenario.title}</span>
+            `;
+          } else {
+            environmentDetails.classList.add('hidden');
+            startButton.disabled = true;
+            startButton.classList.add('disabled:bg-slate-600', 'disabled:cursor-not-allowed');
+            startButtonText.textContent = 'Select Scenario to Begin';
+            
+            overallStatus.innerHTML = `
+              <div class="w-3 h-3 bg-slate-400 rounded-full"></div>
+              <span class="text-slate-400 font-medium">Ready to Deploy</span>
+            `;
+          }
+        });
+        
+        // Start deployment handler
+        startButton.addEventListener('click', function(e) {
+          e.preventDefault();
+          const selectedScenario = scenarioSelect.value;
+          if (selectedScenario && scenarios[selectedScenario]) {
+            startDeployment(selectedScenario, scenarios[selectedScenario]);
+          }
+        });
+      }
+
+      function startDeployment(scenarioKey, scenario) {
+        console.log(`🚀 Starting deployment: ${scenario.title}`);
+        
+        // Update overall status
+        const overallStatus = document.getElementById('overall-status');
+        const deploymentStatus = document.getElementById('deployment-status');
+        const agentsStatus = document.getElementById('agents-status');
+        
+        overallStatus.innerHTML = `
+          <div class="w-3 h-3 bg-yellow-400 rounded-full animate-pulse"></div>
+          <span class="text-yellow-400 font-medium">Deploying: ${scenario.title}</span>
+        `;
+        
+        deploymentStatus.innerHTML = `
+          <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+          <span class="text-sm text-emerald-400">Active: ${scenario.title}</span>
+        `;
+        
+        agentsStatus.innerHTML = `
+          <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+          <span class="text-sm text-emerald-400">Agents Deploying</span>
+        `;
+        
+        // Disable start button during deployment
+        const startButton = document.getElementById('start-deployment');
+        startButton.disabled = true;
+        startButton.querySelector('#start-button-text').textContent = 'Deployment in Progress...';
+        
+        // Start deployment sequence
+        setTimeout(() => startCommandOutput(scenarioKey), 500);
+        setTimeout(() => startComponentAnimations(scenarioKey), 1000);
+        setTimeout(() => startLiveMetrics(), 1500);
+      }
+
+      function startCommandOutput(scenario) {
+        const commandOutput = document.getElementById('command-output');
+        if (!commandOutput) return;
+        
+        // Clear existing content
+        commandOutput.innerHTML = '';
+        
+        const commands = getScenarioCommands(scenario);
+        
+        commands.forEach((cmd, index) => {
+          setTimeout(() => {
+            const line = document.createElement('div');
+            line.className = cmd.text.startsWith('✅') ? 'text-green-400' : 
+                           cmd.text.startsWith('🎉') ? 'text-emerald-400 font-semibold' :
+                           cmd.text.startsWith('✨') ? 'text-blue-400 font-semibold' :
+                           cmd.text.startsWith('⚠️') ? 'text-yellow-400' :
+                           cmd.text.startsWith('🔴') ? 'text-red-400' :
+                           'text-slate-300';
+            line.textContent = cmd.text;
+            commandOutput.appendChild(line);
+            commandOutput.scrollTop = commandOutput.scrollHeight;
+            
+            // Update completion status
+            if (cmd.text.startsWith('🎉')) {
+              setTimeout(() => {
+                const overallStatus = document.getElementById('overall-status');
+                const agentsStatus = document.getElementById('agents-status');
+                
+                overallStatus.innerHTML = `
+                  <div class="w-3 h-3 bg-green-400 rounded-full"></div>
+                  <span class="text-green-400 font-medium">Deployment Complete</span>
+                `;
+                
+                agentsStatus.innerHTML = `
+                  <div class="w-2 h-2 bg-green-400 rounded-full"></div>
+                  <span class="text-sm text-green-400">All Agents Active</span>
+                `;
+                
+                // Re-enable start button
+                const startButton = document.getElementById('start-deployment');
+                startButton.disabled = false;
+                startButton.querySelector('#start-button-text').textContent = 'Start New Deployment';
+              }, 1000);
+            }
+          }, cmd.delay);
+        });
+      }
+
+      function startComponentAnimations(scenario) {
+        const components = ['containers', 'networking', 'database', 'monitoring'];
+        const componentData = getScenarioComponentData(scenario);
+        
+        components.forEach((component, index) => {
+          setTimeout(() => {
+            const data = componentData[component];
+            animateComponent(component, data);
+          }, index * 2000);
+        });
+        
+        // Start overall progress animation
+        animateOverallProgress();
+      }
+
+      function animateComponent(componentName, data) {
+        const element = document.getElementById(`component-${componentName}`);
+        const logsElement = document.getElementById(`${componentName}-logs`);
+        
+        if (element && logsElement) {
+          // Activate component
+          element.classList.remove('opacity-50');
+          element.classList.add('opacity-100', 'border-emerald-500/50');
+          
+          // Clear existing logs
+          logsElement.innerHTML = '';
+          
+          // Animate logs
+          let logIndex = 0;
+          const logInterval = setInterval(() => {
+            if (logIndex < data.logs.length) {
+              const logLine = document.createElement('div');
+              logLine.className = `text-${data.color}-400 text-xs mb-1`;
+              logLine.textContent = data.logs[logIndex];
+              logsElement.appendChild(logLine);
+              logsElement.scrollTop = logsElement.scrollHeight;
+              logIndex++;
+            } else {
+              clearInterval(logInterval);
+              // Mark as complete
+              element.classList.add('border-emerald-400');
+            }
+          }, 800);
+        }
+      }
+
+      function startLiveMetrics() {
+        const metrics = [
+          { element: 'cpu-usage', bar: 'cpu-bar', max: 85, suffix: '%' },
+          { element: 'memory-usage', bar: 'memory-bar', max: 12.8, suffix: '/16 GB' },
+          { element: 'network-usage', bar: 'network-bar', max: 45, suffix: ' MB/s' }
+        ];
+        
+        metrics.forEach(metric => {
+          animateMetric(metric);
+        });
+      }
+
+      function animateMetric(config) {
+        const element = document.getElementById(config.element);
+        const bar = document.getElementById(config.bar);
+        
+        if (element && bar) {
+          let current = 0;
+          const target = config.max;
+          const increment = target / 30;
+          
+          const interval = setInterval(() => {
+            current = Math.min(current + increment + (Math.random() * increment * 0.5), target);
+            
+            let displayValue;
+            if (config.suffix === '%') {
+              displayValue = `${Math.round(current)}${config.suffix}`;
+            } else if (config.suffix === '/16 GB') {
+              displayValue = `${current.toFixed(1)}${config.suffix}`;
+            } else {
+              displayValue = `${Math.round(current)}${config.suffix}`;
+            }
+            
+            element.textContent = displayValue;
+            bar.style.width = `${(current / config.max) * 100}%`;
+            
+            if (current >= target) {
+              clearInterval(interval);
+              // Add some realistic fluctuation
+              setInterval(() => {
+                const fluctuation = target * (0.9 + Math.random() * 0.2);
+                let fluctuationDisplay;
+                if (config.suffix === '%') {
+                  fluctuationDisplay = `${Math.round(fluctuation)}${config.suffix}`;
+                } else if (config.suffix === '/16 GB') {
+                  fluctuationDisplay = `${fluctuation.toFixed(1)}${config.suffix}`;
+                } else {
+                  fluctuationDisplay = `${Math.round(fluctuation)}${config.suffix}`;
+                }
+                element.textContent = fluctuationDisplay;
+                bar.style.width = `${(fluctuation / config.max) * 100}%`;
+              }, 2000 + Math.random() * 3000);
+            }
+          }, 100);
+        }
+      }
+
+      function animateOverallProgress() {
+        const progressBar = document.getElementById('overall-progress-bar');
+        const progressText = document.getElementById('overall-progress-text');
+        
+        if (progressBar && progressText) {
+          let progress = 0;
+          const interval = setInterval(() => {
+            progress = Math.min(progress + 1.5, 100);
+            progressBar.style.width = `${progress}%`;
+            progressText.textContent = `${Math.round(progress)}%`;
+            
+            if (progress >= 100) {
+              clearInterval(interval);
+            }
+          }, 150);
+        }
+      }
+
+      // Scenario-specific data
+      function getScenarioComponentData(scenario) {
+        const componentData = {
+          'onprem-to-aws': {
+            containers: {
+              logs: [
+                '📦 Migrating VMware containers to EKS...',
+                '🐳 Converting Docker images for AWS ECR...',
+                '⚡ Configuring EKS cluster in us-west-2...',
+                '✅ AWS EKS migration complete'
+              ],
+              color: 'blue'
+            },
+            networking: {
+              logs: [
+                '🌐 Setting up AWS Application Load Balancer...',
+                '🔗 Configuring Route 53 DNS migration...',
+                '📡 Establishing VPC peering connections...',
+                '✅ AWS networking infrastructure active'
+              ],
+              color: 'purple'
+            },
+            database: {
+              logs: [
+                '🗄️ Migrating to AWS RDS PostgreSQL...',
+                '⚡ Setting up ElastiCache Redis cluster...',
+                '💾 Configuring automated RDS backups...',
+                '✅ AWS database migration complete'
+              ],
+              color: 'green'
+            },
+            monitoring: {
+              logs: [
+                '📊 Deploying CloudWatch monitoring...',
+                '📈 Setting up X-Ray distributed tracing...',
+                '🔍 Configuring AWS Config compliance...',
+                '✅ AWS observability stack ready'
+              ],
+              color: 'orange'
+            }
+          },
+          'hybrid-multicloud': {
+            containers: {
+              logs: [
+                '📦 Deploying multi-cloud K8s federation...',
+                '🐳 Synchronizing container images across clouds...',
+                '⚡ Configuring cross-cloud service mesh...',
+                '✅ Multi-cloud container orchestration ready'
+              ],
+              color: 'blue'
+            },
+            networking: {
+              logs: [
+                '🌐 Establishing inter-cloud VPN tunnels...',
+                '🔗 Configuring global load balancing...',
+                '📡 Setting up edge CDN distribution...',
+                '✅ Hybrid networking infrastructure active'
+              ],
+              color: 'purple'
+            },
+            database: {
+              logs: [
+                '🗄️ Setting up cross-cloud data replication...',
+                '⚡ Configuring multi-region cache clusters...',
+                '💾 Implementing disaster recovery across clouds...',
+                '✅ Multi-cloud database cluster operational'
+              ],
+              color: 'green'
+            },
+            monitoring: {
+              logs: [
+                '📊 Deploying unified monitoring across clouds...',
+                '📈 Setting up cross-cloud alerting...',
+                '🔍 Configuring centralized log aggregation...',
+                '✅ Multi-cloud observability ready'
+              ],
+              color: 'orange'
+            }
+          },
+          'azure-modernization': {
+            containers: {
+              logs: [
+                '📦 Migrating to Azure Kubernetes Service...',
+                '🐳 Moving containers to Azure Container Registry...',
+                '⚡ Implementing Azure Service Fabric integration...',
+                '✅ Azure AKS modernization complete'
+              ],
+              color: 'blue'
+            },
+            networking: {
+              logs: [
+                '🌐 Upgrading to Azure Application Gateway...',
+                '🔗 Configuring Azure Front Door CDN...',
+                '📡 Setting up Virtual Network peering...',
+                '✅ Azure networking modernization active'
+              ],
+              color: 'purple'
+            },
+            database: {
+              logs: [
+                '🗄️ Migrating to Azure Database for PostgreSQL...',
+                '⚡ Setting up Azure Cache for Redis...',
+                '💾 Configuring geo-redundant backups...',
+                '✅ Azure database modernization complete'
+              ],
+              color: 'green'
+            },
+            monitoring: {
+              logs: [
+                '📊 Deploying Azure Monitor integration...',
+                '📈 Setting up Application Insights...',
+                '🔍 Configuring Azure Security Center...',
+                '✅ Azure observability modernization ready'
+              ],
+              color: 'orange'
+            }
+          },
+          'gcp-ml-platform': {
+            containers: {
+              logs: [
+                '📦 Deploying GKE Autopilot clusters...',
+                '🐳 Setting up Container Registry with Artifact Analysis...',
+                '⚡ Configuring Kubernetes Engine for ML workloads...',
+                '✅ GCP ML container platform ready'
+              ],
+              color: 'blue'
+            },
+            networking: {
+              logs: [
+                '🌐 Setting up Global Load Balancer for ML APIs...',
+                '🔗 Configuring Cloud CDN for model serving...',
+                '📡 Establishing private Google Access...',
+                '✅ GCP ML networking infrastructure active'
+              ],
+              color: 'purple'
+            },
+            database: {
+              logs: [
+                '🗼 Setting up BigQuery ML datasets...',
+                '⚡ Configuring Cloud SQL for feature stores...',
+                '💾 Implementing data pipeline with Dataflow...',
+                '✅ GCP ML data platform operational'
+              ],
+              color: 'green'
+            },
+            monitoring: {
+              logs: [
+                '📊 Deploying Vertex AI monitoring...',
+                '📈 Setting up ML model performance tracking...',
+                '🔍 Configuring Cloud Logging for ML pipelines...',
+                '✅ GCP ML observability stack ready'
+              ],
+              color: 'orange'
+            }
+          }
+        };
+        
+        return componentData[scenario] || componentData['onprem-to-aws'];
+      }
+
+      function getScenarioCommands(scenario) {
+        const commands = {
+          'onprem-to-aws': [
+            { text: `$ sirsi-nexus migrate --source=vmware --target=aws --region=us-west-2`, delay: 500 },
+            { text: '🔍 Scanning VMware vSphere infrastructure...', delay: 1000 },
+            { text: '📊 Analyzing 247 VMs, 12 databases, 5 load balancers...', delay: 1500 },
+            { text: '🚀 Initiating AWS migration pipeline...', delay: 2500 },
+            { text: '', delay: 3000 },
+            { text: '📦 [EKS] Converting VMware containers to EKS...', delay: 3500 },
+            { text: '✅ [EKS] 15 microservices migrated successfully', delay: 5000 },
+            { text: '', delay: 5200 },
+            { text: '🌐 [ALB] Setting up Application Load Balancer...', delay: 5500 },
+            { text: '✅ [ALB] Traffic routing configured with Route 53', delay: 7000 },
+            { text: '', delay: 7200 },
+            { text: '🗼 [RDS] Migrating databases to AWS RDS...', delay: 7500 },
+            { text: '✅ [RDS] 3 PostgreSQL instances migrated with zero downtime', delay: 9500 },
+            { text: '', delay: 9700 },
+            { text: '📊 [CloudWatch] Configuring monitoring and alerting...', delay: 10000 },
+            { text: '✅ [CloudWatch] Full observability stack deployed', delay: 11500 },
+            { text: '', delay: 11700 },
+            { text: '🎉 On-Premises to AWS Migration completed successfully!', delay: 12000 },
+            { text: '📈 Cost savings: $18,500/month | Performance improvement: +34%', delay: 12500 },
+            { text: '✨ SirsiNexus agents monitoring AWS infrastructure', delay: 13000 }
+          ],
+          'hybrid-multicloud': [
+            { text: `$ sirsi-nexus deploy --mode=hybrid --clouds=aws,gcp,azure`, delay: 500 },
+            { text: '🔍 Analyzing multi-cloud requirements...', delay: 1000 },
+            { text: '📊 Planning hybrid deployment across 3 cloud providers...', delay: 1500 },
+            { text: '🚀 Initiating multi-cloud federation setup...', delay: 2500 },
+            { text: '', delay: 3000 },
+            { text: '📦 [K8S] Deploying federated Kubernetes clusters...', delay: 3500 },
+            { text: '✅ [K8S] Cross-cloud service mesh established', delay: 5500 },
+            { text: '', delay: 5700 },
+            { text: '🌐 [NETWORK] Setting up inter-cloud VPN tunnels...', delay: 6000 },
+            { text: '✅ [NETWORK] Global traffic management active', delay: 8000 },
+            { text: '', delay: 8200 },
+            { text: '🗼 [DATA] Configuring cross-cloud data replication...', delay: 8500 },
+            { text: '✅ [DATA] Multi-region disaster recovery ready', delay: 10500 },
+            { text: '', delay: 10700 },
+            { text: '📊 [MONITOR] Deploying unified observability...', delay: 11000 },
+            { text: '✅ [MONITOR] Centralized monitoring across all clouds', delay: 12500 },
+            { text: '', delay: 12700 },
+            { text: '🎉 Hybrid Multi-Cloud deployment completed!', delay: 13000 },
+            { text: '📈 Availability: 99.99% | Global latency: <50ms', delay: 13500 },
+            { text: '✨ SirsiNexus managing multi-cloud infrastructure', delay: 14000 }
+          ],
+          'azure-modernization': [
+            { text: `$ sirsi-nexus modernize --source=azure-classic --target=azure-rm`, delay: 500 },
+            { text: '🔍 Scanning Azure Classic resources...', delay: 1000 },
+            { text: '📊 Found 89 legacy resources requiring modernization...', delay: 1500 },
+            { text: '🚀 Starting Azure Resource Manager migration...', delay: 2500 },
+            { text: '', delay: 3000 },
+            { text: '📦 [AKS] Migrating to Azure Kubernetes Service...', delay: 3500 },
+            { text: '✅ [AKS] Container workloads modernized successfully', delay: 5500 },
+            { text: '', delay: 5700 },
+            { text: '🌐 [APPGW] Upgrading to Application Gateway v2...', delay: 6000 },
+            { text: '✅ [APPGW] Advanced routing and SSL termination active', delay: 7500 },
+            { text: '', delay: 7700 },
+            { text: '🗼 [AZURESQL] Migrating to Azure Database for PostgreSQL...', delay: 8000 },
+            { text: '✅ [AZURESQL] Flexible server with high availability deployed', delay: 10000 },
+            { text: '', delay: 10200 },
+            { text: '📊 [MONITOR] Integrating Azure Monitor and App Insights...', delay: 10500 },
+            { text: '✅ [MONITOR] Advanced telemetry and diagnostics ready', delay: 12000 },
+            { text: '', delay: 12200 },
+            { text: '🎉 Azure Legacy Modernization completed!', delay: 12500 },
+            { text: '📈 Performance boost: +42% | Security compliance: 100%', delay: 13000 },
+            { text: '✨ SirsiNexus optimizing modern Azure infrastructure', delay: 13500 }
+          ],
+          'gcp-ml-platform': [
+            { text: `$ sirsi-nexus deploy --platform=gcp-ml --services=vertex,bigquery`, delay: 500 },
+            { text: '🔍 Analyzing ML workload requirements...', delay: 1000 },
+            { text: '📊 Planning GCP AI/ML platform deployment...', delay: 1500 },
+            { text: '🚀 Initializing Vertex AI and BigQuery ML setup...', delay: 2500 },
+            { text: '', delay: 3000 },
+            { text: '📦 [GKE] Deploying Autopilot clusters for ML workloads...', delay: 3500 },
+            { text: '✅ [GKE] GPU-accelerated nodes ready for training', delay: 5500 },
+            { text: '', delay: 5700 },
+            { text: '🌐 [LB] Setting up Global Load Balancer for ML APIs...', delay: 6000 },
+            { text: '✅ [LB] Model serving endpoints configured globally', delay: 7500 },
+            { text: '', delay: 7700 },
+            { text: '🗼 [BIGQUERY] Setting up ML datasets and feature stores...', delay: 8000 },
+            { text: '✅ [BIGQUERY] Data pipelines and ML models deployed', delay: 10500 },
+            { text: '', delay: 10700 },
+            { text: '📊 [VERTEX] Configuring AI platform monitoring...', delay: 11000 },
+            { text: '✅ [VERTEX] Model performance tracking and drift detection active', delay: 12500 },
+            { text: '', delay: 12700 },
+            { text: '🎉 GCP AI/ML Platform deployment completed!', delay: 13000 },
+            { text: '📈 Training speed: +67% | Model accuracy: 94.7%', delay: 13500 },
+            { text: '✨ SirsiNexus AI managing your ML infrastructure', delay: 14000 }
+          ]
+        };
+        
+        return commands[scenario] || commands['onprem-to-aws'];
+      }
+    </script>
+  </body>
+</html>

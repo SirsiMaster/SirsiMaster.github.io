@@ -1223,14 +1223,14 @@
       
       animationController.initialize();
       
-      // Hero demo button handler
+      // Hero demo button handler - redirect to dedicated demo page
       const heroButton = document.getElementById('hero-demo-button');
       if (heroButton) {
         console.log('✅ Hero demo button found, adding click handler');
         heroButton.addEventListener('click', function(e) {
           e.preventDefault();
-          console.log('🎯 Hero demo button clicked - starting animation!');
-          startInfrastructureDemo();
+          console.log('🎯 Hero demo button clicked - redirecting to demo page!');
+          window.location.href = '/SirsiNexusPortal/demo.html';
         });
       } else {
         console.error('❌ Hero demo button not found');
