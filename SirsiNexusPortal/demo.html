@@ -140,65 +140,79 @@
           </div>
         </div>
 
-        <!-- Demo Content - Full Width Layout -->
+        <!-- Demo Content - Console-Focused Layout -->
         <div class="flex-1 overflow-hidden">
           <div class="h-full p-6 max-w-screen-2xl mx-auto">
-            <!-- Command Output Section - Full Width -->
-            <div class="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50 mb-6 h-2/5">
-              <div class="flex items-center justify-between p-4 border-b border-slate-700/50">
-                <h3 class="text-lg font-bold text-white flex items-center gap-2">
-                  <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3"></path>
-                  </svg>
-                  SirsiNexus Command Console
-                </h3>
-                <div id="deployment-status" class="flex items-center gap-2">
-                  <div class="w-2 h-2 bg-slate-400 rounded-full"></div>
-                  <span class="text-sm text-slate-400">Standby</span>
-                </div>
-              </div>
-              
-              <!-- Command Input Bar -->
-              <div class="flex items-center gap-3 p-4 border-b border-slate-700/30">
-                <div class="flex-1 relative">
-                  <div class="absolute left-3 top-1/2 transform -translate-y-1/2 text-emerald-400 font-mono text-sm">$</div>
-                  <input type="text" id="command-input" 
-                         class="w-full pl-8 pr-4 py-2 bg-slate-900/70 border border-slate-600 text-white placeholder-slate-400 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 font-mono text-sm" 
-                         placeholder="sirsi-nexus deploy --scenario onprem-to-aws --confirm" 
-                         readonly>
-                </div>
-                <button id="execute-command" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors flex items-center gap-2 text-sm">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                  </svg>
-                  Execute
-                </button>
-              </div>
-              
-              <div id="command-output" class="h-64 bg-slate-950/70 m-4 rounded-lg p-4 overflow-y-auto font-mono text-sm">
-                <div class="text-slate-500">$ sirsi-nexus --version</div>
-                <div class="text-emerald-400">SirsiNexus v0.7.10-alpha (Build: 2025.08.05)</div>
-                <div class="text-slate-500 mt-2">$ # Ready for deployment. Select a scenario above to begin.</div>
-                <div class="text-slate-400 mt-1">$ # Available scenarios:</div>
-                <div class="text-slate-400">$ # - onprem-to-aws: VMware to AWS EKS migration</div>
-                <div class="text-slate-400">$ # - hybrid-multicloud: Multi-cloud federation</div>
-                <div class="text-slate-400">$ # - azure-modernization: Azure Classic to ARM</div>
-                <div class="text-slate-400">$ # - gcp-ml-platform: Vertex AI + BigQuery ML</div>
-                <div class="text-slate-500 mt-2">Waiting for scenario selection...</div>
-              </div>
-            </div>
-            
-            <!-- Agents and Metrics Grid -->
-            <div class="grid lg:grid-cols-3 gap-6 h-3/5">
-              <!-- Left: Active SirsiNexus Agents -->
-              <div class="lg:col-span-2 bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50">
+            <!-- Main Console Area -->
+            <div class="flex h-full gap-6">
+              <!-- Command Console - Main Focus -->
+              <div class="flex-1 bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50 flex flex-col">
                 <div class="flex items-center justify-between p-4 border-b border-slate-700/50">
-                  <h3 class="text-lg font-bold text-white">Active SirsiNexus Agents</h3>
-                  <div id="agents-status" class="flex items-center gap-2">
+                  <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                    <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3"></path>
+                    </svg>
+                    SirsiNexus AI Agent Orchestrator
+                  </h3>
+                  <div id="deployment-status" class="flex items-center gap-2">
                     <div class="w-2 h-2 bg-slate-400 rounded-full"></div>
-                    <span class="text-sm text-slate-400">Awaiting Deployment</span>
+                    <span class="text-sm text-slate-400">Standby</span>
                   </div>
                 </div>
+                
+                <!-- Command Input Bar -->
+                <div class="flex items-center gap-3 p-4 border-b border-slate-700/30">
+                  <div class="flex-1 relative">
+                    <div class="absolute left-3 top-1/2 transform -translate-y-1/2 text-emerald-400 font-mono text-sm">$</div>
+                    <input type="text" id="command-input" 
+                           class="w-full pl-8 pr-4 py-2 bg-slate-900/70 border border-slate-600 text-white placeholder-slate-400 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 font-mono text-sm" 
+                           placeholder="sirsi-nexus deploy --scenario onprem-to-aws --confirm" 
+                           readonly>
+                  </div>
+                  <button id="execute-command" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors flex items-center gap-2 text-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                    Execute
+                  </button>
+                </div>
+                
+                <!-- Progress Bar -->
+                <div class="px-4 py-2 border-b border-slate-700/30">
+                  <div class="flex justify-between items-center mb-2">
+                    <span class="text-sm font-medium text-slate-300">Deployment Progress</span>
+                    <span id="overall-progress-text" class="text-sm text-slate-400">0%</span>
+                  </div>
+                  <div class="h-2 bg-slate-700 rounded-full overflow-hidden">
+                    <div id="overall-progress-bar" class="h-full bg-gradient-to-r from-emerald-500 to-emerald-400 w-0 transition-all duration-500 ease-out"></div>
+                  </div>
+                </div>
+                
+                <!-- Command Output - Expanded -->
+                <div id="command-output" class="flex-1 bg-slate-950/70 m-4 rounded-lg p-4 overflow-y-auto font-mono text-sm">
+                  <div class="text-slate-500">$ sirsi-nexus --version</div>
+                  <div class="text-emerald-400">SirsiNexus v0.7.10-alpha (Build: 2025.08.05)</div>
+                  <div class="text-slate-500 mt-2">$ # Ready for deployment. Select a scenario above to begin.</div>
+                  <div class="text-slate-400 mt-1">$ # Available scenarios:</div>
+                  <div class="text-slate-400">$ # - onprem-to-aws: VMware to AWS EKS migration</div>
+                  <div class="text-slate-400">$ # - hybrid-multicloud: Multi-cloud federation</div>
+                  <div class="text-slate-400">$ # - azure-modernization: Azure Classic to ARM</div>
+                  <div class="text-slate-400">$ # - gcp-ml-platform: Vertex AI + BigQuery ML</div>
+                  <div class="text-slate-500 mt-2">Waiting for scenario selection...</div>
+                </div>
+              </div>
+              
+              <!-- Right Sidebar: Agents and Metrics -->
+              <div class="w-80 flex flex-col gap-6">
+                <!-- Agents Panel -->
+                <div class="flex-1 bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50">
+                  <div class="flex items-center justify-between p-4 border-b border-slate-700/50">
+                    <h3 class="text-lg font-bold text-white">Agents</h3>
+                    <div id="agents-status" class="flex items-center gap-2">
+                      <div class="w-2 h-2 bg-slate-400 rounded-full"></div>
+                      <span class="text-xs text-slate-400">Standby</span>
+                    </div>
+                  </div>
 
                 
                 <!-- Component Grid - Better Layout -->
