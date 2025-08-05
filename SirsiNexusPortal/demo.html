@@ -865,6 +865,8 @@ function startCommandOutput(scenario) {
       }
       
       function activateAgent(componentName, message) {
+        console.log(`🚀 Activating agent: ${componentName} with message: ${message}`);
+        
         const element = document.getElementById(`component-${componentName}`);
         const statusElement = document.getElementById(`${componentName}-status`);
         const taskElement = document.getElementById(`${componentName}-task`);
@@ -1788,6 +1790,26 @@ function startCommandOutput(scenario) {
         if (activeAgentsCount) activeAgentsCount.textContent = '0/4';
         if (servicesDeployed) servicesDeployed.textContent = '0';
         if (systemUptime) systemUptime.textContent = '00:00:00';
+        
+        // Reset artifact counts
+        artifactCounts = {
+          yaml: 0,
+          terraform: 0,
+          cloudformation: 0,
+          bicep: 0,
+          helm: 0,
+          docker: 0,
+          jobs: { completed: 0, total: 0 }
+        };
+        
+        // Reset artifact display
+        document.getElementById('yaml-count').textContent = '0';
+        document.getElementById('terraform-count').textContent = '0';
+        document.getElementById('cloudformation-count').textContent = '0';
+        document.getElementById('bicep-count').textContent = '0';
+        document.getElementById('helm-count').textContent = '0';
+        document.getElementById('docker-count').textContent = '0';
+        document.getElementById('job-completions').textContent = '0/0';
       }
       
       function startQuickMetricsUpdates() {
@@ -1843,7 +1865,7 @@ function startCommandOutput(scenario) {
       function updateAgentTasksFromCommand(commandText) {
         // Update specific agent tasks based on command output patterns
         const taskUpdates = {
-          // Container/EKS tasks
+          // AWS Container tasks
           'EKS': {
             component: 'containers',
             tasks: {
@@ -1855,7 +1877,42 @@ function startCommandOutput(scenario) {
               'microservices migrated': 'Finalizing microservices'
             }
           },
-          // Networking tasks
+          // GCP Container tasks
+          'GKE': {
+            component: 'containers',
+            tasks: {
+              'Autopilot clusters': 'Setting up GKE Autopilot',
+              'Binary Authorization': 'Implementing attestation policies',
+              'Kubeflow Pipelines': 'Configuring ML pipelines',
+              'Artifact Registry': 'Setting up container registry',
+              'Istio service mesh': 'Deploying service mesh',
+              'Pod Security Standards': 'Implementing runtime monitoring'
+            }
+          },
+          // Azure Container tasks
+          'AKS': {
+            component: 'containers',
+            tasks: {
+              'Azure Kubernetes Service': 'Deploying AKS clusters',
+              'Pod Security Standards': 'Configuring security policies',
+              'Service Fabric': 'Migrating applications',
+              'Container Registry': 'Setting up ACR',
+              'Linkerd service mesh': 'Deploying service mesh',
+              'Gatekeeper': 'Implementing OPA policies'
+            }
+          },
+          // Multi-cloud Container tasks
+          'KUBERNETES': {
+            component: 'containers',
+            tasks: {
+              'multi-cloud K8s federation': 'Setting up federation',
+              'Synchronizing container': 'Syncing images across clouds',
+              'cross-cloud service mesh': 'Configuring Istio multi-cluster',
+              'GitOps workflows': 'Setting up ArgoCD',
+              'Policy enforcement': 'Implementing OPA'
+            }
+          },
+          // AWS Networking tasks
           'ALB': {
             component: 'networking',
             tasks: {
@@ -1866,7 +1923,23 @@ function startCommandOutput(scenario) {
               'Global traffic routing': 'Optimizing global routing'
             }
           },
-          // Database tasks
+          // Generic Networking tasks (GCP, Azure, Multi-cloud)
+          'NETWORKING': {
+            component: 'networking',
+            tasks: {
+              'Global Load Balancer': 'Setting up global LB',
+              'Application Gateway': 'Configuring app gateway',
+              'Cloud CDN': 'Setting up CDN distribution',
+              'Front Door': 'Configuring Azure Front Door',
+              'Traffic Director': 'Setting up traffic management',
+              'Private Service Connect': 'Configuring private access',
+              'inter-cloud VPN': 'Establishing VPN tunnels',
+              'Virtual Network peering': 'Setting up VNet peering',
+              'Private Google Access': 'Configuring private access',
+              'DDoS protection': 'Enabling DDoS mitigation'
+            }
+          },
+          // AWS Database tasks
           'RDS': {
             component: 'database',
             tasks: {
@@ -1877,7 +1950,39 @@ function startCommandOutput(scenario) {
               'Performance Insights': 'Enabling performance monitoring'
             }
           },
-          // Monitoring tasks
+          // GCP Database tasks
+          'BIGQUERY': {
+            component: 'database',
+            tasks: {
+              'partitioned datasets': 'Creating ML datasets',
+              'BigQuery ML': 'Implementing ML models',
+              'real-time streaming': 'Setting up Dataflow',
+              'federated queries': 'Configuring multi-cloud access',
+              'Dataplex': 'Enabling data governance'
+            }
+          },
+          // Azure Database tasks
+          'DATABASE': {
+            component: 'database',
+            tasks: {
+              'Azure Database for PostgreSQL': 'Setting up Flexible Server',
+              'High Availability': 'Configuring zone redundancy',
+              'automated backups': 'Setting up retention policies',
+              'read replicas': 'Configuring replicas',
+              'Intelligent Insights': 'Enabling performance tuning'
+            }
+          },
+          // Multi-cloud Database tasks
+          'DATA': {
+            component: 'database',
+            tasks: {
+              'cross-cloud data replication': 'Setting up replication',
+              'multi-region cache': 'Configuring cache clusters',
+              'disaster recovery': 'Implementing DR strategy',
+              'global consistency': 'Setting up consistency model'
+            }
+          },
+          // AWS Monitoring tasks
           'OBSERVABILITY': {
             component: 'monitoring',
             tasks: {
@@ -1885,14 +1990,32 @@ function startCommandOutput(scenario) {
               'X-Ray distributed tracing': 'Configuring distributed tracing',
               'CloudWatch Synthetics': 'Setting up synthetic monitoring',
               'composite alarms': 'Configuring intelligent alerting',
-              'AWS Config': 'Setting up compliance monitoring'
+              'AWS Config': 'Setting up compliance monitoring',
+              'Azure Monitor': 'Deploying monitoring solution',
+              'Application Insights': 'Configuring APM',
+              'Azure Sentinel': 'Setting up SIEM',
+              'Cloud Monitoring': 'Deploying GCP monitoring',
+              'Cloud Trace': 'Setting up distributed tracing',
+              'unified monitoring': 'Configuring multi-cloud observability'
+            }
+          },
+          // GCP ML-specific monitoring
+          'VERTEX': {
+            component: 'monitoring',
+            tasks: {
+              'Vertex AI Workbench': 'Setting up ML workbench',
+              'AutoML': 'Configuring AutoML pipelines',
+              'Model Monitoring': 'Setting up drift detection',
+              'Explainable AI': 'Configuring model explanations',
+              'Matching Engine': 'Deploying vector search'
             }
           }
         };
         
-        // Check for task updates
+        // Check for task updates - handle both bracketed and non-bracketed keywords
         Object.keys(taskUpdates).forEach(keyword => {
-          if (commandText.includes(keyword)) {
+          // Check for both [KEYWORD] and KEYWORD patterns
+          if (commandText.includes(`[${keyword}]`) || commandText.includes(keyword)) {
             const update = taskUpdates[keyword];
             const taskElement = document.getElementById(`${update.component}-task`);
             const statusElement = document.getElementById(`${update.component}-status`);
@@ -1902,11 +2025,8 @@ function startCommandOutput(scenario) {
               Object.keys(update.tasks).forEach(taskKeyword => {
                 if (commandText.includes(taskKeyword)) {
                   const newTask = update.tasks[taskKeyword];
-                  if (newTask.length > 45) {
-                    taskElement.textContent = newTask.substring(0, 42) + '...';
-                  } else {
-                    taskElement.textContent = newTask;
-                  }
+                  // Show full task without truncation
+                  taskElement.textContent = newTask;
                 }
               });
             }
