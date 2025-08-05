@@ -187,7 +187,7 @@
                 </div>
                 
                 <!-- Orchestrator Window -->
-                <div class="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50 flex flex-col flex-1">
+                <div class="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50 flex flex-col" style="height: calc(100vh - 24rem);">
                   <div class="flex items-center justify-between p-4 border-b border-slate-700/50">
                     <h3 class="text-lg font-bold text-white flex items-center gap-2">
                       <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -292,7 +292,7 @@
                 </div>
                 
                 <!-- Command Output - Expanded -->
-                <div id="command-output" class="flex-1 bg-slate-950/70 m-4 rounded-lg p-4 overflow-y-auto font-mono text-sm">
+                <div id="command-output" class="flex-1 bg-slate-950/70 m-4 rounded-lg p-4 overflow-y-auto font-mono text-sm min-h-0">
                   <div class="text-slate-500">$ sirsi-nexus --version</div>
                   <div class="text-emerald-400">SirsiNexus v0.7.10-alpha (Build: 2025.08.05)</div>
                   <div class="text-slate-500 mt-2">$ # Ready for deployment. Select a scenario above to begin.</div>
@@ -801,28 +801,28 @@ function startCommandOutput(scenario) {
       function getAgentTriggerPoints(scenario) {
         const triggerMap = {
           'onprem-to-aws': [
-            { keyword: 'EKS]', component: 'containers', agentIndex: 0, message: '🚀 Container orchestration agent activated - EKS deployment started' },
-            { keyword: 'ALB]', component: 'networking', agentIndex: 1, message: '🌐 Network configuration agent activated - Load balancer setup' },
-            { keyword: 'RDS]', component: 'database', agentIndex: 2, message: '🗄️ Database management agent activated - RDS migration' },
+            { keyword: '[EKS]', component: 'containers', agentIndex: 0, message: '🚀 Container orchestration agent activated - EKS deployment started' },
+            { keyword: '[ALB]', component: 'networking', agentIndex: 1, message: '🌐 Network configuration agent activated - Load balancer setup' },
+            { keyword: '[RDS]', component: 'database', agentIndex: 2, message: '🗄️ Database management agent activated - RDS migration' },
             { keyword: 'OBSERVABILITY]', component: 'monitoring', agentIndex: 3, message: '📊 Observability agent activated - CloudWatch deployment' }
           ],
           'gcp-ml-platform': [
-            { keyword: 'GKE]', component: 'containers', agentIndex: 0, message: '🚀 Container orchestration agent activated - GKE deployment' },
-            { keyword: 'NETWORKING]', component: 'networking', agentIndex: 1, message: '🌐 Network configuration agent activated - Global load balancer' },
-            { keyword: 'BIGQUERY]', component: 'database', agentIndex: 2, message: '🗄️ Database management agent activated - BigQuery ML setup' },
-            { keyword: 'VERTEX]', component: 'monitoring', agentIndex: 3, message: '📊 Observability agent activated - Vertex AI monitoring' }
+            { keyword: '[GKE]', component: 'containers', agentIndex: 0, message: '🚀 Container orchestration agent activated - GKE deployment' },
+            { keyword: '[NETWORKING]', component: 'networking', agentIndex: 1, message: '🌐 Network configuration agent activated - Global load balancer' },
+            { keyword: '[BIGQUERY]', component: 'database', agentIndex: 2, message: '🗄️ Database management agent activated - BigQuery ML setup' },
+            { keyword: '[VERTEX]', component: 'monitoring', agentIndex: 3, message: '📊 Observability agent activated - Vertex AI monitoring' }
           ],
           'azure-modernization': [
-            { keyword: 'AKS]', component: 'containers', agentIndex: 0, message: '🚀 Container orchestration agent activated - AKS deployment' },
-            { keyword: 'NETWORKING]', component: 'networking', agentIndex: 1, message: '🌐 Network configuration agent activated - Application Gateway' },
-            { keyword: 'DATABASE]', component: 'database', agentIndex: 2, message: '🗄️ Database management agent activated - Azure PostgreSQL' },
-            { keyword: 'OBSERVABILITY]', component: 'monitoring', agentIndex: 3, message: '📊 Observability agent activated - Azure Monitor' }
+            { keyword: '[AKS]', component: 'containers', agentIndex: 0, message: '🚀 Container orchestration agent activated - AKS deployment' },
+            { keyword: '[NETWORKING]', component: 'networking', agentIndex: 1, message: '🌐 Network configuration agent activated - Application Gateway' },
+            { keyword: '[DATABASE]', component: 'database', agentIndex: 2, message: '🗄️ Database management agent activated - Azure PostgreSQL' },
+            { keyword: '[OBSERVABILITY]', component: 'monitoring', agentIndex: 3, message: '📊 Observability agent activated - Azure Monitor' }
           ],
           'hybrid-multicloud': [
-            { keyword: 'NETWORKING]', component: 'networking', agentIndex: 0, message: '🌐 Network configuration agent activated - Inter-cloud network' },
-            { keyword: 'KUBERNETES]', component: 'containers', agentIndex: 1, message: '🚀 Container orchestration agent activated - Multi-cloud K8s' },
-            { keyword: 'DATA]', component: 'database', agentIndex: 2, message: '🗄️ Database management agent activated - Distributed data layer' },
-            { keyword: 'OBSERVABILITY]', component: 'monitoring', agentIndex: 3, message: '📊 Observability agent activated - Unified monitoring' }
+            { keyword: '[NETWORKING]', component: 'networking', agentIndex: 0, message: '🌐 Network configuration agent activated - Inter-cloud network' },
+            { keyword: '[KUBERNETES]', component: 'containers', agentIndex: 1, message: '🚀 Container orchestration agent activated - Multi-cloud K8s' },
+            { keyword: '[DATA]', component: 'database', agentIndex: 2, message: '🗄️ Database management agent activated - Distributed data layer' },
+            { keyword: '[OBSERVABILITY]', component: 'monitoring', agentIndex: 3, message: '📊 Observability agent activated - Unified monitoring' }
           ]
         };
         
