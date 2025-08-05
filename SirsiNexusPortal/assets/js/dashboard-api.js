@@ -276,10 +276,32 @@ class DashboardAPI {
             return { data: [] };
         }
     }
-}
 
 // Make DashboardAPI available globally
 window.DashboardAPI = DashboardAPI;
+
+const COMPONENTS = ['containers', 'networking', 'database', 'monitoring', 'security', 'hypervisor'];
+
+function activateAgent(componentName, message) {
+    console.log(`Activating agent: ${componentName} with message: ${message}`);
+    // Logic to activate agent
+    if (componentName === 'security') {
+      message = 'Monitoring security elements including KMS, proxy, and SIEM activities initiated.';
+    } else if (componentName === 'hypervisor') {
+      message = 'Hypervisor now tracking agent lifecycle, LLM, and network graph operations started.';
+    }
+    console.log(message);
+}
+
+function getAgentTriggerPoints() {
+    return {
+        'onprem-to-aws': [
+            { keyword: '[EKS]', component: 'containers', message: 'Container orchestration agent activated - EKS deployment started' },
+            { keyword: '[SECURITY]', component: 'security', message: 'Monitoring security elements including KMS, proxy, and SIEM activities initiated.' },
+            { keyword: '[HYPERVISOR]', component: 'hypervisor', message: 'Hypervisor now tracking agent lifecycle, LLM, and network graph operations started.' }
+        ]
+    };
+}
 
 // Export for use in other modules
 if (typeof module !== 'undefined' && module.exports) {
