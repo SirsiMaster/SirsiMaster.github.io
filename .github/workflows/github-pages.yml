@@ -3,8 +3,8 @@ name: GitHub Pages deployment
 on:
   push:
     branches: 
-      - main  # Production deployment
-      - staging/infrastructure-animation  # Staging deployment
+      - main            # Production deployment
+      - 'staging/**'    # Any staging branch
 
 permissions:
   contents: read
@@ -23,6 +23,11 @@ jobs:
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
+
+      - name: Copy index to staging for non-main branches
+        if: github.ref != 'refs/heads/main'
+        run: |
+          cp SirsiNexusPortal/index.html SirsiNexusPortal/index-staging.html
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
