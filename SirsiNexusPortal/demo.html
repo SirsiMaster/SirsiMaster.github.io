@@ -278,9 +278,25 @@
                           <p class="text-xs text-slate-500">Kubernetes • Docker • Pods</p>
                         </div>
                       </div>
-                      <div id="container-logs" class="bg-slate-950/50 rounded p-3 text-xs font-mono text-slate-500 h-24 overflow-y-auto">
-                        <div class="text-slate-600">🔄 Initializing container orchestration agent...</div>
-                        <div class="text-blue-400">📦 Agent ready for deployment commands</div>
+                      <div id="container-logs" class="bg-slate-950/50 rounded p-3 text-xs font-mono">
+                        <div class="flex justify-between items-center mb-2">
+                          <span class="text-blue-400 font-semibold">Status:</span>
+                          <span id="container-status" class="text-slate-400">Standby</span>
+                        </div>
+                        <div class="space-y-1">
+                          <div class="flex justify-between">
+                            <span class="text-slate-400">Current Task:</span>
+                            <span id="container-task" class="text-slate-300">-</span>
+                          </div>
+                          <div class="flex justify-between">
+                            <span class="text-slate-400">Task Duration:</span>
+                            <span id="container-duration" class="text-slate-300">-</span>
+                          </div>
+                          <div class="flex justify-between">
+                            <span class="text-slate-400">Total Runtime:</span>
+                            <span id="container-runtime" class="text-slate-300">00:00</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
 
@@ -297,9 +313,25 @@
                           <p class="text-xs text-slate-500">Load Balancer • Ingress • DNS</p>
                         </div>
                       </div>
-                      <div id="network-logs" class="bg-slate-950/50 rounded p-3 text-xs font-mono text-slate-500 h-24 overflow-y-auto">
-                        <div class="text-slate-600">🌐 Initializing network configuration agent...</div>
-                        <div class="text-purple-400">🔗 Agent monitoring network topology</div>
+                      <div id="network-logs" class="bg-slate-950/50 rounded p-3 text-xs font-mono">
+                        <div class="flex justify-between items-center mb-2">
+                          <span class="text-purple-400 font-semibold">Status:</span>
+                          <span id="network-status" class="text-slate-400">Standby</span>
+                        </div>
+                        <div class="space-y-1">
+                          <div class="flex justify-between">
+                            <span class="text-slate-400">Current Task:</span>
+                            <span id="network-task" class="text-slate-300">-</span>
+                          </div>
+                          <div class="flex justify-between">
+                            <span class="text-slate-400">Task Duration:</span>
+                            <span id="network-duration" class="text-slate-300">-</span>
+                          </div>
+                          <div class="flex justify-between">
+                            <span class="text-slate-400">Total Runtime:</span>
+                            <span id="network-runtime" class="text-slate-300">00:00</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
 
@@ -316,9 +348,25 @@
                           <p class="text-xs text-slate-500">PostgreSQL • Redis • Backups</p>
                         </div>
                       </div>
-                      <div id="database-logs" class="bg-slate-950/50 rounded p-3 text-xs font-mono text-slate-500 h-24 overflow-y-auto">
-                        <div class="text-slate-600">🗄️ Initializing database management agent...</div>
-                        <div class="text-green-400">💾 Agent ready for database operations</div>
+                      <div id="database-logs" class="bg-slate-950/50 rounded p-3 text-xs font-mono">
+                        <div class="flex justify-between items-center mb-2">
+                          <span class="text-green-400 font-semibold">Status:</span>
+                          <span id="database-status" class="text-slate-400">Standby</span>
+                        </div>
+                        <div class="space-y-1">
+                          <div class="flex justify-between">
+                            <span class="text-slate-400">Current Task:</span>
+                            <span id="database-task" class="text-slate-300">-</span>
+                          </div>
+                          <div class="flex justify-between">
+                            <span class="text-slate-400">Task Duration:</span>
+                            <span id="database-duration" class="text-slate-300">-</span>
+                          </div>
+                          <div class="flex justify-between">
+                            <span class="text-slate-400">Total Runtime:</span>
+                            <span id="database-runtime" class="text-slate-300">00:00</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
 
@@ -335,9 +383,25 @@
                           <p class="text-xs text-slate-500">Prometheus • Grafana • Logs</p>
                         </div>
                       </div>
-                      <div id="monitoring-logs" class="bg-slate-950/50 rounded p-3 text-xs font-mono text-slate-500 h-24 overflow-y-auto">
-                        <div class="text-slate-600">📊 Initializing observability agent...</div>
-                        <div class="text-orange-400">🔍 Agent monitoring system metrics</div>
+                      <div id="monitoring-logs" class="bg-slate-950/50 rounded p-3 text-xs font-mono">
+                        <div class="flex justify-between items-center mb-2">
+                          <span class="text-orange-400 font-semibold">Status:</span>
+                          <span id="monitoring-status" class="text-slate-400">Standby</span>
+                        </div>
+                        <div class="space-y-1">
+                          <div class="flex justify-between">
+                            <span class="text-slate-400">Current Task:</span>
+                            <span id="monitoring-task" class="text-slate-300">-</span>
+                          </div>
+                          <div class="flex justify-between">
+                            <span class="text-slate-400">Task Duration:</span>
+                            <span id="monitoring-duration" class="text-slate-300">-</span>
+                          </div>
+                          <div class="flex justify-between">
+                            <span class="text-slate-400">Total Runtime:</span>
+                            <span id="monitoring-runtime" class="text-slate-300">00:00</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -610,19 +674,49 @@
       
       function activateAgent(componentName, message) {
         const element = document.getElementById(`component-${componentName}`);
-        const logsElement = document.getElementById(`${componentName}-logs`);
+        const statusElement = document.getElementById(`${componentName}-status`);
+        const taskElement = document.getElementById(`${componentName}-task`);
+        const durationElement = document.getElementById(`${componentName}-duration`);
+        const runtimeElement = document.getElementById(`${componentName}-runtime`);
         
-        if (element && logsElement) {
+        if (element && statusElement) {
           // Activate component visually
           element.classList.remove('opacity-50');
           element.classList.add('opacity-100', 'border-emerald-500/50', 'shadow-lg');
           
-          // Add activation message
-          const activationLine = document.createElement('div');
-          activationLine.className = 'text-emerald-400 text-xs mb-1 font-semibold';
-          activationLine.textContent = message;
-          logsElement.appendChild(activationLine);
-          logsElement.scrollTop = logsElement.scrollHeight;
+          // Update status
+          statusElement.textContent = 'Working';
+          statusElement.className = 'text-emerald-400';
+          
+          // Extract task from message
+          const taskMatch = message.match(/- (.+)/);
+          const taskName = taskMatch ? taskMatch[1] : message.replace(/🚀|🌐|🗄️|📊/g, '').trim();
+          taskElement.textContent = taskName;
+          
+          // Start task timer
+          const startTime = Date.now();
+          window[`${componentName}StartTime`] = startTime;
+          window[`${componentName}TotalStart`] = window[`${componentName}TotalStart`] || startTime;
+          
+          // Update duration timer
+          const durationInterval = setInterval(() => {
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            const minutes = Math.floor(elapsed / 60);
+            const seconds = elapsed % 60;
+            durationElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+          }, 1000);
+          
+          // Update total runtime timer
+          const runtimeInterval = setInterval(() => {
+            const totalElapsed = Math.floor((Date.now() - window[`${componentName}TotalStart`]) / 1000);
+            const totalMinutes = Math.floor(totalElapsed / 60);
+            const totalSeconds = totalElapsed % 60;
+            runtimeElement.textContent = `${totalMinutes.toString().padStart(2, '0')}:${totalSeconds.toString().padStart(2, '0')}`;
+          }, 1000);
+          
+          // Store intervals for cleanup
+          window[`${componentName}DurationInterval`] = durationInterval;
+          window[`${componentName}RuntimeInterval`] = runtimeInterval;
           
           // Update active agents count
           const activeAgentsCount = document.getElementById('active-agents-count');
@@ -676,32 +770,57 @@
 
       function animateComponent(componentName, data) {
         const element = document.getElementById(`component-${componentName}`);
-        const logsElement = document.getElementById(`${componentName}-logs`);
+        const statusElement = document.getElementById(`${componentName}-status`);
+        const taskElement = document.getElementById(`${componentName}-task`);
+        const durationElement = document.getElementById(`${componentName}-duration`);
         
-        if (element && logsElement) {
+        if (element && statusElement) {
           // Activate component
           element.classList.remove('opacity-50');
           element.classList.add('opacity-100', 'border-emerald-500/50');
           
-          // Clear existing logs
-          logsElement.innerHTML = '';
-          
-          // Animate logs
+          // Animate through tasks
           let logIndex = 0;
           const logInterval = setInterval(() => {
             if (logIndex < data.logs.length) {
-              const logLine = document.createElement('div');
-              logLine.className = `text-${data.color}-400 text-xs mb-1`;
-              logLine.textContent = data.logs[logIndex];
-              logsElement.appendChild(logLine);
-              logsElement.scrollTop = logsElement.scrollHeight;
+              const currentTask = data.logs[logIndex];
+              
+              // Update current task
+              taskElement.textContent = currentTask.replace(/📦|🐳|⚡|✅|🌐|🔗|📡|🗄️|💾|🔄|📊|📈|🔍/g, '').trim();
+              
+              // Reset task duration for new task
+              const taskStartTime = Date.now();
+              
+              // Update task duration for this specific task
+              const taskDurationInterval = setInterval(() => {
+                const elapsed = Math.floor((Date.now() - taskStartTime) / 1000);
+                const minutes = Math.floor(elapsed / 60);
+                const seconds = elapsed % 60;
+                durationElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+              }, 1000);
+              
+              // Clear previous task interval
+              if (window[`${componentName}TaskInterval`]) {
+                clearInterval(window[`${componentName}TaskInterval`]);
+              }
+              window[`${componentName}TaskInterval`] = taskDurationInterval;
+              
               logIndex++;
             } else {
               clearInterval(logInterval);
+              
               // Mark as complete
               element.classList.add('border-emerald-400');
+              statusElement.textContent = 'Complete';
+              statusElement.className = 'text-green-400';
+              taskElement.textContent = 'All tasks completed';
+              
+              // Clear task duration interval
+              if (window[`${componentName}TaskInterval`]) {
+                clearInterval(window[`${componentName}TaskInterval`]);
+              }
             }
-          }, 800);
+          }, 2000); // 2 seconds per task
         }
       }
 
