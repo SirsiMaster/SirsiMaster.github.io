@@ -84,58 +84,43 @@
     <!-- Main Demo Interface -->
     <main class="flex-1 h-full">
       <div class="h-full flex flex-col">
-        <!-- Control Panel -->
-        <div class="bg-slate-800/50 border-b border-slate-700 p-6">
+        <!-- Compact Control Panel -->
+        <div class="bg-slate-800/50 border-b border-slate-700 p-4">
           <div class="max-w-7xl mx-auto">
-            <div class="flex items-center justify-between mb-6">
-              <div>
-                <h2 class="text-2xl font-bold text-white mb-2">Infrastructure Deployment Simulator</h2>
-                <p class="text-slate-400">Select a deployment scenario and watch SirsiNexus agents work in real-time</p>
-              </div>
-              <div id="overall-status" class="flex items-center gap-2">
-                <div class="w-3 h-3 bg-slate-400 rounded-full"></div>
-                <span class="text-slate-400 font-medium">Ready to Deploy</span>
-              </div>
-            </div>
-            
-            <!-- Scenario Selection -->
-            <div class="grid md:grid-cols-2 gap-6">
-              <div>
-                <label class="block text-sm font-medium text-slate-300 mb-3">Choose Deployment Scenario</label>
-                <select id="scenario-select" class="w-full bg-slate-700 border border-slate-600 text-white rounded-lg p-4 text-lg">
-                  <option value="">Select your infrastructure scenario...</option>
-                  <option value="onprem-to-aws">🏢 → ☁️ On-Premises to AWS Migration</option>
-                  <option value="hybrid-multicloud">🌐 Hybrid Multi-Cloud Setup</option>
-                  <option value="azure-modernization">🔄 Azure Legacy Modernization</option>
-                  <option value="gcp-ml-platform">🤖 GCP AI/ML Platform</option>
-                </select>
-              </div>
-              
-              <div id="environment-details" class="hidden">
-                <label class="block text-sm font-medium text-slate-300 mb-3">Deployment Details</label>
-                <div class="bg-slate-700/50 rounded-lg p-4 space-y-2">
-                  <div>
-                    <span class="text-xs text-slate-400">Source:</span>
-                    <div id="source-env" class="text-sm text-emerald-400 font-mono"></div>
-                  </div>
-                  <div>
-                    <span class="text-xs text-slate-400">Target:</span>
-                    <div id="target-env" class="text-sm text-emerald-400 font-mono"></div>
-                  </div>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-6">
+                <div>
+                  <h2 class="text-lg font-bold text-white">SirsiNexus Deployment Simulator</h2>
+                </div>
+                <div class="flex items-center gap-4">
+                  <select id="scenario-select" class="bg-slate-700 border border-slate-600 text-white rounded-lg px-4 py-2 text-sm">
+                    <option value="">Select Scenario...</option>
+                    <option value="onprem-to-aws">🏢 → ☁️ AWS Migration</option>
+                    <option value="hybrid-multicloud">🌐 Multi-Cloud</option>
+                    <option value="azure-modernization">🔄 Azure Modernization</option>
+                    <option value="gcp-ml-platform">🤖 GCP AI/ML</option>
+                  </select>
+                  <button id="start-deployment" 
+                          class="bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-600 disabled:cursor-not-allowed text-white px-6 py-2 rounded-lg font-semibold transition-all duration-300 text-sm flex items-center gap-2"
+                          disabled>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                    <span id="start-button-text">Deploy</span>
+                  </button>
                 </div>
               </div>
-            </div>
-            
-            <!-- Start Button -->
-            <div class="mt-6 flex justify-center">
-              <button id="start-deployment" 
-                      class="bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-600 disabled:cursor-not-allowed text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg text-lg flex items-center gap-3"
-                      disabled>
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                </svg>
-                <span id="start-button-text">Select Scenario to Begin</span>
-              </button>
+              
+              <div class="flex items-center gap-6">
+                <div id="environment-details" class="hidden text-xs">
+                  <span class="text-slate-400">Source:</span> <span id="source-env" class="text-emerald-400 font-mono"></span>
+                  <span class="text-slate-400 ml-3">Target:</span> <span id="target-env" class="text-emerald-400 font-mono"></span>
+                </div>
+                <div id="overall-status" class="flex items-center gap-2">
+                  <div class="w-2 h-2 bg-slate-400 rounded-full"></div>
+                  <span class="text-slate-400 font-medium text-sm">Ready</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -157,6 +142,68 @@
                   <div id="deployment-status" class="flex items-center gap-2">
                     <div class="w-2 h-2 bg-slate-400 rounded-full"></div>
                     <span class="text-sm text-slate-400">Standby</span>
+                  </div>
+                </div>
+                
+                <!-- Live Resource Metrics Bar -->
+                <div class="px-4 py-3 border-b border-slate-700/30 bg-slate-900/30">
+                  <div class="grid grid-cols-4 gap-6 text-xs">
+                    <!-- CPU Usage -->
+                    <div class="flex items-center gap-3">
+                      <div class="flex items-center gap-2 min-w-16">
+                        <div class="w-2 h-2 bg-blue-400 rounded-full"></div>
+                        <span class="text-slate-300 font-medium">CPU</span>
+                      </div>
+                      <div class="flex-1">
+                        <div class="h-2 bg-slate-700 rounded-full overflow-hidden">
+                          <div id="cpu-bar" class="h-full bg-gradient-to-r from-blue-400 to-blue-600 w-0 transition-all duration-300"></div>
+                        </div>
+                      </div>
+                      <span id="cpu-usage" class="text-blue-400 font-mono min-w-10 text-right">0%</span>
+                    </div>
+                    
+                    <!-- Memory Usage -->
+                    <div class="flex items-center gap-3">
+                      <div class="flex items-center gap-2 min-w-16">
+                        <div class="w-2 h-2 bg-purple-400 rounded-full"></div>
+                        <span class="text-slate-300 font-medium">Memory</span>
+                      </div>
+                      <div class="flex-1">
+                        <div class="h-2 bg-slate-700 rounded-full overflow-hidden">
+                          <div id="memory-bar" class="h-full bg-gradient-to-r from-purple-400 to-purple-600 w-0 transition-all duration-300"></div>
+                        </div>
+                      </div>
+                      <span id="memory-usage" class="text-purple-400 font-mono min-w-16 text-right">0/16GB</span>
+                    </div>
+                    
+                    <!-- Network I/O -->
+                    <div class="flex items-center gap-3">
+                      <div class="flex items-center gap-2 min-w-16">
+                        <div class="w-2 h-2 bg-green-400 rounded-full"></div>
+                        <span class="text-slate-300 font-medium">Network</span>
+                      </div>
+                      <div class="flex-1">
+                        <div class="h-2 bg-slate-700 rounded-full overflow-hidden">
+                          <div id="network-bar" class="h-full bg-gradient-to-r from-green-400 to-green-600 w-0 transition-all duration-300"></div>
+                        </div>
+                      </div>
+                      <span id="network-usage" class="text-green-400 font-mono min-w-14 text-right">0MB/s</span>
+                    </div>
+                    
+                    <!-- System Status -->
+                    <div class="flex items-center gap-3">
+                      <div class="flex items-center gap-2 min-w-16">
+                        <div class="w-2 h-2 bg-emerald-400 rounded-full"></div>
+                        <span class="text-slate-300 font-medium">Agents</span>
+                      </div>
+                      <div class="flex items-center gap-3 text-emerald-400 font-mono">
+                        <span id="active-agents-count">0/4</span>
+                        <span class="text-slate-500">•</span>
+                        <span id="services-deployed">0</span> svc
+                        <span class="text-slate-500">•</span>
+                        <span id="system-uptime">00:00</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 
@@ -294,91 +341,9 @@
                       </div>
                     </div>
                   </div>
-                  
-                  <!-- Overall Progress -->
-                  <div class="mb-4">
-                    <div class="flex justify-between items-center mb-2">
-                      <span class="text-sm font-medium text-slate-300">Deployment Progress</span>
-                      <span id="overall-progress-text" class="text-sm text-slate-400">0%</span>
-                    </div>
-                    <div class="h-3 bg-slate-700 rounded-full overflow-hidden">
-                      <div id="overall-progress-bar" class="h-full bg-gradient-to-r from-emerald-500 to-emerald-400 w-0 transition-all duration-500 ease-out"></div>
-                    </div>
-                  </div>
                 </div>
               </div>
 
-              <!-- Right Column: Live Resource Metrics & Status -->
-              <div class="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50">
-                <div class="p-4 border-b border-slate-700/50">
-                  <h3 class="text-lg font-bold text-white mb-4">Live Resource Metrics</h3>
-                </div>
-                <div class="p-4 space-y-6">
-                  <!-- CPU Usage -->
-                  <div>
-                    <div class="flex justify-between items-center mb-2">
-                      <span class="text-sm text-slate-300">CPU Usage</span>
-                      <span id="cpu-usage" class="text-sm font-mono text-emerald-400">0%</span>
-                    </div>
-                    <div class="h-3 bg-slate-700 rounded-full overflow-hidden">
-                      <div id="cpu-bar" class="h-full bg-gradient-to-r from-blue-400 to-blue-600 w-0 transition-all duration-300"></div>
-                    </div>
-                    <div class="flex justify-between text-xs text-slate-500 mt-1">
-                      <span>0%</span>
-                      <span>100%</span>
-                    </div>
-                  </div>
-                  
-                  <!-- Memory Usage -->
-                  <div>
-                    <div class="flex justify-between items-center mb-2">
-                      <span class="text-sm text-slate-300">Memory</span>
-                      <span id="memory-usage" class="text-sm font-mono text-emerald-400">0/16 GB</span>
-                    </div>
-                    <div class="h-3 bg-slate-700 rounded-full overflow-hidden">
-                      <div id="memory-bar" class="h-full bg-gradient-to-r from-purple-400 to-purple-600 w-0 transition-all duration-300"></div>
-                    </div>
-                    <div class="flex justify-between text-xs text-slate-500 mt-1">
-                      <span>0 GB</span>
-                      <span>16 GB</span>
-                    </div>
-                  </div>
-                  
-                  <!-- Network I/O -->
-                  <div>
-                    <div class="flex justify-between items-center mb-2">
-                      <span class="text-sm text-slate-300">Network I/O</span>
-                      <span id="network-usage" class="text-sm font-mono text-emerald-400">0 MB/s</span>
-                    </div>
-                    <div class="h-3 bg-slate-700 rounded-full overflow-hidden">
-                      <div id="network-bar" class="h-full bg-gradient-to-r from-green-400 to-green-600 w-0 transition-all duration-300"></div>
-                    </div>
-                    <div class="flex justify-between text-xs text-slate-500 mt-1">
-                      <span>0 MB/s</span>
-                      <span>100 MB/s</span>
-                    </div>
-                  </div>
-                  
-                  <!-- Deployment Status -->
-                  <div class="border-t border-slate-700 pt-4">
-                    <h4 class="text-sm font-semibold text-white mb-3">System Status</h4>
-                    <div class="space-y-2">
-                      <div class="flex justify-between items-center">
-                        <span class="text-xs text-slate-400">Active Agents</span>
-                        <span id="active-agents-count" class="text-xs font-mono text-emerald-400">0/4</span>
-                      </div>
-                      <div class="flex justify-between items-center">
-                        <span class="text-xs text-slate-400">Services Deployed</span>
-                        <span id="services-deployed" class="text-xs font-mono text-emerald-400">0</span>
-                      </div>
-                      <div class="flex justify-between items-center">
-                        <span class="text-xs text-slate-400">Uptime</span>
-                        <span id="system-uptime" class="text-xs font-mono text-emerald-400">00:00:00</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
