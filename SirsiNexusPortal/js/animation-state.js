@@ -94,7 +94,7 @@ class InfrastructureAnimationController {
   handleStateChange(state, data) {
     // Update UI elements based on state
     if (this.elements.stateLabel) {
-      this.elements.stateLabel.textContent = state.charAt(0).toUpperCase() + state.slice(1);
+      this.elements.stateLabel.innerHTML = `Infrastructure State: <span class="text-emerald-500">${state.charAt(0).toUpperCase() + state.slice(1)}</span>`;
     }
 
     // Update progress bar
