@@ -169,34 +169,23 @@ function initializeAnimation() {
   // Initialize immediately
   animationController.initialize();
 
-  // Add button click handlers for both demo buttons
+  // Add click handler for hero demo button
   const heroButton = document.getElementById('hero-demo-button');
-  const infraButton = document.getElementById('infrastructure-demo-button');
-
-  const setupButton = (button) => {
-    if (button) {
-      console.log('Found demo button, adding click handler');
-      button.onclick = () => {
-        console.log('Demo button clicked');
-        if (window.stateMachine) {
-          console.log('Starting state machine...');
-          window.stateMachine.start();
-          // Scroll to the infrastructure section if clicked from hero
-          if (button.id === 'hero-demo-button') {
-            document.getElementById('platform').scrollIntoView({ behavior: 'smooth' });
-          }
-        } else {
-          console.error('State machine not found');
-        }
-      };
-    }
-  };
-
-  setupButton(heroButton);
-  setupButton(infraButton);
-
-  if (!heroButton && !infraButton) {
-    console.error('No demo buttons found');
+  if (heroButton) {
+    console.log('Found hero demo button, adding click handler');
+    heroButton.onclick = () => {
+      console.log('Demo button clicked');
+      if (window.stateMachine) {
+        console.log('Starting state machine...');
+        window.stateMachine.start();
+        // Scroll to the infrastructure section
+        document.getElementById('platform').scrollIntoView({ behavior: 'smooth' });
+      } else {
+        console.error('State machine not found');
+      }
+    };
+  } else {
+    console.error('Hero demo button not found');
   }
 }
 
