@@ -291,6 +291,42 @@
                   <div class="text-slate-500 mt-2">Waiting for scenario selection...</div>
                 </div>
               </div>
+              
+              <!-- Deployment Artifacts Panel Relocated Below Orchestrator Console -->
+              <div class="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50 p-4 mt-4">
+                <h4 class="text-sm font-semibold text-white mb-3">Deployment Artifacts</h4>
+                <div class="grid grid-cols-7 gap-4 text-xs">
+                  <div class="flex justify-between items-center flex-col">
+                    <span class="text-slate-400">YAML Manifests</span>
+                    <span id="yaml-count" class="text-emerald-400 font-mono text-lg">0</span>
+                  </div>
+                  <div class="flex justify-between items-center flex-col">
+                    <span class="text-slate-400">Terraform Modules</span>
+                    <span id="terraform-count" class="text-emerald-400 font-mono text-lg">0</span>
+                  </div>
+                  <div class="flex justify-between items-center flex-col">
+                    <span class="text-slate-400">CloudFormation</span>
+                    <span id="cloudformation-count" class="text-emerald-400 font-mono text-lg">0</span>
+                  </div>
+                  <div class="flex justify-between items-center flex-col">
+                    <span class="text-slate-400">Bicep Templates</span>
+                    <span id="bicep-count" class="text-emerald-400 font-mono text-lg">0</span>
+                  </div>
+                  <div class="flex justify-between items-center flex-col">
+                    <span class="text-slate-400">Helm Charts</span>
+                    <span id="helm-count" class="text-emerald-400 font-mono text-lg">0</span>
+                  </div>
+                  <div class="flex justify-between items-center flex-col">
+                    <span class="text-slate-400">Docker Images</span>
+                    <span id="docker-count" class="text-emerald-400 font-mono text-lg">0</span>
+                  </div>
+                  <div class="flex justify-between items-center flex-col">
+                    <span class="text-slate-400">Job Completions</span>
+                    <span id="job-completions" class="text-emerald-400 font-mono text-lg">0/0</span>
+                  </div>
+                </div>
+              </div>
+              
               </div>
               
               <!-- Right Sidebar: Agents and Metrics (1/3 width) -->
@@ -577,41 +613,6 @@
                     </div>
                   </div>
                 </div>
-                
-                <!-- Infrastructure Artifacts Panel -->
-                <div class="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50 p-4">
-                  <h4 class="text-sm font-semibold text-white mb-3">Deployment Artifacts</h4>
-                  <div class="space-y-3 text-xs">
-                    <div class="flex justify-between items-center">
-                      <span class="text-slate-400">YAML Manifests:</span>
-                      <span id="yaml-count" class="text-emerald-400 font-mono">0</span>
-                    </div>
-                    <div class="flex justify-between items-center">
-                      <span class="text-slate-400">Terraform Modules:</span>
-                      <span id="terraform-count" class="text-emerald-400 font-mono">0</span>
-                    </div>
-                    <div class="flex justify-between items-center">
-                      <span class="text-slate-400">CloudFormation:</span>
-                      <span id="cloudformation-count" class="text-emerald-400 font-mono">0</span>
-                    </div>
-                    <div class="flex justify-between items-center">
-                      <span class="text-slate-400">Bicep Templates:</span>
-                      <span id="bicep-count" class="text-emerald-400 font-mono">0</span>
-                    </div>
-                    <div class="flex justify-between items-center">
-                      <span class="text-slate-400">Helm Charts:</span>
-                      <span id="helm-count" class="text-emerald-400 font-mono">0</span>
-                    </div>
-                    <div class="flex justify-between items-center">
-                      <span class="text-slate-400">Docker Images:</span>
-                      <span id="docker-count" class="text-emerald-400 font-mono">0</span>
-                    </div>
-                    <div class="flex justify-between items-center">
-                      <span class="text-slate-400">Job Completions:</span>
-                      <span id="job-completions" class="text-emerald-400 font-mono">0/0</span>
-                    </div>
-                  </div>
-                </div>
               </div>
 
             </div>
@@ -670,7 +671,12 @@
           return;
         }
         
-        const scenarios = {
+        // Adjust artifact panel location
+        const artifactsPanel = document.querySelector('.deployment-artifacts');
+        const orchestratorConsole = document.querySelector('.orchestrator-console');
+        if (artifactsPanel && orchestratorConsole) {
+          orchestratorConsole.appendChild(artifactsPanel);
+        }
           'onprem-to-aws': {
         "source": "On-Premises DataCenter (VMware vSphere 7.0)",
         "target": "AWS (us-west-2, us-east-1)",
@@ -729,6 +735,7 @@
         });
         
         // Start deployment handler
+        startArtifactCounter(); // Initialize artifact counter
         startButton.addEventListener('click', function(e) {
           console.log('Deploy button clicked!');
           e.preventDefault();
@@ -791,10 +798,49 @@
         startButton.querySelector('#start-button-text').textContent = 'Migration in Progress...';
         
         // Start comprehensive deployment sequence
-        setTimeout(() => startDiscoveryPhase(scenarioKey), 500);
+// Simulate conversation for plan acceptance
+        let conversationIndex = 0;
+        const conversationFlow = [
+          { speaker: 'SirsiNexus AI', message: 'Here is the plan. Does the CTO/Operator agree? Yes/No.' },
+          { speaker: 'CTO/Operator', message: Math.random() > 0.5 ? 'Yes' : 'No' },
+        ];
+
+        const conversationWindow = document.getElementById('conversation-window');
+
+        if (conversationWindow) {
+          conversationFlow.forEach(entry => {
+            setTimeout(() => {
+              const logEntry = document.createElement('div');
+              logEntry.className = 'mb-2';
+              logEntry.innerHTML = `<strong class="${entry.speaker === 'You' ? 'text-blue-400' : 'text-emerald-400'}">${entry.speaker}:</strong> <span class="text-slate-300">${entry.message}</span>`;
+              conversationWindow.appendChild(logEntry);
+              conversationWindow.scrollTop = conversationWindow.scrollHeight;
+            }, conversationIndex++ * 3000);
+          });
+        }
+
+        setTimeout(() => startDiscoveryPhase(scenarioKey), 10000);
         setTimeout(() => startComponentAnimations(scenarioKey), 8000);
         setTimeout(() => startLiveMetrics(), 10000);
         setTimeout(() => startQuickMetricsUpdates(), 1000);
+      }
+
+function startArtifactCounter() {
+        document.querySelectorAll('[id$="-count"]').forEach(el => {
+          el.textContent = parseInt(el.textContent) + Math.ceil(Math.random() * 100);
+        });
+
+        // Simulate actual work influencing artifact counts
+        const workSimulation = setInterval(() => {
+          document.querySelectorAll('[id$="-count"]').forEach(el => {
+            const current = parseInt(el.textContent);
+            if (current < 1000) {
+              el.textContent = current + Math.ceil(Math.random() * 10);
+            }
+          });
+        }, 5000);
+        
+        setTimeout(() => clearInterval(workSimulation), 60000); // Stop simulation after 1 minute
       }
 
 function startCommandOutput(scenario) {
@@ -941,25 +987,31 @@ function startCommandOutput(scenario) {
         });
       }
       
-      function getAgentTriggerPoints(scenario) {
+function getAgentTriggerPoints(scenario) {
         const triggerMap = {
           'onprem-to-aws': [
             { keyword: '[EKS]', component: 'containers', agentIndex: 0, message: '🚀 Container orchestration agent activated - EKS deployment started' },
             { keyword: '[ALB]', component: 'networking', agentIndex: 1, message: '🌐 Network configuration agent activated - Load balancer setup' },
             { keyword: '[RDS]', component: 'database', agentIndex: 2, message: '🗄️ Database management agent activated - RDS migration' },
-            { keyword: '[OBSERVABILITY]', component: 'monitoring', agentIndex: 3, message: '📊 Observability agent activated - CloudWatch deployment' }
+            { keyword: '[OBSERVABILITY]', component: 'monitoring', agentIndex: 3, message: '📊 Observability agent activated - CloudWatch deployment' },
+            { keyword: '[SECURITY]', component: 'security', agentIndex: 4, message: '🔒 Security management agent activated - Zero-trust enabled' },
+            { keyword: '[HYPERVISOR]', component: 'hypervisor', agentIndex: 5, message: '🔧 Hypervisor management agent activated - Hypervisor routines initiated' }
           ],
           'gcp-ml-platform': [
             { keyword: '[GKE]', component: 'containers', agentIndex: 0, message: '🚀 Container orchestration agent activated - GKE deployment' },
             { keyword: '[NETWORKING]', component: 'networking', agentIndex: 1, message: '🌐 Network configuration agent activated - Global load balancer' },
             { keyword: '[BIGQUERY]', component: 'database', agentIndex: 2, message: '🗄️ Database management agent activated - BigQuery ML setup' },
-            { keyword: '[VERTEX]', component: 'monitoring', agentIndex: 3, message: '📊 Observability agent activated - Vertex AI monitoring' }
+            { keyword: '[VERTEX]', component: 'monitoring', agentIndex: 3, message: '📊 Observability agent activated - Vertex AI monitoring' },
+            { keyword: '[SECURITY]', component: 'security', agentIndex: 4, message: '🔒 Security management agent activated - Data security in place' },
+            { keyword: '[HYPERVISOR]', component: 'hypervisor', agentIndex: 5, message: '🔧 Hypervisor routines activated - System resource management' }
           ],
           'azure-modernization': [
             { keyword: '[AKS]', component: 'containers', agentIndex: 0, message: '🚀 Container orchestration agent activated - AKS deployment' },
             { keyword: '[NETWORKING]', component: 'networking', agentIndex: 1, message: '🌐 Network configuration agent activated - Application Gateway' },
             { keyword: '[DATABASE]', component: 'database', agentIndex: 2, message: '🗄️ Database management agent activated - Azure PostgreSQL' },
-            { keyword: '[OBSERVABILITY]', component: 'monitoring', agentIndex: 3, message: '📊 Observability agent activated - Azure Monitor' }
+            { keyword: '[OBSERVABILITY]', component: 'monitoring', agentIndex: 3, message: '📊 Observability agent activated - Azure Monitor' },
+            { keyword: '[SECURITY]', component: 'security', agentIndex: 4, message: '🔒 Security protocols established - Azure security reinforced' },
+            { keyword: '[HYPERVISOR]', component: 'hypervisor', agentIndex: 5, message: '🔧 Hypervisor management in action - Virtualization processes enhanced' }
           ],
           'hybrid-multicloud': [
             { keyword: '[SECURITY]', component: 'security', agentIndex: 4, message: '🔒 Security management agent activated - Zero-trust mesh' },
@@ -978,7 +1030,7 @@ function startCommandOutput(scenario) {
         console.log(`🚀 Activating agent: ${componentName} with message: ${message}`);
         
         const element = document.getElementById(`component-${componentName}`);
-const statusElement = document.getElementById(`${componentName === 'containers' ? 'container' : componentName}-status`);
+const statusElement = document.getElementById(`${componentName === 'containers' ? 'container' : componentName === 'networking' ? 'network' : componentName}-status`);
         const taskElement = document.getElementById(`${componentName === 'containers' ? 'container' : componentName === 'networking' ? 'network' : componentName}-task`);
         const durationElement = document.getElementById(`${componentName === 'containers' ? 'container' : componentName === 'networking' ? 'network' : componentName}-duration`);
         const runtimeElement = document.getElementById(`${componentName === 'containers' ? 'container' : componentName === 'networking' ? 'network' : componentName}-runtime`);
@@ -1031,8 +1083,13 @@ const statusElement = document.getElementById(`${componentName === 'containers' 
         // Update active agents count
         const activeAgentsCount = document.getElementById('active-agents-count');
         if (activeAgentsCount) {
-          const current = parseInt(activeAgentsCount.textContent.split('/')[0]);
-          activeAgentsCount.textContent = `${current + 1}/6`;
+          // Count actual active agents instead of incrementing
+          const activeAgents = ['containers', 'networking', 'database', 'monitoring', 'security', 'hypervisor']
+            .filter(comp => {
+              const status = document.getElementById(`${comp === 'containers' ? 'container' : comp === 'networking' ? 'network' : comp}-status`);
+              return status && status.textContent === 'Active';
+            }).length;
+          activeAgentsCount.textContent = `${activeAgents}/6`;
         }
         
         // Start component-specific task animation
