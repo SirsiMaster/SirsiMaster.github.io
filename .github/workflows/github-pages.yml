@@ -3,12 +3,15 @@ name: GitHub Pages deployment
 on:
   push:
     branches:
-      - main  # Set this to your default branch
-      - staging/infrastructure-animation  # Staging branch for new features
+      - main
+      - staging/infrastructure-animation
   pull_request:
+    branches:
+      - main
+      - staging/infrastructure-animation
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -18,14 +21,20 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  deploy:
+  build-and-deploy:
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Copy staging file if on staging branch
+        if: github.ref == 'refs/heads/staging/infrastructure-animation'
+        run: |
+          echo "Building staging site..."
+          cp SirsiNexusPortal/index-staging.html SirsiNexusPortal/index.html
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
