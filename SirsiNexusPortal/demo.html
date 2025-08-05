@@ -525,6 +525,10 @@
                       <span id="cloudformation-count" class="text-emerald-400 font-mono">0</span>
                     </div>
                     <div class="flex justify-between items-center">
+                      <span class="text-slate-400">Bicep Templates:</span>
+                      <span id="bicep-count" class="text-emerald-400 font-mono">0</span>
+                    </div>
+                    <div class="flex justify-between items-center">
                       <span class="text-slate-400">Helm Charts:</span>
                       <span id="helm-count" class="text-emerald-400 font-mono">0</span>
                     </div>
@@ -719,10 +723,20 @@ function startCommandOutput(scenario) {
 
         const updateConversation = (entry) => {
           const logEntry = document.createElement('div');
-          logEntry.innerHTML = `<strong>${entry.speaker}:</strong> <span>${entry.message}</span>`;
+          logEntry.className = 'mb-2';
+          logEntry.innerHTML = `<strong class="${entry.speaker === 'You' ? 'text-blue-400' : 'text-emerald-400'}">${entry.speaker}:</strong> <span class="text-slate-300">${entry.message}</span>`;
           conversationWindow.appendChild(logEntry);
           conversationWindow.scrollTop = conversationWindow.scrollHeight;
         };
+
+        // Update conversation status
+        const conversationStatus = document.getElementById('conversation-status');
+        if (conversationStatus) {
+          conversationStatus.innerHTML = `
+            <div class="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+            <span class="text-sm text-blue-400">Active</span>
+          `;
+        }
 
         conversationLog.forEach((entry, index) => {
           setTimeout(() => updateConversation(entry), index * 4000); // Delay to simulate real conversation
@@ -758,8 +772,12 @@ function startCommandOutput(scenario) {
             // Update agent task details based on command output
             updateAgentTasksFromCommand(cmd.text);
             
-            // Update system counters
+            // Update system counters and artifacts
             updateSystemCounters(cmd, index);
+            updateArtifactCounters(cmd.text, scenario);
+            
+            // Add orchestration insights to conversation
+            addOrchestrationInsights(cmd.text, scenario);
             
             // Update progress bar based on actual steps
             const progress = ((index + 1) / commands.length) * 100;
@@ -786,13 +804,23 @@ function startCommandOutput(scenario) {
                   <span class="text-sm text-green-400">All Agents Active</span>
                 `;
                 
-                // Add completion acknowledgment
+                // Add completion acknowledgment to both command output and conversation
                 setTimeout(() => {
                   const completionLine = document.createElement('div');
                   completionLine.className = 'text-cyan-400 font-semibold mt-2';
                   completionLine.textContent = '🤖 SirsiNexus: Deployment artifacts validated. Infrastructure ready. Awaiting next orchestration task.';
                   commandOutput.appendChild(completionLine);
                   commandOutput.scrollTop = commandOutput.scrollHeight;
+                  
+                  // Add to conversation window
+                  const conversationWindow = document.getElementById('conversation-window');
+                  if (conversationWindow) {
+                    const aiResponse = document.createElement('div');
+                    aiResponse.className = 'mb-2 mt-4';
+                    aiResponse.innerHTML = `<strong class="text-emerald-400">SirsiNexus AI:</strong> <span class="text-slate-300">✅ Deployment completed successfully! All infrastructure agents are operational. Generated ${getTotalArtifactCount()} artifacts including IaC templates, container images, and configuration files. System is ready for production workloads.</span>`;
+                    conversationWindow.appendChild(aiResponse);
+                    conversationWindow.scrollTop = conversationWindow.scrollHeight;
+                  }
                 }, 2000);
                 
                 // Re-enable start button
@@ -1884,6 +1912,125 @@ function startCommandOutput(scenario) {
             }
           }
         });
+      }
+      
+      // Artifact counting functionality
+      let artifactCounts = {
+        yaml: 0,
+        terraform: 0,
+        cloudformation: 0,
+        bicep: 0,
+        helm: 0,
+        docker: 0,
+        jobs: { completed: 0, total: 0 }
+      };
+      
+      function updateArtifactCounters(commandText, scenario) {
+        // Update artifact counts based on command text
+        const artifactPatterns = {
+          cloudformation: /CloudFormation templates?.*?(\d+)/i,
+          terraform: /Terraform modules?.*?(\d+)/i,
+          kubernetes: /Kubernetes manifests?.*?(\d+)/i,
+          helm: /Helm charts?.*?(\d+)/i,
+          docker: /Docker.*?(\d+)/i,
+          bicep: /Bicep templates?.*?(\d+)/i,
+          ansible: /Ansible playbooks?.*?(\d+)/i,
+          powershell: /PowerShell scripts?.*?(\d+)/i
+        };
+        
+        Object.keys(artifactPatterns).forEach(type => {
+          const match = commandText.match(artifactPatterns[type]);
+          if (match) {
+            const count = parseInt(match[1]);
+            switch(type) {
+              case 'cloudformation':
+                artifactCounts.cloudformation += count;
+                document.getElementById('cloudformation-count').textContent = artifactCounts.cloudformation;
+                break;
+              case 'terraform':
+                artifactCounts.terraform += count;
+                document.getElementById('terraform-count').textContent = artifactCounts.terraform;
+                break;
+              case 'kubernetes':
+                artifactCounts.yaml += count;
+                document.getElementById('yaml-count').textContent = artifactCounts.yaml;
+                break;
+              case 'helm':
+                artifactCounts.helm += count;
+                document.getElementById('helm-count').textContent = artifactCounts.helm;
+                break;
+              case 'docker':
+                artifactCounts.docker += count;
+                document.getElementById('docker-count').textContent = artifactCounts.docker;
+                break;
+              case 'bicep':
+                artifactCounts.bicep += count;
+                document.getElementById('bicep-count').textContent = artifactCounts.bicep;
+                break;
+            }
+          }
+        });
+        
+        // Update job completions when tasks are completed
+        if (commandText.includes('✅')) {
+          artifactCounts.jobs.completed++;
+          artifactCounts.jobs.total = Math.max(artifactCounts.jobs.total, artifactCounts.jobs.completed + 2);
+          document.getElementById('job-completions').textContent = `${artifactCounts.jobs.completed}/${artifactCounts.jobs.total}`;
+        }
+        
+        // Set total jobs based on scenario
+        if (commandText.includes('SIRSI DEPLOYMENT PLAN')) {
+          const scenarioTotals = {
+            'onprem-to-aws': 25,
+            'hybrid-multicloud': 35,
+            'azure-modernization': 20,
+            'gcp-ml-platform': 30
+          };
+          artifactCounts.jobs.total = scenarioTotals[scenario] || 25;
+          document.getElementById('job-completions').textContent = `${artifactCounts.jobs.completed}/${artifactCounts.jobs.total}`;
+        }
+      }
+      
+      function addOrchestrationInsights(commandText, scenario) {
+        const conversationWindow = document.getElementById('conversation-window');
+        if (!conversationWindow) return;
+        
+        // Key orchestration insights to share
+        const insightTriggers = {
+          '[FOUNDATION]': 'Network foundation established with enterprise-grade security controls.',
+          '[EKS]': 'Container orchestration platform is operational with auto-scaling capabilities.',
+          '[ALB]': 'Load balancing and traffic management systems are optimized for global distribution.',
+          '[RDS]': 'Database systems migrated successfully with 99.99% uptime guarantee.',
+          '[OBSERVABILITY]': 'Full-stack monitoring and observability platform is capturing all metrics.',
+          '[AKS]': 'Azure Kubernetes Service deployment completed with policy-driven governance.',
+          '[GKE]': 'Google Kubernetes Engine configured for ML workloads with GPU acceleration.',
+          '[NETWORKING]': 'Multi-cloud networking backbone established with sub-10ms latency.',
+          '[DATA]': 'Distributed data layer operational with global consistency.',
+          '[VERTEX]': 'AI/ML platform deployment completed with enterprise MLOps capabilities.',
+          '[BIGQUERY]': 'Petabyte-scale analytics platform ready for real-time data processing.'
+        };
+        
+        Object.keys(insightTriggers).forEach(trigger => {
+          if (commandText.includes(trigger) && commandText.includes('✅')) {
+            // Add AI insight to conversation with delay
+            setTimeout(() => {
+              const insight = document.createElement('div');
+              insight.className = 'mb-2 opacity-80';
+              insight.innerHTML = `<strong class="text-emerald-400">SirsiNexus AI:</strong> <span class="text-slate-300">${insightTriggers[trigger]}</span>`;
+              conversationWindow.appendChild(insight);
+              conversationWindow.scrollTop = conversationWindow.scrollHeight;
+            }, Math.random() * 3000 + 1000); // Random delay between 1-4 seconds
+          }
+        });
+      }
+      
+      function getTotalArtifactCount() {
+        return artifactCounts.cloudformation + 
+               artifactCounts.terraform + 
+               artifactCounts.yaml + 
+               artifactCounts.helm + 
+               artifactCounts.docker + 
+               artifactCounts.bicep;
       }
     </script>
   </body>
