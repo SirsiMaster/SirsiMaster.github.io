@@ -634,25 +634,6 @@
           }
         });
         
-        // Execute command button handler
-        const executeButton = document.getElementById('execute-command');
-        if (executeButton) {
-          executeButton.addEventListener('click', function(e) {
-            e.preventDefault();
-            const selectedScenario = scenarioSelect.value;
-            if (selectedScenario && scenarios[selectedScenario]) {
-              startDeployment(selectedScenario, scenarios[selectedScenario]);
-            } else {
-              // Show a message if no scenario is selected
-              const commandOutput = document.getElementById('command-output');
-              const errorLine = document.createElement('div');
-              errorLine.className = 'text-red-400 mt-2';
-              errorLine.textContent = '❌ Error: Please select a deployment scenario first.';
-              commandOutput.appendChild(errorLine);
-              commandOutput.scrollTop = commandOutput.scrollHeight;
-            }
-          });
-        }
       }
 
       function startDeployment(scenarioKey, scenario) {
@@ -698,7 +679,6 @@
 
 function startCommandOutput(scenario) {
         const commandOutput = document.getElementById('command-output');
-        const commandInput = document.getElementById('command-input');
         const conversationWindow = document.getElementById('conversation-window');
         if (!commandOutput || !conversationWindow) return;
         
