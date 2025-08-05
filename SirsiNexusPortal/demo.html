@@ -257,7 +257,7 @@
                         <span class="text-slate-300 font-medium">Agents</span>
                       </div>
                       <div class="flex items-center gap-3 text-emerald-400 font-mono">
-                        <span id="active-agents-count">0/4</span>
+                    <span id="active-agents-count">0/6</span>
                         <span class="text-slate-500">•</span>
                         <span id="services-deployed">0</span> svc
                         <span class="text-slate-500">•</span>
@@ -501,6 +501,76 @@
                           <div class="flex justify-between">
                             <span class="text-slate-400 text-xs">Runtime:</span>
                             <span id="monitoring-runtime" class="text-slate-300 text-xs font-mono">00:00</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Security -->
+                    <div id="component-security" class="bg-slate-900/50 rounded-lg p-4 border border-slate-600/30 opacity-50 transition-all duration-500">
+                      <div class="flex items-center gap-3 mb-3">
+                        <div class="w-8 h-8 bg-red-500/20 rounded-lg flex items-center justify-center">
+                          <svg class="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                          </svg>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                          <h4 class="font-semibold text-red-400 text-sm truncate">Security</h4>
+                          <p class="text-xs text-slate-500">KMS, Proxy, SIEM</p>
+                        </div>
+                      </div>
+                      <div id="security-logs" class="bg-slate-950/50 rounded p-3 text-xs font-mono">
+                        <div class="flex justify-between items-center mb-2">
+                          <span class="text-red-400 font-semibold">Status:</span>
+                          <span id="security-status" class="text-slate-400">Standby</span>
+                        </div>
+                        <div class="space-y-1">
+                          <div class="flex justify-between items-start">
+                            <span class="text-slate-400 text-xs">Task:</span>
+                            <span id="security-task" class="text-slate-300 text-xs text-right flex-1 ml-2 min-w-0 truncate">Standby</span>
+                          </div>
+                          <div class="flex justify-between">
+                            <span class="text-slate-400 text-xs">Duration:</span>
+                            <span id="security-duration" class="text-slate-300 text-xs font-mono">--:--</span>
+                          </div>
+                          <div class="flex justify-between">
+                            <span class="text-slate-400 text-xs">Runtime:</span>
+                            <span id="security-runtime" class="text-slate-300 text-xs font-mono">00:00</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Hypervisor -->
+                    <div id="component-hypervisor" class="bg-slate-900/50 rounded-lg p-4 border border-slate-600/30 opacity-50 transition-all duration-500">
+                      <div class="flex items-center gap-3 mb-3">
+                        <div class="w-8 h-8 bg-indigo-500/20 rounded-lg flex items-center justify-center">
+                          <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
+                          </svg>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                          <h4 class="font-semibold text-indigo-400 text-sm truncate">Hypervisor</h4>
+                          <p class="text-xs text-slate-500">Agent Lifecycle</p>
+                        </div>
+                      </div>
+                      <div id="hypervisor-logs" class="bg-slate-950/50 rounded p-3 text-xs font-mono">
+                        <div class="flex justify-between items-center mb-2">
+                          <span class="text-indigo-400 font-semibold">Status:</span>
+                          <span id="hypervisor-status" class="text-slate-400">Standby</span>
+                        </div>
+                        <div class="space-y-1">
+                          <div class="flex justify-between items-start">
+                            <span class="text-slate-400 text-xs">Task:</span>
+                            <span id="hypervisor-task" class="text-slate-300 text-xs text-right flex-1 ml-2 min-w-0 truncate">Standby</span>
+                          </div>
+                          <div class="flex justify-between">
+                            <span class="text-slate-400 text-xs">Duration:</span>
+                            <span id="hypervisor-duration" class="text-slate-300 text-xs font-mono">--:--</span>
+                          </div>
+                          <div class="flex justify-between">
+                            <span class="text-slate-400 text-xs">Runtime:</span>
+                            <span id="hypervisor-runtime" class="text-slate-300 text-xs font-mono">00:00</span>
                           </div>
                         </div>
                       </div>
@@ -868,7 +938,64 @@ function startCommandOutput(scenario) {
         return triggerMap[scenario] || triggerMap['onprem-to-aws'];
       }
       
-      function activateAgent(componentName, message) {
+      function activateAgent(componentName) {
+        console.log(`Activating agent: ${componentName}`);
+        const agentData = agentTemplateData[componentName];
+        const componentElement = document.getElementById(`component-${componentName}`);
+        const statusElement = document.getElementById(`${componentName}-status`);
+        const taskElement = document.getElementById(`${componentName}-task`);
+        const durationElement = document.getElementById(`${componentName}-duration`);
+        const runtimeElement = document.getElementById(`${componentName}-runtime`);
+
+        if (!componentElement || !statusElement) return;
+
+        componentElement.classList.remove('opacity-50');
+        componentElement.classList.add('opacity-100', 'border-emerald-500/50', 'shadow-lg');
+
+        statusElement.textContent = 'Active';
+        statusElement.className = 'text-emerald-400';
+
+        let logIndex = 0;
+        const logInterval = setInterval(() => {
+          if (logIndex < agentData.logs.length) {
+            const currentTask = agentData.logs[logIndex];
+            taskElement.textContent = currentTask;
+
+            const taskStartTime = Date.now();
+
+            const taskDurationInterval = setInterval(() => {
+              const elapsed = Math.floor((Date.now() - taskStartTime) / 1000);
+              const minutes = Math.floor(elapsed / 60);
+              const seconds = elapsed % 60;
+              durationElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }, 1000);
+
+            window[`${componentName}TaskInterval`] = taskDurationInterval;
+
+            logIndex++;
+          } else {
+            clearInterval(logInterval);
+            componentElement.classList.add('border-green-500/50');
+            componentElement.classList.remove('border-emerald-500/50');
+            statusElement.textContent = 'Complete';
+            statusElement.className = 'text-green-400';
+            taskElement.textContent = 'All tasks completed';
+            clearInterval(window[`${componentName}TaskInterval`]);
+            durationElement.textContent = '--:--';
+          }
+        }, Math.random() * 2000 + 3000);
+
+        const animation = setInterval(() => {
+          const totalElapsed = Math.floor((Date.now() - taskStartTime) / 1000);
+          const totalMinutes = Math.floor(totalElapsed / 60);
+          const totalSeconds = totalElapsed % 60;
+          runtimeElement.textContent = `${totalMinutes.toString().padStart(2, '0')}:${totalSeconds.toString().padStart(2, '0')}`;
+        }, 1000);
+
+        window[`${componentName}RuntimeInterval`] = animation;
+      }
+
+      
         console.log(`🚀 Activating agent: ${componentName} with message: ${message}`);
         
         const element = document.getElementById(`component-${componentName}`);
@@ -922,7 +1049,7 @@ function startCommandOutput(scenario) {
           const activeAgentsCount = document.getElementById('active-agents-count');
           if (activeAgentsCount) {
             const current = parseInt(activeAgentsCount.textContent.split('/')[0]);
-            activeAgentsCount.textContent = `${current + 1}/4`;
+            activeAgentsCount.textContent = `${current + 1}/6`;
           }
           
           // Start component-specific task animation
@@ -958,8 +1085,8 @@ function startCommandOutput(scenario) {
         }
       }
 
-      function startComponentAnimations(scenario) {
-        const components = ['containers', 'networking', 'database', 'monitoring'];
+function initializeAgents() {
+        const components = ['containers', 'networking', 'database', 'monitoring', 'security', 'hypervisor'];
         const componentData = getScenarioComponentData(scenario);
         
         components.forEach((component, index) => {
@@ -1194,9 +1321,65 @@ function startCommandOutput(scenario) {
       }
 
       // Scenario-specific data
+  const agentTemplateData = {
+        containers: {
+          logs: [
+            'Initiating setup for containers...',
+            'Configuring container orchestration...',
+            'Finalizing container deployment...',
+            'Containers are now live.'
+          ],
+          color: 'blue'
+        },
+        networking: {
+          logs: [
+            'Setting up network configurations...',
+            'Applying network security policies...',
+            'Network routes established...',
+            'Network is fully operational.'
+          ],
+          color: 'purple'
+        },
+        database: {
+          logs: [
+            'Database initialization...',
+            'Configuring database connections...',
+            'Database backup routines...',
+            'Database is operational.'
+          ],
+          color: 'green'
+        },
+        monitoring: {
+          logs: [
+            'Monitoring systems engaged...',
+            'Collecting metrics...',
+            'Alerts configured...',
+            'Monitoring operational.'
+          ],
+          color: 'orange'
+        },
+        security: {
+          logs: [
+            'Security systems analysis...',
+            'Implementing firewall rules...',
+            'Security checks complete...',
+            'All systems secured.'
+          ],
+          color: 'red'
+        },
+        hypervisor: {
+          logs: [
+            'Initializing agent lifecycle management...',
+            'Tracking resource allocation...',
+            'Optimizing runtime environments...',
+            'Agents are actively managed.'
+          ],
+          color: 'indigo'
+        }
+      };
+
       function getScenarioComponentData(scenario) {
         const componentData = {
-          'onprem-to-aws': {
             containers: {
               logs: [
                 '📦 Migrating VMware containers to EKS...',
