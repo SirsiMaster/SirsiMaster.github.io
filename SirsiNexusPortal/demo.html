@@ -962,6 +962,8 @@ function startCommandOutput(scenario) {
             { keyword: '[OBSERVABILITY]', component: 'monitoring', agentIndex: 3, message: '📊 Observability agent activated - Azure Monitor' }
           ],
           'hybrid-multicloud': [
+            { keyword: '[SECURITY]', component: 'security', agentIndex: 4, message: '🔒 Security management agent activated - Zero-trust mesh' },
+            { keyword: '[HYPERVISOR]', component: 'hypervisor', agentIndex: 5, message: '🔧 Hypervisor management agent activated - Resource allocation started' },
             { keyword: '[NETWORKING]', component: 'networking', agentIndex: 1, message: '🌐 Network configuration agent activated - Inter-cloud network' },
             { keyword: '[KUBERNETES]', component: 'containers', agentIndex: 0, message: '🚀 Container orchestration agent activated - Multi-cloud K8s' },
             { keyword: '[DATA]', component: 'database', agentIndex: 2, message: '🗄️ Database management agent activated - Distributed data layer' },
@@ -976,10 +978,10 @@ function startCommandOutput(scenario) {
         console.log(`🚀 Activating agent: ${componentName} with message: ${message}`);
         
         const element = document.getElementById(`component-${componentName}`);
-        const statusElement = document.getElementById(`${componentName}-status`);
-        const taskElement = document.getElementById(`${componentName}-task`);
-        const durationElement = document.getElementById(`${componentName}-duration`);
-        const runtimeElement = document.getElementById(`${componentName}-runtime`);
+const statusElement = document.getElementById(`${componentName === 'containers' ? 'container' : componentName}-status`);
+        const taskElement = document.getElementById(`${componentName === 'containers' ? 'container' : componentName === 'networking' ? 'network' : componentName}-task`);
+        const durationElement = document.getElementById(`${componentName === 'containers' ? 'container' : componentName === 'networking' ? 'network' : componentName}-duration`);
+        const runtimeElement = document.getElementById(`${componentName === 'containers' ? 'container' : componentName === 'networking' ? 'network' : componentName}-runtime`);
         
         if (!element || !statusElement) {
           console.error(`Cannot find agent elements for: ${componentName}`);
@@ -1088,9 +1090,9 @@ function initializeAgents() {
         if (!data) return;
         
         const element = document.getElementById(`component-${componentName}`);
-        const statusElement = document.getElementById(`${componentName}-status`);
-        const taskElement = document.getElementById(`${componentName}-task`);
-        const durationElement = document.getElementById(`${componentName}-duration`);
+        const statusElement = document.getElementById(`${componentName === 'containers' ? 'container' : componentName === 'networking' ? 'network' : componentName}-status`);
+        const taskElement = document.getElementById(`${componentName === 'containers' ? 'container' : componentName === 'networking' ? 'network' : componentName}-task`);
+        const durationElement = document.getElementById(`${componentName === 'containers' ? 'container' : componentName === 'networking' ? 'network' : componentName}-duration`);
         
         let logIndex = 0;
         const logInterval = setInterval(() => {
@@ -1360,6 +1362,7 @@ function initializeAgents() {
 
       function getScenarioComponentData(scenario) {
         const componentData = {
+          'onprem-to-aws': {
             containers: {
               logs: [
                 '📦 Migrating VMware containers to EKS...',
@@ -1503,6 +1506,21 @@ function initializeAgents() {
             },
             monitoring: {
               logs: [
+                '🔐 Implementing advanced security protocols...',
+                '🛡️ Continuous threat detection and mitigation...',
+                '🔒 Identity and access management configured...',
+                '✅ Security system fully operational'
+              ],
+              color: 'red'
+            },
+            hypervisor: {
+              logs: [
+                '🔧 Hypervisor setup initiated...',
+                '⚒️ Optimizing resource allocation...',
+                '🔄 Executing hypervisor updates...',
+                '✅ Hypervisor management successfully completed'
+              ],
+              color: 'indigo'
                 '📊 Deploying Vertex AI monitoring...',
                 '📈 Setting up ML model performance tracking...',
                 '🔍 Configuring Cloud Logging for ML pipelines...',
@@ -1898,7 +1916,7 @@ function initializeAgents() {
       
       function cleanupIntervals() {
         // Clean up any existing intervals to prevent memory leaks
-        const components = ['containers', 'networking', 'database', 'monitoring'];
+        const components = ['containers', 'networking', 'database', 'monitoring', 'security', 'hypervisor'];
         components.forEach(component => {
           if (window[`${component}DurationInterval`]) {
             clearInterval(window[`${component}DurationInterval`]);
@@ -1933,13 +1951,13 @@ function initializeAgents() {
       
       function resetAgentStates() {
         // Reset all agent panels to initial state
-        const components = ['containers', 'networking', 'database', 'monitoring'];
+        const components = ['containers', 'networking', 'database', 'monitoring', 'security', 'hypervisor'];
         components.forEach(component => {
           const element = document.getElementById(`component-${component}`);
-          const statusElement = document.getElementById(`${component}-status`);
-          const taskElement = document.getElementById(`${component}-task`);
-          const durationElement = document.getElementById(`${component}-duration`);
-          const runtimeElement = document.getElementById(`${component}-runtime`);
+          const statusElement = document.getElementById(`${component === 'containers' ? 'container' : component === 'networking' ? 'network' : component}-status`);
+          const taskElement = document.getElementById(`${component === 'containers' ? 'container' : component === 'networking' ? 'network' : component}-task`);
+          const durationElement = document.getElementById(`${component === 'containers' ? 'container' : component === 'networking' ? 'network' : component}-duration`);
+          const runtimeElement = document.getElementById(`${component === 'containers' ? 'container' : component === 'networking' ? 'network' : component}-runtime`);
           
           if (element && statusElement) {
             // Reset visual state
@@ -1960,7 +1978,7 @@ function initializeAgents() {
         const servicesDeployed = document.getElementById('services-deployed');
         const systemUptime = document.getElementById('system-uptime');
         
-        if (activeAgentsCount) activeAgentsCount.textContent = '0/4';
+        if (activeAgentsCount) activeAgentsCount.textContent = '0/6';
         if (servicesDeployed) servicesDeployed.textContent = '0';
         if (systemUptime) systemUptime.textContent = '00:00:00';
         
