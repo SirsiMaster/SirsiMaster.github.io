@@ -316,6 +316,176 @@
       <div class="absolute bottom-10 right-10 w-32 h-32 bg-blue-200 dark:bg-blue-800 rounded-full opacity-20 animate-pulse" style="animation-delay: 1s;"></div>
     </section>
 
+    <!-- Infrastructure Demo Section -->
+    <section class="relative py-24 bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-900 text-white overflow-hidden">
+      <!-- Animated Background -->
+      <div class="absolute inset-0 opacity-20">
+        <div class="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-emerald-600/20 via-transparent to-transparent"></div>
+      </div>
+      
+      <div class="max-w-7xl mx-auto px-6 relative z-10">
+        <div class="text-center mb-12">
+          <div class="inline-flex items-center gap-2 bg-emerald-500/20 px-4 py-2 rounded-full mb-6">
+            <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+            <span class="text-sm font-medium text-emerald-300">Live Infrastructure Deployment</span>
+          </div>
+          <h2 class="text-4xl md:text-5xl font-bold mb-4">Watch SirsiNexus Deploy Your Infrastructure</h2>
+          <p class="text-xl text-slate-300 max-w-4xl mx-auto mb-8">Real-time deployment of containers, networking, databases, and monitoring across multi-cloud environments</p>
+          
+          <button id="advanced-demo-button" class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white font-semibold rounded-lg hover:from-emerald-700 hover:to-emerald-800 transition-all duration-300 transform hover:scale-105 shadow-lg">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            </svg>
+            Start Infrastructure Deployment
+          </button>
+        </div>
+
+        <!-- Infrastructure Deployment Grid -->
+        <div class="grid lg:grid-cols-3 gap-8 mb-12">
+          <!-- Left Column: Infrastructure Components -->
+          <div class="lg:col-span-2">
+            <div class="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50 p-6">
+              <div class="flex items-center justify-between mb-6">
+                <h3 class="text-xl font-bold text-white">Infrastructure Components</h3>
+                <div id="deployment-status" class="flex items-center gap-2">
+                  <div class="w-2 h-2 bg-slate-400 rounded-full"></div>
+                  <span class="text-sm text-slate-400">Ready to Deploy</span>
+                </div>
+              </div>
+              
+              <!-- Component Grid -->
+              <div class="grid md:grid-cols-2 gap-4 mb-6">
+                <!-- Containers -->
+                <div id="component-containers" class="bg-slate-900/50 rounded-lg p-4 border border-slate-600/30 opacity-50 transition-all duration-500">
+                  <div class="flex items-center gap-3 mb-3">
+                    <div class="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                      <svg class="w-4 h-4 text-blue-400" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M13.5 3a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0ZM15 3a3 3 0 1 0-6 0 3 3 0 0 0 6 0Zm6 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm1.5 0a3 3 0 1 0-6 0 3 3 0 0 0 6 0ZM6 7.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0ZM7.5 7.5a3 3 0 1 0-6 0 3 3 0 0 0 6 0Zm13.5 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm1.5 0a3 3 0 1 0-6 0 3 3 0 0 0 6 0Zm-12 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm1.5 0a3 3 0 1 0-6 0 3 3 0 0 0 6 0Z"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-blue-400">Container Orchestration</h4>
+                      <p class="text-xs text-slate-500">Kubernetes • Docker • Pods</p>
+                    </div>
+                  </div>
+                  <div id="container-logs" class="bg-slate-950/50 rounded p-2 text-xs font-mono text-slate-500 h-16 overflow-hidden">
+                    <div>⏸ Waiting for deployment...</div>
+                  </div>
+                </div>
+
+                <!-- Networking -->
+                <div id="component-networking" class="bg-slate-900/50 rounded-lg p-4 border border-slate-600/30 opacity-50 transition-all duration-500">
+                  <div class="flex items-center gap-3 mb-3">
+                    <div class="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center">
+                      <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+                      </svg>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-purple-400">Network & DNS</h4>
+                      <p class="text-xs text-slate-500">Load Balancer • Ingress • DNS</p>
+                    </div>
+                  </div>
+                  <div id="network-logs" class="bg-slate-950/50 rounded p-2 text-xs font-mono text-slate-500 h-16 overflow-hidden">
+                    <div>⏸ Waiting for deployment...</div>
+                  </div>
+                </div>
+
+                <!-- Database -->
+                <div id="component-database" class="bg-slate-900/50 rounded-lg p-4 border border-slate-600/30 opacity-50 transition-all duration-500">
+                  <div class="flex items-center gap-3 mb-3">
+                    <div class="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center">
+                      <svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path>
+                      </svg>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-green-400">Database Cluster</h4>
+                      <p class="text-xs text-slate-500">PostgreSQL • Redis • Backups</p>
+                    </div>
+                  </div>
+                  <div id="database-logs" class="bg-slate-950/50 rounded p-2 text-xs font-mono text-slate-500 h-16 overflow-hidden">
+                    <div>⏸ Waiting for deployment...</div>
+                  </div>
+                </div>
+
+                <!-- Monitoring -->
+                <div id="component-monitoring" class="bg-slate-900/50 rounded-lg p-4 border border-slate-600/30 opacity-50 transition-all duration-500">
+                  <div class="flex items-center gap-3 mb-3">
+                    <div class="w-8 h-8 bg-orange-500/20 rounded-lg flex items-center justify-center">
+                      <svg class="w-4 h-4 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                      </svg>
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-orange-400">Observability</h4>
+                      <p class="text-xs text-slate-500">Prometheus • Grafana • Logs</p>
+                    </div>
+                  </div>
+                  <div id="monitoring-logs" class="bg-slate-950/50 rounded p-2 text-xs font-mono text-slate-500 h-16 overflow-hidden">
+                    <div>⏸ Waiting for deployment...</div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Overall Progress -->
+              <div class="mb-4">
+                <div class="flex justify-between items-center mb-2">
+                  <span class="text-sm font-medium text-slate-300">Deployment Progress</span>
+                  <span id="overall-progress-text" class="text-sm text-slate-400">0%</span>
+                </div>
+                <div class="h-2 bg-slate-700 rounded-full overflow-hidden">
+                  <div id="overall-progress-bar" class="h-full bg-gradient-to-r from-emerald-500 to-emerald-400 w-0 transition-all duration-500 ease-out"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Live Metrics & Commands -->
+          <div class="space-y-6">
+            <!-- Resource Metrics -->
+            <div class="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50 p-6">
+              <h3 class="text-lg font-bold text-white mb-4">Live Resource Metrics</h3>
+              <div class="space-y-4">
+                <div class="flex justify-between items-center">
+                  <span class="text-sm text-slate-300">CPU Usage</span>
+                  <span id="cpu-usage" class="text-sm font-mono text-emerald-400">0%</span>
+                </div>
+                <div class="h-1 bg-slate-700 rounded-full overflow-hidden">
+                  <div id="cpu-bar" class="h-full bg-blue-500 w-0 transition-all duration-300"></div>
+                </div>
+                
+                <div class="flex justify-between items-center">
+                  <span class="text-sm text-slate-300">Memory</span>
+                  <span id="memory-usage" class="text-sm font-mono text-emerald-400">0/0 GB</span>
+                </div>
+                <div class="h-1 bg-slate-700 rounded-full overflow-hidden">
+                  <div id="memory-bar" class="h-full bg-purple-500 w-0 transition-all duration-300"></div>
+                </div>
+                
+                <div class="flex justify-between items-center">
+                  <span class="text-sm text-slate-300">Network I/O</span>
+                  <span id="network-usage" class="text-sm font-mono text-emerald-400">0 MB/s</span>
+                </div>
+                <div class="h-1 bg-slate-700 rounded-full overflow-hidden">
+                  <div id="network-bar" class="h-full bg-green-500 w-0 transition-all duration-300"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Command Output -->
+            <div class="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50 p-6">
+              <h3 class="text-lg font-bold text-white mb-4">Command Output</h3>
+              <div id="command-output" class="bg-slate-950/70 rounded-lg p-4 h-64 overflow-y-auto font-mono text-xs text-green-400">
+                <div class="text-slate-500">$ sirsi-nexus init --cloud=multi --region=global</div>
+                <div class="text-slate-500">Waiting for deployment command...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Dual Path Section -->
     <section class="relative py-20 bg-gradient-to-br from-white via-slate-50 to-emerald-50/20 dark:from-slate-900 dark:via-slate-800 dark:to-emerald-900/20 overflow-hidden">
       <!-- Triangle Pattern -->
@@ -968,16 +1138,240 @@
       
       animationController.initialize();
       
+      // Hero demo button handler
       const heroButton = document.getElementById('hero-demo-button');
       if (heroButton) {
-        console.log('✅ Demo button found, adding click handler');
+        console.log('✅ Hero demo button found, adding click handler');
         heroButton.addEventListener('click', function(e) {
           e.preventDefault();
-          console.log('🎯 Demo button clicked - starting animation!');
-          stateMachine.start();
+          console.log('🎯 Hero demo button clicked - starting animation!');
+          startInfrastructureDemo();
         });
       } else {
-        console.error('❌ Demo button not found');
+        console.error('❌ Hero demo button not found');
+      }
+      
+      // Advanced demo button handler
+      const advancedButton = document.getElementById('advanced-demo-button');
+      if (advancedButton) {
+        console.log('✅ Advanced demo button found, adding click handler');
+        advancedButton.addEventListener('click', function(e) {
+          e.preventDefault();
+          console.log('🎯 Advanced demo button clicked - starting infrastructure demo!');
+          startInfrastructureDemo();
+        });
+      } else {
+        console.error('❌ Advanced demo button not found');
+      }
+      
+      // Infrastructure demo controller
+      function startInfrastructureDemo() {
+        console.log('🚀 Starting comprehensive infrastructure demo');
+        
+        // Update deployment status
+        const deploymentStatus = document.getElementById('deployment-status');
+        if (deploymentStatus) {
+          deploymentStatus.innerHTML = `
+            <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+            <span class="text-sm text-emerald-400">Deploying...</span>
+          `;
+        }
+        
+        // Start the state machine animation
+        stateMachine.start();
+        
+        // Start component deployments
+        startComponentDeployments();
+        
+        // Start metrics animation
+        startMetricsAnimation();
+        
+        // Start command output simulation
+        startCommandOutput();
+      }
+      
+      function startComponentDeployments() {
+        const components = ['containers', 'networking', 'database', 'monitoring'];
+        const componentData = {
+          containers: {
+            logs: [
+              '📦 Initializing Kubernetes cluster...',
+              '🐳 Pulling Docker images...',
+              '⚡ Creating namespaces and pods...',
+              '✅ Container orchestration ready'
+            ],
+            color: 'blue'
+          },
+          networking: {
+            logs: [
+              '🌐 Configuring load balancer...',
+              '🔗 Setting up ingress rules...',
+              '📡 Establishing DNS records...',
+              '✅ Network infrastructure active'
+            ],
+            color: 'purple'
+          },
+          database: {
+            logs: [
+              '🗄️ Provisioning PostgreSQL cluster...',
+              '⚡ Configuring Redis cache...',
+              '💾 Setting up automated backups...',
+              '✅ Database cluster operational'
+            ],
+            color: 'green'
+          },
+          monitoring: {
+            logs: [
+              '📊 Deploying Prometheus...',
+              '📈 Configuring Grafana dashboards...',
+              '🔍 Setting up log aggregation...',
+              '✅ Observability stack ready'
+            ],
+            color: 'orange'
+          }
+        };
+        
+        components.forEach((component, index) => {
+          setTimeout(() => {
+            animateComponent(component, componentData[component]);
+          }, index * 2000);
+        });
+      }
+      
+      function animateComponent(componentName, data) {
+        const element = document.getElementById(`component-${componentName}`);
+        const logsElement = document.getElementById(`${componentName}-logs`);
+        
+        if (element && logsElement) {
+          // Activate component
+          element.classList.remove('opacity-50');
+          element.classList.add('opacity-100', 'border-emerald-500/50');
+          
+          // Animate logs
+          let logIndex = 0;
+          const logInterval = setInterval(() => {
+            if (logIndex < data.logs.length) {
+              logsElement.innerHTML += `<div class="text-${data.color}-400 text-xs mb-1">${data.logs[logIndex]}</div>`;
+              logsElement.scrollTop = logsElement.scrollHeight;
+              logIndex++;
+            } else {
+              clearInterval(logInterval);
+              // Mark as complete
+              element.classList.add('border-emerald-400');
+            }
+          }, 800);
+        }
+      }
+      
+      function startMetricsAnimation() {
+        const metrics = {
+          cpu: { element: 'cpu-usage', bar: 'cpu-bar', max: 85 },
+          memory: { element: 'memory-usage', bar: 'memory-bar', max: 72 },
+          network: { element: 'network-usage', bar: 'network-bar', max: 45 }
+        };
+        
+        Object.keys(metrics).forEach(metric => {
+          animateMetric(metrics[metric], metric);
+        });
+        
+        // Overall progress
+        animateOverallProgress();
+      }
+      
+      function animateMetric(config, type) {
+        const element = document.getElementById(config.element);
+        const bar = document.getElementById(config.bar);
+        
+        if (element && bar) {
+          let current = 0;
+          const target = config.max;
+          const increment = target / 20;
+          
+          const interval = setInterval(() => {
+            current = Math.min(current + increment + Math.random() * 5, target);
+            
+            if (type === 'cpu') {
+              element.textContent = `${Math.round(current)}%`;
+            } else if (type === 'memory') {
+              element.textContent = `${(current/10).toFixed(1)}/16 GB`;
+            } else if (type === 'network') {
+              element.textContent = `${Math.round(current)} MB/s`;
+            }
+            
+            bar.style.width = `${(current/100)*100}%`;
+            
+            if (current >= target) {
+              clearInterval(interval);
+            }
+          }, 200);
+        }
+      }
+      
+      function animateOverallProgress() {
+        const progressBar = document.getElementById('overall-progress-bar');
+        const progressText = document.getElementById('overall-progress-text');
+        
+        if (progressBar && progressText) {
+          let progress = 0;
+          const interval = setInterval(() => {
+            progress = Math.min(progress + 2, 100);
+            progressBar.style.width = `${progress}%`;
+            progressText.textContent = `${progress}%`;
+            
+            if (progress >= 100) {
+              clearInterval(interval);
+              // Update deployment status to complete
+              const deploymentStatus = document.getElementById('deployment-status');
+              if (deploymentStatus) {
+                deploymentStatus.innerHTML = `
+                  <div class="w-2 h-2 bg-green-400 rounded-full"></div>
+                  <span class="text-sm text-green-400">Deployment Complete</span>
+                `;
+              }
+            }
+          }, 150);
+        }
+      }
+      
+      function startCommandOutput() {
+        const commandOutput = document.getElementById('command-output');
+        if (!commandOutput) return;
+        
+        const commands = [
+          { text: '$ sirsi-nexus init --cloud=multi --region=global', delay: 500 },
+          { text: '🔍 Scanning cloud environments...', delay: 1000 },
+          { text: '📊 Analyzing resource requirements...', delay: 1500 },
+          { text: '🚀 Starting deployment pipeline...', delay: 2000 },
+          { text: '', delay: 2200 },
+          { text: '📦 [CONTAINERS] Initializing Kubernetes cluster', delay: 2500 },
+          { text: '✅ [CONTAINERS] 12 pods deployed successfully', delay: 4000 },
+          { text: '', delay: 4200 },
+          { text: '🌐 [NETWORKING] Configuring load balancer', delay: 4500 },
+          { text: '✅ [NETWORKING] Ingress rules active', delay: 6000 },
+          { text: '', delay: 6200 },
+          { text: '🗄️ [DATABASE] PostgreSQL cluster provisioned', delay: 6500 },
+          { text: '✅ [DATABASE] Redis cache operational', delay: 8000 },
+          { text: '', delay: 8200 },
+          { text: '📊 [MONITORING] Prometheus metrics collecting', delay: 8500 },
+          { text: '✅ [MONITORING] Grafana dashboards ready', delay: 10000 },
+          { text: '', delay: 10200 },
+          { text: '🎉 Infrastructure deployment completed successfully!', delay: 10500 },
+          { text: '📈 Performance optimization in progress...', delay: 11000 },
+          { text: '✨ SirsiNexus AI agents now monitoring your infrastructure', delay: 11500 }
+        ];
+        
+        commands.forEach((cmd, index) => {
+          setTimeout(() => {
+            const line = document.createElement('div');
+            line.className = cmd.text.startsWith('✅') ? 'text-green-400' : 
+                           cmd.text.startsWith('🎉') ? 'text-emerald-400 font-semibold' :
+                           cmd.text.startsWith('✨') ? 'text-blue-400 font-semibold' :
+                           'text-slate-300';
+            line.textContent = cmd.text;
+            commandOutput.appendChild(line);
+            commandOutput.scrollTop = commandOutput.scrollHeight;
+          }, cmd.delay);
+        });
       }
     });
   </script>
