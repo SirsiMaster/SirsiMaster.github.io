@@ -27,11 +27,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Copy staging file if on staging branch
-        if: github.ref == 'refs/heads/staging/infrastructure-animation'
+      - name: Configure deployment path
+        id: configure_path
         run: |
-          echo "Building staging site..."
-          cp index-staging.html index.html
+          if [[ "${GITHUB_REF#refs/heads/}" == "staging/infrastructure-animation" ]]; then
+            echo "Deploying to staging environment"
+            mkdir -p staging
+            cp -r * staging/ || true
+            echo "path=staging" >> $GITHUB_OUTPUT
+          else
+            echo "path=." >> $GITHUB_OUTPUT
+          fi
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -39,7 +45,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: ${{ steps.configure_path.outputs.path }}
 
       - name: Deploy to GitHub Pages
         id: deployment
