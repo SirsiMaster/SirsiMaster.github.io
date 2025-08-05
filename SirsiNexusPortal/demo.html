@@ -732,6 +732,7 @@
         startButton.addEventListener('click', function(e) {
           console.log('Deploy button clicked!');
           e.preventDefault();
+          e.stopPropagation();
           const selectedScenario = scenarioSelect.value;
           console.log('Selected scenario:', selectedScenario);
           if (selectedScenario && scenarios[selectedScenario]) {
@@ -741,6 +742,17 @@
             console.log('No scenario selected or scenario not found');
           }
         });
+        
+        // Also add event listener to the button text span to handle clicks on the text
+        const buttonTextSpan = document.getElementById('start-button-text');
+        if (buttonTextSpan) {
+          buttonTextSpan.addEventListener('click', function(e) {
+            console.log('Button text clicked, triggering button click');
+            e.preventDefault();
+            e.stopPropagation();
+            startButton.click();
+          });
+        }
         
       }
 
