@@ -24,6 +24,13 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
+      - name: Verify files exist
+        run: |
+          echo "Checking SirsiNexusPortal directory contents:"
+          ls -la SirsiNexusPortal/
+          echo "Verifying index files exist:"
+          ls -la SirsiNexusPortal/index*.html
+      
       - name: Copy index to staging for non-main branches
         if: github.ref != 'refs/heads/main'
         run: |
