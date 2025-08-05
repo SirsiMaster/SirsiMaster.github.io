@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main  # Set this to your default branch
+      - staging/infrastructure-animation  # Staging branch for new features
   pull_request:
 
 permissions:
