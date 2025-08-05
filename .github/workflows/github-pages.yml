@@ -2,7 +2,9 @@ name: GitHub Pages deployment
 
 on:
   push:
-    branches: [main]
+    branches: 
+      - main  # Production deployment
+      - staging/infrastructure-animation  # Staging deployment
 
 permissions:
   contents: read
