@@ -170,7 +170,7 @@ function initializeAnimation() {
   animationController.initialize();
 
   // Add button click handler
-  const demoButton = document.querySelector('button[onclick="window.stateMachine.start()"]');
+  const demoButton = document.getElementById('demo-button');
   if (demoButton) {
     console.log('Found demo button, adding click handler');
     demoButton.onclick = () => {
