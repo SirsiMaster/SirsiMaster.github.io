@@ -251,6 +251,27 @@
               
               <!-- Right Sidebar: Agents and Metrics (1/3 width) -->
               <div class="w-1/3 flex flex-col gap-6">
+                <!-- Milestone Tracker Panel -->
+                <div id="milestone-panel" class="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50 hidden">
+                  <div class="flex items-center justify-between p-4 border-b border-slate-700/50">
+                    <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                      <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                      </svg>
+                      Milestone Tracker
+                    </h3>
+                    <div id="milestone-status" class="flex items-center gap-2">
+                      <div class="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
+                      <span class="text-xs text-purple-400">Active</span>
+                    </div>
+                  </div>
+                  <div class="p-4 max-h-96 overflow-y-auto">
+                    <div id="milestone-list" class="space-y-3">
+                      <!-- Milestones will be populated dynamically -->
+                    </div>
+                  </div>
+                </div>
+                
                 <!-- Agents Panel -->
                 <div class="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50">
                   <div class="flex items-center justify-between p-4 border-b border-slate-700/50">
@@ -1241,6 +1262,38 @@
           'onprem-to-aws': [
             { text: '🎯 CTO Prompt: "Initiate VMware to AWS migration targeting the US West region with fully modernized networking. Prioritize zero-downtime policies and compliance."', delay: 200 },
             { text: `$ sirsi-nexus migrate --source=vmware --target=aws --region=us-west-2 --vpc-cidr=10.0.0.0/16`, delay: 500 },
+            { text: '', delay: 700 },
+            { text: '🤖 SirsiNexus AI: Analyzing request and generating comprehensive deployment plan...', delay: 800 },
+            { text: '', delay: 900 },
+            { text: '━━━━━━━━━━━━━━━━━ SIRSI DEPLOYMENT PLAN ━━━━━━━━━━━━━━━━━', delay: 1200 },
+            { text: '📋 EXECUTIVE SUMMARY:', delay: 1400 },
+            { text: '   • Migration Type: VMware vSphere → AWS EKS (Zero-downtime)', delay: 1600 },
+            { text: '   • Target Region: us-west-2 (Primary), us-east-1 (DR)', delay: 1800 },
+            { text: '   • Estimated Duration: 6-8 hours', delay: 2000 },
+            { text: '   • Risk Level: MEDIUM (managed with automated rollback)', delay: 2200 },
+            { text: '', delay: 2300 },
+            { text: '🎯 MILESTONES & ARTIFACTS:', delay: 2500 },
+            { text: '   1. [FOUNDATION] Network & VPC Setup → CloudFormation templates', delay: 2700 },
+            { text: '   2. [EKS] Container Migration → Kubernetes manifests, Helm charts', delay: 2900 },
+            { text: '   3. [ALB] Load Balancer Config → Terraform modules', delay: 3100 },
+            { text: '   4. [RDS] Database Migration → DMS scripts, backup procedures', delay: 3300 },
+            { text: '   5. [OBSERVABILITY] Monitoring Setup → CloudWatch dashboards, alerts', delay: 3500 },
+            { text: '   6. [SECURITY] Zero-trust Implementation → IAM policies, security groups', delay: 3700 },
+            { text: '', delay: 3800 },
+            { text: '⚠️  KNOWN CONFLICTS & MITIGATIONS:', delay: 4000 },
+            { text: '   • VMware NSX-T compatibility → Custom CNI bridge deployment', delay: 4200 },
+            { text: '   • Legacy F5 BIG-IP configs → AWS WAF v2 rule translation', delay: 4400 },
+            { text: '   • NetApp storage dependencies → EFS migration with data validation', delay: 4600 },
+            { text: '', delay: 4700 },
+            { text: '🛠️  INFRASTRUCTURE-AS-CODE ARTIFACTS:', delay: 4900 },
+            { text: '   • 47 CloudFormation templates (VPC, Transit Gateway, Security)', delay: 5100 },
+            { text: '   • 23 Terraform modules (EKS, RDS, ALB configurations)', delay: 5300 },
+            { text: '   • 156 Kubernetes manifests (workload definitions, services)', delay: 5500 },
+            { text: '   • 34 Helm charts (monitoring, logging, service mesh)', delay: 5700 },
+            { text: '   • 89 Docker multi-stage builds (container optimization)', delay: 5900 },
+            { text: '   • 12 Ansible playbooks (configuration management)', delay: 6100 },
+            { text: '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', delay: 6300 },
+            { text: '', delay: 6400 },
             { text: '🔍 Performing deep infrastructure discovery via VMware vCenter API...', delay: 1000 },
             { text: '📊 Analyzing 247 VMs, 12 databases, 5 F5 BIG-IP load balancers, 3 NetApp clusters...', delay: 1800 },
             { text: '🔐 Extracting vSphere DRS affinity rules and storage policies...', delay: 2400 },
@@ -1293,6 +1346,36 @@
           'hybrid-multicloud': [
             { text: '🎯 CTO Prompt: "Deploy a hybrid multi-cloud architecture leveraging AWS, GCP, and Azure. Ensure seamless interconnectivity with policy-driven solutions."', delay: 200 },
             { text: `$ sirsi-nexus deploy --mode=hybrid --clouds=aws,gcp,azure --federation=istio --policy-engine=opa`, delay: 500 },
+            { text: '', delay: 700 },
+            { text: '🤖 SirsiNexus AI: Orchestrating multi-cloud deployment strategy...', delay: 800 },
+            { text: '', delay: 900 },
+            { text: '━━━━━━━━━━━━━━━━━ SIRSI DEPLOYMENT PLAN ━━━━━━━━━━━━━━━━━', delay: 1200 },
+            { text: '📋 EXECUTIVE SUMMARY:', delay: 1400 },
+            { text: '   • Architecture: Hybrid Multi-Cloud Federation (AWS+GCP+Azure)', delay: 1600 },
+            { text: '   • Service Mesh: Istio with cross-cloud endpoints', delay: 1800 },
+            { text: '   • Estimated Duration: 8-12 hours', delay: 2000 },
+            { text: '   • Risk Level: HIGH (complex multi-provider coordination)', delay: 2200 },
+            { text: '', delay: 2300 },
+            { text: '🎯 MILESTONES & ARTIFACTS:', delay: 2500 },
+            { text: '   1. [NETWORKING] Inter-cloud backbone → SD-WAN configs, BGP policies', delay: 2700 },
+            { text: '   2. [KUBERNETES] Federated clusters → Admiral, Cluster API manifests', delay: 2900 },
+            { text: '   3. [DATA] Distributed data layer → CockroachDB, Kafka configurations', delay: 3100 },
+            { text: '   4. [OBSERVABILITY] Unified monitoring → OpenTelemetry, Prometheus setup', delay: 3300 },
+            { text: '   5. [SECURITY] Zero-trust mesh → Vault, OPA, Spiffe configurations', delay: 3500 },
+            { text: '', delay: 3600 },
+            { text: '⚠️  KNOWN CONFLICTS & MITIGATIONS:', delay: 3800 },
+            { text: '   • Cross-cloud latency → Edge PoP optimization, Anycast routing', delay: 4000 },
+            { text: '   • Compliance variations → GDPR/SOX policy engine integration', delay: 4200 },
+            { text: '   • Service discovery complexity → Consul Connect mesh integration', delay: 4400 },
+            { text: '', delay: 4500 },
+            { text: '🛠️  INFRASTRUCTURE-AS-CODE ARTIFACTS:', delay: 4700 },
+            { text: '   • 78 Terraform modules (multi-cloud networking, compute)', delay: 4900 },
+            { text: '   • 234 Kubernetes manifests (federated services, policies)', delay: 5100 },
+            { text: '   • 45 Helm charts (Istio, monitoring, security)', delay: 5300 },
+            { text: '   • 67 OPA policies (governance, compliance, security)', delay: 5500 },
+            { text: '   • 123 Docker containers (custom service mesh components)', delay: 5700 },
+            { text: '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', delay: 5900 },
+            { text: '', delay: 6000 },
             { text: '🔍 Performing multi-cloud workload placement analysis with bin-packing algorithms...', delay: 1000 },
             { text: '📊 Planning hybrid deployment: AWS (compute), GCP (AI/ML), Azure (data analytics)...', delay: 1800 },
             { text: '🔐 Analyzing compliance requirements: GDPR (EU), SOX (US), PIPEDA (CA)...', delay: 2600 },
@@ -1341,6 +1424,37 @@
           'azure-modernization': [
             { text: '🎯 CTO Prompt: "Modernize classic Azure implementations to ARM using infrastructure as code methodologies. Emphasize scalability and security improvements."', delay: 200 },
             { text: `$ sirsi-nexus modernize --source=azure-classic --target=azure-rm --bicep-templates --policy-as-code`, delay: 500 },
+            { text: '', delay: 700 },
+            { text: '🤖 SirsiNexus AI: Analyzing Azure legacy architecture for modernization...', delay: 800 },
+            { text: '', delay: 900 },
+            { text: '━━━━━━━━━━━━━━━━━ SIRSI DEPLOYMENT PLAN ━━━━━━━━━━━━━━━━━', delay: 1200 },
+            { text: '📋 EXECUTIVE SUMMARY:', delay: 1400 },
+            { text: '   • Migration Type: Azure Classic (ASM) → ARM with IaC', delay: 1600 },
+            { text: '   • Modernization Scope: 89 legacy resources → cloud-native', delay: 1800 },
+            { text: '   • Estimated Duration: 4-6 hours', delay: 2000 },
+            { text: '   • Risk Level: LOW (Azure-to-Azure with rollback)', delay: 2200 },
+            { text: '', delay: 2300 },
+            { text: '🎯 MILESTONES & ARTIFACTS:', delay: 2500 },
+            { text: '   1. [FOUNDATION] ARM governance → Bicep templates, Azure Policy', delay: 2700 },
+            { text: '   2. [AKS] Container modernization → AKS manifests, ACR configs', delay: 2900 },
+            { text: '   3. [NETWORKING] Gateway upgrade → Application Gateway v2, Front Door', delay: 3100 },
+            { text: '   4. [DATABASE] PostgreSQL migration → Flexible Server, backups', delay: 3300 },
+            { text: '   5. [OBSERVABILITY] Monitor integration → Log Analytics, App Insights', delay: 3500 },
+            { text: '   6. [SECURITY] Identity modernization → Azure AD PIM, Key Vault', delay: 3700 },
+            { text: '', delay: 3800 },
+            { text: '⚠️  KNOWN CONFLICTS & MITIGATIONS:', delay: 4000 },
+            { text: '   • Legacy API deprecation → ARM API compatibility shim', delay: 4200 },
+            { text: '   • Service Fabric dependencies → AKS migration with Dapr', delay: 4400 },
+            { text: '   • Classic storage accounts → Managed disk conversion', delay: 4600 },
+            { text: '', delay: 4700 },
+            { text: '🛠️  INFRASTRUCTURE-AS-CODE ARTIFACTS:', delay: 4900 },
+            { text: '   • 34 Bicep templates (resource groups, policies, networking)', delay: 5100 },
+            { text: '   • 67 ARM templates (legacy compatibility, migration scripts)', delay: 5300 },
+            { text: '   • 45 Kubernetes manifests (AKS workloads, services)', delay: 5500 },
+            { text: '   • 23 Helm charts (Linkerd, monitoring, security)', delay: 5700 },
+            { text: '   • 89 PowerShell scripts (migration automation, validation)', delay: 5900 },
+            { text: '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', delay: 6100 },
+            { text: '', delay: 6200 },
             { text: '🔍 Performing deep scan of Azure Service Management (ASM) resources...', delay: 1000 },
             { text: '📊 Inventorying 89 legacy resources: Cloud Services, Storage Accounts, Virtual Networks...', delay: 1800 },
             { text: '🔐 Analyzing deprecated API versions and unsupported configurations...', delay: 2600 },
@@ -1394,6 +1508,39 @@
           'gcp-ml-platform': [
             { text: '🎯 CTO Prompt: "Deploy an AI/ML platform on GCP with a focus on Vertex services and state-of-the-art ML pipelines. Maintain efficiency and robust security."', delay: 200 },
             { text: `$ sirsi-nexus deploy --platform=gcp-ml --services=vertex,bigquery --kubeflow --tfx-pipelines`, delay: 500 },
+            { text: '', delay: 700 },
+            { text: '🤖 SirsiNexus AI: Optimizing AI/ML platform architecture for Vertex AI...', delay: 800 },
+            { text: '', delay: 900 },
+            { text: '━━━━━━━━━━━━━━━━━ SIRSI DEPLOYMENT PLAN ━━━━━━━━━━━━━━━━━', delay: 1200 },
+            { text: '📋 EXECUTIVE SUMMARY:', delay: 1400 },
+            { text: '   • Platform: GCP Vertex AI + BigQuery ML + Kubeflow', delay: 1600 },
+            { text: '   • ML Models: 847M parameters, distributed training', delay: 1800 },
+            { text: '   • Estimated Duration: 10-14 hours', delay: 2000 },
+            { text: '   • Risk Level: MEDIUM (complex ML pipeline coordination)', delay: 2200 },
+            { text: '', delay: 2300 },
+            { text: '🎯 MILESTONES & ARTIFACTS:', delay: 2500 },
+            { text: '   1. [FOUNDATION] ML VPC setup → Private Google Access, IAM configs', delay: 2700 },
+            { text: '   2. [GKE] GPU clusters → Autopilot, Kubeflow, TensorFlow configs', delay: 2900 },
+            { text: '   3. [NETWORKING] Global ML APIs → Load balancer, CDN, edge inference', delay: 3100 },
+            { text: '   4. [BIGQUERY] ML datasets → Partitioned tables, federated queries', delay: 3300 },
+            { text: '   5. [VERTEX] AI platform → Workbench, AutoML, model monitoring', delay: 3500 },
+            { text: '   6. [OBSERVABILITY] ML monitoring → Cloud Trace, Profiler, logging', delay: 3700 },
+            { text: '   7. [SECURITY] ML security → VPC Service Controls, KMS, Binary Auth', delay: 3900 },
+            { text: '', delay: 4000 },
+            { text: '⚠️  KNOWN CONFLICTS & MITIGATIONS:', delay: 4200 },
+            { text: '   • TPU v4 availability → Multi-zone allocation with A100 fallback', delay: 4400 },
+            { text: '   • BigQuery slot limits → Flex slots with burst capacity', delay: 4600 },
+            { text: '   • Kubeflow version compatibility → TensorFlow Extended integration', delay: 4800 },
+            { text: '', delay: 4900 },
+            { text: '🛠️  INFRASTRUCTURE-AS-CODE ARTIFACTS:', delay: 5100 },
+            { text: '   • 56 Terraform modules (GKE, BigQuery, Vertex AI)', delay: 5300 },
+            { text: '   • 189 Kubernetes manifests (Kubeflow, ML workloads)', delay: 5500 },
+            { text: '   • 78 Helm charts (monitoring, security, ML tools)', delay: 5700 },
+            { text: '   • 234 Docker images (custom ML containers, optimizations)', delay: 5900 },
+            { text: '   • 123 Python scripts (TFX pipelines, data validation)', delay: 6100 },
+            { text: '   • 45 Jupyter notebooks (model training, experimentation)', delay: 6300 },
+            { text: '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', delay: 6500 },
+            { text: '', delay: 6600 },
             { text: '🔍 Performing comprehensive ML workload analysis with TensorFlow Extended profiling...', delay: 1000 },
             { text: '📊 Planning GCP AI/ML platform: Vertex AI, BigQuery ML, AutoML, Kubeflow Pipelines...', delay: 1800 },
             { text: '🔐 Analyzing model complexity: 847M parameters, distributed training requirements...', delay: 2600 },
