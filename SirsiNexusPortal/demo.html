@@ -593,6 +593,15 @@
                   <span class="text-sm text-green-400">All Agents Active</span>
                 `;
                 
+                // Add completion acknowledgment
+                setTimeout(() => {
+                  const completionLine = document.createElement('div');
+                  completionLine.className = 'text-cyan-400 font-semibold mt-2';
+                  completionLine.textContent = '🤖 SirsiNexus: Deployment artifacts validated. Infrastructure ready. Awaiting next orchestration task.';
+                  commandOutput.appendChild(completionLine);
+                  commandOutput.scrollTop = commandOutput.scrollHeight;
+                }, 2000);
+                
                 // Re-enable start button
                 const startButton = document.getElementById('start-deployment');
                 startButton.disabled = false;
