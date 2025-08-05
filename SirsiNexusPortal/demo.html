@@ -130,16 +130,16 @@
           <div class="h-full p-6 max-w-none mx-auto">
             <!-- Main Console Area -->
             <div class="flex h-full gap-6">
-              <!-- Command Console - Main Focus (2/3 width) -->
-              <div class="w-2/3 flex flex-col gap-4">
-                <!-- Conversation Window -->
-                <div class="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50 flex flex-col h-64">
+              <!-- Left Section: AI Prompt (1/3 width) -->
+              <div class="w-1/3 flex flex-col gap-4">
+                <!-- Conversation Window - Full Height -->
+                <div class="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50 flex flex-col flex-1">
                   <div class="flex items-center justify-between p-4 border-b border-slate-700/50">
                     <h3 class="text-lg font-bold text-white flex items-center gap-2">
                       <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-4l-4 4z"></path>
                       </svg>
-                      SirsiNexus AI Prompt
+                      SirsiNexus AI Console
                     </h3>
                     <div id="conversation-status" class="flex items-center gap-2">
                       <div class="w-2 h-2 bg-slate-400 rounded-full"></div>
@@ -150,6 +150,10 @@
                     <div class="text-slate-500">💬 SirsiNexus AI: Hello! How can I assist you with your infrastructure deployment today? Please select a scenario to begin.</div>
                   </div>
                 </div>
+              </div>
+
+              <!-- Center Section: Orchestrator and Command Console (2/3 width) -->
+              <div class="w-2/3 flex flex-col gap-4">
                 
                 <!-- Credentials Input Panel (Initially Hidden) -->
                 <div id="credentials-panel" class="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50 hidden">
@@ -504,25 +508,33 @@
                   </div>
                 </div>
                 
-                <!-- Quick Metrics Panel -->
+                <!-- Infrastructure Artifacts Panel -->
                 <div class="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50 p-4">
-                  <h4 class="text-sm font-semibold text-white mb-3">Quick Metrics</h4>
+                  <h4 class="text-sm font-semibold text-white mb-3">Deployment Artifacts</h4>
                   <div class="space-y-3 text-xs">
                     <div class="flex justify-between items-center">
-                      <span class="text-slate-400">Active Services:</span>
-                      <span id="quick-services" class="text-emerald-400 font-mono">0</span>
+                      <span class="text-slate-400">YAML Manifests:</span>
+                      <span id="yaml-count" class="text-emerald-400 font-mono">0</span>
                     </div>
                     <div class="flex justify-between items-center">
-                      <span class="text-slate-400">Deployment Time:</span>
-                      <span id="quick-deployment-time" class="text-emerald-400 font-mono">00:00:00</span>
+                      <span class="text-slate-400">Terraform Modules:</span>
+                      <span id="terraform-count" class="text-emerald-400 font-mono">0</span>
                     </div>
                     <div class="flex justify-between items-center">
-                      <span class="text-slate-400">Success Rate:</span>
-                      <span id="quick-success-rate" class="text-emerald-400 font-mono">100%</span>
+                      <span class="text-slate-400">CloudFormation:</span>
+                      <span id="cloudformation-count" class="text-emerald-400 font-mono">0</span>
                     </div>
                     <div class="flex justify-between items-center">
-                      <span class="text-slate-400">Health Score:</span>
-                      <span id="quick-health-score" class="text-emerald-400 font-mono">A+</span>
+                      <span class="text-slate-400">Helm Charts:</span>
+                      <span id="helm-count" class="text-emerald-400 font-mono">0</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                      <span class="text-slate-400">Docker Images:</span>
+                      <span id="docker-count" class="text-emerald-400 font-mono">0</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                      <span class="text-slate-400">Job Completions:</span>
+                      <span id="job-completions" class="text-emerald-400 font-mono">0/0</span>
                     </div>
                   </div>
                 </div>
