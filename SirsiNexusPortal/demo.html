@@ -568,6 +568,15 @@
             // Update system counters
             updateSystemCounters(cmd, index);
             
+            // Update progress bar based on actual steps
+            const progress = ((index + 1) / commands.length) * 100;
+            const progressBar = document.getElementById('overall-progress-bar');
+            const progressText = document.getElementById('overall-progress-text');
+            if (progressBar && progressText) {
+              progressBar.style.width = `${progress}%`;
+              progressText.textContent = `${Math.round(progress)}%`;
+            }
+            
             // Update completion status
             if (cmd.text.startsWith('🎉')) {
               setTimeout(() => {
@@ -595,12 +604,34 @@
       }
       
       function getAgentTriggerPoints(scenario) {
-        return [
-          { keyword: '[EKS]', component: 'containers', agentIndex: 0, message: '🚀 Container orchestration agent activated' },
-          { keyword: '[ALB]', component: 'networking', agentIndex: 1, message: '🌐 Network configuration agent activated' },
-          { keyword: '[RDS]', component: 'database', agentIndex: 2, message: '🗄️ Database management agent activated' },
-          { keyword: '[OBSERVABILITY]', component: 'monitoring', agentIndex: 3, message: '📊 Observability agent activated' }
-        ];
+        const triggerMap = {
+          'onprem-to-aws': [
+            { keyword: '[EKS]', component: 'containers', agentIndex: 0, message: '🚀 Container orchestration agent activated - EKS deployment started' },
+            { keyword: '[ALB]', component: 'networking', agentIndex: 1, message: '🌐 Network configuration agent activated - Load balancer setup' },
+            { keyword: '[RDS]', component: 'database', agentIndex: 2, message: '🗄️ Database management agent activated - RDS migration' },
+            { keyword: '[OBSERVABILITY]', component: 'monitoring', agentIndex: 3, message: '📊 Observability agent activated - CloudWatch deployment' }
+          ],
+          'gcp-ml-platform': [
+            { keyword: '[GKE]', component: 'containers', agentIndex: 0, message: '🚀 Container orchestration agent activated - GKE deployment' },
+            { keyword: '[NETWORKING]', component: 'networking', agentIndex: 1, message: '🌐 Network configuration agent activated - Global load balancer' },
+            { keyword: '[BIGQUERY]', component: 'database', agentIndex: 2, message: '🗄️ Database management agent activated - BigQuery ML setup' },
+            { keyword: '[VERTEX]', component: 'monitoring', agentIndex: 3, message: '📊 Observability agent activated - Vertex AI monitoring' }
+          ],
+          'azure-modernization': [
+            { keyword: '[AKS]', component: 'containers', agentIndex: 0, message: '🚀 Container orchestration agent activated - AKS deployment' },
+            { keyword: '[NETWORKING]', component: 'networking', agentIndex: 1, message: '🌐 Network configuration agent activated - Application Gateway' },
+            { keyword: '[DATABASE]', component: 'database', agentIndex: 2, message: '🗄️ Database management agent activated - Azure PostgreSQL' },
+            { keyword: '[OBSERVABILITY]', component: 'monitoring', agentIndex: 3, message: '📊 Observability agent activated - Azure Monitor' }
+          ],
+          'hybrid-multicloud': [
+            { keyword: '[KUBERNETES]', component: 'containers', agentIndex: 0, message: '🚀 Container orchestration agent activated - Multi-cloud K8s' },
+            { keyword: '[NETWORKING]', component: 'networking', agentIndex: 1, message: '🌐 Network configuration agent activated - Inter-cloud network' },
+            { keyword: '[DATA]', component: 'database', agentIndex: 2, message: '🗄️ Database management agent activated - Distributed data layer' },
+            { keyword: '[OBSERVABILITY]', component: 'monitoring', agentIndex: 3, message: '📊 Observability agent activated - Unified monitoring' }
+          ]
+        };
+        
+        return triggerMap[scenario] || triggerMap['onprem-to-aws'];
       }
       
       function activateAgent(componentName, message) {
