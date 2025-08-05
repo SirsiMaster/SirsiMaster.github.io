@@ -819,8 +819,8 @@ function startCommandOutput(scenario) {
             { keyword: '[OBSERVABILITY]', component: 'monitoring', agentIndex: 3, message: '📊 Observability agent activated - Azure Monitor' }
           ],
           'hybrid-multicloud': [
-            { keyword: '[NETWORKING]', component: 'networking', agentIndex: 0, message: '🌐 Network configuration agent activated - Inter-cloud network' },
-            { keyword: '[KUBERNETES]', component: 'containers', agentIndex: 1, message: '🚀 Container orchestration agent activated - Multi-cloud K8s' },
+            { keyword: '[NETWORKING]', component: 'networking', agentIndex: 1, message: '🌐 Network configuration agent activated - Inter-cloud network' },
+            { keyword: '[KUBERNETES]', component: 'containers', agentIndex: 0, message: '🚀 Container orchestration agent activated - Multi-cloud K8s' },
             { keyword: '[DATA]', component: 'database', agentIndex: 2, message: '🗄️ Database management agent activated - Distributed data layer' },
             { keyword: '[OBSERVABILITY]', component: 'monitoring', agentIndex: 3, message: '📊 Observability agent activated - Unified monitoring' }
           ]
@@ -1342,7 +1342,7 @@ function startCommandOutput(scenario) {
       function getScenarioCommands(scenario) {
         const commands = {
           'onprem-to-aws': [
-            { text: '🎯 CTO Prompt: "Initiate VMware to AWS migration targeting the US West region with fully modernized networking. Prioritize zero-downtime policies and compliance."', delay: 200 },
+{ text: '🎯 Initiate VMware to AWS migration targeting the US West region with fully modernized networking. Prioritize zero-downtime policies and compliance.', delay: 200 },
             { text: `$ sirsi-nexus migrate --source=vmware --target=aws --region=us-west-2 --vpc-cidr=10.0.0.0/16`, delay: 500 },
             { text: '', delay: 700 },
             { text: '🤖 SirsiNexus AI: Analyzing request and generating comprehensive deployment plan...', delay: 800 },
@@ -1426,7 +1426,7 @@ function startCommandOutput(scenario) {
             { text: '✨ Advanced capabilities: Auto-scaling, self-healing, predictive maintenance active', delay: 50400 }
           ],
           'hybrid-multicloud': [
-            { text: '🎯 CTO Prompt: "Deploy a hybrid multi-cloud architecture leveraging AWS, GCP, and Azure. Ensure seamless interconnectivity with policy-driven solutions."', delay: 200 },
+{ text: '🎯 Deploy a hybrid multi-cloud architecture leveraging AWS, GCP, and Azure. Ensure seamless interconnectivity with policy-driven solutions.', delay: 200 },
             { text: `$ sirsi-nexus deploy --mode=hybrid --clouds=aws,gcp,azure --federation=istio --policy-engine=opa`, delay: 500 },
             { text: '', delay: 700 },
             { text: '🤖 SirsiNexus AI: Orchestrating multi-cloud deployment strategy...', delay: 800 },
@@ -1504,7 +1504,7 @@ function startCommandOutput(scenario) {
             { text: '✨ Advanced capabilities: Auto-failover, intelligent routing, predictive scaling active', delay: 49200 }
           ],
           'azure-modernization': [
-            { text: '🎯 CTO Prompt: "Modernize classic Azure implementations to ARM using infrastructure as code methodologies. Emphasize scalability and security improvements."', delay: 200 },
+{ text: '🎯 Modernize classic Azure implementations to ARM using infrastructure as code methodologies. Emphasize scalability and security improvements.', delay: 200 },
             { text: `$ sirsi-nexus modernize --source=azure-classic --target=azure-rm --bicep-templates --policy-as-code`, delay: 500 },
             { text: '', delay: 700 },
             { text: '🤖 SirsiNexus AI: Analyzing Azure legacy architecture for modernization...', delay: 800 },
@@ -1588,7 +1588,7 @@ function startCommandOutput(scenario) {
             { text: '✨ Advanced features: Auto-remediation, compliance monitoring, intelligent scaling', delay: 54600 }
           ],
           'gcp-ml-platform': [
-            { text: '🎯 CTO Prompt: "Deploy an AI/ML platform on GCP with a focus on Vertex services and state-of-the-art ML pipelines. Maintain efficiency and robust security."', delay: 200 },
+{ text: '🎯 Deploy an AI/ML platform on GCP with a focus on Vertex services and state-of-the-art ML pipelines. Maintain efficiency and robust security.', delay: 200 },
             { text: `$ sirsi-nexus deploy --platform=gcp-ml --services=vertex,bigquery --kubeflow --tfx-pipelines`, delay: 500 },
             { text: '', delay: 700 },
             { text: '🤖 SirsiNexus AI: Optimizing AI/ML platform architecture for Vertex AI...', delay: 800 },
@@ -1709,6 +1709,16 @@ function startCommandOutput(scenario) {
           clearInterval(window.uptimeInterval);
           delete window.uptimeInterval;
         }
+        
+        // Clean up quick metrics intervals
+        if (window.deploymentTimeInterval) {
+          clearInterval(window.deploymentTimeInterval);
+          delete window.deploymentTimeInterval;
+        }
+        if (window.metricsInterval) {
+          clearInterval(window.metricsInterval);
+          delete window.metricsInterval;
+        }
       }
       
       function resetAgentStates() {
@@ -1743,6 +1753,56 @@ function startCommandOutput(scenario) {
         if (activeAgentsCount) activeAgentsCount.textContent = '0/4';
         if (servicesDeployed) servicesDeployed.textContent = '0';
         if (systemUptime) systemUptime.textContent = '00:00:00';
+      }
+      
+      function startQuickMetricsUpdates() {
+        // Update Quick Metrics Panel with realistic data
+        let servicesCount = 0;
+        let deploymentSeconds = 0;
+        let successRate = 100;
+        let healthScore = 'A+';
+        
+        const quickServices = document.getElementById('quick-services');
+        const quickDeploymentTime = document.getElementById('quick-deployment-time');
+        const quickSuccessRate = document.getElementById('quick-success-rate');
+        const quickHealthScore = document.getElementById('quick-health-score');
+        
+        // Update deployment time counter
+        const deploymentTimeInterval = setInterval(() => {
+          deploymentSeconds++;
+          const hours = Math.floor(deploymentSeconds / 3600);
+          const minutes = Math.floor((deploymentSeconds % 3600) / 60);
+          const seconds = deploymentSeconds % 60;
+          
+          if (quickDeploymentTime) {
+            quickDeploymentTime.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+          }
+        }, 1000);
+        
+        // Periodically update other metrics
+        const metricsInterval = setInterval(() => {
+          // Increment services occasionally
+          if (Math.random() < 0.3) {
+            servicesCount = Math.min(servicesCount + Math.floor(Math.random() * 3) + 1, 50);
+            if (quickServices) quickServices.textContent = servicesCount;
+          }
+          
+          // Simulate slight success rate fluctuation
+          successRate = Math.max(95, Math.min(100, successRate + (Math.random() - 0.5) * 2));
+          if (quickSuccessRate) quickSuccessRate.textContent = `${successRate.toFixed(1)}%`;
+          
+          // Update health score based on success rate
+          if (successRate >= 99) healthScore = 'A+';
+          else if (successRate >= 97) healthScore = 'A';
+          else if (successRate >= 95) healthScore = 'B+';
+          else healthScore = 'B';
+          
+          if (quickHealthScore) quickHealthScore.textContent = healthScore;
+        }, 5000);
+        
+        // Store intervals for cleanup
+        window.deploymentTimeInterval = deploymentTimeInterval;
+        window.metricsInterval = metricsInterval;
       }
       
       function updateAgentTasksFromCommand(commandText) {
