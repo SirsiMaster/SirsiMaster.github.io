@@ -201,7 +201,7 @@
                         <span class="text-slate-500">•</span>
                         <span id="services-deployed">0</span> svc
                         <span class="text-slate-500">•</span>
-                        <span id="system-uptime">00:00</span>
+                        <span id="system-uptime">00:00:00</span>
                       </div>
                     </div>
                   </div>
@@ -250,9 +250,9 @@
               </div>
               
               <!-- Right Sidebar: Agents and Metrics -->
-              <div class="w-80 flex flex-col gap-6">
+              <div class="w-96 flex flex-col gap-6">
                 <!-- Agents Panel -->
-                <div class="flex-1 bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50">
+                <div class="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50">
                   <div class="flex items-center justify-between p-4 border-b border-slate-700/50">
                     <h3 class="text-lg font-bold text-white">Agents</h3>
                     <div id="agents-status" class="flex items-center gap-2">
@@ -263,8 +263,8 @@
 
                 
                 <!-- Component Grid - Better Layout -->
-                <div class="p-4 h-full overflow-y-auto">
-                  <div class="grid grid-cols-2 gap-4 mb-6">
+                <div class="p-4 flex-1 overflow-y-auto">
+                  <div class="grid grid-cols-2 gap-4 h-fit">
                     <!-- Containers -->
                     <div id="component-containers" class="bg-slate-900/50 rounded-lg p-4 border border-slate-600/30 opacity-50 transition-all duration-500">
                       <div class="flex items-center gap-3 mb-3">
@@ -273,9 +273,9 @@
                             <path d="M13.5 3a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0ZM15 3a3 3 0 1 0-6 0 3 3 0 0 0 6 0Zm6 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm1.5 0a3 3 0 1 0-6 0 3 3 0 0 0 6 0ZM6 7.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0ZM7.5 7.5a3 3 0 1 0-6 0 3 3 0 0 0 6 0Zm13.5 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm1.5 0a3 3 0 1 0-6 0 3 3 0 0 0 6 0Zm-12 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm1.5 0a3 3 0 1 0-6 0 3 3 0 0 0 6 0Z"/>
                           </svg>
                         </div>
-                        <div>
-                          <h4 class="font-semibold text-blue-400">Container Orchestration</h4>
-                          <p class="text-xs text-slate-500">Kubernetes • Docker • Pods</p>
+                        <div class="flex-1 min-w-0">
+                          <h4 class="font-semibold text-blue-400 text-sm truncate">Container</h4>
+                          <p class="text-xs text-slate-500">Kubernetes</p>
                         </div>
                       </div>
                       <div id="container-logs" class="bg-slate-950/50 rounded p-3 text-xs font-mono">
@@ -284,17 +284,17 @@
                           <span id="container-status" class="text-slate-400">Standby</span>
                         </div>
                         <div class="space-y-1">
-                          <div class="flex justify-between">
-                            <span class="text-slate-400">Current Task:</span>
-                            <span id="container-task" class="text-slate-300">-</span>
+                          <div class="flex justify-between items-start">
+                            <span class="text-slate-400 text-xs">Task:</span>
+                            <span id="container-task" class="text-slate-300 text-xs text-right flex-1 ml-2 min-w-0 truncate">Standby</span>
                           </div>
                           <div class="flex justify-between">
-                            <span class="text-slate-400">Task Duration:</span>
-                            <span id="container-duration" class="text-slate-300">-</span>
+                            <span class="text-slate-400 text-xs">Duration:</span>
+                            <span id="container-duration" class="text-slate-300 text-xs font-mono">--:--</span>
                           </div>
                           <div class="flex justify-between">
-                            <span class="text-slate-400">Total Runtime:</span>
-                            <span id="container-runtime" class="text-slate-300">00:00</span>
+                            <span class="text-slate-400 text-xs">Runtime:</span>
+                            <span id="container-runtime" class="text-slate-300 text-xs font-mono">00:00</span>
                           </div>
                         </div>
                       </div>
@@ -308,9 +308,9 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
                           </svg>
                         </div>
-                        <div>
-                          <h4 class="font-semibold text-purple-400">Network & DNS</h4>
-                          <p class="text-xs text-slate-500">Load Balancer • Ingress • DNS</p>
+                        <div class="flex-1 min-w-0">
+                          <h4 class="font-semibold text-purple-400 text-sm truncate">Network</h4>
+                          <p class="text-xs text-slate-500">Load Balancer</p>
                         </div>
                       </div>
                       <div id="network-logs" class="bg-slate-950/50 rounded p-3 text-xs font-mono">
@@ -319,17 +319,17 @@
                           <span id="network-status" class="text-slate-400">Standby</span>
                         </div>
                         <div class="space-y-1">
-                          <div class="flex justify-between">
-                            <span class="text-slate-400">Current Task:</span>
-                            <span id="network-task" class="text-slate-300">-</span>
+                          <div class="flex justify-between items-start">
+                            <span class="text-slate-400 text-xs">Task:</span>
+                            <span id="network-task" class="text-slate-300 text-xs text-right flex-1 ml-2 min-w-0 truncate">Standby</span>
                           </div>
                           <div class="flex justify-between">
-                            <span class="text-slate-400">Task Duration:</span>
-                            <span id="network-duration" class="text-slate-300">-</span>
+                            <span class="text-slate-400 text-xs">Duration:</span>
+                            <span id="network-duration" class="text-slate-300 text-xs font-mono">--:--</span>
                           </div>
                           <div class="flex justify-between">
-                            <span class="text-slate-400">Total Runtime:</span>
-                            <span id="network-runtime" class="text-slate-300">00:00</span>
+                            <span class="text-slate-400 text-xs">Runtime:</span>
+                            <span id="network-runtime" class="text-slate-300 text-xs font-mono">00:00</span>
                           </div>
                         </div>
                       </div>
@@ -343,9 +343,9 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path>
                           </svg>
                         </div>
-                        <div>
-                          <h4 class="font-semibold text-green-400">Database Cluster</h4>
-                          <p class="text-xs text-slate-500">PostgreSQL • Redis • Backups</p>
+                        <div class="flex-1 min-w-0">
+                          <h4 class="font-semibold text-green-400 text-sm truncate">Database</h4>
+                          <p class="text-xs text-slate-500">PostgreSQL</p>
                         </div>
                       </div>
                       <div id="database-logs" class="bg-slate-950/50 rounded p-3 text-xs font-mono">
@@ -354,17 +354,17 @@
                           <span id="database-status" class="text-slate-400">Standby</span>
                         </div>
                         <div class="space-y-1">
-                          <div class="flex justify-between">
-                            <span class="text-slate-400">Current Task:</span>
-                            <span id="database-task" class="text-slate-300">-</span>
+                          <div class="flex justify-between items-start">
+                            <span class="text-slate-400 text-xs">Task:</span>
+                            <span id="database-task" class="text-slate-300 text-xs text-right flex-1 ml-2 min-w-0 truncate">Standby</span>
                           </div>
                           <div class="flex justify-between">
-                            <span class="text-slate-400">Task Duration:</span>
-                            <span id="database-duration" class="text-slate-300">-</span>
+                            <span class="text-slate-400 text-xs">Duration:</span>
+                            <span id="database-duration" class="text-slate-300 text-xs font-mono">--:--</span>
                           </div>
                           <div class="flex justify-between">
-                            <span class="text-slate-400">Total Runtime:</span>
-                            <span id="database-runtime" class="text-slate-300">00:00</span>
+                            <span class="text-slate-400 text-xs">Runtime:</span>
+                            <span id="database-runtime" class="text-slate-300 text-xs font-mono">00:00</span>
                           </div>
                         </div>
                       </div>
@@ -378,9 +378,9 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                           </svg>
                         </div>
-                        <div>
-                          <h4 class="font-semibold text-orange-400">Observability</h4>
-                          <p class="text-xs text-slate-500">Prometheus • Grafana • Logs</p>
+                        <div class="flex-1 min-w-0">
+                          <h4 class="font-semibold text-orange-400 text-sm truncate">Monitoring</h4>
+                          <p class="text-xs text-slate-500">Observability</p>
                         </div>
                       </div>
                       <div id="monitoring-logs" class="bg-slate-950/50 rounded p-3 text-xs font-mono">
@@ -389,20 +389,43 @@
                           <span id="monitoring-status" class="text-slate-400">Standby</span>
                         </div>
                         <div class="space-y-1">
-                          <div class="flex justify-between">
-                            <span class="text-slate-400">Current Task:</span>
-                            <span id="monitoring-task" class="text-slate-300">-</span>
+                          <div class="flex justify-between items-start">
+                            <span class="text-slate-400 text-xs">Task:</span>
+                            <span id="monitoring-task" class="text-slate-300 text-xs text-right flex-1 ml-2 min-w-0 truncate">Standby</span>
                           </div>
                           <div class="flex justify-between">
-                            <span class="text-slate-400">Task Duration:</span>
-                            <span id="monitoring-duration" class="text-slate-300">-</span>
+                            <span class="text-slate-400 text-xs">Duration:</span>
+                            <span id="monitoring-duration" class="text-slate-300 text-xs font-mono">--:--</span>
                           </div>
                           <div class="flex justify-between">
-                            <span class="text-slate-400">Total Runtime:</span>
-                            <span id="monitoring-runtime" class="text-slate-300">00:00</span>
+                            <span class="text-slate-400 text-xs">Runtime:</span>
+                            <span id="monitoring-runtime" class="text-slate-300 text-xs font-mono">00:00</span>
                           </div>
                         </div>
                       </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Quick Metrics Panel -->
+                <div class="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50 p-4">
+                  <h4 class="text-sm font-semibold text-white mb-3">Quick Metrics</h4>
+                  <div class="space-y-3 text-xs">
+                    <div class="flex justify-between items-center">
+                      <span class="text-slate-400">Active Services:</span>
+                      <span id="quick-services" class="text-emerald-400 font-mono">0</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                      <span class="text-slate-400">Deployment Time:</span>
+                      <span id="quick-deployment-time" class="text-emerald-400 font-mono">--:--</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                      <span class="text-slate-400">Success Rate:</span>
+                      <span id="quick-success-rate" class="text-emerald-400 font-mono">---%</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                      <span class="text-slate-400">Health Score:</span>
+                      <span id="quick-health-score" class="text-emerald-400 font-mono">---</span>
                     </div>
                   </div>
                 </div>
@@ -513,10 +536,36 @@
             startDeployment(selectedScenario, scenarios[selectedScenario]);
           }
         });
+        
+        // Execute command button handler
+        const executeButton = document.getElementById('execute-command');
+        if (executeButton) {
+          executeButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            const selectedScenario = scenarioSelect.value;
+            if (selectedScenario && scenarios[selectedScenario]) {
+              startDeployment(selectedScenario, scenarios[selectedScenario]);
+            } else {
+              // Show a message if no scenario is selected
+              const commandOutput = document.getElementById('command-output');
+              const errorLine = document.createElement('div');
+              errorLine.className = 'text-red-400 mt-2';
+              errorLine.textContent = '❌ Error: Please select a deployment scenario first.';
+              commandOutput.appendChild(errorLine);
+              commandOutput.scrollTop = commandOutput.scrollHeight;
+            }
+          });
+        }
       }
 
       function startDeployment(scenarioKey, scenario) {
         console.log(`🚀 Starting deployment: ${scenario.title}`);
+        
+        // Clean up any existing intervals to prevent memory leaks
+        cleanupIntervals();
+        
+        // Reset agent states
+        resetAgentStates();
         
         // Update overall status
         const overallStatus = document.getElementById('overall-status');
@@ -586,13 +635,15 @@
             
             // Trigger agent activation based on command output
             agentTriggers.forEach(trigger => {
-              if (cmd.text.includes(trigger.keyword) && currentAgentIndex === trigger.agentIndex) {
+              if (cmd.text.includes(trigger.keyword)) {
                 setTimeout(() => {
                   activateAgent(trigger.component, trigger.message);
                 }, 500);
-                currentAgentIndex++;
               }
             });
+            
+            // Update agent task details based on command output
+            updateAgentTasksFromCommand(cmd.text);
             
             // Update system counters
             updateSystemCounters(cmd, index);
@@ -685,12 +736,13 @@
           element.classList.add('opacity-100', 'border-emerald-500/50', 'shadow-lg');
           
           // Update status
-          statusElement.textContent = 'Working';
+          statusElement.textContent = 'Active';
           statusElement.className = 'text-emerald-400';
           
-          // Extract task from message
+          // Extract task from message - improved parsing
           const taskMatch = message.match(/- (.+)/);
-          const taskName = taskMatch ? taskMatch[1] : message.replace(/🚀|🌐|🗄️|📊/g, '').trim();
+          let taskName = taskMatch ? taskMatch[1] : message.replace(/🚀|🌐|🗄️|📊|activated/g, '').trim();
+          taskName = taskName.replace(/agent\s+/, '').replace(/\s+agent/, '').trim();
           taskElement.textContent = taskName;
           
           // Start task timer
@@ -724,6 +776,11 @@
             const current = parseInt(activeAgentsCount.textContent.split('/')[0]);
             activeAgentsCount.textContent = `${current + 1}/4`;
           }
+          
+          // Start component-specific task animation
+          setTimeout(() => {
+            startComponentTaskAnimation(componentName);
+          }, 2000);
         }
       }
       
@@ -768,60 +825,71 @@
         animateOverallProgress();
       }
 
-      function animateComponent(componentName, data) {
+      function startComponentTaskAnimation(componentName) {
+        const scenario = document.getElementById('scenario-select').value;
+        const componentData = getScenarioComponentData(scenario);
+        const data = componentData[componentName];
+        
+        if (!data) return;
+        
         const element = document.getElementById(`component-${componentName}`);
         const statusElement = document.getElementById(`${componentName}-status`);
         const taskElement = document.getElementById(`${componentName}-task`);
         const durationElement = document.getElementById(`${componentName}-duration`);
         
-        if (element && statusElement) {
-          // Activate component
-          element.classList.remove('opacity-50');
-          element.classList.add('opacity-100', 'border-emerald-500/50');
-          
-          // Animate through tasks
-          let logIndex = 0;
-          const logInterval = setInterval(() => {
-            if (logIndex < data.logs.length) {
-              const currentTask = data.logs[logIndex];
-              
-              // Update current task
-              taskElement.textContent = currentTask.replace(/📦|🐳|⚡|✅|🌐|🔗|📡|🗄️|💾|🔄|📊|📈|🔍/g, '').trim();
-              
-              // Reset task duration for new task
-              const taskStartTime = Date.now();
-              
-              // Update task duration for this specific task
-              const taskDurationInterval = setInterval(() => {
-                const elapsed = Math.floor((Date.now() - taskStartTime) / 1000);
-                const minutes = Math.floor(elapsed / 60);
-                const seconds = elapsed % 60;
-                durationElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-              }, 1000);
-              
-              // Clear previous task interval
-              if (window[`${componentName}TaskInterval`]) {
-                clearInterval(window[`${componentName}TaskInterval`]);
-              }
-              window[`${componentName}TaskInterval`] = taskDurationInterval;
-              
-              logIndex++;
-            } else {
-              clearInterval(logInterval);
-              
-              // Mark as complete
-              element.classList.add('border-emerald-400');
-              statusElement.textContent = 'Complete';
-              statusElement.className = 'text-green-400';
-              taskElement.textContent = 'All tasks completed';
-              
-              // Clear task duration interval
-              if (window[`${componentName}TaskInterval`]) {
-                clearInterval(window[`${componentName}TaskInterval`]);
-              }
+        let logIndex = 0;
+        const logInterval = setInterval(() => {
+          if (logIndex < data.logs.length) {
+            const currentTask = data.logs[logIndex];
+            
+            // Clean up task text for display
+            let cleanTask = currentTask.replace(/📦|🐳|⚡|✅|🌐|🔗|📡|🗄️|💾|🔄|📊|📈|🔍/g, '').trim();
+            if (cleanTask.length > 45) {
+              cleanTask = cleanTask.substring(0, 42) + '...';
             }
-          }, 2000); // 2 seconds per task
-        }
+            taskElement.textContent = cleanTask;
+            
+            // Reset task duration for new task
+            const taskStartTime = Date.now();
+            
+            // Clear previous task interval
+            if (window[`${componentName}TaskInterval`]) {
+              clearInterval(window[`${componentName}TaskInterval`]);
+            }
+            
+            // Update task duration for this specific task
+            const taskDurationInterval = setInterval(() => {
+              const elapsed = Math.floor((Date.now() - taskStartTime) / 1000);
+              const minutes = Math.floor(elapsed / 60);
+              const seconds = elapsed % 60;
+              durationElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }, 1000);
+            
+            window[`${componentName}TaskInterval`] = taskDurationInterval;
+            
+            logIndex++;
+          } else {
+            clearInterval(logInterval);
+            
+            // Mark as complete
+            element.classList.add('border-green-500/50');
+            element.classList.remove('border-emerald-500/50');
+            statusElement.textContent = 'Complete';
+            statusElement.className = 'text-green-400';
+            taskElement.textContent = 'All tasks completed';
+            
+            // Stop task duration timer but keep runtime going
+            if (window[`${componentName}TaskInterval`]) {
+              clearInterval(window[`${componentName}TaskInterval`]);
+            }
+            durationElement.textContent = '--:--';
+          }
+        }, Math.random() * 2000 + 3000); // 3-5 seconds per task for realism
+      }
+      
+      function animateComponent(componentName, data) {
+        // This function is now handled by activateAgent and startComponentTaskAnimation
+        // Keeping for backwards compatibility but functionality moved to new functions
       }
 
       function startLiveMetrics() {
@@ -1355,6 +1423,139 @@
         };
         
         return commands[scenario] || commands['onprem-to-aws'];
+      }
+      
+      function cleanupIntervals() {
+        // Clean up any existing intervals to prevent memory leaks
+        const components = ['containers', 'networking', 'database', 'monitoring'];
+        components.forEach(component => {
+          if (window[`${component}DurationInterval`]) {
+            clearInterval(window[`${component}DurationInterval`]);
+            delete window[`${component}DurationInterval`];
+          }
+          if (window[`${component}RuntimeInterval`]) {
+            clearInterval(window[`${component}RuntimeInterval`]);
+            delete window[`${component}RuntimeInterval`];
+          }
+          if (window[`${component}TaskInterval`]) {
+            clearInterval(window[`${component}TaskInterval`]);
+            delete window[`${component}TaskInterval`];
+          }
+        });
+        
+        // Clean up uptime interval
+        if (window.uptimeInterval) {
+          clearInterval(window.uptimeInterval);
+          delete window.uptimeInterval;
+        }
+      }
+      
+      function resetAgentStates() {
+        // Reset all agent panels to initial state
+        const components = ['containers', 'networking', 'database', 'monitoring'];
+        components.forEach(component => {
+          const element = document.getElementById(`component-${component}`);
+          const statusElement = document.getElementById(`${component}-status`);
+          const taskElement = document.getElementById(`${component}-task`);
+          const durationElement = document.getElementById(`${component}-duration`);
+          const runtimeElement = document.getElementById(`${component}-runtime`);
+          
+          if (element && statusElement) {
+            // Reset visual state
+            element.classList.remove('opacity-100', 'border-emerald-500/50', 'border-green-500/50', 'shadow-lg');
+            element.classList.add('opacity-50');
+            
+            // Reset status and task info
+            statusElement.textContent = 'Standby';
+            statusElement.className = 'text-slate-400';
+            taskElement.textContent = 'Standby';
+            durationElement.textContent = '--:--';
+            runtimeElement.textContent = '00:00';
+          }
+        });
+        
+        // Reset counters
+        const activeAgentsCount = document.getElementById('active-agents-count');
+        const servicesDeployed = document.getElementById('services-deployed');
+        const systemUptime = document.getElementById('system-uptime');
+        
+        if (activeAgentsCount) activeAgentsCount.textContent = '0/4';
+        if (servicesDeployed) servicesDeployed.textContent = '0';
+        if (systemUptime) systemUptime.textContent = '00:00:00';
+      }
+      
+      function updateAgentTasksFromCommand(commandText) {
+        // Update specific agent tasks based on command output patterns
+        const taskUpdates = {
+          // Container/EKS tasks
+          'EKS': {
+            component: 'containers',
+            tasks: {
+              'Creating cluster': 'Setting up EKS cluster',
+              'Pod Security Standards': 'Configuring security policies',
+              'Converting VMware': 'Migrating container workloads',
+              'Migrating container images': 'Processing container images',
+              'Deploying Istio': 'Setting up service mesh',
+              'microservices migrated': 'Finalizing microservices'
+            }
+          },
+          // Networking tasks
+          'ALB': {
+            component: 'networking',
+            tasks: {
+              'Application Load Balancer': 'Configuring load balancer',
+              'SSL/TLS termination': 'Setting up SSL certificates',
+              'weighted routing': 'Configuring traffic routing',
+              'geolocation-based DNS': 'Setting up DNS failover',
+              'Global traffic routing': 'Optimizing global routing'
+            }
+          },
+          // Database tasks
+          'RDS': {
+            component: 'database',
+            tasks: {
+              'Aurora PostgreSQL': 'Setting up Aurora cluster',
+              'AWS DMS with CDC': 'Migrating database with zero downtime',
+              'automated backups': 'Configuring backup strategy',
+              'Aurora Global Database': 'Setting up disaster recovery',
+              'Performance Insights': 'Enabling performance monitoring'
+            }
+          },
+          // Monitoring tasks
+          'OBSERVABILITY': {
+            component: 'monitoring',
+            tasks: {
+              'CloudWatch Container Insights': 'Setting up container monitoring',
+              'X-Ray distributed tracing': 'Configuring distributed tracing',
+              'CloudWatch Synthetics': 'Setting up synthetic monitoring',
+              'composite alarms': 'Configuring intelligent alerting',
+              'AWS Config': 'Setting up compliance monitoring'
+            }
+          }
+        };
+        
+        // Check for task updates
+        Object.keys(taskUpdates).forEach(keyword => {
+          if (commandText.includes(keyword)) {
+            const update = taskUpdates[keyword];
+            const taskElement = document.getElementById(`${update.component}-task`);
+            const statusElement = document.getElementById(`${update.component}-status`);
+            
+            if (taskElement && statusElement && statusElement.textContent === 'Active') {
+              // Find matching task
+              Object.keys(update.tasks).forEach(taskKeyword => {
+                if (commandText.includes(taskKeyword)) {
+                  const newTask = update.tasks[taskKeyword];
+                  if (newTask.length > 45) {
+                    taskElement.textContent = newTask.substring(0, 42) + '...';
+                  } else {
+                    taskElement.textContent = newTask;
+                  }
+                }
+              });
+            }
+          }
+        });
       }
     </script>
   </body>
