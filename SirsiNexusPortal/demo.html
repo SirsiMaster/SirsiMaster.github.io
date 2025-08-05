@@ -677,6 +677,9 @@
         if (artifactsPanel && orchestratorConsole) {
           orchestratorConsole.appendChild(artifactsPanel);
         }
+        
+        // Scenario definitions
+        const scenarios = {
           'onprem-to-aws': {
         "source": "On-Premises DataCenter (VMware vSphere 7.0)",
         "target": "AWS (us-west-2, us-east-1)",
