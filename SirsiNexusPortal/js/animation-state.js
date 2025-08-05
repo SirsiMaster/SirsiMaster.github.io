@@ -80,12 +80,24 @@ class InfrastructureAnimationController {
   }
 
   initialize() {
+    console.log('Initializing animation controller...');
     // Find and store references to animation elements
     this.elements = {
       progressBar: document.getElementById('infrastructure-progress'),
       stateLabel: document.getElementById('current-state'),
       detailsPanel: document.getElementById('details-panel')
     };
+
+    // Debug element finding
+    console.log('Elements found:', {
+      progressBar: !!this.elements.progressBar,
+      stateLabel: !!this.elements.stateLabel,
+      detailsPanel: !!this.elements.detailsPanel
+    });
+
+    if (!this.elements.progressBar) console.error('infrastructure-progress element not found');
+    if (!this.elements.stateLabel) console.error('current-state element not found');
+    if (!this.elements.detailsPanel) console.error('details-panel element not found');
 
     // Subscribe to state changes
     this.stateMachine.subscribe((state, data) => this.handleStateChange(state, data));
@@ -260,21 +272,35 @@ function initializeAnimation() {
   const heroButton = document.getElementById('hero-demo-button');
   if (heroButton) {
     console.log('Found hero demo button, adding click handler');
-    heroButton.onclick = () => {
+    heroButton.addEventListener('click', (e) => {
+      e.preventDefault();
       console.log('Demo button clicked');
       if (window.stateMachine) {
         console.log('Starting state machine...');
         window.stateMachine.start();
-        // Scroll to the infrastructure section
-        document.getElementById('SirsiNexusPortal-platform').scrollIntoView({ behavior: 'smooth' });
+        // Remove auto-scroll - demo should work in place
       } else {
         console.error('State machine not found');
       }
-    };
+    });
   } else {
     console.error('Hero demo button not found');
   }
 }
 
+// Add comprehensive debugging
+console.log('Animation script loaded!');
+
 // Run initialization when DOM is loaded
-document.addEventListener('DOMContentLoaded', initializeAnimation);
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('DOM loaded, initializing animation...');
+  initializeAnimation();
+});
+
+// Fallback initialization in case DOMContentLoaded already fired
+if (document.readyState === 'loading') {
+  console.log('Document still loading, waiting for DOMContentLoaded');
+} else {
+  console.log('Document already loaded, initializing immediately');
+  initializeAnimation();
+}
