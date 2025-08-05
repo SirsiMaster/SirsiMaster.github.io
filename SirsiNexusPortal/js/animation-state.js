@@ -266,7 +266,7 @@ function initializeAnimation() {
         console.log('Starting state machine...');
         window.stateMachine.start();
         // Scroll to the infrastructure section
-        document.getElementById('platform').scrollIntoView({ behavior: 'smooth' });
+        document.getElementById('SirsiNexusPortal-platform').scrollIntoView({ behavior: 'smooth' });
       } else {
         console.error('State machine not found');
       }
