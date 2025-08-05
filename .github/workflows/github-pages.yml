@@ -2,9 +2,7 @@ name: GitHub Pages deployment
 
 on:
   push:
-    branches:
-      - main
-      - staging/infrastructure-animation
+    branches: [main]
 
 permissions:
   contents: read
@@ -27,8 +25,10 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: 'SirsiNexusPortal'
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
