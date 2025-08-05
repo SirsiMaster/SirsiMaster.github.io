@@ -139,7 +139,7 @@
                       <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-4l-4 4z"></path>
                       </svg>
-                      CTO ↔ SirsiNexus AI Conversation
+                      SirsiNexus AI Prompt
                     </h3>
                     <div id="conversation-status" class="flex items-center gap-2">
                       <div class="w-2 h-2 bg-slate-400 rounded-full"></div>
@@ -147,7 +147,7 @@
                     </div>
                   </div>
                   <div id="conversation-window" class="flex-1 bg-slate-950/70 m-4 rounded-lg p-4 overflow-y-auto font-mono text-sm">
-                    <div class="text-slate-500">💬 SirsiNexus AI: Ready to assist with infrastructure deployment. Please select a scenario to begin planning.</div>
+                    <div class="text-slate-500">💬 SirsiNexus AI: Hello! How can I assist you with your infrastructure deployment today? Please select a scenario to begin.</div>
                   </div>
                 </div>
                 
@@ -677,10 +677,11 @@
         setTimeout(() => startQuickMetricsUpdates(), 1000);
       }
 
-      function startCommandOutput(scenario) {
+function startCommandOutput(scenario) {
         const commandOutput = document.getElementById('command-output');
         const commandInput = document.getElementById('command-input');
-        if (!commandOutput) return;
+        const conversationWindow = document.getElementById('conversation-window');
+        if (!commandOutput || !conversationWindow) return;
         
         // Clear existing content
         commandOutput.innerHTML = '';
@@ -693,6 +694,32 @@
         if (commandInput) {
           commandInput.value = commands[0].text.replace('$ ', '');
         }
+
+        // Start deployment interaction in conversation window
+        const scenarioMessages = {
+          'onprem-to-aws': 'Initiate VMware to AWS migration targeting the US West region with fully modernized networking. Prioritize zero-downtime policies and compliance.',
+          'hybrid-multicloud': 'Deploy a hybrid multi-cloud architecture leveraging AWS, GCP, and Azure. Ensure seamless interconnectivity with policy-driven solutions.',
+          'azure-modernization': 'Modernize classic Azure implementations to ARM using infrastructure as code methodologies. Emphasize scalability and security improvements.',
+          'gcp-ml-platform': 'Deploy an AI/ML platform on GCP with a focus on Vertex services and state-of-the-art ML pipelines. Maintain efficiency and robust security.'
+        };
+        
+        const userPrompt = scenarioMessages[scenario] || 'Please proceed with the selected deployment scenario.';
+        
+        const conversationLog = [
+          {speaker: 'You', message: userPrompt},
+          {speaker: 'SirsiNexus AI', message: 'Understanding your requirements. Analyzing infrastructure and generating comprehensive deployment plan...'},
+        ];
+
+        const updateConversation = (entry) => {
+          const logEntry = document.createElement('div');
+          logEntry.innerHTML = `<strong>${entry.speaker}:</strong> <span>${entry.message}</span>`;
+          conversationWindow.appendChild(logEntry);
+          conversationWindow.scrollTop = conversationWindow.scrollHeight;
+        };
+
+        conversationLog.forEach((entry, index) => {
+          setTimeout(() => updateConversation(entry), index * 4000); // Delay to simulate real conversation
+        });
         
         commands.forEach((cmd, index) => {
           setTimeout(() => {
