@@ -86,14 +86,14 @@
       <div class="h-full flex flex-col">
         <!-- Compact Control Panel -->
         <div class="bg-slate-800/50 border-b border-slate-700 p-4">
-          <div class="max-w-7xl mx-auto">
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-6">
-                <div>
-                  <h2 class="text-lg font-bold text-white">SirsiNexus Deployment Simulator</h2>
+          <div class="max-w-none mx-auto px-4">
+            <div class="flex items-center justify-between flex-wrap gap-4">
+              <div class="flex items-center gap-6 min-w-0 flex-1">
+                <div class="flex-shrink-0">
+                  <h2 class="text-lg font-bold text-white whitespace-nowrap">SirsiNexus Deployment Simulator</h2>
                 </div>
-                <div class="flex items-center gap-4">
-                  <select id="scenario-select" class="bg-slate-700 border border-slate-600 text-white rounded-lg px-4 py-2 text-sm">
+                <div class="flex items-center gap-3 min-w-0">
+                  <select id="scenario-select" class="bg-slate-700 border border-slate-600 text-white rounded-lg px-3 py-2 text-sm min-w-48">
                     <option value="">Select Scenario...</option>
                     <option value="onprem-to-aws">🏢 → ☁️ AWS Migration</option>
                     <option value="hybrid-multicloud">🌐 Multi-Cloud</option>
@@ -101,9 +101,9 @@
                     <option value="gcp-ml-platform">🤖 GCP AI/ML</option>
                   </select>
                   <button id="start-deployment" 
-                          class="bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-600 disabled:cursor-not-allowed text-white px-6 py-2 rounded-lg font-semibold transition-all duration-300 text-sm flex items-center gap-2"
+                          class="bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-600 disabled:cursor-not-allowed text-white px-2 py-1 rounded text-xs font-normal transition-all duration-300 flex items-center gap-1 whitespace-nowrap flex-shrink-0"
                           disabled>
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                     </svg>
                     <span id="start-button-text">Deploy</span>
@@ -111,12 +111,12 @@
                 </div>
               </div>
               
-              <div class="flex items-center gap-6">
-                <div id="environment-details" class="hidden text-xs">
+              <div class="flex items-center gap-4 flex-shrink-0">
+                <div id="environment-details" class="hidden text-xs whitespace-nowrap">
                   <span class="text-slate-400">Source:</span> <span id="source-env" class="text-emerald-400 font-mono"></span>
                   <span class="text-slate-400 ml-3">Target:</span> <span id="target-env" class="text-emerald-400 font-mono"></span>
                 </div>
-                <div id="overall-status" class="flex items-center gap-2">
+                <div id="overall-status" class="flex items-center gap-2 whitespace-nowrap">
                   <div class="w-2 h-2 bg-slate-400 rounded-full"></div>
                   <span class="text-slate-400 font-medium text-sm">Ready</span>
                 </div>
@@ -127,11 +127,11 @@
 
         <!-- Demo Content - Console-Focused Layout -->
         <div class="flex-1 overflow-hidden">
-          <div class="h-full p-6 max-w-screen-2xl mx-auto">
+          <div class="h-full p-6 max-w-none mx-auto">
             <!-- Main Console Area -->
             <div class="flex h-full gap-6">
-              <!-- Command Console - Main Focus -->
-              <div class="flex-1 bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50 flex flex-col">
+              <!-- Command Console - Main Focus (2/3 width) -->
+              <div class="w-2/3 bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50 flex flex-col">
                 <div class="flex items-center justify-between p-4 border-b border-slate-700/50">
                   <h3 class="text-lg font-bold text-white flex items-center gap-2">
                     <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -216,8 +216,8 @@
                            placeholder="sirsi-nexus deploy --scenario onprem-to-aws --confirm" 
                            readonly>
                   </div>
-                  <button id="execute-command" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors flex items-center gap-2 text-sm">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <button id="execute-command" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2 py-1 rounded text-xs font-normal transition-colors flex items-center gap-1">
+                    <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                     </svg>
                     Execute
@@ -249,8 +249,8 @@
                 </div>
               </div>
               
-              <!-- Right Sidebar: Agents and Metrics -->
-              <div class="w-[48rem] flex flex-col gap-6">
+              <!-- Right Sidebar: Agents and Metrics (1/3 width) -->
+              <div class="w-1/3 flex flex-col gap-6">
                 <!-- Agents Panel -->
                 <div class="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50">
                   <div class="flex items-center justify-between p-4 border-b border-slate-700/50">
@@ -573,29 +573,29 @@
         const agentsStatus = document.getElementById('agents-status');
         
         overallStatus.innerHTML = `
-          <div class="w-3 h-3 bg-yellow-400 rounded-full animate-pulse"></div>
-          <span class="text-yellow-400 font-medium">Deploying: ${scenario.title}</span>
+          <div class="w-3 h-3 bg-blue-400 rounded-full animate-pulse"></div>
+          <span class="text-blue-400 font-medium">Discovery Phase: ${scenario.title}</span>
         `;
         
         deploymentStatus.innerHTML = `
-          <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-          <span class="text-sm text-emerald-400">Active: ${scenario.title}</span>
+          <div class="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+          <span class="text-sm text-blue-400">Initializing: ${scenario.title}</span>
         `;
         
         agentsStatus.innerHTML = `
-          <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-          <span class="text-sm text-emerald-400">Agents Deploying</span>
+          <div class="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+          <span class="text-sm text-blue-400">Discovery Agents Active</span>
         `;
         
         // Disable start button during deployment
         const startButton = document.getElementById('start-deployment');
         startButton.disabled = true;
-        startButton.querySelector('#start-button-text').textContent = 'Deployment in Progress...';
+        startButton.querySelector('#start-button-text').textContent = 'Migration in Progress...';
         
-        // Start deployment sequence
-        setTimeout(() => startCommandOutput(scenarioKey), 500);
-        setTimeout(() => startComponentAnimations(scenarioKey), 1000);
-        setTimeout(() => startLiveMetrics(), 1500);
+        // Start comprehensive deployment sequence
+        setTimeout(() => startDiscoveryPhase(scenarioKey), 500);
+        setTimeout(() => startComponentAnimations(scenarioKey), 8000);
+        setTimeout(() => startLiveMetrics(), 10000);
       }
 
       function startCommandOutput(scenario) {
@@ -618,17 +618,17 @@
         commands.forEach((cmd, index) => {
           setTimeout(() => {
             const line = document.createElement('div');
-            line.className = cmd.text.startsWith('✅') ? 'text-green-400' : 
-                           cmd.text.startsWith('🎉') ? 'text-emerald-400 font-semibold' :
-                           cmd.text.startsWith('✨') ? 'text-blue-400 font-semibold' :
-                           cmd.text.startsWith('⚠️') ? 'text-yellow-400' :
-                           cmd.text.startsWith('🔴') ? 'text-red-400' :
-                           cmd.text.startsWith('🏗️') ? 'text-cyan-400' :
-                           cmd.text.startsWith('📦') ? 'text-blue-400' :
-                           cmd.text.startsWith('🌐') ? 'text-purple-400' :
-                           cmd.text.startsWith('🗼') ? 'text-green-400' :
-                           cmd.text.startsWith('📊') ? 'text-orange-400' :
-                           'text-slate-300';
+            line.className = cmd.text.startsWith('✅') ? 'text-green-400'
+                            : cmd.text.startsWith('🎉') ? 'text-emerald-400 font-semibold'
+                            : cmd.text.startsWith('✨') ? 'text-blue-400 font-semibold'
+                            : cmd.text.startsWith('⚠️') ? 'text-yellow-400'
+                            : cmd.text.startsWith('🔴') ? 'text-red-400'
+                            : cmd.text.startsWith('🏗️') ? 'text-cyan-400'
+                            : cmd.text.startsWith('📦') ? 'text-blue-400'
+                            : cmd.text.startsWith('🌐') ? 'text-purple-400'
+                            : cmd.text.startsWith('🗼') ? 'text-green-400'
+                            : cmd.text.startsWith('📊') ? 'text-orange-400'
+                            : 'text-slate-300';
             line.textContent = cmd.text;
             commandOutput.appendChild(line);
             commandOutput.scrollTop = commandOutput.scrollHeight;
@@ -691,32 +691,33 @@
           }, cmd.delay);
         });
       }
+      }
       
       function getAgentTriggerPoints(scenario) {
         const triggerMap = {
           'onprem-to-aws': [
-            { keyword: '[EKS]', component: 'containers', agentIndex: 0, message: '🚀 Container orchestration agent activated - EKS deployment started' },
-            { keyword: '[ALB]', component: 'networking', agentIndex: 1, message: '🌐 Network configuration agent activated - Load balancer setup' },
-            { keyword: '[RDS]', component: 'database', agentIndex: 2, message: '🗄️ Database management agent activated - RDS migration' },
-            { keyword: '[OBSERVABILITY]', component: 'monitoring', agentIndex: 3, message: '📊 Observability agent activated - CloudWatch deployment' }
+            { keyword: 'EKS]', component: 'containers', agentIndex: 0, message: '🚀 Container orchestration agent activated - EKS deployment started' },
+            { keyword: 'ALB]', component: 'networking', agentIndex: 1, message: '🌐 Network configuration agent activated - Load balancer setup' },
+            { keyword: 'RDS]', component: 'database', agentIndex: 2, message: '🗄️ Database management agent activated - RDS migration' },
+            { keyword: 'OBSERVABILITY]', component: 'monitoring', agentIndex: 3, message: '📊 Observability agent activated - CloudWatch deployment' }
           ],
           'gcp-ml-platform': [
-            { keyword: '[GKE]', component: 'containers', agentIndex: 0, message: '🚀 Container orchestration agent activated - GKE deployment' },
-            { keyword: '[NETWORKING]', component: 'networking', agentIndex: 1, message: '🌐 Network configuration agent activated - Global load balancer' },
-            { keyword: '[BIGQUERY]', component: 'database', agentIndex: 2, message: '🗄️ Database management agent activated - BigQuery ML setup' },
-            { keyword: '[VERTEX]', component: 'monitoring', agentIndex: 3, message: '📊 Observability agent activated - Vertex AI monitoring' }
+            { keyword: 'GKE]', component: 'containers', agentIndex: 0, message: '🚀 Container orchestration agent activated - GKE deployment' },
+            { keyword: 'NETWORKING]', component: 'networking', agentIndex: 1, message: '🌐 Network configuration agent activated - Global load balancer' },
+            { keyword: 'BIGQUERY]', component: 'database', agentIndex: 2, message: '🗄️ Database management agent activated - BigQuery ML setup' },
+            { keyword: 'VERTEX]', component: 'monitoring', agentIndex: 3, message: '📊 Observability agent activated - Vertex AI monitoring' }
           ],
           'azure-modernization': [
-            { keyword: '[AKS]', component: 'containers', agentIndex: 0, message: '🚀 Container orchestration agent activated - AKS deployment' },
-            { keyword: '[NETWORKING]', component: 'networking', agentIndex: 1, message: '🌐 Network configuration agent activated - Application Gateway' },
-            { keyword: '[DATABASE]', component: 'database', agentIndex: 2, message: '🗄️ Database management agent activated - Azure PostgreSQL' },
-            { keyword: '[OBSERVABILITY]', component: 'monitoring', agentIndex: 3, message: '📊 Observability agent activated - Azure Monitor' }
+            { keyword: 'AKS]', component: 'containers', agentIndex: 0, message: '🚀 Container orchestration agent activated - AKS deployment' },
+            { keyword: 'NETWORKING]', component: 'networking', agentIndex: 1, message: '🌐 Network configuration agent activated - Application Gateway' },
+            { keyword: 'DATABASE]', component: 'database', agentIndex: 2, message: '🗄️ Database management agent activated - Azure PostgreSQL' },
+            { keyword: 'OBSERVABILITY]', component: 'monitoring', agentIndex: 3, message: '📊 Observability agent activated - Azure Monitor' }
           ],
           'hybrid-multicloud': [
-            { keyword: '[KUBERNETES]', component: 'containers', agentIndex: 0, message: '🚀 Container orchestration agent activated - Multi-cloud K8s' },
-            { keyword: '[NETWORKING]', component: 'networking', agentIndex: 1, message: '🌐 Network configuration agent activated - Inter-cloud network' },
-            { keyword: '[DATA]', component: 'database', agentIndex: 2, message: '🗄️ Database management agent activated - Distributed data layer' },
-            { keyword: '[OBSERVABILITY]', component: 'monitoring', agentIndex: 3, message: '📊 Observability agent activated - Unified monitoring' }
+            { keyword: 'NETWORKING]', component: 'networking', agentIndex: 0, message: '🌐 Network configuration agent activated - Inter-cloud network' },
+            { keyword: 'KUBERNETES]', component: 'containers', agentIndex: 1, message: '🚀 Container orchestration agent activated - Multi-cloud K8s' },
+            { keyword: 'DATA]', component: 'database', agentIndex: 2, message: '🗄️ Database management agent activated - Distributed data layer' },
+            { keyword: 'OBSERVABILITY]', component: 'monitoring', agentIndex: 3, message: '📊 Observability agent activated - Unified monitoring' }
           ]
         };
         
@@ -1208,9 +1209,37 @@
         return componentData[scenario] || componentData['onprem-to-aws'];
       }
 
+      function startDiscoveryPhase(scenarioKey) {
+        // Update status to deployment phase after discovery
+        setTimeout(() => {
+          const overallStatus = document.getElementById('overall-status');
+          const deploymentStatus = document.getElementById('deployment-status');
+          const agentsStatus = document.getElementById('agents-status');
+          
+          overallStatus.innerHTML = `
+            <div class="w-3 h-3 bg-yellow-400 rounded-full animate-pulse"></div>
+            <span class="text-yellow-400 font-medium">Deployment Phase</span>
+          `;
+          
+          deploymentStatus.innerHTML = `
+            <div class="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
+            <span class="text-sm text-yellow-400">Migration Active</span>
+          `;
+          
+          agentsStatus.innerHTML = `
+            <div class="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
+            <span class="text-sm text-yellow-400">Deployment Agents Active</span>
+          `;
+          
+          // Start main command output
+          startCommandOutput(scenarioKey);
+        }, 7000);
+      }
+
       function getScenarioCommands(scenario) {
         const commands = {
           'onprem-to-aws': [
+            { text: '🎯 CTO Prompt: "Initiate VMware to AWS migration targeting the US West region with fully modernized networking. Prioritize zero-downtime policies and compliance."', delay: 200 },
             { text: `$ sirsi-nexus migrate --source=vmware --target=aws --region=us-west-2 --vpc-cidr=10.0.0.0/16`, delay: 500 },
             { text: '🔍 Performing deep infrastructure discovery via VMware vCenter API...', delay: 1000 },
             { text: '📊 Analyzing 247 VMs, 12 databases, 5 F5 BIG-IP load balancers, 3 NetApp clusters...', delay: 1800 },
@@ -1262,6 +1291,7 @@
             { text: '✨ Advanced capabilities: Auto-scaling, self-healing, predictive maintenance active', delay: 50400 }
           ],
           'hybrid-multicloud': [
+            { text: '🎯 CTO Prompt: "Deploy a hybrid multi-cloud architecture leveraging AWS, GCP, and Azure. Ensure seamless interconnectivity with policy-driven solutions."', delay: 200 },
             { text: `$ sirsi-nexus deploy --mode=hybrid --clouds=aws,gcp,azure --federation=istio --policy-engine=opa`, delay: 500 },
             { text: '🔍 Performing multi-cloud workload placement analysis with bin-packing algorithms...', delay: 1000 },
             { text: '📊 Planning hybrid deployment: AWS (compute), GCP (AI/ML), Azure (data analytics)...', delay: 1800 },
@@ -1309,6 +1339,7 @@
             { text: '✨ Advanced capabilities: Auto-failover, intelligent routing, predictive scaling active', delay: 49200 }
           ],
           'azure-modernization': [
+            { text: '🎯 CTO Prompt: "Modernize classic Azure implementations to ARM using infrastructure as code methodologies. Emphasize scalability and security improvements."', delay: 200 },
             { text: `$ sirsi-nexus modernize --source=azure-classic --target=azure-rm --bicep-templates --policy-as-code`, delay: 500 },
             { text: '🔍 Performing deep scan of Azure Service Management (ASM) resources...', delay: 1000 },
             { text: '📊 Inventorying 89 legacy resources: Cloud Services, Storage Accounts, Virtual Networks...', delay: 1800 },
@@ -1361,6 +1392,7 @@
             { text: '✨ Advanced features: Auto-remediation, compliance monitoring, intelligent scaling', delay: 54600 }
           ],
           'gcp-ml-platform': [
+            { text: '🎯 CTO Prompt: "Deploy an AI/ML platform on GCP with a focus on Vertex services and state-of-the-art ML pipelines. Maintain efficiency and robust security."', delay: 200 },
             { text: `$ sirsi-nexus deploy --platform=gcp-ml --services=vertex,bigquery --kubeflow --tfx-pipelines`, delay: 500 },
             { text: '🔍 Performing comprehensive ML workload analysis with TensorFlow Extended profiling...', delay: 1000 },
             { text: '📊 Planning GCP AI/ML platform: Vertex AI, BigQuery ML, AutoML, Kubeflow Pipelines...', delay: 1800 },
