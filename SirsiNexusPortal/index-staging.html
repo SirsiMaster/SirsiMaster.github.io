@@ -340,16 +340,101 @@
           </button>
         </div>
 
-        <!-- Infrastructure Deployment Grid -->
-        <div class="grid lg:grid-cols-3 gap-8 mb-12">
-          <!-- Left Column: Infrastructure Components -->
-          <div class="lg:col-span-2">
+        <!-- Command Center & Live Demo -->
+        <div class="space-y-8">
+          <!-- Central Command Interface -->
+          <div class="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50 p-6">
+            <div class="flex items-center justify-between mb-6">
+              <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                <svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3"></path>
+                </svg>
+                SirsiNexus Command Center
+              </h3>
+              <div id="config-status" class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+                <span class="text-sm text-blue-400">Ready for Commands</span>
+              </div>
+            </div>
+            
+            <!-- Scenario Selection -->
+            <div class="grid md:grid-cols-2 gap-6 mb-6">
+              <div>
+                <label class="block text-sm font-medium text-slate-300 mb-2">Quick Deploy Scenario</label>
+                <select id="scenario-select" class="w-full bg-slate-700 border border-slate-600 text-white rounded-lg p-3">
+                  <option value="">Select deployment scenario...</option>
+                  <option value="onprem-to-aws">On-Premises → AWS Migration</option>
+                  <option value="hybrid-multicloud">Hybrid Multi-Cloud Setup</option>
+                  <option value="azure-modernization">Azure Legacy Modernization</option>
+                  <option value="gcp-ml-platform">GCP AI/ML Platform</option>
+                </select>
+              </div>
+              
+              <div id="environment-details" class="hidden">
+                <div class="space-y-2">
+                  <div>
+                    <span class="text-xs text-slate-400">Source:</span>
+                    <div id="source-env" class="text-sm text-emerald-400 font-mono"></div>
+                  </div>
+                  <div>
+                    <span class="text-xs text-slate-400">Target:</span>
+                    <div id="target-env" class="text-sm text-emerald-400 font-mono"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Command Input -->
+            <div class="flex items-center gap-3 mb-4">
+              <div class="flex-1 relative">
+                <div class="absolute left-3 top-1/2 transform -translate-y-1/2 text-emerald-400 font-mono text-sm">$</div>
+                <input type="text" id="command-input" 
+                       class="w-full pl-8 pr-4 py-3 bg-slate-900 border border-slate-600 text-white placeholder-slate-400 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 font-mono" 
+                       placeholder="sirsi-nexus deploy --scenario onprem-to-aws --confirm" 
+                       autocomplete="off">
+              </div>
+              <button id="execute-command" class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+                Execute
+              </button>
+              <button id="start-deployment" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                🚀 Quick Start
+              </button>
+            </div>
+          </div>
+          
+          <!-- Live Output Grid -->
+          <div class="grid lg:grid-cols-2 gap-8">
+            <!-- Left: Command Output & Status -->
+            <div class="space-y-6">
+              <!-- Command Output -->
+              <div class="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50 p-6">
+                <div class="flex items-center justify-between mb-4">
+                  <h3 class="text-lg font-bold text-white">Live Command Output</h3>
+                  <div id="deployment-status" class="flex items-center gap-2">
+                    <div class="w-2 h-2 bg-slate-400 rounded-full"></div>
+                    <span class="text-sm text-slate-400">Standby</span>
+                  </div>
+                </div>
+                <div id="command-output" class="bg-slate-950/70 rounded-lg p-4 h-80 overflow-y-auto font-mono text-xs">
+                  <div class="text-slate-500">$ sirsi-nexus --version</div>
+                  <div class="text-emerald-400">SirsiNexus v0.7.10-alpha (Build: 2025.08.05)</div>
+                  <div class="text-slate-500 mt-2">$ # Ready for commands. Try:</div>
+                  <div class="text-slate-400">$ sirsi-nexus deploy --help</div>
+                  <div class="text-slate-400">$ sirsi-nexus analyze --cloud aws</div>
+                  <div class="text-slate-400">$ sirsi-nexus migrate --scenario onprem-to-aws</div>
+                  <div class="text-slate-500 mt-2">Waiting for input...</div>
+                </div>
+              </div>
+            
             <div class="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50 p-6">
               <div class="flex items-center justify-between mb-6">
-                <h3 class="text-xl font-bold text-white">Infrastructure Components</h3>
+                <h3 class="text-xl font-bold text-white">Active SirsiNexus Agents</h3>
                 <div id="deployment-status" class="flex items-center gap-2">
                   <div class="w-2 h-2 bg-slate-400 rounded-full"></div>
-                  <span class="text-sm text-slate-400">Ready to Deploy</span>
+                  <span class="text-sm text-slate-400">Awaiting Deployment</span>
                 </div>
               </div>
               
@@ -1164,30 +1249,108 @@
         console.error('❌ Advanced demo button not found');
       }
       
-      // Infrastructure demo controller
-      function startInfrastructureDemo() {
-        console.log('🚀 Starting comprehensive infrastructure demo');
-        
-        // Update deployment status
-        const deploymentStatus = document.getElementById('deployment-status');
-        if (deploymentStatus) {
-          deploymentStatus.innerHTML = `
-            <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-            <span class="text-sm text-emerald-400">Deploying...</span>
-          `;
+      // Scenario configuration handler
+      const scenarioSelect = document.getElementById('scenario-select');
+      const environmentDetails = document.getElementById('environment-details');
+      const sourceEnv = document.getElementById('source-env');
+      const targetEnv = document.getElementById('target-env');
+      const startDeploymentBtn = document.getElementById('start-deployment');
+      const configStatus = document.getElementById('config-status');
+      
+      const scenarios = {
+        'onprem-to-aws': {
+          source: 'On-Premises DataCenter (VMware vSphere 7.0)',
+          target: 'AWS (us-west-2, us-east-1)',
+          description: 'Legacy application migration with zero downtime'
+        },
+        'hybrid-multicloud': {
+          source: 'Hybrid (On-Prem + Azure)',
+          target: 'Multi-Cloud (AWS + GCP + Azure)',
+          description: 'Enterprise-grade hybrid cloud expansion'
+        },
+        'azure-modernization': {
+          source: 'Azure Classic (Legacy Resources)',
+          target: 'Azure Resource Manager + AKS',
+          description: 'Legacy Azure infrastructure modernization'
+        },
+        'gcp-ml-platform': {
+          source: 'Traditional ML Infrastructure',
+          target: 'GCP Vertex AI + BigQuery ML',
+          description: 'AI/ML platform deployment and optimization'
         }
+      };
+      
+      if (scenarioSelect) {
+        scenarioSelect.addEventListener('change', function(e) {
+          const scenario = scenarios[e.target.value];
+          if (scenario) {
+            environmentDetails.classList.remove('hidden');
+            sourceEnv.textContent = scenario.source;
+            targetEnv.textContent = scenario.target;
+            configStatus.innerHTML = `
+              <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+              <span class="text-sm text-emerald-400">Configuration Ready</span>
+            `;
+          } else {
+            environmentDetails.classList.add('hidden');
+          }
+        });
+      }
+      
+      if (startDeploymentBtn) {
+        startDeploymentBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          const selectedScenario = scenarioSelect.value;
+          if (selectedScenario) {
+            startComprehensiveDemo(selectedScenario);
+          }
+        });
+      }
+      
+      // Comprehensive infrastructure demo controller
+      function startComprehensiveDemo(scenario) {
+        console.log(`🚀 Starting ${scenario} migration demo`);
         
-        // Start the state machine animation
-        stateMachine.start();
-        
-        // Start component deployments
-        startComponentDeployments();
-        
-        // Start metrics animation
-        startMetricsAnimation();
-        
-        // Start command output simulation
-        startCommandOutput();
+        try {
+          // Update deployment status with scenario-specific info
+          const deploymentStatus = document.getElementById('deployment-status');
+          if (deploymentStatus) {
+            deploymentStatus.innerHTML = `
+              <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+              <span class="text-sm text-emerald-400">SirsiNexus Agents: ${getScenarioTitle(scenario)}</span>
+            `;
+          }
+          
+          // Start scenario-specific simulation
+          setTimeout(() => startScenarioSpecificDeployment(scenario), 500);
+          setTimeout(() => startMetricsAnimation(), 1000);
+          setTimeout(() => startScenarioCommandOutput(scenario), 1500);
+          
+          // Start state machine
+          if (window.stateMachine) {
+            console.log('Starting state machine...');
+            window.stateMachine.start();
+          } else {
+            console.error('State machine not found!');
+          }
+        } catch (error) {
+          console.error('Error in startComprehensiveDemo:', error);
+        }
+      }
+      
+      function getScenarioTitle(scenario) {
+        const titles = {
+          'onprem-to-aws': 'Migrating to AWS',
+          'hybrid-multicloud': 'Multi-Cloud Deployment',
+          'azure-modernization': 'Azure Modernization',
+          'gcp-ml-platform': 'GCP ML Platform Setup'
+        };
+        return titles[scenario] || 'Infrastructure Deployment';
+      }
+      
+      // Simple demo fallback
+      function startInfrastructureDemo() {
+        startComprehensiveDemo('onprem-to-aws');
       }
       
       function startComponentDeployments() {
@@ -1333,45 +1496,343 @@
         }
       }
       
-      function startCommandOutput() {
+      // Scenario-specific deployment functions
+      function startScenarioSpecificDeployment(scenario) {
+        const components = ['containers', 'networking', 'database', 'monitoring'];
+        const scenarioComponentData = getScenarioComponentData(scenario);
+        
+        components.forEach((component, index) => {
+          setTimeout(() => {
+            const data = scenarioComponentData[component] || getDefaultComponentData()[component];
+            animateComponent(component, data);
+          }, index * 2000);
+        });
+      }
+      
+      function getScenarioComponentData(scenario) {
+        const componentData = {
+          'onprem-to-aws': {
+            containers: {
+              logs: [
+                '📦 Migrating VMware containers to EKS...',
+                '🐳 Converting Docker images for AWS ECR...',
+                '⚡ Configuring EKS cluster in us-west-2...',
+                '✅ AWS EKS migration complete'
+              ],
+              color: 'blue'
+            },
+            networking: {
+              logs: [
+                '🌐 Setting up AWS Application Load Balancer...',
+                '🔗 Configuring Route 53 DNS migration...',
+                '📡 Establishing VPC peering connections...',
+                '✅ AWS networking infrastructure active'
+              ],
+              color: 'purple'
+            },
+            database: {
+              logs: [
+                '🗄️ Migrating to AWS RDS PostgreSQL...',
+                '⚡ Setting up ElastiCache Redis cluster...',
+                '💾 Configuring automated RDS backups...',
+                '✅ AWS database migration complete'
+              ],
+              color: 'green'
+            },
+            monitoring: {
+              logs: [
+                '📊 Deploying CloudWatch monitoring...',
+                '📈 Setting up X-Ray distributed tracing...',
+                '🔍 Configuring AWS Config compliance...',
+                '✅ AWS observability stack ready'
+              ],
+              color: 'orange'
+            }
+          },
+          'hybrid-multicloud': {
+            containers: {
+              logs: [
+                '📦 Deploying multi-cloud K8s federation...',
+                '🐳 Synchronizing container images across clouds...',
+                '⚡ Configuring cross-cloud service mesh...',
+                '✅ Multi-cloud container orchestration ready'
+              ],
+              color: 'blue'
+            },
+            networking: {
+              logs: [
+                '🌐 Establishing inter-cloud VPN tunnels...',
+                '🔗 Configuring global load balancing...',
+                '📡 Setting up edge CDN distribution...',
+                '✅ Hybrid networking infrastructure active'
+              ],
+              color: 'purple'
+            },
+            database: {
+              logs: [
+                '🗄️ Setting up cross-cloud data replication...',
+                '⚡ Configuring multi-region cache clusters...',
+                '💾 Implementing disaster recovery across clouds...',
+                '✅ Multi-cloud database cluster operational'
+              ],
+              color: 'green'
+            },
+            monitoring: {
+              logs: [
+                '📊 Deploying unified monitoring across clouds...',
+                '📈 Setting up cross-cloud alerting...',
+                '🔍 Configuring centralized log aggregation...',
+                '✅ Multi-cloud observability ready'
+              ],
+              color: 'orange'
+            }
+          },
+          'azure-modernization': {
+            containers: {
+              logs: [
+                '📦 Migrating to Azure Kubernetes Service...',
+                '🐳 Moving containers to Azure Container Registry...',
+                '⚡ Implementing Azure Service Fabric integration...',
+                '✅ Azure AKS modernization complete'
+              ],
+              color: 'blue'
+            },
+            networking: {
+              logs: [
+                '🌐 Upgrading to Azure Application Gateway...',
+                '🔗 Configuring Azure Front Door CDN...',
+                '📡 Setting up Virtual Network peering...',
+                '✅ Azure networking modernization active'
+              ],
+              color: 'purple'
+            },
+            database: {
+              logs: [
+                '🗄️ Migrating to Azure Database for PostgreSQL...',
+                '⚡ Setting up Azure Cache for Redis...',
+                '💾 Configuring geo-redundant backups...',
+                '✅ Azure database modernization complete'
+              ],
+              color: 'green'
+            },
+            monitoring: {
+              logs: [
+                '📊 Deploying Azure Monitor integration...',
+                '📈 Setting up Application Insights...',
+                '🔍 Configuring Azure Security Center...',
+                '✅ Azure observability modernization ready'
+              ],
+              color: 'orange'
+            }
+          },
+          'gcp-ml-platform': {
+            containers: {
+              logs: [
+                '📦 Deploying GKE Autopilot clusters...',
+                '🐳 Setting up Container Registry with Artifact Analysis...',
+                '⚡ Configuring Kubernetes Engine for ML workloads...',
+                '✅ GCP ML container platform ready'
+              ],
+              color: 'blue'
+            },
+            networking: {
+              logs: [
+                '🌐 Setting up Global Load Balancer for ML APIs...',
+                '🔗 Configuring Cloud CDN for model serving...',
+                '📡 Establishing private Google Access...',
+                '✅ GCP ML networking infrastructure active'
+              ],
+              color: 'purple'
+            },
+            database: {
+              logs: [
+                '🗼 Setting up BigQuery ML datasets...',
+                '⚡ Configuring Cloud SQL for feature stores...',
+                '💾 Implementing data pipeline with Dataflow...',
+                '✅ GCP ML data platform operational'
+              ],
+              color: 'green'
+            },
+            monitoring: {
+              logs: [
+                '📊 Deploying Vertex AI monitoring...',
+                '📈 Setting up ML model performance tracking...',
+                '🔍 Configuring Cloud Logging for ML pipelines...',
+                '✅ GCP ML observability stack ready'
+              ],
+              color: 'orange'
+            }
+          }
+        };
+        
+        return componentData[scenario] || getDefaultComponentData();
+      }
+      
+      function getDefaultComponentData() {
+        return {
+          containers: {
+            logs: [
+              '📦 Initializing Kubernetes cluster...',
+              '🐳 Pulling Docker images...',
+              '⚡ Creating namespaces and pods...',
+              '✅ Container orchestration ready'
+            ],
+            color: 'blue'
+          },
+          networking: {
+            logs: [
+              '🌐 Configuring load balancer...',
+              '🔗 Setting up ingress rules...',
+              '📡 Establishing DNS records...',
+              '✅ Network infrastructure active'
+            ],
+            color: 'purple'
+          },
+          database: {
+            logs: [
+              '🗼 Provisioning PostgreSQL cluster...',
+              '⚡ Configuring Redis cache...',
+              '💾 Setting up automated backups...',
+              '✅ Database cluster operational'
+            ],
+            color: 'green'
+          },
+          monitoring: {
+            logs: [
+              '📊 Deploying Prometheus...',
+              '📈 Configuring Grafana dashboards...',
+              '🔍 Setting up log aggregation...',
+              '✅ Observability stack ready'
+            ],
+            color: 'orange'
+          }
+        };
+      }
+      
+      function startScenarioCommandOutput(scenario) {
         const commandOutput = document.getElementById('command-output');
         if (!commandOutput) return;
         
-        const commands = [
-          { text: '$ sirsi-nexus init --cloud=multi --region=global', delay: 500 },
-          { text: '🔍 Scanning cloud environments...', delay: 1000 },
-          { text: '📊 Analyzing resource requirements...', delay: 1500 },
-          { text: '🚀 Starting deployment pipeline...', delay: 2000 },
-          { text: '', delay: 2200 },
-          { text: '📦 [CONTAINERS] Initializing Kubernetes cluster', delay: 2500 },
-          { text: '✅ [CONTAINERS] 12 pods deployed successfully', delay: 4000 },
-          { text: '', delay: 4200 },
-          { text: '🌐 [NETWORKING] Configuring load balancer', delay: 4500 },
-          { text: '✅ [NETWORKING] Ingress rules active', delay: 6000 },
-          { text: '', delay: 6200 },
-          { text: '🗄️ [DATABASE] PostgreSQL cluster provisioned', delay: 6500 },
-          { text: '✅ [DATABASE] Redis cache operational', delay: 8000 },
-          { text: '', delay: 8200 },
-          { text: '📊 [MONITORING] Prometheus metrics collecting', delay: 8500 },
-          { text: '✅ [MONITORING] Grafana dashboards ready', delay: 10000 },
-          { text: '', delay: 10200 },
-          { text: '🎉 Infrastructure deployment completed successfully!', delay: 10500 },
-          { text: '📈 Performance optimization in progress...', delay: 11000 },
-          { text: '✨ SirsiNexus AI agents now monitoring your infrastructure', delay: 11500 }
-        ];
+        const scenarioCommands = getScenarioCommands(scenario);
         
-        commands.forEach((cmd, index) => {
+        scenarioCommands.forEach((cmd, index) => {
           setTimeout(() => {
             const line = document.createElement('div');
             line.className = cmd.text.startsWith('✅') ? 'text-green-400' : 
                            cmd.text.startsWith('🎉') ? 'text-emerald-400 font-semibold' :
                            cmd.text.startsWith('✨') ? 'text-blue-400 font-semibold' :
+                           cmd.text.startsWith('⚠️') ? 'text-yellow-400' :
+                           cmd.text.startsWith('🔴') ? 'text-red-400' :
                            'text-slate-300';
             line.textContent = cmd.text;
             commandOutput.appendChild(line);
             commandOutput.scrollTop = commandOutput.scrollHeight;
           }, cmd.delay);
         });
+      }
+      
+      function getScenarioCommands(scenario) {
+        const commands = {
+          'onprem-to-aws': [
+            { text: `$ sirsi-nexus migrate --source=vmware --target=aws --region=us-west-2`, delay: 500 },
+            { text: '🔍 Scanning VMware vSphere infrastructure...', delay: 1000 },
+            { text: '📊 Analyzing 247 VMs, 12 databases, 5 load balancers...', delay: 1500 },
+            { text: '🚀 Initiating AWS migration pipeline...', delay: 2500 },
+            { text: '', delay: 3000 },
+            { text: '📦 [EKS] Converting VMware containers to EKS...', delay: 3500 },
+            { text: '✅ [EKS] 15 microservices migrated successfully', delay: 5000 },
+            { text: '', delay: 5200 },
+            { text: '🌐 [ALB] Setting up Application Load Balancer...', delay: 5500 },
+            { text: '✅ [ALB] Traffic routing configured with Route 53', delay: 7000 },
+            { text: '', delay: 7200 },
+            { text: '🗼 [RDS] Migrating databases to AWS RDS...', delay: 7500 },
+            { text: '✅ [RDS] 3 PostgreSQL instances migrated with zero downtime', delay: 9500 },
+            { text: '', delay: 9700 },
+            { text: '📊 [CloudWatch] Configuring monitoring and alerting...', delay: 10000 },
+            { text: '✅ [CloudWatch] Full observability stack deployed', delay: 11500 },
+            { text: '', delay: 11700 },
+            { text: '🎉 On-Premises to AWS Migration completed successfully!', delay: 12000 },
+            { text: '📈 Cost savings: $18,500/month | Performance improvement: +34%', delay: 12500 },
+            { text: '✨ SirsiNexus agents monitoring AWS infrastructure', delay: 13000 }
+          ],
+          'hybrid-multicloud': [
+            { text: `$ sirsi-nexus deploy --mode=hybrid --clouds=aws,gcp,azure`, delay: 500 },
+            { text: '🔍 Analyzing multi-cloud requirements...', delay: 1000 },
+            { text: '📊 Planning hybrid deployment across 3 cloud providers...', delay: 1500 },
+            { text: '🚀 Initiating multi-cloud federation setup...', delay: 2500 },
+            { text: '', delay: 3000 },
+            { text: '📦 [K8S] Deploying federated Kubernetes clusters...', delay: 3500 },
+            { text: '✅ [K8S] Cross-cloud service mesh established', delay: 5500 },
+            { text: '', delay: 5700 },
+            { text: '🌐 [NETWORK] Setting up inter-cloud VPN tunnels...', delay: 6000 },
+            { text: '✅ [NETWORK] Global traffic management active', delay: 8000 },
+            { text: '', delay: 8200 },
+            { text: '🗼 [DATA] Configuring cross-cloud data replication...', delay: 8500 },
+            { text: '✅ [DATA] Multi-region disaster recovery ready', delay: 10500 },
+            { text: '', delay: 10700 },
+            { text: '📊 [MONITOR] Deploying unified observability...', delay: 11000 },
+            { text: '✅ [MONITOR] Centralized monitoring across all clouds', delay: 12500 },
+            { text: '', delay: 12700 },
+            { text: '🎉 Hybrid Multi-Cloud deployment completed!', delay: 13000 },
+            { text: '📈 Availability: 99.99% | Global latency: <50ms', delay: 13500 },
+            { text: '✨ SirsiNexus managing multi-cloud infrastructure', delay: 14000 }
+          ],
+          'azure-modernization': [
+            { text: `$ sirsi-nexus modernize --source=azure-classic --target=azure-rm`, delay: 500 },
+            { text: '🔍 Scanning Azure Classic resources...', delay: 1000 },
+            { text: '📊 Found 89 legacy resources requiring modernization...', delay: 1500 },
+            { text: '🚀 Starting Azure Resource Manager migration...', delay: 2500 },
+            { text: '', delay: 3000 },
+            { text: '📦 [AKS] Migrating to Azure Kubernetes Service...', delay: 3500 },
+            { text: '✅ [AKS] Container workloads modernized successfully', delay: 5500 },
+            { text: '', delay: 5700 },
+            { text: '🌐 [APPGW] Upgrading to Application Gateway v2...', delay: 6000 },
+            { text: '✅ [APPGW] Advanced routing and SSL termination active', delay: 7500 },
+            { text: '', delay: 7700 },
+            { text: '🗼 [AZURESQL] Migrating to Azure Database for PostgreSQL...', delay: 8000 },
+            { text: '✅ [AZURESQL] Flexible server with high availability deployed', delay: 10000 },
+            { text: '', delay: 10200 },
+            { text: '📊 [MONITOR] Integrating Azure Monitor and App Insights...', delay: 10500 },
+            { text: '✅ [MONITOR] Advanced telemetry and diagnostics ready', delay: 12000 },
+            { text: '', delay: 12200 },
+            { text: '🎉 Azure Legacy Modernization completed!', delay: 12500 },
+            { text: '📈 Performance boost: +42% | Security compliance: 100%', delay: 13000 },
+            { text: '✨ SirsiNexus optimizing modern Azure infrastructure', delay: 13500 }
+          ],
+          'gcp-ml-platform': [
+            { text: `$ sirsi-nexus deploy --platform=gcp-ml --services=vertex,bigquery`, delay: 500 },
+            { text: '🔍 Analyzing ML workload requirements...', delay: 1000 },
+            { text: '📊 Planning GCP AI/ML platform deployment...', delay: 1500 },
+            { text: '🚀 Initializing Vertex AI and BigQuery ML setup...', delay: 2500 },
+            { text: '', delay: 3000 },
+            { text: '📦 [GKE] Deploying Autopilot clusters for ML workloads...', delay: 3500 },
+            { text: '✅ [GKE] GPU-accelerated nodes ready for training', delay: 5500 },
+            { text: '', delay: 5700 },
+            { text: '🌐 [LB] Setting up Global Load Balancer for ML APIs...', delay: 6000 },
+            { text: '✅ [LB] Model serving endpoints configured globally', delay: 7500 },
+            { text: '', delay: 7700 },
+            { text: '🗼 [BIGQUERY] Setting up ML datasets and feature stores...', delay: 8000 },
+            { text: '✅ [BIGQUERY] Data pipelines and ML models deployed', delay: 10500 },
+            { text: '', delay: 10700 },
+            { text: '📊 [VERTEX] Configuring AI platform monitoring...', delay: 11000 },
+            { text: '✅ [VERTEX] Model performance tracking and drift detection active', delay: 12500 },
+            { text: '', delay: 12700 },
+            { text: '🎉 GCP AI/ML Platform deployment completed!', delay: 13000 },
+            { text: '📈 Training speed: +67% | Model accuracy: 94.7%', delay: 13500 },
+            { text: '✨ SirsiNexus AI managing your ML infrastructure', delay: 14000 }
+          ]
+        };
+        
+        return commands[scenario] || [
+          { text: '$ sirsi-nexus deploy --mode=default', delay: 500 },
+          { text: '🔍 Scanning infrastructure...', delay: 1000 },
+          { text: '✅ Deployment completed!', delay: 3000 }
+        ];
+      }
+      
+      function startCommandOutput() {
+        // Fallback to default scenario
+        startScenarioCommandOutput('onprem-to-aws');
       }
     });
   </script>
