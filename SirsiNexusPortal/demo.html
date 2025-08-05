@@ -652,13 +652,23 @@
         const environmentDetails = document.getElementById('environment-details');
         const sourceEnv = document.getElementById('source-env');
         const targetEnv = document.getElementById('target-env');
-const startButton = document.getElementById('start-deployment');
-if (!startButton) {
-  console.error('Start button not found');
-  return;
-}
+        const startButton = document.getElementById('start-deployment');
         const startButtonText = document.getElementById('start-button-text');
         const overallStatus = document.getElementById('overall-status');
+        
+        // Debug logging
+        console.log('Start button element:', startButton);
+        console.log('Scenario select element:', scenarioSelect);
+        
+        if (!startButton) {
+          console.error('Start button not found');
+          return;
+        }
+        
+        if (!scenarioSelect) {
+          console.error('Scenario select not found');
+          return;
+        }
         
         const scenarios = {
           'onprem-to-aws': {
@@ -720,10 +730,15 @@ if (!startButton) {
         
         // Start deployment handler
         startButton.addEventListener('click', function(e) {
+          console.log('Deploy button clicked!');
           e.preventDefault();
           const selectedScenario = scenarioSelect.value;
+          console.log('Selected scenario:', selectedScenario);
           if (selectedScenario && scenarios[selectedScenario]) {
+            console.log('Starting deployment for:', scenarios[selectedScenario].title);
             startDeployment(selectedScenario, scenarios[selectedScenario]);
+          } else {
+            console.log('No scenario selected or scenario not found');
           }
         });
         
