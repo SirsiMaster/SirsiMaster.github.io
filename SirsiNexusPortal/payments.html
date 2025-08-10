@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SirsiNexus - Business Payments</title>
+    <link href="./assets/css/tailwind.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=USD&components=buttons,marks"></script>
+</head>
+<body class="h-full bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+    <!-- Header -->
+    <nav class="bg-white dark:bg-gray-800 shadow-sm border-b dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-xl font-bold text-gray-900 dark:text-white">SirsiNexus</h1>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button id="theme-toggle" class="p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                        <i class="fas fa-moon dark:hidden"></i>
+                        <i class="fas fa-sun hidden dark:inline"></i>
+                    </button>
+                    <a href="index.html" class="text-gray-500 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">
+                        <i class="fas fa-home mr-2"></i>Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="min-h-screen py-12">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Payment Selection -->
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">SirsiNexus Business Payments</h2>
+                <p class="text-lg text-gray-600 dark:text-gray-300">Professional services and enterprise solutions</p>
+                
+                <!-- QR Code Section -->
+                <div class="mt-6 flex justify-center">
+                    <div class="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-lg">
+                        <div class="text-center mb-2">
+                            <div id="business-qr-code" class="mx-auto"></div>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">Share this page</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Options Tabs -->
+            <div class="mb-8">
+                <div class="flex justify-center space-x-4">
+                    <button id="services-tab" class="tab-btn active px-6 py-3 rounded-lg font-medium transition-all">
+                        Business Services
+                    </button>
+                    <button id="enterprise-tab" class="tab-btn px-6 py-3 rounded-lg font-medium transition-all">
+                        Enterprise Plans
+                    </button>
+                    <button id="custom-tab" class="tab-btn px-6 py-3 rounded-lg font-medium transition-all">
+                        Custom Quote
+                    </button>
+                    <button id="invoice-tab" class="tab-btn px-6 py-3 rounded-lg font-medium transition-all">
+                        Request Invoice
+                    </button>
+                </div>
+            </div>
+
+            <!-- Enterprise Plans Section -->
+            <div id="enterprise-section" class="payment-section hidden">
+                <div class="grid md:grid-cols-3 gap-6 mb-8">
+                    <!-- Starter Plan -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 text-center">
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">$2,500/mo</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Starter Plan</p>
+                        <ul class="text-sm text-gray-600 dark:text-gray-300 mb-4 text-left">
+                            <li>• Cloud Infrastructure Setup</li>
+                            <li>• Basic AI Integration</li>
+                            <li>• 24/7 Support</li>
+                            <li>• Up to 10 users</li>
+                        </ul>
+                        <div id="paypal-button-starter" class="paypal-button-container"></div>
+                    </div>
+
+                    <!-- Professional Plan -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 text-center border-2 border-indigo-500">
+                        <div class="bg-indigo-500 text-white text-xs font-bold px-2 py-1 rounded-full mb-2">POPULAR</div>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">$7,500/mo</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Professional Plan</p>
+                        <ul class="text-sm text-gray-600 dark:text-gray-300 mb-4 text-left">
+                            <li>• Full AI Orchestration</li>
+                            <li>• Multi-cloud Management</li>
+                            <li>• Advanced Analytics</li>
+                            <li>• Up to 100 users</li>
+                        </ul>
+                        <div id="paypal-button-professional" class="paypal-button-container"></div>
+                    </div>
+
+                    <!-- Enterprise Plan -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 text-center">
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">$25,000/mo</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Enterprise Plan</p>
+                        <ul class="text-sm text-gray-600 dark:text-gray-300 mb-4 text-left">
+                            <li>• Custom AI Solutions</li>
+                            <li>• Dedicated Infrastructure</li>
+                            <li>• White-label Options</li>
+                            <li>• Unlimited users</li>
+                        </ul>
+                        <div id="paypal-button-enterprise" class="paypal-button-container"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Services Section -->
+            <div id="services-section" class="payment-section">
+                <div class="grid md:grid-cols-2 gap-6 mb-8">
+                    <!-- AI Strategy Consultation -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">AI Strategy Consultation</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">2-hour executive consultation on AI implementation</p>
+                        <div class="text-2xl font-bold text-indigo-600 dark:text-indigo-400 mb-4">$500</div>
+                        <div id="paypal-button-consultation" class="paypal-button-container"></div>
+                    </div>
+
+                    <!-- Cloud Migration -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Cloud Migration Service</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Complete cloud infrastructure migration</p>
+                        <div class="text-2xl font-bold text-indigo-600 dark:text-indigo-400 mb-4">$15,000</div>
+                        <div id="paypal-button-development" class="paypal-button-container"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Custom Quote Section -->
+            <div id="custom-section" class="payment-section hidden">
+                <div class="max-w-2xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Request Custom Quote</h3>
+                    <div class="grid md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Project Budget Range</label>
+                            <select id="budget-range" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white">
+                                <option value="">Select budget range</option>
+                                <option value="5000-25000">$5,000 - $25,000</option>
+                                <option value="25000-100000">$25,000 - $100,000</option>
+                                <option value="100000-500000">$100,000 - $500,000</option>
+                                <option value="500000+">$500,000+</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Timeline</label>
+                            <select id="timeline" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white">
+                                <option value="">Select timeline</option>
+                                <option value="rush">Rush (1-4 weeks)</option>
+                                <option value="standard">Standard (1-3 months)</option>
+                                <option value="extended">Extended (3-12 months)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Project Description</label>
+                        <textarea id="project-description" rows="4" 
+                               class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+                               placeholder="Describe your project requirements..."></textarea>
+                    </div>
+                    <button onclick="requestQuote()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-4 rounded-md transition-colors">
+                        Request Quote & Invoice
+                    </button>
+                </div>
+            </div>
+
+            <!-- Invoice Request Section -->
+            <div id="invoice-section" class="payment-section hidden">
+                <div class="max-w-2xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Request Invoice</h3>
+                    <div class="grid md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Company Name</label>
+                            <input type="text" id="company-name" 
+                                   class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+                                   placeholder="Your Company">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Contact Email</label>
+                            <input type="email" id="contact-email" 
+                                   class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+                                   placeholder="billing@company.com">
+                        </div>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Service/Product</label>
+                            <select id="invoice-service" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white">
+                                <option value="">Select service</option>
+                                <option value="consultation">AI Strategy Consultation - $500</option>
+                                <option value="migration">Cloud Migration Service - $15,000</option>
+                                <option value="starter">Starter Plan - $2,500/mo</option>
+                                <option value="professional">Professional Plan - $7,500/mo</option>
+                                <option value="enterprise">Enterprise Plan - $25,000/mo</option>
+                                <option value="custom">Custom Project</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Amount (if custom)</label>
+                            <input type="number" id="invoice-amount" min="0" step="0.01" 
+                                   class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+                                   placeholder="Enter amount">
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Billing Address</label>
+                        <textarea id="billing-address" rows="3" 
+                               class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+                               placeholder="Company Name&#10;Street Address&#10;City, State ZIP"></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Additional Notes</label>
+                        <textarea id="invoice-notes" rows="2" 
+                               class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-white"
+                               placeholder="PO numbers, special terms, etc."></textarea>
+                    </div>
+                    <button onclick="requestInvoice()" class="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-4 rounded-md transition-colors">
+                        Request Invoice
+                    </button>
+                </div>
+            </div>
+
+            <!-- Payment Methods Info -->
+            <div class="mt-12 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Accepted Payment Methods</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                    <div class="flex flex-col items-center">
+                        <i class="fab fa-paypal text-3xl text-blue-600 mb-2"></i>
+                        <span class="text-sm text-gray-600 dark:text-gray-300">PayPal</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <i class="fab fa-apple-pay text-3xl text-gray-900 dark:text-white mb-2"></i>
+                        <span class="text-sm text-gray-600 dark:text-gray-300">Apple Pay</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <i class="fab fa-google-pay text-3xl text-green-600 mb-2"></i>
+                        <span class="text-sm text-gray-600 dark:text-gray-300">Google Pay</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <i class="fas fa-credit-card text-3xl text-gray-700 dark:text-gray-300 mb-2"></i>
+                        <span class="text-sm text-gray-600 dark:text-gray-300">Credit Cards</span>
+                    </div>
+                </div>
+                <div class="mt-4 text-center text-sm text-gray-500 dark:text-gray-400">
+                    Secure payments processed by PayPal. We never store your payment information.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Success Modal -->
+    <div id="success-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white dark:bg-gray-800 rounded-lg p-8 max-w-md mx-4">
+            <div class="text-center">
+                <i class="fas fa-check-circle text-5xl text-green-500 mb-4"></i>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Payment Successful!</h3>
+                <p class="text-gray-600 dark:text-gray-300 mb-4">Thank you for your payment. You will receive a confirmation email shortly.</p>
+                <button onclick="closeSuccessModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-md">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="./assets/js/fresh-theme-toggle.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <script>
+        // Generate QR code for current page
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentUrl = window.location.href;
+            QRCode.toCanvas(document.getElementById('business-qr-code'), currentUrl, {
+                width: 120,
+                height: 120,
+                colorDark: '#1f2937',
+                colorLight: '#ffffff'
+            }, function (error) {
+                if (error) console.error(error);
+            });
+        });
+
+        // Tab switching
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all tabs
+                document.querySelectorAll('.tab-btn').forEach(t => {
+                    t.classList.remove('active', 'bg-indigo-600', 'text-white');
+                    t.classList.add('bg-gray-200', 'text-gray-700', 'hover:bg-gray-300');
+                });
+                
+                // Add active class to clicked tab
+                btn.classList.add('active', 'bg-indigo-600', 'text-white');
+                btn.classList.remove('bg-gray-200', 'text-gray-700', 'hover:bg-gray-300');
+                
+                // Hide all sections
+                document.querySelectorAll('.payment-section').forEach(section => {
+                    section.classList.add('hidden');
+                });
+                
+                // Show corresponding section
+                const tabId = btn.id.replace('-tab', '-section');
+                document.getElementById(tabId).classList.remove('hidden');
+                
+                // Reinitialize PayPal buttons for the active section
+                initializePayPalButtons();
+            });
+        });
+
+        // Initialize tab styles
+        document.addEventListener('DOMContentLoaded', () => {
+            const activeTab = document.querySelector('.tab-btn.active');
+            if (activeTab) {
+                activeTab.classList.add('bg-indigo-600', 'text-white');
+            }
+            
+            document.querySelectorAll('.tab-btn:not(.active)').forEach(btn => {
+                btn.classList.add('bg-gray-200', 'text-gray-700', 'hover:bg-gray-300', 'dark:bg-gray-700', 'dark:text-gray-300', 'dark:hover:bg-gray-600');
+            });
+            
+            initializePayPalButtons();
+        });
+
+        // PayPal button configuration
+        function createPayPalButton(containerId, amount, description = '') {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            // Clear existing button
+            container.innerHTML = '';
+            
+            paypal.Buttons({
+                createOrder: function(data, actions) {
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: {
+                                value: amount.toString()
+                            },
+                            description: description || `Payment to SirsiNexus - $${amount}`
+                        }]
+                    });
+                },
+                onApprove: function(data, actions) {
+                    return actions.order.capture().then(function(details) {
+                        showSuccessModal(details);
+                        // Send transaction data to server for record keeping
+                        recordTransaction(details, amount, description);
+                        console.log('Transaction completed by ' + details.payer.name.given_name);
+                    });
+                },
+                onError: function(err) {
+                    console.error('PayPal error:', err);
+                    alert('Payment failed. Please try again.');
+                }
+            }).render('#' + containerId);
+        }
+
+        function initializePayPalButtons() {
+            // Enterprise plan buttons
+            createPayPalButton('paypal-button-starter', 2500, 'SirsiNexus Starter Plan - Monthly');
+            createPayPalButton('paypal-button-professional', 7500, 'SirsiNexus Professional Plan - Monthly');
+            createPayPalButton('paypal-button-enterprise', 25000, 'SirsiNexus Enterprise Plan - Monthly');
+            
+            // Service buttons
+            createPayPalButton('paypal-button-consultation', 500, 'AI Strategy Consultation - 2 Hours');
+            createPayPalButton('paypal-button-development', 15000, 'Cloud Migration Service');
+        }
+
+        // Quote request functionality
+        function requestQuote() {
+            const budgetRange = document.getElementById('budget-range').value;
+            const timeline = document.getElementById('timeline').value;
+            const description = document.getElementById('project-description').value;
+            
+            if (!budgetRange || !timeline || !description.trim()) {
+                alert('Please fill in all fields to request a quote.');
+                return;
+            }
+            
+            // Create quote request object
+            const quoteRequest = {
+                budgetRange,
+                timeline,
+                description,
+                timestamp: new Date().toISOString(),
+                type: 'quote-request'
+            };
+            
+            // Store locally for now (in production, send to server)
+            localStorage.setItem('quote-request-' + Date.now(), JSON.stringify(quoteRequest));
+            
+            alert('Quote request submitted! We will contact you within 24 hours with a detailed proposal and invoice.');
+            
+            // Clear form
+            document.getElementById('budget-range').value = '';
+            document.getElementById('timeline').value = '';
+            document.getElementById('project-description').value = '';
+        }
+
+        // Invoice request functionality
+        function requestInvoice() {
+            const companyName = document.getElementById('company-name').value;
+            const email = document.getElementById('contact-email').value;
+            const service = document.getElementById('invoice-service').value;
+            const amount = document.getElementById('invoice-amount').value;
+            const address = document.getElementById('billing-address').value;
+            const notes = document.getElementById('invoice-notes').value;
+            
+            if (!companyName || !email || !service || !address) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+            
+            // Create invoice request
+            const invoiceRequest = {
+                companyName,
+                email,
+                service,
+                amount: service === 'custom' ? amount : getServiceAmount(service),
+                address,
+                notes,
+                timestamp: new Date().toISOString(),
+                invoiceNumber: 'INV-' + Date.now(),
+                type: 'invoice-request'
+            };
+            
+            // Store locally for now (in production, send to server)
+            localStorage.setItem('invoice-request-' + Date.now(), JSON.stringify(invoiceRequest));
+            
+            alert(`Invoice request submitted! Invoice ${invoiceRequest.invoiceNumber} will be sent to ${email} within 1 business day.`);
+            
+            // Clear form
+            document.getElementById('company-name').value = '';
+            document.getElementById('contact-email').value = '';
+            document.getElementById('invoice-service').value = '';
+            document.getElementById('invoice-amount').value = '';
+            document.getElementById('billing-address').value = '';
+            document.getElementById('invoice-notes').value = '';
+        }
+
+        function getServiceAmount(service) {
+            const amounts = {
+                'consultation': 500,
+                'migration': 15000,
+                'starter': 2500,
+                'professional': 7500,
+                'enterprise': 25000
+            };
+            return amounts[service] || 0;
+        }
+
+        // Record transaction for bookkeeping
+        function recordTransaction(details, amount, description) {
+            const transaction = {
+                transactionId: details.id,
+                payerName: details.payer.name.given_name + ' ' + details.payer.name.surname,
+                payerEmail: details.payer.email_address,
+                amount: amount,
+                description: description,
+                status: details.status,
+                timestamp: new Date().toISOString(),
+                type: 'payment-completed'
+            };
+            
+            // Store transaction record (in production, send to server/accounting system)
+            localStorage.setItem('transaction-' + details.id, JSON.stringify(transaction));
+            
+            console.log('Transaction recorded:', transaction);
+        }
+
+        function showSuccessModal(details) {
+            document.getElementById('success-modal').classList.remove('hidden');
+            document.getElementById('success-modal').classList.add('flex');
+        }
+
+        function closeSuccessModal() {
+            document.getElementById('success-modal').classList.add('hidden');
+            document.getElementById('success-modal').classList.remove('flex');
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('success-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeSuccessModal();
+            }
+        });
+    </script>
+</body>
+</html>

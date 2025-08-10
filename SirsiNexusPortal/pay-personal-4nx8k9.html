@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SirsiNexus - Personal Payments</title>
+    <link href="./assets/css/tailwind.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://www.paypal.com/sdk/js?client-id=ASUI7q4yAs6anh26J6T_7hLyX0UwUbVWQS-8lgngn9z0W6VX4zrt2y7Q_auiXBAUrzxd1ibBrz22KDAr&currency=USD&components=buttons,marks"></script>
+    <meta name="robots" content="noindex, nofollow">
+</head>
+<body class="h-full bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+    <!-- Header -->
+    <nav class="bg-white dark:bg-gray-800 shadow-sm border-b dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-xl font-bold text-gray-900 dark:text-white">Collymore Consulting</h1>
+                    </div>
+                    <div class="ml-4">
+                        <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">
+                            Personal Portal
+                        </span>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button id="theme-toggle" class="p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                        <i class="fas fa-moon dark:hidden"></i>
+                        <i class="fas fa-sun hidden dark:inline"></i>
+                    </button>
+                    <a href="index.html" class="text-gray-500 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">
+                        <i class="fas fa-home mr-2"></i>Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="min-h-screen py-12">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Payment Selection -->
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Collymore Consulting - Payment Portal</h2>
+                <p class="text-lg text-gray-600 dark:text-gray-300">Private payment options for personal consulting services</p>
+                
+                <!-- QR Code Section -->
+                <div class="mt-6 flex justify-center">
+                    <div class="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-lg">
+                        <div class="text-center mb-2">
+                            <div id="personal-qr-code" class="mx-auto"></div>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">Collymore Consulting Payment Link</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Options Tabs -->
+            <div class="mb-8">
+                <div class="flex justify-center space-x-4">
+                    <button id="quick-pay-tab" class="tab-btn active px-6 py-3 rounded-lg font-medium transition-all">
+                        Quick Pay
+                    </button>
+                    <button id="services-tab" class="tab-btn px-6 py-3 rounded-lg font-medium transition-all">
+                        Personal Services
+                    </button>
+                    <button id="custom-tab" class="tab-btn px-6 py-3 rounded-lg font-medium transition-all">
+                        Custom Amount
+                    </button>
+                    <button id="invoice-tab" class="tab-btn px-6 py-3 rounded-lg font-medium transition-all">
+                        Send Invoice
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quick Pay Section -->
+            <div id="quick-pay-section" class="payment-section">
+                <div class="grid md:grid-cols-4 gap-6 mb-8">
+                    <!-- $25 Payment -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 text-center">
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">$25</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Small Favor</p>
+                        <div id="paypal-button-25" class="paypal-button-container"></div>
+                    </div>
+
+                    <!-- $50 Payment -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 text-center">
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">$50</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Quick Help</p>
+                        <div id="paypal-button-50" class="paypal-button-container"></div>
+                    </div>
+
+                    <!-- $100 Payment -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 text-center border-2 border-green-500">
+                        <div class="bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full mb-2">POPULAR</div>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">$100</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Standard</p>
+                        <div id="paypal-button-100" class="paypal-button-container"></div>
+                    </div>
+
+                    <!-- $250 Payment -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 text-center">
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">$250</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Premium</p>
+                        <div id="paypal-button-250" class="paypal-button-container"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Services Section -->
+            <div id="services-section" class="payment-section hidden">
+                <div class="grid md:grid-cols-2 gap-6 mb-8">
+                    <!-- Personal Consultation -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Personal Consultation</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">1-hour personal tech advice session</p>
+                        <div class="text-2xl font-bold text-green-600 dark:text-green-400 mb-4">$75</div>
+                        <div id="paypal-button-consultation" class="paypal-button-container"></div>
+                    </div>
+
+                    <!-- Quick Fix/Setup -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Quick Tech Setup</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Quick technical setup or troubleshooting</p>
+                        <div class="text-2xl font-bold text-green-600 dark:text-green-400 mb-4">$150</div>
+                        <div id="paypal-button-setup" class="paypal-button-container"></div>
+                    </div>
+
+                    <!-- Extended Help -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Extended Support</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Half-day technical support session</p>
+                        <div class="text-2xl font-bold text-green-600 dark:text-green-400 mb-4">$300</div>
+                        <div id="paypal-button-extended" class="paypal-button-container"></div>
+                    </div>
+
+                    <!-- Custom Project -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Personal Project</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Small personal development project</p>
+                        <div class="text-2xl font-bold text-green-600 dark:text-green-400 mb-4">$500</div>
+                        <div id="paypal-button-project" class="paypal-button-container"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Custom Amount Section -->
+            <div id="custom-section" class="payment-section hidden">
+                <div class="max-w-md mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Custom Payment</h3>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Amount (USD)</label>
+                        <div class="relative">
+                            <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+                            <input type="number" id="custom-amount" min="5" max="5000" step="0.01" 
+                                   class="pl-8 w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:text-white"
+                                   placeholder="Enter amount">
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Description (Optional)</label>
+                        <input type="text" id="payment-description" 
+                               class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:text-white"
+                               placeholder="Payment for...">
+                    </div>
+                    <div id="paypal-button-custom" class="paypal-button-container"></div>
+                </div>
+            </div>
+
+            <!-- Invoice Section -->
+            <div id="invoice-section" class="payment-section hidden">
+                <div class="max-w-2xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Send Personal Invoice</h3>
+                    <div class="grid md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Client Name</label>
+                            <input type="text" id="client-name" 
+                                   class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:text-white"
+                                   placeholder="Client Name">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email Address</label>
+                            <input type="email" id="client-email" 
+                                   class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:text-white"
+                                   placeholder="client@example.com">
+                        </div>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Service</label>
+                            <select id="invoice-service-personal" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:text-white">
+                                <option value="">Select service</option>
+                                <option value="consultation">Personal Consultation - $75</option>
+                                <option value="setup">Quick Tech Setup - $150</option>
+                                <option value="extended">Extended Support - $300</option>
+                                <option value="project">Personal Project - $500</option>
+                                <option value="custom">Custom Amount</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Amount (if custom)</label>
+                            <input type="number" id="invoice-amount-personal" min="0" step="0.01" 
+                                   class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:text-white"
+                                   placeholder="Enter amount">
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Work Description</label>
+                        <textarea id="work-description" rows="3" 
+                               class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:text-white"
+                               placeholder="Describe the work performed or to be performed..."></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Payment Terms</label>
+                        <select id="payment-terms" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:text-white">
+                            <option value="immediate">Due Immediately</option>
+                            <option value="net7">Net 7 Days</option>
+                            <option value="net15">Net 15 Days</option>
+                            <option value="net30">Net 30 Days</option>
+                        </select>
+                    </div>
+                    <button onclick="sendPersonalInvoice()" class="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-4 rounded-md transition-colors">
+                        Send Invoice
+                    </button>
+                </div>
+            </div>
+
+            <!-- Payment Methods Info -->
+            <div class="mt-12 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Accepted Payment Methods</h3>
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-4 text-center">
+                    <div class="flex flex-col items-center">
+                        <i class="fab fa-paypal text-3xl text-blue-600 mb-2"></i>
+                        <span class="text-sm text-gray-600 dark:text-gray-300">PayPal</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <i class="fab fa-apple-pay text-3xl text-gray-900 dark:text-white mb-2"></i>
+                        <span class="text-sm text-gray-600 dark:text-gray-300">Apple Pay</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <i class="fab fa-google-pay text-3xl text-green-600 mb-2"></i>
+                        <span class="text-sm text-gray-600 dark:text-gray-300">Google Pay</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <i class="fas fa-credit-card text-3xl text-gray-700 dark:text-gray-300 mb-2"></i>
+                        <span class="text-sm text-gray-600 dark:text-gray-300">Credit Cards</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <i class="fas fa-university text-3xl text-purple-600 mb-2"></i>
+                        <span class="text-sm text-gray-600 dark:text-gray-300">Bank Transfer</span>
+                    </div>
+                </div>
+                <div class="mt-4 text-center text-sm text-gray-500 dark:text-gray-400">
+                    Secure payments processed by PayPal Business. All transactions are private and confidential.<br>
+                    Collymore Consulting LLC - Professional Services
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Success Modal -->
+    <div id="success-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white dark:bg-gray-800 rounded-lg p-8 max-w-md mx-4">
+            <div class="text-center">
+                <i class="fas fa-check-circle text-5xl text-green-500 mb-4"></i>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Payment Successful!</h3>
+                <p class="text-gray-600 dark:text-gray-300 mb-4">Thank you for your payment. A receipt has been sent to your email.</p>
+                <button onclick="closeSuccessModal()" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-md">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="./assets/js/fresh-theme-toggle.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <script>
+        // Generate QR code for current page
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentUrl = window.location.href;
+            QRCode.toCanvas(document.getElementById('personal-qr-code'), currentUrl, {
+                width: 120,
+                height: 120,
+                colorDark: '#15803d',
+                colorLight: '#ffffff'
+            }, function (error) {
+                if (error) console.error(error);
+            });
+        });
+
+        // Tab switching
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all tabs
+                document.querySelectorAll('.tab-btn').forEach(t => {
+                    t.classList.remove('active', 'bg-green-600', 'text-white');
+                    t.classList.add('bg-gray-200', 'text-gray-700', 'hover:bg-gray-300');
+                });
+                
+                // Add active class to clicked tab
+                btn.classList.add('active', 'bg-green-600', 'text-white');
+                btn.classList.remove('bg-gray-200', 'text-gray-700', 'hover:bg-gray-300');
+                
+                // Hide all sections
+                document.querySelectorAll('.payment-section').forEach(section => {
+                    section.classList.add('hidden');
+                });
+                
+                // Show corresponding section
+                const tabId = btn.id.replace('-tab', '-section');
+                document.getElementById(tabId).classList.remove('hidden');
+                
+                // Reinitialize PayPal buttons for the active section
+                initializePayPalButtons();
+            });
+        });
+
+        // Initialize tab styles
+        document.addEventListener('DOMContentLoaded', () => {
+            const activeTab = document.querySelector('.tab-btn.active');
+            if (activeTab) {
+                activeTab.classList.add('bg-green-600', 'text-white');
+            }
+            
+            document.querySelectorAll('.tab-btn:not(.active)').forEach(btn => {
+                btn.classList.add('bg-gray-200', 'text-gray-700', 'hover:bg-gray-300', 'dark:bg-gray-700', 'dark:text-gray-300', 'dark:hover:bg-gray-600');
+            });
+            
+            initializePayPalButtons();
+        });
+
+        // PayPal button configuration
+        function createPayPalButton(containerId, amount, description = '') {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            // Clear existing button
+            container.innerHTML = '';
+            
+            paypal.Buttons({
+                createOrder: function(data, actions) {
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: {
+                                value: amount.toString()
+                            },
+                            description: description || `Collymore Consulting - $${amount}`
+                        }]
+                    });
+                },
+                onApprove: function(data, actions) {
+                    return actions.order.capture().then(function(details) {
+                        showSuccessModal(details);
+                        recordPersonalTransaction(details, amount, description);
+                        console.log('Personal transaction completed by ' + details.payer.name.given_name);
+                    });
+                },
+                onError: function(err) {
+                    console.error('PayPal error:', err);
+                    alert('Payment failed. Please try again.');
+                }
+            }).render('#' + containerId);
+        }
+
+        function initializePayPalButtons() {
+            // Quick pay buttons
+            createPayPalButton('paypal-button-25', 25, 'Collymore Consulting - Small Task');
+            createPayPalButton('paypal-button-50', 50, 'Collymore Consulting - Quick Help');
+            createPayPalButton('paypal-button-100', 100, 'Collymore Consulting - Standard');
+            createPayPalButton('paypal-button-250', 250, 'Collymore Consulting - Premium');
+            
+            // Service buttons
+            createPayPalButton('paypal-button-consultation', 75, 'Collymore Consulting - 1 Hour Session');
+            createPayPalButton('paypal-button-setup', 150, 'Collymore Consulting - Tech Setup');
+            createPayPalButton('paypal-button-extended', 300, 'Collymore Consulting - Extended Support');
+            createPayPalButton('paypal-button-project', 500, 'Collymore Consulting - Project Work');
+            
+            // Custom amount button
+            initializeCustomPayButton();
+        }
+
+        function initializeCustomPayButton() {
+            const customAmountInput = document.getElementById('custom-amount');
+            const descriptionInput = document.getElementById('payment-description');
+            
+            if (customAmountInput) {
+                customAmountInput.addEventListener('input', function() {
+                    const amount = parseFloat(this.value);
+                    if (amount >= 5 && amount <= 5000) {
+                        const description = descriptionInput.value || `Collymore Consulting - Custom Payment - $${amount}`;
+                        createPayPalButton('paypal-button-custom', amount, description);
+                    }
+                });
+                
+                descriptionInput.addEventListener('input', function() {
+                    const amount = parseFloat(customAmountInput.value);
+                    if (amount >= 5 && amount <= 5000) {
+                        const description = this.value || `Collymore Consulting - Custom Payment - $${amount}`;
+                        createPayPalButton('paypal-button-custom', amount, description);
+                    }
+                });
+            }
+        }
+
+        // Personal invoice functionality
+        function sendPersonalInvoice() {
+            const clientName = document.getElementById('client-name').value;
+            const email = document.getElementById('client-email').value;
+            const service = document.getElementById('invoice-service-personal').value;
+            const amount = document.getElementById('invoice-amount-personal').value;
+            const description = document.getElementById('work-description').value;
+            const terms = document.getElementById('payment-terms').value;
+            
+            if (!clientName || !email || !service || !description) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+            
+            // Create personal invoice
+            const personalInvoice = {
+                clientName,
+                email,
+                service,
+                amount: service === 'custom' ? amount : getPersonalServiceAmount(service),
+                description,
+                terms,
+                timestamp: new Date().toISOString(),
+                invoiceNumber: 'PERS-' + Date.now(),
+                type: 'personal-invoice'
+            };
+            
+            // Store locally for now (in production, send to server)
+            localStorage.setItem('personal-invoice-' + Date.now(), JSON.stringify(personalInvoice));
+            
+            alert(`Personal invoice ${personalInvoice.invoiceNumber} created! Invoice details saved locally.`);
+            
+            // Clear form
+            document.getElementById('client-name').value = '';
+            document.getElementById('client-email').value = '';
+            document.getElementById('invoice-service-personal').value = '';
+            document.getElementById('invoice-amount-personal').value = '';
+            document.getElementById('work-description').value = '';
+            document.getElementById('payment-terms').value = 'immediate';
+        }
+
+        function getPersonalServiceAmount(service) {
+            const amounts = {
+                'consultation': 75,
+                'setup': 150,
+                'extended': 300,
+                'project': 500
+            };
+            return amounts[service] || 0;
+        }
+
+        // Record personal transaction
+        function recordPersonalTransaction(details, amount, description) {
+            const transaction = {
+                transactionId: details.id,
+                payerName: details.payer.name.given_name + ' ' + details.payer.name.surname,
+                payerEmail: details.payer.email_address,
+                amount: amount,
+                description: description,
+                status: details.status,
+                timestamp: new Date().toISOString(),
+                type: 'personal-payment-completed',
+                category: 'personal'
+            };
+            
+            // Store transaction record
+            localStorage.setItem('personal-transaction-' + details.id, JSON.stringify(transaction));
+            
+            console.log('Personal transaction recorded:', transaction);
+        }
+
+        function showSuccessModal(details) {
+            document.getElementById('success-modal').classList.remove('hidden');
+            document.getElementById('success-modal').classList.add('flex');
+        }
+
+        function closeSuccessModal() {
+            document.getElementById('success-modal').classList.add('hidden');
+            document.getElementById('success-modal').classList.remove('flex');
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('success-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeSuccessModal();
+            }
+        });
+
+        // Security: Clear browser history of this page
+        if (typeof window.history.replaceState === 'function') {
+            window.history.replaceState({}, document.title, window.location.href);
+        }
+    </script>
+</body>
+</html>
