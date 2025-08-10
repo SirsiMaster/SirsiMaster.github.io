@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Invoice - Collymore Consulting</title>
+    <link href="./assets/css/tailwind.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="robots" content="noindex, nofollow">
+</head>
+<body class="h-full bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+    <!-- Header -->
+    <nav class="bg-white dark:bg-gray-800 shadow-sm border-b dark:border-gray-700">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-xl font-bold text-gray-900 dark:text-white">Collymore Consulting - Invoice Creator</h1>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <button id="theme-toggle" class="p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <i class="fas fa-moon dark:hidden"></i>
+                        <i class="fas fa-sun hidden dark:inline"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-2xl mx-auto">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8">
+                <div class="text-center mb-8">
+                    <div class="mx-auto w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-file-invoice text-blue-600 dark:text-blue-400 text-2xl"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Create Payment Invoice</h2>
+                    <p class="text-gray-600 dark:text-gray-300">Generate a payment link for your client</p>
+                </div>
+
+                <form id="invoice-form" class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Invoice Number</label>
+                            <input type="text" id="invoice-number" required
+                                   class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                                   placeholder="CC-2025-001">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Amount ($USD)</label>
+                            <input type="number" id="invoice-amount" min="5" max="50000" step="0.01" required
+                                   class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                                   placeholder="150.00">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Client Name</label>
+                        <input type="text" id="client-name" required
+                               class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                               placeholder="John Smith">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Client Email</label>
+                        <input type="email" id="client-email" required
+                               class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                               placeholder="john@example.com">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Service Description</label>
+                        <textarea id="service-description" rows="3" required
+                                  class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                                  placeholder="Technical consultation - 2 hours"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Due Date</label>
+                        <input type="date" id="due-date" required
+                               class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white">
+                    </div>
+
+                    <div class="flex space-x-4">
+                        <button type="button" onclick="generateInvoiceLink()" 
+                                class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-md transition-colors">
+                            <i class="fas fa-link mr-2"></i>Generate Payment Link
+                        </button>
+                        <button type="button" onclick="sendInvoiceEmail()" 
+                                class="flex-1 bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-6 rounded-md transition-colors">
+                            <i class="fas fa-envelope mr-2"></i>Email Client
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Generated Link Section -->
+            <div id="link-section" class="hidden mt-8 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Payment Link Generated</h3>
+                <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-md mb-4">
+                    <p class="text-sm text-gray-600 dark:text-gray-300 mb-2">Send this link to your client:</p>
+                    <div class="flex items-center space-x-2">
+                        <input type="text" id="generated-link" readonly
+                               class="flex-1 px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 dark:text-white">
+                        <button onclick="copyLink()" class="px-3 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-sm">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="flex space-x-4">
+                    <button onclick="previewInvoice()" class="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 text-sm">
+                        <i class="fas fa-eye mr-1"></i>Preview
+                    </button>
+                    <button onclick="qrCode()" class="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 text-sm">
+                        <i class="fas fa-qrcode mr-1"></i>QR Code
+                    </button>
+                </div>
+            </div>
+
+            <!-- QR Code Section -->
+            <div id="qr-section" class="hidden mt-8 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 text-center">
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">QR Code</h3>
+                <div id="qr-code-container" class="mb-4"></div>
+                <p class="text-sm text-gray-600 dark:text-gray-300">Client can scan this QR code to pay</p>
+            </div>
+
+            <!-- PayPal Native Invoicing Instructions -->
+            <div class="mt-8 bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6">
+                <h3 class="text-lg font-bold text-blue-900 dark:text-blue-100 mb-4">
+                    <i class="fas fa-info-circle mr-2"></i>PayPal Native Invoicing (Recommended)
+                </h3>
+                <div class="text-sm text-blue-800 dark:text-blue-200 space-y-3">
+                    <p><strong>For more professional invoicing, use PayPal's built-in system:</strong></p>
+                    <ol class="list-decimal list-inside space-y-2 ml-4">
+                        <li>Go to <a href="https://www.paypal.com/invoice" target="_blank" class="underline font-medium">paypal.com/invoice</a></li>
+                        <li>Click "Create Invoice"</li>
+                        <li>Fill in your client details and services</li>
+                        <li>PayPal will send professional branded invoices</li>
+                        <li>Clients can pay directly through PayPal's secure system</li>
+                        <li>You'll get automatic payment notifications</li>
+                    </ol>
+                    <p class="mt-3 p-3 bg-blue-100 dark:bg-blue-800 rounded">
+                        <strong>Benefits:</strong> Professional branding, automatic reminders, tax reporting, and built-in dispute resolution.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./assets/js/fresh-theme-toggle.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <script>
+        // Set default due date to 30 days from now
+        document.addEventListener('DOMContentLoaded', () => {
+            const defaultDueDate = new Date();
+            defaultDueDate.setDate(defaultDueDate.getDate() + 30);
+            document.getElementById('due-date').value = defaultDueDate.toISOString().split('T')[0];
+            
+            // Auto-generate invoice number
+            const invoiceNumber = 'CC-' + new Date().getFullYear() + '-' + String(Date.now()).slice(-3);
+            document.getElementById('invoice-number').value = invoiceNumber;
+        });
+
+        let currentInvoice = null;
+
+        function generateInvoiceLink() {
+            const invoice = {
+                number: document.getElementById('invoice-number').value,
+                amount: parseFloat(document.getElementById('invoice-amount').value),
+                client: document.getElementById('client-name').value,
+                email: document.getElementById('client-email').value,
+                service: document.getElementById('service-description').value,
+                date: new Date().toISOString(),
+                dueDate: document.getElementById('due-date').value
+            };
+
+            if (!invoice.number || !invoice.amount || !invoice.client || !invoice.service) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            currentInvoice = invoice;
+            
+            const invoiceData = encodeURIComponent(JSON.stringify(invoice));
+            const baseUrl = window.location.origin + window.location.pathname.replace('create-invoice.html', 'pay.html');
+            const paymentLink = `${baseUrl}?invoice=${invoiceData}`;
+            
+            document.getElementById('generated-link').value = paymentLink;
+            document.getElementById('link-section').classList.remove('hidden');
+            
+            // Store invoice for records
+            localStorage.setItem('invoice-' + invoice.number, JSON.stringify({
+                ...invoice,
+                type: 'collymore-invoice',
+                status: 'sent',
+                paymentLink: paymentLink
+            }));
+        }
+
+        function copyLink() {
+            const linkInput = document.getElementById('generated-link');
+            linkInput.select();
+            linkInput.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(linkInput.value);
+            
+            // Visual feedback
+            const button = event.target;
+            const originalText = button.innerHTML;
+            button.innerHTML = '<i class="fas fa-check"></i>';
+            button.classList.remove('bg-blue-600', 'hover:bg-blue-700');
+            button.classList.add('bg-green-600');
+            
+            setTimeout(() => {
+                button.innerHTML = originalText;
+                button.classList.remove('bg-green-600');
+                button.classList.add('bg-blue-600', 'hover:bg-blue-700');
+            }, 2000);
+        }
+
+        function previewInvoice() {
+            if (!currentInvoice) {
+                alert('Please generate a payment link first.');
+                return;
+            }
+            
+            const invoiceData = encodeURIComponent(JSON.stringify(currentInvoice));
+            const previewUrl = `pay.html?invoice=${invoiceData}`;
+            window.open(previewUrl, '_blank');
+        }
+
+        function qrCode() {
+            if (!currentInvoice) {
+                alert('Please generate a payment link first.');
+                return;
+            }
+            
+            const link = document.getElementById('generated-link').value;
+            const qrContainer = document.getElementById('qr-code-container');
+            qrContainer.innerHTML = '';
+            
+            QRCode.toCanvas(qrContainer, link, {
+                width: 200,
+                height: 200,
+                colorDark: '#1f2937',
+                colorLight: '#ffffff'
+            }, function (error) {
+                if (error) console.error(error);
+            });
+            
+            document.getElementById('qr-section').classList.remove('hidden');
+        }
+
+        function sendInvoiceEmail() {
+            if (!currentInvoice) {
+                alert('Please generate a payment link first.');
+                return;
+            }
+            
+            const subject = `Invoice ${currentInvoice.number} - Collymore Consulting`;
+            const body = `Dear ${currentInvoice.client},
+
+Please find your invoice details below:
+
+Invoice #: ${currentInvoice.number}
+Service: ${currentInvoice.service}
+Amount: $${currentInvoice.amount.toFixed(2)}
+Due Date: ${new Date(currentInvoice.dueDate).toLocaleDateString()}
+
+To pay this invoice securely, please click the link below:
+${document.getElementById('generated-link').value}
+
+Thank you for your business!
+
+Best regards,
+Collymore Consulting
+cylton@cylton.com`;
+
+            const mailtoLink = `mailto:${currentInvoice.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.location.href = mailtoLink;
+        }
+    </script>
+</body>
+</html>
