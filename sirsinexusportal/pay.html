@@ -553,17 +553,16 @@
         
         function checkAdminStatus() {
             const isAdmin = localStorage.getItem('sirsi-admin-session') === 'active';
+            const adminNav = document.getElementById('admin-nav');
             
-            if (isAdmin) {
-                document.getElementById('admin-nav').classList.remove('hidden');
-                document.getElementById('admin-nav').classList.add('flex');
-                document.getElementById('admin-login-btn').classList.add('hidden');
-                document.getElementById('admin-logout-btn').classList.remove('hidden');
-            } else {
-                document.getElementById('admin-nav').classList.add('hidden');
-                document.getElementById('admin-nav').classList.remove('flex');
-                document.getElementById('admin-login-btn').classList.remove('hidden');
-                document.getElementById('admin-logout-btn').classList.add('hidden');
+            if (adminNav) {
+                if (isAdmin) {
+                    adminNav.classList.remove('hidden');
+                    adminNav.classList.add('flex');
+                } else {
+                    adminNav.classList.add('hidden');
+                    adminNav.classList.remove('flex');
+                }
             }
         }
         
