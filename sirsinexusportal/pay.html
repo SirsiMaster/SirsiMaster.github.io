@@ -487,6 +487,12 @@
             return { type: 'none', available: false };
         }
         
+        // PayPal SDK loaded callback
+        function onPayPalLoaded() {
+            console.log('PayPal SDK fully loaded and ready');
+            initializePaymentSystem();
+        }
+        
         // Wait for both DOM and PayPal SDK to be fully loaded
         function initializePaymentSystem() {
             console.log('Initializing payment page...');
@@ -498,37 +504,44 @@
             // Initialize admin status
             checkAdminStatus();
             
-            // Wait a bit more for PayPal SDK to be fully ready
-            setTimeout(function() {
-                console.log('PayPal SDK check after delay:', typeof paypal !== 'undefined');
-                
-                // Initialize PayPal payment system
-                const urlParams = new URLSearchParams(window.location.search);
-                const invoiceData = urlParams.get('invoice');
-                
-                if (invoiceData) {
-                    try {
-                        currentInvoice = JSON.parse(decodeURIComponent(invoiceData));
-                        showInvoicePayment();
-                    } catch (e) {
-                        console.error('Invalid invoice data:', e);
-                        showCustomPayment();
-                    }
-                } else {
+            // Initialize PayPal payment system
+            const urlParams = new URLSearchParams(window.location.search);
+            const invoiceData = urlParams.get('invoice');
+            
+            if (invoiceData) {
+                try {
+                    currentInvoice = JSON.parse(decodeURIComponent(invoiceData));
+                    showInvoicePayment();
+                } catch (e) {
+                    console.error('Invalid invoice data:', e);
                     showCustomPayment();
                 }
-            }, 1000); // 1 second delay to ensure PayPal SDK is ready
+            } else {
+                showCustomPayment();
+            }
         }
         
-        // Single DOMContentLoaded event to avoid conflicts
-        document.addEventListener('DOMContentLoaded', initializePaymentSystem);
+        // Smart initialization with multiple triggers
+        let paymentSystemInitialized = false;
         
-        // Backup - also try on window load in case DOMContentLoaded fires too early
+        function safeInitializePaymentSystem() {
+            if (paymentSystemInitialized) return;
+            paymentSystemInitialized = true;
+            
+            console.log('Safe payment system initialization');
+            initializePaymentSystem();
+        }
+        
+        // Wait for DOM to be ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', safeInitializePaymentSystem);
+        } else {
+            safeInitializePaymentSystem();
+        }
+        
+        // Backup initialization on window load
         window.addEventListener('load', function() {
-            if (!document.getElementById('paypal-button-container').innerHTML) {
-                console.log('Backup initialization on window load');
-                initializePaymentSystem();
-            }
+            setTimeout(safeInitializePaymentSystem, 100);
         });
         
         function initializeThemeToggle() {
@@ -604,7 +617,7 @@
             
             // Clear container and messages
             container.innerHTML = '';
-            messageDiv.innerHTML = '';
+            if (messageDiv) messageDiv.innerHTML = '';
             
             // Store current payment info
             currentAmount = amount || 0;
@@ -614,17 +627,49 @@
             showApplePayButton(true);
             showGooglePayButton(true);
             
-            // Check if PayPal SDK is loaded
+            // Check if PayPal SDK is loaded with retry mechanism
             if (typeof paypal === 'undefined') {
-                console.error('PayPal SDK not loaded');
-                container.innerHTML = '<div class="bg-slate-100 dark:bg-slate-700 rounded-xl p-4 text-center"><p class="text-slate-500 dark:text-slate-400">PayPal is loading...</p></div>';
+                console.warn('PayPal SDK not loaded, showing loading state');
+                container.innerHTML = `
+                    <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white py-4 px-6 rounded-xl text-center">
+                        <div class="flex items-center justify-center gap-3">
+                            <div class="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
+                            <span class="font-medium">Loading PayPal...</span>
+                        </div>
+                    </div>
+                `;
+                
+                // Retry PayPal loading
+                setTimeout(() => {
+                    if (typeof paypal !== 'undefined') {
+                        renderPayPalButtons(amount, description);
+                    } else {
+                        container.innerHTML = `
+                            <div class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4 text-center">
+                                <p class="text-amber-700 dark:text-amber-300 font-medium mb-2">PayPal Loading Issue</p>
+                                <p class="text-amber-600 dark:text-amber-400 text-sm mb-3">PayPal is taking longer than expected to load.</p>
+                                <button onclick="location.reload()" class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                                    Refresh Page
+                                </button>
+                            </div>
+                        `;
+                    }
+                }, 3000);
                 return;
             }
             
             // Check if paypal.Buttons is available
             if (typeof paypal.Buttons !== 'function') {
                 console.error('PayPal Buttons not available');
-                container.innerHTML = '<div class="bg-slate-100 dark:bg-slate-700 rounded-xl p-4 text-center"><p class="text-red-500">PayPal unavailable. Please refresh.</p></div>';
+                container.innerHTML = `
+                    <div class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-4 text-center">
+                        <p class="text-red-600 dark:text-red-400 font-medium mb-2">PayPal Service Unavailable</p>
+                        <p class="text-red-500 dark:text-red-400 text-sm mb-3">PayPal payment buttons are temporarily unavailable.</p>
+                        <button onclick="location.reload()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                            Try Again
+                        </button>
+                    </div>
+                `;
                 return;
             }
             
