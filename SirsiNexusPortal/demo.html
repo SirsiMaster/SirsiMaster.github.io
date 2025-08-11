@@ -775,57 +775,208 @@
         // Reset agent states
         resetAgentStates();
         
-        // Update overall status
+        const conversationWindow = document.getElementById('conversation-window');
+        const commandOutput = document.getElementById('command-output');
         const overallStatus = document.getElementById('overall-status');
         const deploymentStatus = document.getElementById('deployment-status');
         const agentsStatus = document.getElementById('agents-status');
+        const startButton = document.getElementById('start-deployment');
         
+        // Clear conversation window except initial message
+        conversationWindow.innerHTML = '<div class="text-slate-500">💬 SirsiNexus AI: Hello! How can I assist you with your infrastructure deployment today?</div>';
+        
+        // Clear command output
+        commandOutput.innerHTML = '';
+        
+        // Update statuses
         overallStatus.innerHTML = `
           <div class="w-3 h-3 bg-blue-400 rounded-full animate-pulse"></div>
-          <span class="text-blue-400 font-medium">Discovery Phase: ${scenario.title}</span>
+          <span class="text-blue-400 font-medium">Awaiting Instructions</span>
         `;
         
         deploymentStatus.innerHTML = `
-          <div class="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
-          <span class="text-sm text-blue-400">Initializing: ${scenario.title}</span>
+          <div class="w-2 h-2 bg-yellow-400 rounded-full"></div>
+          <span class="text-sm text-yellow-400">Standby</span>
         `;
         
         agentsStatus.innerHTML = `
-          <div class="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
-          <span class="text-sm text-blue-400">Discovery Agents Active</span>
+          <div class="w-2 h-2 bg-slate-400 rounded-full"></div>
+          <span class="text-sm text-slate-400">Agents Ready</span>
         `;
         
-        // Disable start button during deployment
-        const startButton = document.getElementById('start-deployment');
+        // Disable start button
         startButton.disabled = true;
-        startButton.querySelector('#start-button-text').textContent = 'Migration in Progress...';
+        startButton.querySelector('#start-button-text').textContent = 'Processing...';
         
-        // Start comprehensive deployment sequence
-// Simulate conversation for plan acceptance
-        let conversationIndex = 0;
-        const conversationFlow = [
-          { speaker: 'SirsiNexus AI', message: 'Here is the plan. Does the CTO/Operator agree? Yes/No.' },
-          { speaker: 'CTO/Operator', message: Math.random() > 0.5 ? 'Yes' : 'No' },
-        ];
-
-        const conversationWindow = document.getElementById('conversation-window');
-
-        if (conversationWindow) {
-          conversationFlow.forEach(entry => {
+        // STEP 2: User states scenario elements
+        const scenarioMessages = {
+          'onprem-to-aws': '🎯 Initiate VMware to AWS migration targeting the US West region with fully modernized networking. Prioritize zero-downtime policies and compliance.',
+          'hybrid-multicloud': '🎯 Deploy a hybrid multi-cloud architecture leveraging AWS, GCP, and Azure. Ensure seamless interconnectivity with policy-driven solutions.',
+          'azure-modernization': '🎯 Modernize classic Azure implementations to ARM using infrastructure as code methodologies. Emphasize scalability and security improvements.',
+          'gcp-ml-platform': '🎯 Deploy an AI/ML platform on GCP with a focus on Vertex services and state-of-the-art ML pipelines. Maintain efficiency and robust security.'
+        };
+        
+        const userMessage = scenarioMessages[scenarioKey] || 'Please proceed with the selected deployment scenario.';
+        
+        setTimeout(() => {
+          // User states what they want
+          const userEntry = document.createElement('div');
+          userEntry.className = 'mb-2 mt-4';
+          userEntry.innerHTML = `<strong class="text-blue-400">You:</strong> <span class="text-slate-300">${userMessage}</span>`;
+          conversationWindow.appendChild(userEntry);
+          conversationWindow.scrollTop = conversationWindow.scrollHeight;
+          
+          // Update conversation status
+          const conversationStatus = document.getElementById('conversation-status');
+          conversationStatus.innerHTML = `
+            <div class="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+            <span class="text-sm text-blue-400">Active</span>
+          `;
+          
+          // STEP 3: Orchestrator initiates discovery
+          setTimeout(() => {
+            // Update orchestrator status
+            deploymentStatus.innerHTML = `
+              <div class="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
+              <span class="text-sm text-yellow-400">Discovery Active</span>
+            `;
+            
+            // Show orchestrator starting discovery
+            const discoveryLine = document.createElement('div');
+            discoveryLine.className = 'text-yellow-400';
+            discoveryLine.textContent = '🔍 Initiating infrastructure discovery phase...';
+            commandOutput.appendChild(discoveryLine);
+            
+            // Generate randomized infrastructure elements
+            const infrastructureElements = generateRandomInfrastructure(scenarioKey);
+            
+            // Display discovery findings in orchestrator
             setTimeout(() => {
-              const logEntry = document.createElement('div');
-              logEntry.className = 'mb-2';
-              logEntry.innerHTML = `<strong class="${entry.speaker === 'You' ? 'text-blue-400' : 'text-emerald-400'}">${entry.speaker}:</strong> <span class="text-slate-300">${entry.message}</span>`;
-              conversationWindow.appendChild(logEntry);
-              conversationWindow.scrollTop = conversationWindow.scrollHeight;
-            }, conversationIndex++ * 3000);
-          });
-        }
-
-        setTimeout(() => startDiscoveryPhase(scenarioKey), 10000);
-        setTimeout(() => startComponentAnimations(scenarioKey), 8000);
-        setTimeout(() => startLiveMetrics(), 10000);
-        setTimeout(() => startQuickMetricsUpdates(), 1000);
+              infrastructureElements.forEach((element, idx) => {
+                setTimeout(() => {
+                  const line = document.createElement('div');
+                  line.className = 'text-slate-400';
+                  line.textContent = element;
+                  commandOutput.appendChild(line);
+                  commandOutput.scrollTop = commandOutput.scrollHeight;
+                }, idx * 200);
+              });
+              
+              // After discovery, orchestrator pauses
+              setTimeout(() => {
+                const pauseLine = document.createElement('div');
+                pauseLine.className = 'text-yellow-400 mt-2';
+                pauseLine.textContent = '⏸️ Discovery complete. Awaiting authorization from AI Console...';
+                commandOutput.appendChild(pauseLine);
+                commandOutput.scrollTop = commandOutput.scrollHeight;
+                
+                // STEP 4: SirsiNexus AI describes findings and plan
+                setTimeout(() => {
+                  const aiPlanMessage = document.createElement('div');
+                  aiPlanMessage.className = 'mb-2 mt-4';
+                  aiPlanMessage.innerHTML = `<strong class="text-emerald-400">SirsiNexus AI:</strong> <span class="text-slate-300">Based on the discovery phase, I've analyzed your infrastructure and prepared a comprehensive deployment plan:</span>`;
+                  conversationWindow.appendChild(aiPlanMessage);
+                  
+                  // Show detailed plan
+                  const planDetails = generateDeploymentPlan(scenarioKey, infrastructureElements);
+                  const planDiv = document.createElement('div');
+                  planDiv.className = 'ml-4 mt-2 p-3 bg-slate-800/50 rounded-lg text-sm';
+                  planDiv.innerHTML = planDetails;
+                  conversationWindow.appendChild(planDiv);
+                  
+                  // Ask for agreement
+                  const questionMessage = document.createElement('div');
+                  questionMessage.className = 'mb-2 mt-4';
+                  questionMessage.innerHTML = `<strong class="text-emerald-400">SirsiNexus AI:</strong> <span class="text-slate-300">Does this plan meet your requirements? Please respond with "accept", "decline", or "modify" if you'd like to make changes.</span>`;
+                  conversationWindow.appendChild(questionMessage);
+                  conversationWindow.scrollTop = conversationWindow.scrollHeight;
+                  
+                  // STEP 5: User responds (randomized)
+                  setTimeout(() => {
+                    const responses = ['accept', 'decline', 'modify'];
+                    const weights = [0.6, 0.1, 0.3]; // 60% accept, 10% decline, 30% modify
+                    const userResponse = weightedRandom(responses, weights);
+                    
+                    const responseMessage = document.createElement('div');
+                    responseMessage.className = 'mb-2 mt-4';
+                    
+                    if (userResponse === 'accept') {
+                      responseMessage.innerHTML = `<strong class="text-blue-400">You:</strong> <span class="text-slate-300">Accept. The plan looks good, please proceed.</span>`;
+                      conversationWindow.appendChild(responseMessage);
+                      conversationWindow.scrollTop = conversationWindow.scrollHeight;
+                      
+                      // Sirsi acknowledges and starts
+                      setTimeout(() => {
+                        const startMessage = document.createElement('div');
+                        startMessage.className = 'mb-2 mt-2';
+                        startMessage.innerHTML = `<strong class="text-emerald-400">SirsiNexus AI:</strong> <span class="text-slate-300">Excellent! I'll begin the deployment now.</span>`;
+                        conversationWindow.appendChild(startMessage);
+                        
+                        // The magic phrase that starts orchestrator
+                        const beginMessage = document.createElement('div');
+                        beginMessage.className = 'mb-2 mt-2';
+                        beginMessage.innerHTML = `<strong class="text-emerald-400">SirsiNexus AI:</strong> <span class="text-slate-300 font-bold">OK, lets begin.</span>`;
+                        conversationWindow.appendChild(beginMessage);
+                        conversationWindow.scrollTop = conversationWindow.scrollHeight;
+                        
+                        // Start orchestrator
+                        setTimeout(() => startOrchestrator(scenarioKey), 1000);
+                      }, 2000);
+                      
+                    } else if (userResponse === 'decline') {
+                      responseMessage.innerHTML = `<strong class="text-blue-400">You:</strong> <span class="text-slate-300">Decline. I have concerns about the current approach.</span>`;
+                      conversationWindow.appendChild(responseMessage);
+                      conversationWindow.scrollTop = conversationWindow.scrollHeight;
+                      
+                      // Sirsi asks what to do
+                      setTimeout(() => {
+                        const askMessage = document.createElement('div');
+                        askMessage.className = 'mb-2 mt-2';
+                        askMessage.innerHTML = `<strong class="text-emerald-400">SirsiNexus AI:</strong> <span class="text-slate-300">I understand. What would you like me to adjust in the deployment plan? Please provide your requirements.</span>`;
+                        conversationWindow.appendChild(askMessage);
+                        conversationWindow.scrollTop = conversationWindow.scrollHeight;
+                        
+                        // Re-enable button for new attempt
+                        startButton.disabled = false;
+                        startButton.querySelector('#start-button-text').textContent = 'Retry Deployment';
+                      }, 2000);
+                      
+                    } else { // modify
+                      responseMessage.innerHTML = `<strong class="text-blue-400">You:</strong> <span class="text-slate-300">I want to modify the plan with the following changes:</span>`;
+                      conversationWindow.appendChild(responseMessage);
+                      
+                      // STEP 6: User provides modifications
+                      const modifications = generateRandomModifications(scenarioKey);
+                      const modDiv = document.createElement('div');
+                      modDiv.className = 'ml-4 mt-2 p-3 bg-slate-800/50 rounded-lg text-sm';
+                      modDiv.innerHTML = modifications;
+                      conversationWindow.appendChild(modDiv);
+                      conversationWindow.scrollTop = conversationWindow.scrollHeight;
+                      
+                      // Sirsi agrees to modifications
+                      setTimeout(() => {
+                        const agreeMessage = document.createElement('div');
+                        agreeMessage.className = 'mb-2 mt-4';
+                        agreeMessage.innerHTML = `<strong class="text-emerald-400">SirsiNexus AI:</strong> <span class="text-slate-300">I've incorporated your modifications into the deployment plan. These changes will optimize the deployment for your specific requirements.</span>`;
+                        conversationWindow.appendChild(agreeMessage);
+                        
+                        // The magic phrase
+                        const beginMessage = document.createElement('div');
+                        beginMessage.className = 'mb-2 mt-2';
+                        beginMessage.innerHTML = `<strong class="text-emerald-400">SirsiNexus AI:</strong> <span class="text-slate-300 font-bold">OK, lets begin.</span>`;
+                        conversationWindow.appendChild(beginMessage);
+                        conversationWindow.scrollTop = conversationWindow.scrollHeight;
+                        
+                        // STEP 7: Start orchestrator
+                        setTimeout(() => startOrchestrator(scenarioKey), 1000);
+                      }, 3000);
+                    }
+                  }, 5000); // User thinks for 5 seconds
+                }, 3000); // AI processes findings
+              }, infrastructureElements.length * 200 + 1000);
+            }, 2000); // Start showing discovery after 2 seconds
+          }, 3000); // Orchestrator responds after user message
+        }, 2000); // User speaks after 2 seconds
       }
 
 function startArtifactCounter() {
@@ -1033,7 +1184,7 @@ function getAgentTriggerPoints(scenario) {
         console.log(`🚀 Activating agent: ${componentName} with message: ${message}`);
         
         const element = document.getElementById(`component-${componentName}`);
-const statusElement = document.getElementById(`${componentName === 'containers' ? 'container' : componentName === 'networking' ? 'network' : componentName}-status`);
+        const statusElement = document.getElementById(`${componentName === 'containers' ? 'container' : componentName === 'networking' ? 'network' : componentName}-status`);
         const taskElement = document.getElementById(`${componentName === 'containers' ? 'container' : componentName === 'networking' ? 'network' : componentName}-task`);
         const durationElement = document.getElementById(`${componentName === 'containers' ? 'container' : componentName === 'networking' ? 'network' : componentName}-duration`);
         const runtimeElement = document.getElementById(`${componentName === 'containers' ? 'container' : componentName === 'networking' ? 'network' : componentName}-runtime`);
@@ -1632,7 +1783,7 @@ function initializeAgents() {
       function getScenarioCommands(scenario) {
         const commands = {
           'onprem-to-aws': [
-{ text: '🎯 Initiate VMware to AWS migration targeting the US West region with fully modernized networking. Prioritize zero-downtime policies and compliance.', delay: 200 },
+            { text: '🎯 Initiate VMware to AWS migration targeting the US West region with fully modernized networking. Prioritize zero-downtime policies and compliance.', delay: 200 },
             { text: `$ sirsi-nexus migrate --source=vmware --target=aws --region=us-west-2 --vpc-cidr=10.0.0.0/16`, delay: 500 },
             { text: '', delay: 700 },
             { text: '🤖 SirsiNexus AI: Analyzing request and generating comprehensive deployment plan...', delay: 800 },
@@ -1717,7 +1868,7 @@ function initializeAgents() {
             { text: '🔵 Overall optimization achieved!', delay: 51000 }
           ],
           'hybrid-multicloud': [
-{ text: '🎯 Deploy a hybrid multi-cloud architecture leveraging AWS, GCP, and Azure. Ensure seamless interconnectivity with policy-driven solutions.', delay: 200 },
+            { text: '🎯 Deploy a hybrid multi-cloud architecture leveraging AWS, GCP, and Azure. Ensure seamless interconnectivity with policy-driven solutions.', delay: 200 },
             { text: `$ sirsi-nexus deploy --mode=hybrid --clouds=aws,gcp,azure --federation=istio --policy-engine=opa`, delay: 500 },
             { text: '', delay: 700 },
             { text: '🤖 SirsiNexus AI: Orchestrating multi-cloud deployment strategy...', delay: 800 },
@@ -1795,7 +1946,7 @@ function initializeAgents() {
             { text: '✨ Advanced capabilities: Auto-failover, intelligent routing, predictive scaling active', delay: 49200 }
           ],
           'azure-modernization': [
-{ text: '🎯 Modernize classic Azure implementations to ARM using infrastructure as code methodologies. Emphasize scalability and security improvements.', delay: 200 },
+            { text: '🎯 Modernize classic Azure implementations to ARM using infrastructure as code methodologies. Emphasize scalability and security improvements.', delay: 200 },
             { text: `$ sirsi-nexus modernize --source=azure-classic --target=azure-rm --bicep-templates --policy-as-code`, delay: 500 },
             { text: '', delay: 700 },
             { text: '🤖 SirsiNexus AI: Analyzing Azure legacy architecture for modernization...', delay: 800 },
@@ -1879,7 +2030,7 @@ function initializeAgents() {
             { text: '✨ Advanced features: Auto-remediation, compliance monitoring, intelligent scaling', delay: 54600 }
           ],
           'gcp-ml-platform': [
-{ text: '🎯 Deploy an AI/ML platform on GCP with a focus on Vertex services and state-of-the-art ML pipelines. Maintain efficiency and robust security.', delay: 200 },
+            { text: '🎯 Deploy an AI/ML platform on GCP with a focus on Vertex services and state-of-the-art ML pipelines. Maintain efficiency and robust security.', delay: 200 },
             { text: `$ sirsi-nexus deploy --platform=gcp-ml --services=vertex,bigquery --kubeflow --tfx-pipelines`, delay: 500 },
             { text: '', delay: 700 },
             { text: '🤖 SirsiNexus AI: Optimizing AI/ML platform architecture for Vertex AI...', delay: 800 },
@@ -2412,6 +2563,278 @@ function initializeAgents() {
                artifactCounts.helm + 
                artifactCounts.docker + 
                artifactCounts.bicep;
+      }
+      
+      // Helper function for weighted random selection
+      function weightedRandom(items, weights) {
+        const totalWeight = weights.reduce((a, b) => a + b, 0);
+        const random = Math.random() * totalWeight;
+        let cumulativeWeight = 0;
+        
+        for (let i = 0; i < items.length; i++) {
+          cumulativeWeight += weights[i];
+          if (random < cumulativeWeight) {
+            return items[i];
+          }
+        }
+        return items[items.length - 1];
+      }
+      
+      // Generate randomized infrastructure elements for discovery
+      function generateRandomInfrastructure(scenario) {
+        const baseElements = {
+          'onprem-to-aws': [
+            `📊 Discovered ${247 + Math.floor(Math.random() * 50)} virtual machines across ${3 + Math.floor(Math.random() * 3)} vSphere clusters`,
+            `🗄️ Found ${12 + Math.floor(Math.random() * 5)} database instances (PostgreSQL, MySQL, Oracle)`,
+            `🌐 Identified ${5 + Math.floor(Math.random() * 3)} F5 BIG-IP load balancers with ${89 + Math.floor(Math.random() * 20)} virtual servers`,
+            `💾 Detected ${3 + Math.floor(Math.random() * 2)} NetApp storage clusters with ${1.2 + (Math.random() * 0.8).toFixed(1)}PB total capacity`,
+            `🔒 Found ${156 + Math.floor(Math.random() * 40)} security groups and ${423 + Math.floor(Math.random() * 100)} firewall rules`,
+            `📡 Discovered ${18 + Math.floor(Math.random() * 7)} VLANs across ${4 + Math.floor(Math.random() * 2)} network zones`,
+            `🔐 Identified ${67 + Math.floor(Math.random() * 20)} SSL certificates requiring migration`,
+            `📦 Found ${234 + Math.floor(Math.random() * 50)} containerized applications ready for EKS`
+          ],
+          'hybrid-multicloud': [
+            `📊 Discovered ${189 + Math.floor(Math.random() * 40)} on-premises servers and ${156 + Math.floor(Math.random() * 30)} Azure VMs`,
+            `🌐 Found ${7 + Math.floor(Math.random() * 3)} existing cloud connections across AWS, Azure, and GCP`,
+            `🗄️ Identified ${23 + Math.floor(Math.random() * 10)} databases requiring multi-cloud replication`,
+            `💾 Detected ${2.8 + (Math.random() * 1.2).toFixed(1)}PB of data for cross-cloud synchronization`,
+            `🔒 Found ${234 + Math.floor(Math.random() * 50)} IAM roles and ${567 + Math.floor(Math.random() * 100)} policies`,
+            `📡 Discovered ${12 + Math.floor(Math.random() * 5)} existing VPN connections to optimize`,
+            `🔐 Identified ${89 + Math.floor(Math.random() * 20)} compliance requirements (GDPR, SOX, HIPAA)`,
+            `📦 Found ${345 + Math.floor(Math.random() * 70)} microservices for multi-cloud deployment`
+          ],
+          'azure-modernization': [
+            `📊 Discovered ${89 + Math.floor(Math.random() * 20)} Azure Classic resources requiring modernization`,
+            `🗄️ Found ${34 + Math.floor(Math.random() * 10)} Classic storage accounts to migrate`,
+            `🌐 Identified ${12 + Math.floor(Math.random() * 5)} Cloud Services for AKS migration`,
+            `💾 Detected ${567 + Math.floor(Math.random() * 100)}GB in legacy blob storage`,
+            `🔒 Found ${45 + Math.floor(Math.random() * 15)} deprecated API versions in use`,
+            `📡 Discovered ${23 + Math.floor(Math.random() * 8)} virtual networks for ARM conversion`,
+            `🔐 Identified ${78 + Math.floor(Math.random() * 20)} service principals needing updates`,
+            `📦 Found ${123 + Math.floor(Math.random() * 30)} workloads for container modernization`
+          ],
+          'gcp-ml-platform': [
+            `📊 Analyzed ML workload requirements: ${847 + Math.floor(Math.random() * 200)}M model parameters`,
+            `🗄️ Identified ${4.5 + (Math.random() * 2).toFixed(1)}TB training datasets for BigQuery`,
+            `🌐 Found ${34 + Math.floor(Math.random() * 10)} existing ML models for migration`,
+            `💾 Detected ${89 + Math.floor(Math.random() * 20)} feature engineering pipelines`,
+            `🔒 Discovered ${156 + Math.floor(Math.random() * 40)} data privacy requirements`,
+            `📡 Identified ${8 + Math.floor(Math.random() * 4)} regions for global model serving`,
+            `🔐 Found ${234 + Math.floor(Math.random() * 50)} API endpoints requiring authentication`,
+            `📦 Discovered ${67 + Math.floor(Math.random() * 20)} Jupyter notebooks for Vertex AI`
+          ]
+        };
+        
+        return baseElements[scenario] || baseElements['onprem-to-aws'];
+      }
+      
+      // Generate deployment plan based on discovery
+      function generateDeploymentPlan(scenario, infrastructure) {
+        const plans = {
+          'onprem-to-aws': `
+            <div class="space-y-3">
+              <div class="font-semibold text-emerald-400">📋 Migration Strategy:</div>
+              <ul class="list-disc list-inside space-y-2 text-slate-300">
+                <li>Lift-and-shift ${infrastructure[0].match(/\d+/)[0]} VMs using AWS Server Migration Service</li>
+                <li>Containerize applications and deploy to EKS with zero-downtime blue-green deployment</li>
+                <li>Migrate databases using AWS DMS with continuous data replication</li>
+                <li>Replace F5 load balancers with AWS ALB/NLB and WAF</li>
+                <li>Implement AWS Direct Connect for hybrid connectivity during migration</li>
+              </ul>
+              
+              <div class="font-semibold text-emerald-400 mt-4">🎯 Key Milestones:</div>
+              <ol class="list-decimal list-inside space-y-2 text-slate-300">
+                <li>Network foundation and security baseline (2 hours)</li>
+                <li>Container platform deployment (1.5 hours)</li>
+                <li>Database migration with validation (2 hours)</li>
+                <li>Application cutover and testing (1 hour)</li>
+                <li>Monitoring and optimization (30 minutes)</li>
+              </ol>
+              
+              <div class="font-semibold text-emerald-400 mt-4">⚠️ Risk Mitigation:</div>
+              <ul class="list-disc list-inside space-y-2 text-slate-300">
+                <li>Automated rollback procedures at each milestone</li>
+                <li>Real-time data validation during migration</li>
+                <li>Canary deployment for critical applications</li>
+                <li>24/7 monitoring with instant alerting</li>
+              </ul>
+            </div>
+          `,
+          'hybrid-multicloud': `
+            <div class="space-y-3">
+              <div class="font-semibold text-emerald-400">📋 Multi-Cloud Architecture:</div>
+              <ul class="list-disc list-inside space-y-2 text-slate-300">
+                <li>Deploy ${infrastructure[7].match(/\d+/)[0]} microservices across AWS, Azure, and GCP</li>
+                <li>Establish inter-cloud networking with sub-10ms latency</li>
+                <li>Implement global data replication for ${infrastructure[3].match(/[\d.]+/)[0]}PB</li>
+                <li>Configure unified identity management across clouds</li>
+                <li>Deploy Istio service mesh for cross-cloud service discovery</li>
+              </ul>
+              
+              <div class="font-semibold text-emerald-400 mt-4">🎯 Deployment Phases:</div>
+              <ol class="list-decimal list-inside space-y-2 text-slate-300">
+                <li>Multi-cloud network backbone setup (3 hours)</li>
+                <li>Kubernetes federation deployment (2 hours)</li>
+                <li>Distributed data layer implementation (2.5 hours)</li>
+                <li>Service mesh and API gateway (1.5 hours)</li>
+                <li>Observability and security hardening (1 hour)</li>
+              </ol>
+              
+              <div class="font-semibold text-emerald-400 mt-4">🔒 Security & Compliance:</div>
+              <ul class="list-disc list-inside space-y-2 text-slate-300">
+                <li>Zero-trust security model with mTLS everywhere</li>
+                <li>Compliance automation for GDPR, SOX, HIPAA</li>
+                <li>Encrypted data at rest and in transit</li>
+                <li>Centralized audit logging and SIEM integration</li>
+              </ul>
+            </div>
+          `,
+          'azure-modernization': `
+            <div class="space-y-3">
+              <div class="font-semibold text-emerald-400">📋 Modernization Approach:</div>
+              <ul class="list-disc list-inside space-y-2 text-slate-300">
+                <li>Convert ${infrastructure[0].match(/\d+/)[0]} Classic resources to ARM templates</li>
+                <li>Migrate ${infrastructure[2].match(/\d+/)[0]} Cloud Services to AKS</li>
+                <li>Upgrade storage accounts with zone redundancy</li>
+                <li>Implement Infrastructure as Code with Bicep</li>
+                <li>Enable Azure Policy for governance at scale</li>
+              </ul>
+              
+              <div class="font-semibold text-emerald-400 mt-4">🎯 Modernization Steps:</div>
+              <ol class="list-decimal list-inside space-y-2 text-slate-300">
+                <li>ARM template generation and validation (1 hour)</li>
+                <li>Resource group reorganization (30 minutes)</li>
+                <li>AKS cluster deployment and migration (2 hours)</li>
+                <li>Database and storage modernization (1.5 hours)</li>
+                <li>Monitoring and security updates (1 hour)</li>
+              </ol>
+              
+              <div class="font-semibold text-emerald-400 mt-4">💡 Optimization Benefits:</div>
+              <ul class="list-disc list-inside space-y-2 text-slate-300">
+                <li>40% cost reduction through right-sizing</li>
+                <li>99.99% availability with zone redundancy</li>
+                <li>Automated scaling and self-healing</li>
+                <li>Enhanced security with Azure Defender</li>
+              </ul>
+            </div>
+          `,
+          'gcp-ml-platform': `
+            <div class="space-y-3">
+              <div class="font-semibold text-emerald-400">📋 ML Platform Architecture:</div>
+              <ul class="list-disc list-inside space-y-2 text-slate-300">
+                <li>Deploy Vertex AI for ${infrastructure[0].match(/\d+/)[0]}M parameter models</li>
+                <li>Set up BigQuery ML with ${infrastructure[1].match(/[\d.]+/)[0]}TB datasets</li>
+                <li>Configure distributed training on TPU v4 pods</li>
+                <li>Implement MLOps with Kubeflow and TFX</li>
+                <li>Deploy model serving with global edge caching</li>
+              </ul>
+              
+              <div class="font-semibold text-emerald-400 mt-4">🎯 Implementation Phases:</div>
+              <ol class="list-decimal list-inside space-y-2 text-slate-300">
+                <li>ML infrastructure foundation (2 hours)</li>
+                <li>GKE cluster with GPU/TPU nodes (2 hours)</li>
+                <li>Data pipeline and feature store (3 hours)</li>
+                <li>ML platform and model deployment (2 hours)</li>
+                <li>Monitoring and optimization (1 hour)</li>
+              </ol>
+              
+              <div class="font-semibold text-emerald-400 mt-4">🚀 ML Capabilities:</div>
+              <ul class="list-disc list-inside space-y-2 text-slate-300">
+                <li>AutoML for rapid model development</li>
+                <li>Distributed training with 10x speedup</li>
+                <li>A/B testing and gradual rollouts</li>
+                <li>Real-time model monitoring and retraining</li>
+                <li>Explainable AI with feature attribution</li>
+              </ul>
+            </div>
+          `
+        };
+        
+        return plans[scenario] || plans['onprem-to-aws'];
+      }
+      
+      // Generate random modifications from user
+      function generateRandomModifications(scenario) {
+        const modifications = {
+          'onprem-to-aws': [
+            `• Please use t3.2xlarge instances instead of t3.xlarge for the web tier to handle peak loads better`,
+            `• Add an additional availability zone (us-west-2c) for the database layer`,
+            `• Include AWS Shield Advanced for DDoS protection on all public-facing endpoints`,
+            `• Set up cross-region replication to us-east-1 for disaster recovery`,
+            `• Use GP3 volumes instead of GP2 for better cost-performance ratio`
+          ],
+          'hybrid-multicloud': [
+            `• Prioritize GCP for ML workloads due to TPU availability`,
+            `• Add Cloudflare as an additional CDN layer for global performance`,
+            `• Implement HashiCorp Consul for service discovery instead of native solutions`,
+            `• Include blockchain-based audit trail for compliance requirements`,
+            `• Set up dedicated interconnects between all three cloud providers`
+          ],
+          'azure-modernization': [
+            `• Use Azure Spot instances for non-critical batch processing workloads`,
+            `• Add Azure Bastion for secure administrative access`,
+            `• Include Azure Synapse Analytics for big data processing`,
+            `• Implement Azure Arc for hybrid management capabilities`,
+            `• Set up Azure Lighthouse for multi-tenant management`
+          ],
+          'gcp-ml-platform': [
+            `• Use A100 80GB GPUs instead of V100s for larger model training`,
+            `• Add Weights & Biases for experiment tracking alongside Vertex AI`,
+            `• Include Apache Beam for data preprocessing pipelines`,
+            `• Set up model versioning with DVC (Data Version Control)`,
+            `• Add Ray for distributed hyperparameter tuning`
+          ]
+        };
+        
+        const modList = modifications[scenario] || modifications['onprem-to-aws'];
+        // Randomly select 2-4 modifications
+        const count = 2 + Math.floor(Math.random() * 3);
+        const selected = [];
+        const indices = [];
+        
+        while (indices.length < count) {
+          const idx = Math.floor(Math.random() * modList.length);
+          if (!indices.includes(idx)) {
+            indices.push(idx);
+            selected.push(modList[idx]);
+          }
+        }
+        
+        return `<ul class="list-disc list-inside space-y-2 text-slate-300">${selected.join('\n')}</ul>`;
+      }
+      
+      // Start orchestrator after authorization
+      function startOrchestrator(scenario) {
+        const commandOutput = document.getElementById('command-output');
+        const deploymentStatus = document.getElementById('deployment-status');
+        const overallStatus = document.getElementById('overall-status');
+        
+        // Clear command output
+        commandOutput.innerHTML = '';
+        
+        // Update status
+        deploymentStatus.innerHTML = `
+          <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+          <span class="text-sm text-emerald-400">Deployment Active</span>
+        `;
+        
+        overallStatus.innerHTML = `
+          <div class="w-3 h-3 bg-emerald-400 rounded-full animate-pulse"></div>
+          <span class="text-emerald-400 font-medium">Deployment in Progress</span>
+        `;
+        
+        // Show orchestrator acknowledged the start signal
+        const ackLine = document.createElement('div');
+        ackLine.className = 'text-emerald-400 font-semibold';
+        ackLine.textContent = '✅ Authorization received. Starting deployment sequence...';
+        commandOutput.appendChild(ackLine);
+        
+        // Start the actual deployment commands
+        setTimeout(() => {
+          startCommandOutput(scenario);
+          startLiveMetrics();
+          startQuickMetricsUpdates();
+        }, 1000);
       }
     </script>
   </body>

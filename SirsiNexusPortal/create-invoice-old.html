@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SirsiNexus - Invoice Creator</title>
+    <meta name="description" content="Create professional invoices - SirsiNexus Business Tools">
+    <meta name="theme-color" content="#059669">
+    
+    <!-- Preload critical resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              'inter': ['Inter', 'sans-serif'],
+            },
+            colors: {
+              emerald: {
+                600: '#059669',
+                700: '#047857',
+              },
+            },
+          },
+        },
+      }
+    </script>
+    
+    <!-- QR Code Library -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    
+    <!-- Fresh Theme Toggle -->
+    <script>
+      (function() {
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const shouldBeDark = savedTheme ? savedTheme === 'dark' : prefersDark;
+        
+        if (shouldBeDark) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      })();
+    </script>
+
+    <style>
+      /* SirsiNexus patterns */
+      .hex-pattern {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-image: 
+          url('data:image/svg+xml,<svg width="100" height="86.6" xmlns="http://www.w3.org/2000/svg"><polygon points="50,0 100,25 100,61.6 50,86.6 0,61.6 0,25" fill="none" stroke="rgba(16,185,129,0.3)" stroke-width="1"/></svg>');
+        background-size: 100px 86.6px;
+        opacity: 0.6;
+      }
+    </style>
+</head>
+<body class="font-inter bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100">
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800/95 sticky top-0 z-50 border-b border-slate-200 dark:border-slate-700 backdrop-blur-sm">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="flex h-16 items-center justify-between">
+          <div class="flex items-center gap-6">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 flex items-center justify-center">
+                <img src="/SirsiNexusPortal/assets/images/Sirsi_Logo_300ppi_cguiyg.png" alt="Sirsi Logo" class="w-12 h-12 object-contain dark:hidden">
+                <img src="/SirsiNexusPortal/assets/images/Sirsi_Logo_300ppi_Inverted_lt7asx.png" alt="Sirsi Logo" class="w-12 h-12 object-contain hidden dark:block">
+              </div>
+              <div>
+                <h1 class="text-lg font-semibold text-slate-900 dark:text-slate-100">
+                  SirsiNexus
+                </h1>
+                <div class="flex items-center gap-2">
+                  <span class="text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded">
+                    Invoice Creator
+                  </span>
+                  <div class="flex items-center gap-1">
+                    <div class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></div>
+                    <span class="text-xs text-slate-600 dark:text-slate-300">Live</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <nav class="flex items-center gap-6">
+            <a href="/SirsiNexusPortal/index.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">Home</a>
+            <a href="/SirsiNexusPortal/pay.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">Payment Portal</a>
+            <button id="theme-toggle" class="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors border border-slate-300 dark:border-slate-600" title="Toggle theme">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+              </svg>
+            </button>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <!-- Invoice Creator Section -->
+    <section class="relative bg-gradient-to-br from-slate-50 via-emerald-50 to-emerald-100 dark:from-slate-900 dark:via-emerald-900 dark:to-emerald-800 py-24 overflow-hidden">
+      <!-- Hexagonal Pattern Overlay -->
+      <div class="hex-pattern"></div>
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center">
+          <div class="inline-flex items-center gap-2 bg-emerald-100 dark:bg-emerald-900/30 px-4 py-2 rounded-full mb-6">
+            <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+            <span class="text-sm font-medium text-emerald-700 dark:text-emerald-300">Professional Business Tools</span>
+          </div>
+          <h1 class="text-5xl md:text-7xl font-bold text-slate-900 dark:text-slate-100 mb-6 leading-tight">
+            Invoice <span class="text-emerald-600">Creator</span>
+          </h1>
+          <p class="text-2xl text-slate-600 dark:text-slate-400 mb-4 max-w-4xl mx-auto font-light">
+            Create professional invoices with <span class="font-semibold text-emerald-600">multi-channel distribution</span>
+          </p>
+        </div>
+      </div>
+      <!-- Background decoration -->
+      <div class="absolute top-10 left-10 w-20 h-20 bg-emerald-200 dark:bg-emerald-800 rounded-full opacity-30 animate-pulse"></div>
+      <div class="absolute bottom-10 right-10 w-32 h-32 bg-blue-200 dark:bg-blue-800 rounded-full opacity-20 animate-pulse" style="animation-delay: 1s;"></div>
+    </section>
+
+    <!-- Invoice Form Section -->
+    <section class="relative py-20 bg-gradient-to-br from-white via-slate-50 to-emerald-50/20 dark:from-slate-900 dark:via-slate-800 dark:to-emerald-900/20 overflow-hidden">
+      <div class="max-w-4xl mx-auto px-6">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-200 dark:border-slate-700">
+
+        <div class="grid lg:grid-cols-3 gap-8">
+          <!-- Invoice Form -->
+          <div class="lg:col-span-2">
+            <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl invoice-glow border border-slate-200 dark:border-slate-700 p-8">
+              <div class="mb-8">
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-2">Invoice Details</h2>
+                <p class="text-slate-600 dark:text-slate-400">Fill in the invoice information and select distribution channels</p>
+              </div>
+
+              <form id="advanced-invoice-form" class="space-y-6">
+                <div class="grid md:grid-cols-2 gap-6">
+                  <div class="space-y-2">
+                    <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300">Invoice Number</label>
+                    <input type="text" id="invoice-number" required
+                           class="w-full px-4 py-3 border-2 border-slate-300 dark:border-slate-600 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-slate-700 dark:text-white transition-colors"
+                           placeholder="SIRSI-2025-001">
+                  </div>
+                  <div class="space-y-2">
+                    <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300">Amount ($USD)</label>
+                    <div class="relative">
+                      <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-500 text-lg font-medium">$</span>
+                      <input type="number" id="invoice-amount" min="5" max="100000" step="0.01" required
+                             class="pl-10 w-full px-4 py-3 border-2 border-slate-300 dark:border-slate-600 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-slate-700 dark:text-white transition-colors"
+                             placeholder="0.00">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                  <div class="space-y-2">
+                    <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300">Client Name</label>
+                    <input type="text" id="client-name" required
+                           class="w-full px-4 py-3 border-2 border-slate-300 dark:border-slate-600 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-slate-700 dark:text-white transition-colors"
+                           placeholder="John Smith or ABC Corporation">
+                  </div>
+                  <div class="space-y-2">
+                    <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300">Client Email</label>
+                    <input type="email" id="client-email" required
+                           class="w-full px-4 py-3 border-2 border-slate-300 dark:border-slate-600 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-slate-700 dark:text-white transition-colors"
+                           placeholder="client@example.com">
+                  </div>
+                </div>
+
+                <div class="space-y-2">
+                  <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300">Service Description</label>
+                  <textarea id="service-description" rows="3" required
+                            class="w-full px-4 py-3 border-2 border-slate-300 dark:border-slate-600 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-slate-700 dark:text-white transition-colors"
+                            placeholder="AI Infrastructure Consultation - 4 hours of strategic planning and implementation guidance"></textarea>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                  <div class="space-y-2">
+                    <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300">Due Date</label>
+                    <input type="date" id="due-date" required
+                           class="w-full px-4 py-3 border-2 border-slate-300 dark:border-slate-600 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-slate-700 dark:text-white transition-colors">
+                  </div>
+                  <div class="space-y-2">
+                    <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300">Client Phone (Optional)</label>
+                    <input type="tel" id="client-phone"
+                           class="w-full px-4 py-3 border-2 border-slate-300 dark:border-slate-600 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-slate-700 dark:text-white transition-colors"
+                           placeholder="+1 (555) 123-4567">
+                  </div>
+                </div>
+
+                <!-- Distribution Channels -->
+                <div class="border-t-2 border-slate-200 dark:border-slate-600 pt-8">
+                  <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100 mb-6">Distribution Channels</h3>
+                  
+                  <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Email Distribution -->
+                    <div class="bg-gradient-to-br from-blue-50 to-blue-100/50 dark:from-blue-900/20 dark:to-blue-800/20 rounded-xl p-6">
+                      <div class="flex items-center gap-3 mb-4">
+                        <input type="checkbox" id="enable-email" checked class="w-5 h-5 text-blue-600 border-2 border-gray-300 rounded focus:ring-blue-500">
+                        <label class="flex items-center gap-2 font-semibold text-slate-900 dark:text-slate-100">
+                          <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                          </svg>
+                          Professional Email
+                        </label>
+                      </div>
+                      <p class="text-sm text-slate-600 dark:text-slate-400 mb-3">Rich HTML email with SirsiNexus branding, payment buttons, and QR codes</p>
+                      <div class="text-xs text-blue-600 dark:text-blue-400">
+                        ✅ Professional templates • ✅ Mobile optimized • ✅ Payment tracking
+                      </div>
+                    </div>
+
+                    <!-- SMS Distribution -->
+                    <div class="bg-gradient-to-br from-green-50 to-green-100/50 dark:from-green-900/20 dark:to-green-800/20 rounded-xl p-6">
+                      <div class="flex items-center gap-3 mb-4">
+                        <input type="checkbox" id="enable-sms" class="w-5 h-5 text-green-600 border-2 border-gray-300 rounded focus:ring-green-500">
+                        <label class="flex items-center gap-2 font-semibold text-slate-900 dark:text-slate-100">
+                          <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                          </svg>
+                          SMS Notifications
+                        </label>
+                      </div>
+                      <p class="text-sm text-slate-600 dark:text-slate-400 mb-3">Text message with payment link and QR code (requires phone number)</p>
+                      <div class="text-xs text-green-600 dark:text-green-400">
+                        ⚡ Instant delivery • 📱 Mobile-first • 🔗 Short URLs
+                      </div>
+                    </div>
+
+                    <!-- Social Media -->
+                    <div class="bg-gradient-to-br from-purple-50 to-purple-100/50 dark:from-purple-900/20 dark:to-purple-800/20 rounded-xl p-6">
+                      <div class="flex items-center gap-3 mb-4">
+                        <input type="checkbox" id="enable-social" class="w-5 h-5 text-purple-600 border-2 border-gray-300 rounded focus:ring-purple-500">
+                        <label class="flex items-center gap-2 font-semibold text-slate-900 dark:text-slate-100">
+                          <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                          </svg>
+                          Social Sharing
+                        </label>
+                      </div>
+                      <p class="text-sm text-slate-600 dark:text-slate-400 mb-3">Generate sharing links for WhatsApp, Twitter, LinkedIn, and more</p>
+                      <div class="text-xs text-purple-600 dark:text-purple-400">
+                        🌐 Multiple platforms • 📊 Rich metadata • 🎯 Targeted messaging
+                      </div>
+                    </div>
+
+                    <!-- QR Code -->
+                    <div class="bg-gradient-to-br from-orange-50 to-orange-100/50 dark:from-orange-900/20 dark:to-orange-800/20 rounded-xl p-6">
+                      <div class="flex items-center gap-3 mb-4">
+                        <input type="checkbox" id="enable-qr" checked class="w-5 h-5 text-orange-600 border-2 border-gray-300 rounded focus:ring-orange-500">
+                        <label class="flex items-center gap-2 font-semibold text-slate-900 dark:text-slate-100">
+                          <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2 2v0"></path>
+                          </svg>
+                          QR Code Generation
+                        </label>
+                      </div>
+                      <p class="text-sm text-slate-600 dark:text-slate-400 mb-3">High-resolution QR codes with Sirsi branding and payment tracking</p>
+                      <div class="text-xs text-orange-600 dark:text-orange-400">
+                        📷 Instant scanning • 🎨 Branded colors • 📈 Analytics tracking
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="pt-8 border-t-2 border-slate-200 dark:border-slate-600">
+                  <div class="flex flex-col sm:flex-row gap-4">
+                    <button type="button" onclick="generateAdvancedInvoice()" 
+                            class="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg">
+                      <svg class="w-5 h-5 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="13 10V3L4 14h7v7l9-11h-7z"></path>
+                      </svg>
+                      Create & Distribute Invoice
+                    </button>
+                    <button type="button" onclick="previewInvoice()" 
+                            class="bg-slate-200 dark:bg-slate-600 text-slate-800 dark:text-slate-200 font-semibold py-4 px-8 rounded-xl hover:bg-slate-300 dark:hover:bg-slate-500 transition-colors">
+                      <svg class="w-5 h-5 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                      </svg>
+                      Preview
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Distribution Results Panel -->
+          <div class="lg:col-span-1">
+            <div class="bg-gradient-to-br from-slate-50 to-emerald-50/30 dark:from-slate-800 dark:to-emerald-900/20 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 sticky top-24">
+              <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100 mb-4">Distribution Status</h3>
+              
+              <div id="distribution-results" class="space-y-4">
+                <div class="text-center py-8">
+                  <div class="w-16 h-16 bg-slate-200 dark:bg-slate-700 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                  </div>
+                  <p class="text-slate-500 dark:text-slate-400">Create an invoice to see distribution options</p>
+                </div>
+              </div>
+
+              <!-- PayPal Native Integration Notice -->
+              <div class="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800">
+                <div class="flex items-start gap-3">
+                  <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                  <div>
+                    <h4 class="text-sm font-semibold text-blue-900 dark:text-blue-100 mb-1">PayPal Business Integration</h4>
+                    <p class="text-xs text-blue-800 dark:text-blue-200 mb-2">For enterprise invoicing, you can also use PayPal's native system at <a href="https://www.paypal.com/invoice" target="_blank" class="underline font-medium">paypal.com/invoice</a></p>
+                    <div class="text-xs text-blue-600 dark:text-blue-400">
+                      • Professional branding • Automatic reminders • Tax reporting
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Background Effects -->
+      <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
+        <div class="absolute top-20 left-20 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-20 right-20 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl"></div>
+      </div>
+    </section>
+
+    <!-- Comprehensive Tutorial Modal -->
+    <div id="tutorial-modal" class="hidden fixed inset-0 z-50 overflow-y-auto" aria-labelledby="tutorial-title" role="dialog" aria-modal="true">
+      <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <!-- Background overlay -->
+        <div class="fixed inset-0 bg-gray-900/75 backdrop-blur-sm transition-opacity" aria-hidden="true"></div>
+        
+        <!-- Modal panel -->
+        <div class="inline-block align-bottom bg-white dark:bg-slate-800 rounded-2xl px-4 pt-5 pb-4 text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-6xl sm:w-full sm:p-8">
+          <div class="flex items-center justify-between mb-6">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                </svg>
+              </div>
+              <div>
+                <h2 id="tutorial-title" class="text-2xl font-bold text-slate-900 dark:text-slate-100">Complete Invoice System Tutorial</h2>
+                <p class="text-sm text-slate-600 dark:text-slate-400">Master every feature of the SirsiNexus Invoice Creator</p>
+              </div>
+            </div>
+            <button onclick="toggleTutorial()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          </div>
+          
+          <div class="grid lg:grid-cols-4 gap-6">
+            <!-- Tutorial Navigation -->
+            <div class="lg:col-span-1">
+              <div class="bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-700 dark:to-blue-900/20 rounded-xl p-4 sticky top-4">
+                <h3 class="font-semibold text-slate-900 dark:text-slate-100 mb-4">Tutorial Sections</h3>
+                <nav class="space-y-2" id="tutorial-nav">
+                  <button onclick="showTutorialSection('overview')" class="tutorial-nav-btn w-full text-left px-3 py-2 rounded-lg text-sm transition-colors" data-section="overview">
+                    📋 System Overview
+                  </button>
+                  <button onclick="showTutorialSection('basic-invoice')" class="tutorial-nav-btn w-full text-left px-3 py-2 rounded-lg text-sm transition-colors" data-section="basic-invoice">
+                    ✏️ Creating Your First Invoice
+                  </button>
+                  <button onclick="showTutorialSection('distribution')" class="tutorial-nav-btn w-full text-left px-3 py-2 rounded-lg text-sm transition-colors" data-section="distribution">
+                    📤 Distribution Channels
+                  </button>
+                  <button onclick="showTutorialSection('email-setup')" class="tutorial-nav-btn w-full text-left px-3 py-2 rounded-lg text-sm transition-colors" data-section="email-setup">
+                    📧 Email Distribution
+                  </button>
+                  <button onclick="showTutorialSection('sms-setup')" class="tutorial-nav-btn w-full text-left px-3 py-2 rounded-lg text-sm transition-colors" data-section="sms-setup">
+                    📱 SMS Notifications
+                  </button>
+                  <button onclick="showTutorialSection('social-sharing')" class="tutorial-nav-btn w-full text-left px-3 py-2 rounded-lg text-sm transition-colors" data-section="social-sharing">
+                    🌐 Social Media Sharing
+                  </button>
+                  <button onclick="showTutorialSection('qr-codes')" class="tutorial-nav-btn w-full text-left px-3 py-2 rounded-lg text-sm transition-colors" data-section="qr-codes">
+                    📱 QR Code Generation
+                  </button>
+                  <button onclick="showTutorialSection('payment-flow')" class="tutorial-nav-btn w-full text-left px-3 py-2 rounded-lg text-sm transition-colors" data-section="payment-flow">
+                    💳 Payment Processing
+                  </button>
+                  <button onclick="showTutorialSection('best-practices')" class="tutorial-nav-btn w-full text-left px-3 py-2 rounded-lg text-sm transition-colors" data-section="best-practices">
+                    🎯 Best Practices
+                  </button>
+                  <button onclick="showTutorialSection('troubleshooting')" class="tutorial-nav-btn w-full text-left px-3 py-2 rounded-lg text-sm transition-colors" data-section="troubleshooting">
+                    🔧 Troubleshooting
+                  </button>
+                </nav>
+              </div>
+            </div>
+            
+            <!-- Tutorial Content -->
+            <div class="lg:col-span-3">
+              <div id="tutorial-content" class="bg-white dark:bg-slate-900/50 rounded-xl p-6 min-h-[600px] overflow-y-auto">
+                <!-- Content will be dynamically loaded here -->
+              </div>
+            </div>
+          </div>
+          
+          <!-- Action buttons -->
+          <div class="mt-6 flex justify-between items-center pt-4 border-t border-slate-200 dark:border-slate-700">
+            <div class="flex items-center gap-4">
+              <button onclick="runInteractiveDemo()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                🚀 Try Interactive Demo
+              </button>
+              <button onclick="fillSampleData()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                📝 Fill Sample Data
+              </button>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="exportTutorialPDF()" class="text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 px-4 py-2 rounded-lg text-sm transition-colors">
+                📄 Export Guide (PDF)
+              </button>
+              <button onclick="toggleTutorial()" class="bg-slate-200 dark:bg-slate-600 text-slate-800 dark:text-slate-200 px-6 py-2 rounded-lg text-sm font-medium hover:bg-slate-300 dark:hover:bg-slate-500 transition-colors">
+                Close Tutorial
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="./assets/js/fresh-theme-toggle.js"></script>
+    <script src="./assets/js/multi-channel-distribution.js"></script>
+    <script src="./assets/js/advanced-invoice-creator.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+</body>
+</html>
