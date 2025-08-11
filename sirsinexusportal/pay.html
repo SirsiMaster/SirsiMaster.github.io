@@ -204,33 +204,54 @@
             <!-- Simple Payment Form -->
             <div id="custom-payment-section" class="space-y-6">
               <div class="text-center mb-6">
-                <h3 class="text-xl font-semibold text-slate-800 dark:text-slate-200 mb-2">Enter Payment Details</h3>
-                <p class="text-slate-600 dark:text-slate-400">All payments processed securely through PayPal</p>
+                <h3 class="text-xl font-semibold text-slate-800 dark:text-slate-200 mb-2">Make a Payment</h3>
+                <p class="text-slate-600 dark:text-slate-400">Choose your preferred payment method below</p>
               </div>
               
-              <div class="space-y-4">
-                <div>
-                  <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Payment Amount (USD)</label>
-                  <div class="relative">
-                    <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-500 text-lg font-medium">$</span>
-                    <input type="number" id="payment-amount" min="1" max="10000" step="0.01" 
-                           class="pl-10 w-full px-4 py-3 text-lg border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-slate-700 dark:text-white"
-                           placeholder="0.00">
-                  </div>
+              <!-- Payment Buttons - Front and Center -->
+              <div class="space-y-3 mb-8">
+                <!-- Apple Pay Button -->
+                <div id="apple-pay-button" style="display: block;">
+                  <button id="apple-pay-btn" class="w-full bg-black text-white py-4 px-6 rounded-xl flex items-center justify-center gap-3 hover:bg-gray-800 transition-colors shadow-lg">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                    </svg>
+                    <span class="text-lg font-medium">Pay with Apple Pay</span>
+                  </button>
                 </div>
                 
-                <div>
-                  <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Description (Optional)</label>
-                  <input type="text" id="payment-description" 
-                         class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-slate-700 dark:text-white"
-                         placeholder="Payment description">
+                <!-- Google Pay Button -->
+                <div id="google-pay-button" style="display: block;"></div>
+                
+                <!-- PayPal Button -->
+                <div id="paypal-button-container"></div>
+              </div>
+              
+              <!-- Payment Details Form -->
+              <div class="bg-slate-50 dark:bg-slate-700/50 rounded-xl p-6">
+                <h4 class="text-lg font-semibold text-slate-800 dark:text-slate-200 mb-4">Payment Details</h4>
+                <div class="space-y-4">
+                  <div>
+                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Payment Amount (USD) *</label>
+                    <div class="relative">
+                      <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-500 text-lg font-medium">$</span>
+                      <input type="number" id="payment-amount" min="1" max="10000" step="0.01" 
+                             class="pl-10 w-full px-4 py-3 text-lg border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-slate-700 dark:text-white transition-colors"
+                             placeholder="0.00">
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Description (Optional)</label>
+                    <input type="text" id="payment-description" 
+                           class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-slate-700 dark:text-white"
+                           placeholder="What is this payment for?">
+                  </div>
                 </div>
               </div>
               
-              <!-- Payment Status Message -->
-              <div id="payment-message" class="mt-4 text-center">
-                <p class="text-slate-500 dark:text-slate-400">Enter an amount of $1 or more to see payment options</p>
-              </div>
+              <!-- Status Messages -->
+              <div id="payment-message" class="text-center text-sm"></div>
             </div>
 
             <!-- Payment Methods Information -->
@@ -581,52 +602,52 @@
                 return;
             }
             
-            // Clear container
+            // Clear container and messages
             container.innerHTML = '';
             messageDiv.innerHTML = '';
             
-            if (!amount || amount < 1) {
-                messageDiv.innerHTML = '<p class="text-slate-500 dark:text-slate-400">Enter an amount of $1 or more to see payment options</p>';
-                return;
-            }
+            // Store current payment info
+            currentAmount = amount || 0;
+            currentDescription = description || 'Payment to SirsiNexus';
+            
+            // Always show buttons, but make them functional based on amount
+            showApplePayButton(true);
+            showGooglePayButton(true);
             
             // Check if PayPal SDK is loaded
             if (typeof paypal === 'undefined') {
                 console.error('PayPal SDK not loaded');
-                messageDiv.innerHTML = '<p class="text-red-500">PayPal SDK not loaded. Please refresh the page.</p>';
+                container.innerHTML = '<div class="bg-slate-100 dark:bg-slate-700 rounded-xl p-4 text-center"><p class="text-slate-500 dark:text-slate-400">PayPal is loading...</p></div>';
                 return;
             }
             
             // Check if paypal.Buttons is available
             if (typeof paypal.Buttons !== 'function') {
                 console.error('PayPal Buttons not available');
-                messageDiv.innerHTML = '<p class="text-red-500">PayPal Buttons not available. Please refresh the page.</p>';
+                container.innerHTML = '<div class="bg-slate-100 dark:bg-slate-700 rounded-xl p-4 text-center"><p class="text-red-500">PayPal unavailable. Please refresh.</p></div>';
                 return;
             }
             
             console.log('Rendering PayPal buttons for amount:', amount, 'description:', description);
             
-            // Store current payment info
-            currentAmount = amount;
-            currentDescription = description;
-            
-            // Show Apple Pay button if available
-            showApplePayButton(amount >= 1);
-            
-            // Show Google Pay button if available
-            showGooglePayButton(amount >= 1);
-            
             try {
                 paypal.Buttons({
                     createOrder: function(data, actions) {
-                        console.log('Creating PayPal order...');
+                        // Check amount at payment time
+                        const currentAmount = parseFloat(document.getElementById('payment-amount').value) || 0;
+                        if (currentAmount < 1) {
+                            highlightAmountField();
+                            throw new Error('Amount must be $1 or more');
+                        }
+                        
+                        console.log('Creating PayPal order for:', currentAmount);
                         return actions.order.create({
                             purchase_units: [{
                                 amount: {
-                                    value: amount.toFixed(2),
+                                    value: currentAmount.toFixed(2),
                                     currency_code: 'USD'
                                 },
-                                description: description
+                                description: document.getElementById('payment-description').value || 'Payment to SirsiNexus'
                             }]
                         });
                     },
@@ -639,8 +660,8 @@
                             const transaction = {
                                 id: details.id,
                                 payer: details.payer,
-                                amount: amount,
-                                description: description,
+                                amount: parseFloat(document.getElementById('payment-amount').value),
+                                description: document.getElementById('payment-description').value || 'Payment to SirsiNexus',
                                 timestamp: new Date().toISOString()
                             };
                             
@@ -652,27 +673,50 @@
                     },
                     onError: function(err) {
                         console.error('PayPal error:', err);
-                        messageDiv.innerHTML = '<p class="text-red-500">Payment failed. Please try again.</p>';
+                        messageDiv.innerHTML = '<p class="text-red-500 text-sm">Payment failed. Please try again.</p>';
                     },
                     onCancel: function(data) {
                         console.log('Payment cancelled:', data);
-                        messageDiv.innerHTML = '<p class="text-yellow-600">Payment was cancelled.</p>';
+                        messageDiv.innerHTML = '<p class="text-amber-600 text-sm">Payment was cancelled.</p>';
                     },
                     style: {
                         layout: 'vertical',
                         color: 'blue',
                         shape: 'pill',
-                        label: 'paypal'
+                        label: 'paypal',
+                        height: 50
                     }
                 }).render('#paypal-button-container').then(function() {
                     console.log('PayPal buttons rendered successfully');
                 }).catch(function(err) {
                     console.error('PayPal render error:', err);
-                    messageDiv.innerHTML = '<p class="text-red-500">Error loading payment buttons. Please refresh the page.</p>';
+                    container.innerHTML = '<div class="bg-red-50 dark:bg-red-900/20 rounded-xl p-4 text-center"><p class="text-red-600 text-sm">Error loading PayPal. Please refresh.</p></div>';
                 });
             } catch (error) {
                 console.error('PayPal initialization error:', error);
-                messageDiv.innerHTML = '<p class="text-red-500">Payment system error. Please contact support.</p>';
+                container.innerHTML = '<div class="bg-red-50 dark:bg-red-900/20 rounded-xl p-4 text-center"><p class="text-red-600 text-sm">PayPal system error.</p></div>';
+            }
+        }
+        
+        function highlightAmountField() {
+            const amountField = document.getElementById('payment-amount');
+            if (amountField) {
+                // Add error styling
+                amountField.classList.add('border-red-500', 'ring-2', 'ring-red-200');
+                amountField.focus();
+                
+                // Show error message
+                const messageDiv = document.getElementById('payment-message');
+                if (messageDiv) {
+                    messageDiv.innerHTML = '<p class="text-red-500 text-sm font-medium">⚠️ Please enter an amount of $1 or more to proceed</p>';
+                }
+                
+                // Remove error styling after user starts typing
+                amountField.addEventListener('input', function removeErrorStyling() {
+                    amountField.classList.remove('border-red-500', 'ring-2', 'ring-red-200');
+                    if (messageDiv) messageDiv.innerHTML = '';
+                    amountField.removeEventListener('input', removeErrorStyling);
+                }, { once: true });
             }
         }
         
