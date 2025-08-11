@@ -7,26 +7,26 @@ Testing user sign-up process and admin dashboard workflows end-to-end.
 
 ### 1. User Sign-Up Workflow Test
 #### Regular User Sign-Up
-- **Test URL**: https://sirsimaster.github.io/SirsiNexusPortal/signup.html
+- **Test URL**: https://sirsimaster.github.io/sirsinexusportal/signup.html
 - **Status**: ✅ TESTING IN PROGRESS
 - **Expected**: User can fill form, submit, receive confirmation
 - **Actual**: TBD
 
 #### Investor Sign-Up 
-- **Test URL**: https://sirsimaster.github.io/SirsiNexusPortal/signup.html
+- **Test URL**: https://sirsimaster.github.io/sirsinexusportal/signup.html
 - **Status**: ✅ TESTING IN PROGRESS  
 - **Expected**: Additional fields appear, validation works, application stored
 - **Actual**: TBD
 
 ### 2. Admin Dashboard Workflow Test
 #### Admin Login
-- **Test URL**: https://sirsimaster.github.io/SirsiNexusPortal/investor-login.html
+- **Test URL**: https://sirsimaster.github.io/sirsinexusportal/investor-login.html
 - **Status**: ✅ TESTING IN PROGRESS
 - **Expected**: Admin login redirects to dashboard
 - **Actual**: TBD
 
 #### Dashboard Features
-- **Test URL**: https://sirsimaster.github.io/SirsiNexusPortal/admin-dashboard.html
+- **Test URL**: https://sirsimaster.github.io/sirsinexusportal/admin-dashboard.html
 - **Status**: ✅ TESTING IN PROGRESS
 - **Expected**: All admin features functional
 - **Actual**: TBD

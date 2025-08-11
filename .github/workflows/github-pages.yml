@@ -31,12 +31,12 @@ jobs:
           cp -r SirsiNexusPortal _site/
           echo "Verifying structure:"
           ls -la _site/
-          ls -la _site/SirsiNexusPortal/index*.html
+          ls -la _site/sirsinexusportal/index*.html
       
       - name: Copy index to staging for non-main branches
         if: github.ref != 'refs/heads/main'
         run: |
-          cp _site/SirsiNexusPortal/index.html _site/SirsiNexusPortal/index-staging.html
+          cp _site/sirsinexusportal/index.html _site/sirsinexusportal/index-staging.html
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

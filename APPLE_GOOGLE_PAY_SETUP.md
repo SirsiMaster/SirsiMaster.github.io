@@ -98,7 +98,7 @@ You'll need to add this to your repository:
 SirsiMaster.github.io/
 ├── .well-known/
 │   └── apple-developer-merchantid-domain-association
-├── SirsiNexusPortal/
+├── sirsinexusportal/
 │   └── pay.html (✅ updated)
 └── README.md
 ```

@@ -11,7 +11,7 @@ This repository contains the GitHub Pages content for SirsiNexus platform docume
 ## Repository Details
 - Remote: https://github.com/SirsiMaster/SirsiMaster.github.io.git
 - Branch: main
-- Live URL: https://sirsimaster.github.io/SirsiNexusPortal/
+- Live URL: https://sirsimaster.github.io/sirsinexusportal/
 - Last Updated: $(date +"%Y-%m-%d %H:%M:%S")
 
 ## Quick Start

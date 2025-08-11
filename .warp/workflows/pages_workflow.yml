@@ -37,5 +37,5 @@ steps:
     description: "Deploy changes with safeguards"
 
   - name: "Verify Deployment"
-    command: "echo 'Visit https://sirsimaster.github.io/SirsiNexusPortal/ to verify changes'"
+    command: "echo 'Visit https://sirsimaster.github.io/sirsinexusportal/ to verify changes'"
     description: "Manual verification step"
