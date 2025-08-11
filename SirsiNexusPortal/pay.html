@@ -114,18 +114,13 @@
           <nav class="flex items-center gap-4">
             <a href="/SirsiNexusPortal/index.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">Home</a>
             
-            <!-- Admin Navigation - Only visible in admin mode -->
+            <!-- Admin Navigation - Only visible when accessing from admin portal -->
             <div id="admin-nav" class="hidden flex items-center gap-4">
               <a href="/SirsiNexusPortal/admin/create-invoice.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">Invoice Creator</a>
               <a href="/SirsiNexusPortal/admin/revenue-dashboard.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">Revenue Dashboard</a>
               <a href="/SirsiNexusPortal/admin/index.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">Admin Dashboard</a>
+              <button id="admin-logout-btn" class="text-sm text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 transition-colors" onclick="adminLogout()">Logout</button>
             </div>
-            
-            <!-- Admin Login Button - Only visible when not in admin mode -->
-            <button id="admin-login-btn" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors" onclick="showAdminLogin()">Admin</button>
-            
-            <!-- Admin Logout Button - Only visible in admin mode -->
-            <button id="admin-logout-btn" class="hidden text-sm text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 transition-colors" onclick="adminLogout()">Logout</button>
             
             <button id="theme-toggle" class="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors border border-slate-300 dark:border-slate-600" title="Toggle theme">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -229,38 +224,81 @@
             <div class="bg-gradient-to-r from-slate-50 to-emerald-50/20 dark:from-slate-900/50 dark:to-emerald-900/10 rounded-xl p-6">
               <div class="text-center">
                 <p class="text-slate-600 dark:text-slate-400 font-medium mb-4">Secure payment powered by PayPal Business</p>
-                <div class="flex justify-center items-center gap-6">
-                  <div class="flex flex-col items-center gap-1">
-                    <svg class="w-8 h-8 text-blue-600" viewBox="0 0 24 24" fill="currentColor">
+                
+                <!-- Primary Payment Methods -->
+                <div class="grid grid-cols-3 md:grid-cols-6 gap-4 mb-4">
+                  <div class="flex flex-col items-center gap-2 p-3 bg-white dark:bg-slate-700/50 rounded-lg">
+                    <svg class="w-10 h-10 text-[#003087]" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.3 2.42 1.15 4.26-.6 7.31-2.25 9.675-8.44 9.675h-1.81c-.37 0-.69.25-.78.6l-.52 3.31-.07.22c-.07.69-.59 1.24-1.29 1.24-.4 0-.77-.17-1.03-.42-.27-.26-.42-.62-.42-1.01z"/>
                     </svg>
-                    <span class="text-xs text-slate-600 dark:text-slate-400 font-medium">PayPal</span>
+                    <span class="text-xs text-slate-600 dark:text-slate-300 font-medium">PayPal</span>
                   </div>
-                  <div class="flex flex-col items-center gap-1">
-                    <svg class="w-8 h-8 text-slate-700 dark:text-slate-300" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M12.87 5.45c-.32-.96-1.04-1.6-2.16-1.6H6.33c-.24 0-.44.17-.48.4l-.03.17L4.43 14.4c-.02.15.08.29.23.29h1.72c.18 0 .33-.13.36-.3l.35-2.24c.04-.23.23-.4.47-.4h1.09c2.27 0 3.6-1.1 3.95-4.13.15-1.33-.02-2.37-.73-3.17z"/>
+                  
+                  <div class="flex flex-col items-center gap-2 p-3 bg-white dark:bg-slate-700/50 rounded-lg">
+                    <svg class="w-10 h-10 text-slate-900 dark:text-white" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M15.337 4.11c-.126.11-.24.255-.34.428a2.286 2.286 0 0 0-.258 1.047c.006.37.092.725.25 1.047.126.257.298.463.504.61.174.122.365.198.567.225.205.028.414.008.614-.059a2.51 2.51 0 0 0 1.14-.717 2.24 2.24 0 0 0 .502-.835c.097-.301.116-.62.056-.928a2.242 2.242 0 0 0-.372-.876 2.323 2.323 0 0 0-.717-.646 2.51 2.51 0 0 0-.887-.273 2.553 2.553 0 0 0-.932.11c-.306.088-.59.245-.827.467-.195.183-.364.398-.5.646zm3.842 7.842c-.45.062-.9-.013-1.312-.217a2.96 2.96 0 0 1-1.05-.78c-.287-.353-.485-.773-.58-1.225-.095-.452-.086-.924.028-1.37.114-.446.332-.856.638-1.198.306-.342.698-.608 1.141-.777.443-.168.925-.231 1.404-.184.479.047.943.218 1.353.499.41.281.755.668.998 1.128.243.46.374.977.382 1.505.008.528-.105 1.055-.331 1.534-.226.479-.562.897-.99 1.22-.428.323-.938.548-1.486.635z"/>
                     </svg>
-                    <span class="text-xs text-slate-600 dark:text-slate-400 font-medium">Apple Pay</span>
+                    <span class="text-xs text-slate-600 dark:text-slate-300 font-medium">Apple Pay</span>
                   </div>
-                  <div class="flex flex-col items-center gap-1">
-                    <svg class="w-8 h-8 text-green-600" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M12.87 5.45c-.32-.96-1.04-1.6-2.16-1.6H6.33c-.24 0-.44.17-.48.4l-.03.17L4.43 14.4c-.02.15.08.29.23.29h1.72c.18 0 .33-.13.36-.3l.35-2.24c.04-.23.23-.4.47-.4h1.09c2.27 0 3.6-1.1 3.95-4.13.15-1.33-.02-2.37-.73-3.17z"/>
-                    </svg>
-                    <span class="text-xs text-slate-600 dark:text-slate-400 font-medium">Google Pay</span>
+                  
+                  <div class="flex flex-col items-center gap-2 p-3 bg-white dark:bg-slate-700/50 rounded-lg">
+                    <div class="w-10 h-10 flex items-center justify-center">
+                      <svg class="w-8 h-8" viewBox="0 0 24 24">
+                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                      </svg>
+                    </div>
+                    <span class="text-xs text-slate-600 dark:text-slate-300 font-medium">Google Pay</span>
                   </div>
-                  <div class="flex flex-col items-center gap-1">
-                    <svg class="w-8 h-8 text-slate-600 dark:text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
-                    </svg>
-                    <span class="text-xs text-slate-600 dark:text-slate-400 font-medium">Credit Cards</span>
+                  
+                  <div class="flex flex-col items-center gap-2 p-3 bg-white dark:bg-slate-700/50 rounded-lg">
+                    <div class="flex gap-1">
+                      <div class="w-4 h-6 bg-[#EB001B] rounded-sm"></div>
+                      <div class="w-4 h-6 bg-[#FF5F00] rounded-sm -ml-2"></div>
+                    </div>
+                    <span class="text-xs text-slate-600 dark:text-slate-300 font-medium">Mastercard</span>
                   </div>
-                  <div class="flex flex-col items-center gap-1">
-                    <svg class="w-8 h-8 text-blue-500" viewBox="0 0 24 24" fill="currentColor">
+                  
+                  <div class="flex flex-col items-center gap-2 p-3 bg-white dark:bg-slate-700/50 rounded-lg">
+                    <div class="w-10 h-6 bg-[#1A1F71] text-white flex items-center justify-center text-xs font-bold rounded">
+                      VISA
+                    </div>
+                    <span class="text-xs text-slate-600 dark:text-slate-300 font-medium">Visa</span>
+                  </div>
+                  
+                  <div class="flex flex-col items-center gap-2 p-3 bg-white dark:bg-slate-700/50 rounded-lg">
+                    <svg class="w-10 h-10 text-[#3D95CE]" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M13.101 12.9c0-.51-.41-.93-.93-.93s-.93.41-.93.93.41.93.93.93.93-.41.93-.93zm-1.86-4.65c-.51 0-.93.41-.93.93s.41.93.93.93.93-.41.93-.93-.41-.93-.93-.93z"/>
+                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
                     </svg>
-                    <span class="text-xs text-slate-600 dark:text-slate-400 font-medium">Venmo</span>
+                    <span class="text-xs text-slate-600 dark:text-slate-300 font-medium">Venmo</span>
                   </div>
                 </div>
+                
+                <!-- Additional Methods -->
+                <div class="flex justify-center items-center gap-6 mb-4">
+                  <div class="flex flex-col items-center gap-1">
+                    <div class="w-8 h-5 bg-[#0079C1] text-white flex items-center justify-center text-xs font-bold rounded">
+                      AMEX
+                    </div>
+                    <span class="text-xs text-slate-500 dark:text-slate-400">American Express</span>
+                  </div>
+                  <div class="flex flex-col items-center gap-1">
+                    <div class="w-8 h-5 bg-[#FF6000] text-white flex items-center justify-center text-xs font-bold rounded">
+                      DISC
+                    </div>
+                    <span class="text-xs text-slate-500 dark:text-slate-400">Discover</span>
+                  </div>
+                  <div class="flex flex-col items-center gap-1">
+                    <svg class="w-6 h-6 text-[#006FCF]" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M1.5 5A1.5 1.5 0 003 3.5h18A1.5 1.5 0 0022.5 5v14a1.5 1.5 0 01-1.5 1.5H3A1.5 1.5 0 011.5 19V5zm3 2v10h15V7h-15z"/>
+                    </svg>
+                    <span class="text-xs text-slate-500 dark:text-slate-400">Bank Transfer</span>
+                  </div>
+                </div>
+                
                 <div class="mt-4 text-xs text-slate-500 dark:text-slate-400">
                   <p class="flex items-center justify-center gap-1">
                     <svg class="w-4 h-4 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
@@ -281,11 +319,11 @@
             <p class="text-slate-600 dark:text-slate-400 mb-3">
               Our support team is here to assist you with any payment questions.
             </p>
-            <a href="mailto:support@sirsinexus.com" class="inline-flex items-center gap-2 text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 font-semibold transition-colors">
+            <a href="mailto:cylton@cylton.com" class="inline-flex items-center gap-2 text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 font-semibold transition-colors">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
               </svg>
-              support@sirsinexus.com
+              cylton@cylton.com
             </a>
           </div>
         </div>
