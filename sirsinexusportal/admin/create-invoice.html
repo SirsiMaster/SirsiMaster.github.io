@@ -390,7 +390,7 @@
         currentInvoice = invoice;
         
         const invoiceData = encodeURIComponent(JSON.stringify(invoice));
-        const baseUrl = window.location.origin + window.location.pathname.replace('create-invoice-clean.html', 'pay.html');
+        const baseUrl = window.location.origin + '/sirsinexusportal/pay.html';
         const paymentLink = `${baseUrl}?invoice=${invoiceData}`;
         
         document.getElementById('generated-link').value = paymentLink;
@@ -432,7 +432,7 @@
         }
         
         const invoiceData = encodeURIComponent(JSON.stringify(currentInvoice));
-        const previewUrl = `pay.html?invoice=${invoiceData}`;
+        const previewUrl = `/sirsinexusportal/pay.html?invoice=${invoiceData}`;
         window.open(previewUrl, '_blank');
       }
 
