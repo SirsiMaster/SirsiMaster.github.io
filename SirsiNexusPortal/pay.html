@@ -418,11 +418,34 @@
                 description = `Invoice ${window.currentInvoice.number} - ${window.currentInvoice.service}`;
             } else {
                 // Custom payment
-                amount = parseFloat(document.getElementById('payment-amount').value);
-                description = document.getElementById('payment-description').value || 'Payment to Collymore Consulting';
+                const amountInput = document.getElementById('payment-amount');
+                amount = amountInput ? parseFloat(amountInput.value) : 0;
+                description = document.getElementById('payment-description')?.value || 'Payment to Collymore Consulting';
                 
                 if (!amount || amount < 5) {
-                    container.innerHTML = '<p class="text-center text-gray-500 dark:text-gray-400 py-4">Enter an amount of $5 or more to continue</p>';
+                    // Show PayPal button with disabled state and message
+                    container.innerHTML = `
+                        <div class="text-center py-4">
+                            <p class="text-gray-500 dark:text-gray-400 mb-4">Enter an amount of $5 or more to continue</p>
+                            <div class="opacity-50 pointer-events-none" id="disabled-button"></div>
+                        </div>
+                    `;
+                    
+                    // Still render a disabled button for visual reference
+                    paypal.Buttons({
+                        createOrder: function() {
+                            return Promise.reject('Please enter an amount first');
+                        },
+                        style: {
+                            layout: 'vertical',
+                            color: 'blue',
+                            shape: 'pill',
+                            label: 'paypal',
+                            height: 50
+                        }
+                    }).render('#disabled-button').catch(() => {
+                        // Ignore render errors for disabled button
+                    });
                     return;
                 }
             }
