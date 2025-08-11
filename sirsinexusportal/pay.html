@@ -36,6 +36,9 @@
     <!-- PayPal SDK with Apple Pay and alternative payment methods -->
     <script src="https://www.paypal.com/sdk/js?client-id=ASUI7q4yAs6anh26J6T_7hLyX0UwUbVWQS-8lgngn9z0W6VX4zrt2y7Q_auiXBAUrzxd1ibBrz22KDAr&currency=USD&components=buttons,marks,funding-eligibility&enable-funding=venmo,paylater,card&disable-funding=credit"></script>
     
+    <!-- Google Pay SDK -->
+    <script async src="https://pay.google.com/gp/p/js/pay.js" onload="onGooglePayLoaded()"></script>
+    
     <!-- Security and privacy -->
     <meta name="robots" content="noindex, nofollow">
     <meta name="referrer" content="no-referrer">
@@ -273,9 +276,24 @@
               </div>
             </div>
 
-            <!-- PayPal Buttons Container -->
+            <!-- Payment Buttons Container -->
             <div class="mt-4">
+              <!-- Apple Pay Button -->
+              <div id="apple-pay-button" class="mb-4" style="display: none;">
+                <button id="apple-pay-btn" class="w-full bg-black text-white py-4 px-6 rounded-lg flex items-center justify-center gap-3 hover:bg-gray-800 transition-colors">
+                  <svg class="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                  </svg>
+                  <span class="text-lg font-medium">Pay with Apple Pay</span>
+                </button>
+              </div>
+              
+              <!-- Google Pay Button -->
+              <div id="google-pay-button" class="mb-4" style="display: none;"></div>
+              
+              <!-- PayPal Button -->
               <div id="paypal-button-container"></div>
+              
               <div id="payment-message" class="text-center mt-4 text-slate-600 dark:text-slate-400"></div>
             </div>
           </div>
@@ -322,6 +340,64 @@
     <script>
         // Global variables
         let currentInvoice = null;
+        let currentAmount = 0;
+        let currentDescription = '';
+        let googlePayClient = null;
+        
+        // Google Pay configuration
+        const googlePayConfig = {
+            environment: 'TEST', // Change to 'PRODUCTION' for live
+            apiVersion: 2,
+            apiVersionMinor: 0,
+            allowedPaymentMethods: [{
+                type: 'CARD',
+                parameters: {
+                    allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
+                    allowedCardNetworks: ['AMEX', 'DISCOVER', 'JCB', 'MASTERCARD', 'VISA']
+                },
+                tokenizationSpecification: {
+                    type: 'PAYMENT_GATEWAY',
+                    parameters: {
+                        'gateway': 'example',
+                        'gatewayMerchantId': 'exampleGatewayMerchantId'
+                    }
+                }
+            }]
+        };
+        
+        // Google Pay callback
+        function onGooglePayLoaded() {
+            console.log('Google Pay SDK loaded');
+            if (typeof google !== 'undefined' && google.payments) {
+                googlePayClient = new google.payments.api.PaymentsClient(googlePayConfig);
+                checkGooglePayAvailability();
+            }
+        }
+        
+        function checkGooglePayAvailability() {
+            if (!googlePayClient) return;
+            
+            googlePayClient.isReadyToPay({
+                apiVersion: googlePayConfig.apiVersion,
+                apiVersionMinor: googlePayConfig.apiVersionMinor,
+                allowedPaymentMethods: googlePayConfig.allowedPaymentMethods
+            }).then(function(response) {
+                if (response.result) {
+                    console.log('Google Pay is available');
+                    // Will show button when amount is entered
+                }
+            }).catch(function(err) {
+                console.log('Google Pay not available:', err);
+            });
+        }
+        
+        function checkApplePayAvailability() {
+            if (window.ApplePaySession && ApplePaySession.canMakePayments()) {
+                console.log('Apple Pay is available');
+                return true;
+            }
+            return false;
+        }
         
         // Wait for both DOM and PayPal SDK to be fully loaded
         function initializePaymentSystem() {
@@ -462,6 +538,16 @@
             }
             
             console.log('Rendering PayPal buttons for amount:', amount, 'description:', description);
+            
+            // Store current payment info
+            currentAmount = amount;
+            currentDescription = description;
+            
+            // Show Apple Pay button if available
+            showApplePayButton(amount >= 1);
+            
+            // Show Google Pay button if available
+            showGooglePayButton(amount >= 1);
             
             try {
                 paypal.Buttons({
@@ -632,6 +718,108 @@
                 checkAdminStatus();
                 alert('Logged out of admin mode.');
             }
+        }
+        
+        // Apple Pay functions
+        function showApplePayButton(show) {
+            const applePayButton = document.getElementById('apple-pay-button');
+            if (show && checkApplePayAvailability()) {
+                applePayButton.style.display = 'block';
+                document.getElementById('apple-pay-btn').onclick = function() {
+                    handleApplePay();
+                };
+            } else {
+                applePayButton.style.display = 'none';
+            }
+        }
+        
+        function handleApplePay() {
+            if (!currentAmount || currentAmount < 1) {
+                alert('Please enter a valid payment amount');
+                return;
+            }
+            
+            const paymentRequest = {
+                countryCode: 'US',
+                currencyCode: 'USD',
+                supportedNetworks: ['visa', 'masterCard', 'amex', 'discover'],
+                merchantCapabilities: ['supports3DS'],
+                total: {
+                    label: currentDescription || 'Payment to SirsiNexus',
+                    amount: currentAmount.toFixed(2)
+                }
+            };
+            
+            const session = new ApplePaySession(3, paymentRequest);
+            
+            session.onvalidatemerchant = function(event) {
+                // In a real implementation, you'd validate with your server
+                console.log('Apple Pay merchant validation needed');
+                session.abort();
+                alert('Apple Pay setup required - contact support');
+            };
+            
+            session.onpaymentauthorized = function(event) {
+                // Process payment with your payment processor
+                session.completePayment(ApplePaySession.STATUS_SUCCESS);
+                showSuccessMessage({id: 'apple-pay-' + Date.now()});
+            };
+            
+            session.begin();
+        }
+        
+        // Google Pay functions
+        function showGooglePayButton(show) {
+            const googlePayButton = document.getElementById('google-pay-button');
+            if (show && googlePayClient) {
+                googlePayButton.style.display = 'block';
+                createGooglePayButton();
+            } else {
+                googlePayButton.style.display = 'none';
+            }
+        }
+        
+        function createGooglePayButton() {
+            const button = googlePayClient.createButton({
+                onClick: handleGooglePay,
+                buttonColor: 'default',
+                buttonType: 'pay'
+            });
+            
+            const container = document.getElementById('google-pay-button');
+            container.innerHTML = '';
+            container.appendChild(button);
+        }
+        
+        function handleGooglePay() {
+            if (!currentAmount || currentAmount < 1) {
+                alert('Please enter a valid payment amount');
+                return;
+            }
+            
+            const paymentDataRequest = {
+                apiVersion: googlePayConfig.apiVersion,
+                apiVersionMinor: googlePayConfig.apiVersionMinor,
+                allowedPaymentMethods: googlePayConfig.allowedPaymentMethods,
+                transactionInfo: {
+                    totalPriceStatus: 'FINAL',
+                    totalPrice: currentAmount.toFixed(2),
+                    currencyCode: 'USD'
+                },
+                merchantInfo: {
+                    merchantName: 'SirsiNexus'
+                }
+            };
+            
+            googlePayClient.loadPaymentData(paymentDataRequest)
+                .then(function(paymentData) {
+                    console.log('Google Pay success:', paymentData);
+                    showSuccessMessage({id: 'google-pay-' + Date.now()});
+                })
+                .catch(function(err) {
+                    console.error('Google Pay error:', err);
+                    alert('Google Pay payment failed');
+                });
         }
     </script>
 </body>
