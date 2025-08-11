@@ -315,8 +315,38 @@
     </div>
 
     <script>
-        // Theme toggle functionality
+        // Global variables
+        let currentInvoice = null;
+        
+        // Single DOMContentLoaded event to avoid conflicts
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('Initializing payment page...');
+            console.log('PayPal SDK loaded:', typeof paypal !== 'undefined');
+            
+            // Initialize theme toggle
+            initializeThemeToggle();
+            
+            // Initialize admin status
+            checkAdminStatus();
+            
+            // Initialize PayPal payment system
+            const urlParams = new URLSearchParams(window.location.search);
+            const invoiceData = urlParams.get('invoice');
+            
+            if (invoiceData) {
+                try {
+                    currentInvoice = JSON.parse(decodeURIComponent(invoiceData));
+                    showInvoicePayment();
+                } catch (e) {
+                    console.error('Invalid invoice data:', e);
+                    showCustomPayment();
+                }
+            } else {
+                showCustomPayment();
+            }
+        });
+        
+        function initializeThemeToggle() {
             const themeToggle = document.getElementById('theme-toggle');
             if (themeToggle) {
                 themeToggle.addEventListener('click', function(e) {
@@ -333,31 +363,7 @@
                     }
                 });
             }
-        });
-    </script>
-    <script>
-        // Global variables
-        let currentInvoice = null;
-        
-        // Initialize when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('PayPal SDK loaded:', typeof paypal !== 'undefined');
-            
-            const urlParams = new URLSearchParams(window.location.search);
-            const invoiceData = urlParams.get('invoice');
-            
-            if (invoiceData) {
-                try {
-                    currentInvoice = JSON.parse(decodeURIComponent(invoiceData));
-                    showInvoicePayment();
-                } catch (e) {
-                    console.error('Invalid invoice data:', e);
-                    showCustomPayment();
-                }
-            } else {
-                showCustomPayment();
-            }
-        });
+        }
         
         function showInvoicePayment() {
             if (!currentInvoice) return;
