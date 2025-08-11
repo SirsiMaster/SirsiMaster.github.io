@@ -3,30 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Invoice - Collymore Consulting</title>
-    <link href="./assets/css/tailwind.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>SirsiNexus - Professional Invoice Creator</title>
+    <meta name="description" content="Create professional invoices with multi-channel distribution - SirsiNexus Business Tools">
+    <meta name="theme-color" content="#059669">
+    
+    <!-- Preload critical resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- TailwindCSS with SirsiNexus theme -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              'inter': ['Inter', 'sans-serif'],
+            },
+            colors: {
+              emerald: {
+                600: '#059669',
+                700: '#047857',
+              },
+            },
+          },
+        },
+      }
+    </script>
+    
+    <!-- QR Code Library -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    
+    <!-- Security and privacy -->
     <meta name="robots" content="noindex, nofollow">
+    <meta name="referrer" content="no-referrer">
+    
+    <!-- Fresh Theme Toggle -->
+    <script>
+      (function() {
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const shouldBeDark = savedTheme ? savedTheme === 'dark' : prefersDark;
+        
+        if (shouldBeDark) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      })();
+    </script>
+
+    <style>
+      /* SirsiNexus geometric patterns */
+      .hex-pattern {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-image: 
+          url('data:image/svg+xml,<svg width="100" height="86.6" xmlns="http://www.w3.org/2000/svg"><polygon points="50,0 100,25 100,61.6 50,86.6 0,61.6 0,25" fill="none" stroke="rgba(16,185,129,0.08)" stroke-width="1"/></svg>');
+        background-size: 100px 86.6px;
+        opacity: 0.4;
+      }
+
+      .invoice-glow {
+        box-shadow: 0 0 40px rgba(16, 185, 129, 0.12);
+      }
+
+      .invoice-glow:hover {
+        box-shadow: 0 0 60px rgba(16, 185, 129, 0.18);
+      }
+    </style>
 </head>
-<body class="h-full bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-    <!-- Header -->
-    <nav class="bg-white dark:bg-gray-800 shadow-sm border-b dark:border-gray-700">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex items-center">
-                    <div class="flex-shrink-0">
-                        <h1 class="text-xl font-bold text-gray-900 dark:text-white">Collymore Consulting - Invoice Creator</h1>
-                    </div>
+<body class="font-inter bg-gradient-to-br from-slate-50 via-emerald-50/20 to-slate-50 dark:from-slate-900 dark:via-emerald-900/10 dark:to-slate-900 text-slate-900 dark:text-slate-100 min-h-screen">
+    <!-- Professional Header with Sirsi Branding -->
+    <header class="bg-white dark:bg-slate-800/95 sticky top-0 z-50 border-b border-slate-200 dark:border-slate-700 backdrop-blur-sm">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="flex h-16 items-center justify-between">
+          <div class="flex items-center gap-6">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 flex items-center justify-center">
+                <img src="/SirsiNexusPortal/assets/images/Sirsi_Logo_300ppi_cguiyg.png" alt="Sirsi Logo" class="w-12 h-12 object-contain dark:hidden">
+                <img src="/SirsiNexusPortal/assets/images/Sirsi_Logo_300ppi_Inverted_lt7asx.png" alt="Sirsi Logo" class="w-12 h-12 object-contain hidden dark:block">
+              </div>
+              <div>
+                <h1 class="text-lg font-semibold text-slate-900 dark:text-slate-100">
+                  SirsiNexus
+                </h1>
+                <div class="flex items-center gap-2">
+                  <span class="text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded">
+                    Invoice Creator
+                  </span>
+                  <div class="flex items-center gap-1">
+                    <div class="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
+                    <span class="text-xs text-slate-600 dark:text-slate-300">Professional</span>
+                  </div>
                 </div>
-                <div class="flex items-center">
-                    <button id="theme-toggle" class="p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700">
-                        <i class="fas fa-moon dark:hidden"></i>
-                        <i class="fas fa-sun hidden dark:inline"></i>
-                    </button>
-                </div>
+              </div>
             </div>
+          </div>
+          <nav class="flex items-center gap-6">
+            <a href="/SirsiNexusPortal/index.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">Home</a>
+            <a href="/SirsiNexusPortal/pay.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">Payment Portal</a>
+            <button id="theme-toggle" class="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors border border-slate-300 dark:border-slate-600" title="Toggle theme">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+              </svg>
+            </button>
+          </nav>
         </div>
-    </nav>
+      </div>
+    </header>
 
     <div class="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
         <div class="max-w-2xl mx-auto">
