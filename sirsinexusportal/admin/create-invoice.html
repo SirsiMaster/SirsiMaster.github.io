@@ -390,7 +390,14 @@
         currentInvoice = invoice;
         
         const invoiceData = encodeURIComponent(JSON.stringify(invoice));
-        const baseUrl = window.location.origin + '/sirsinexusportal/pay.html';
+        // Handle both local development and GitHub Pages deployment
+        let baseUrl;
+        if (window.location.hostname === 'sirsimaster.github.io') {
+          baseUrl = window.location.origin + '/sirsinexusportal/pay.html';
+        } else {
+          // For local development or other deployments
+          baseUrl = window.location.origin + '/sirsinexusportal/pay.html';
+        }
         const paymentLink = `${baseUrl}?invoice=${invoiceData}`;
         
         document.getElementById('generated-link').value = paymentLink;
@@ -431,9 +438,30 @@
           return;
         }
         
+        console.log('Current invoice data:', currentInvoice);
         const invoiceData = encodeURIComponent(JSON.stringify(currentInvoice));
-        const previewUrl = `/sirsinexusportal/pay.html?invoice=${invoiceData}`;
-        window.open(previewUrl, '_blank');
+        console.log('Encoded invoice data:', invoiceData);
+        
+        // Handle both local development and GitHub Pages deployment
+        let previewUrl;
+        if (window.location.hostname === 'sirsimaster.github.io') {
+          previewUrl = `/sirsinexusportal/pay.html?invoice=${invoiceData}`;
+        } else {
+          // For local development or other deployments
+          previewUrl = `/sirsinexusportal/pay.html?invoice=${invoiceData}`;
+        }
+        
+        console.log('Preview URL:', previewUrl);
+        console.log('Current hostname:', window.location.hostname);
+        console.log('Current origin:', window.location.origin);
+        
+        // Try to open the preview
+        const newWindow = window.open(previewUrl, '_blank');
+        if (!newWindow) {
+          alert('Please allow popups for this site to use the preview function.');
+        } else {
+          console.log('Preview window opened successfully');
+        }
       }
 
       function emailInvoice() {
