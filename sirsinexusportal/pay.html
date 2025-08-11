@@ -198,114 +198,37 @@
           </div>
           
           <div class="p-8">
-            <!-- Custom Amount Input (if no invoice) -->
+            <!-- Simple Payment Form -->
             <div id="custom-payment-section" class="space-y-6">
-              <div class="space-y-2">
-                <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300">Payment Amount</label>
-                <div class="relative">
-                  <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-500 text-xl font-medium">$</span>
-                  <input type="number" id="payment-amount" min="5" max="10000" step="0.01" 
-                         class="pl-10 w-full px-4 py-4 text-xl border-2 border-slate-300 dark:border-slate-600 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-slate-700 dark:text-white transition-colors"
-                         placeholder="0.00">
-                </div>
+              <div class="text-center mb-6">
+                <h3 class="text-xl font-semibold text-slate-800 dark:text-slate-200 mb-2">Enter Payment Details</h3>
+                <p class="text-slate-600 dark:text-slate-400">All payments processed securely through PayPal</p>
               </div>
-              <div class="space-y-2">
-                <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300">Description (Optional)</label>
-                <input type="text" id="payment-description" 
-                       class="w-full px-4 py-3 border-2 border-slate-300 dark:border-slate-600 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-slate-700 dark:text-white transition-colors"
-                       placeholder="What is this payment for?">
+              
+              <div class="space-y-4">
+                <div>
+                  <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Payment Amount (USD)</label>
+                  <div class="relative">
+                    <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-500 text-lg font-medium">$</span>
+                    <input type="number" id="payment-amount" min="1" max="10000" step="0.01" 
+                           class="pl-10 w-full px-4 py-3 text-lg border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-slate-700 dark:text-white"
+                           placeholder="0.00">
+                  </div>
+                </div>
+                
+                <div>
+                  <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Description (Optional)</label>
+                  <input type="text" id="payment-description" 
+                         class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-slate-700 dark:text-white"
+                         placeholder="Payment description">
+                </div>
               </div>
             </div>
 
-            <!-- PayPal Button Container -->
-            <div id="paypal-button-container" class="my-8"></div>
-
-            <!-- Payment Methods Section -->
-            <div class="bg-gradient-to-r from-slate-50 to-emerald-50/20 dark:from-slate-900/50 dark:to-emerald-900/10 rounded-xl p-6">
-              <div class="text-center">
-                <p class="text-slate-600 dark:text-slate-400 font-medium mb-4">100% Secure Payment Processing</p>
-                
-                <!-- PayPal Primary Button -->
-                <div class="mb-6">
-                  <div class="flex flex-col items-center gap-3 p-4 bg-white dark:bg-slate-700/50 rounded-lg border-2 border-[#003087]/20">
-                    <svg class="w-16 h-16 text-[#003087]" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.3 2.42 1.15 4.26-.6 7.31-2.25 9.675-8.44 9.675h-1.81c-.37 0-.69.25-.78.6l-.52 3.31-.07.22c-.07.69-.59 1.24-1.29 1.24-.4 0-.77-.17-1.03-.42-.27-.26-.42-.62-.42-1.01z"/>
-                    </svg>
-                    <div>
-                      <h4 class="font-bold text-slate-900 dark:text-slate-100 text-lg">PayPal Business</h4>
-                      <p class="text-sm text-slate-600 dark:text-slate-400">Primary Payment Processor</p>
-                    </div>
-                  </div>
-                </div>
-                
-                <!-- Available Payment Methods (Processed through PayPal) -->
-                <div class="mb-4">
-                  <h5 class="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Payment Methods Available Through PayPal:</h5>
-                  <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
-                    <div class="flex items-center gap-2 p-2 bg-white dark:bg-slate-700/50 rounded-lg border border-slate-200 dark:border-slate-600">
-                      <svg class="w-6 h-6 text-[#003087]" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.3 2.42 1.15 4.26-.6 7.31-2.25 9.675-8.44 9.675h-1.81c-.37 0-.69.25-.78.6l-.52 3.31-.07.22c-.07.69-.59 1.24-1.29 1.24-.4 0-.77-.17-1.03-.42-.27-.26-.42-.62-.42-1.01z"/>
-                      </svg>
-                      <span class="text-xs font-medium text-slate-700 dark:text-slate-300">PayPal Balance</span>
-                    </div>
-                    
-                    <div class="flex items-center gap-2 p-2 bg-white dark:bg-slate-700/50 rounded-lg border border-slate-200 dark:border-slate-600">
-                      <svg class="w-6 h-6 text-slate-700 dark:text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
-                      </svg>
-                      <span class="text-xs font-medium text-slate-700 dark:text-slate-300">Debit Cards</span>
-                    </div>
-                    
-                    <div class="flex items-center gap-2 p-2 bg-white dark:bg-slate-700/50 rounded-lg border border-slate-200 dark:border-slate-600">
-                      <svg class="w-6 h-6 text-[#3D95CE]" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M13.101 12.9c0-.51-.41-.93-.93-.93s-.93.41-.93.93.41.93.93.93.93-.41.93-.93zm-1.86-4.65c-.51 0-.93.41-.93.93s.41.93.93.93.93-.41.93-.93-.41-.93-.93-.93z"/>
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
-                      </svg>
-                      <span class="text-xs font-medium text-slate-700 dark:text-slate-300">Venmo</span>
-                    </div>
-                    
-                    <div class="flex items-center gap-2 p-2 bg-white dark:bg-slate-700/50 rounded-lg border border-slate-200 dark:border-slate-600">
-                      <div class="w-6 h-4 bg-gradient-to-r from-blue-600 to-blue-800 text-white flex items-center justify-center text-xs font-bold rounded">
-                        P
-                      </div>
-                      <span class="text-xs font-medium text-slate-700 dark:text-slate-300">Pay Later</span>
-                    </div>
-                    
-                    <div class="flex items-center gap-2 p-2 bg-white dark:bg-slate-700/50 rounded-lg border border-slate-200 dark:border-slate-600">
-                      <svg class="w-6 h-6 text-slate-600 dark:text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
-                      </svg>
-                      <span class="text-xs font-medium text-slate-700 dark:text-slate-300">Mobile Pay</span>
-                    </div>
-                    
-                    <div class="flex items-center gap-2 p-2 bg-white dark:bg-slate-700/50 rounded-lg border border-slate-200 dark:border-slate-600">
-                      <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                      </svg>
-                      <span class="text-xs font-medium text-slate-700 dark:text-slate-300">Bank Transfer</span>
-                    </div>
-                  </div>
-                </div>
-                
-                <!-- Security Notice -->
-                <div class="bg-emerald-50 dark:bg-emerald-900/20 rounded-lg p-4 mb-4">
-                  <div class="flex items-center justify-center gap-2 mb-2">
-                    <svg class="w-5 h-5 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
-                      <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
-                    </svg>
-                    <h6 class="font-semibold text-emerald-800 dark:text-emerald-200">Enterprise Security</h6>
-                  </div>
-                  <p class="text-xs text-emerald-700 dark:text-emerald-300 text-center">
-                    All payments processed exclusively through PayPal's secure platform<br>
-                    • PCI DSS Level 1 Compliant • 256-bit SSL Encryption • Buyer Protection
-                  </p>
-                </div>
-                
-                <div class="text-xs text-slate-500 dark:text-slate-400">
-                  <p class="mb-1"><strong>Important:</strong> All payments are processed securely through PayPal Business.</p>
-                  <p>Available payment methods depend on your PayPal account settings and location.</p>
-                </div>
-              </div>
+            <!-- PayPal Buttons Container -->
+            <div class="mt-8">
+              <div id="paypal-button-container"></div>
+              <div id="payment-message" class="text-center mt-4 text-slate-600 dark:text-slate-400"></div>
             </div>
           </div>
         </div>
@@ -370,118 +293,156 @@
         });
     </script>
     <script>
-        // Check for invoice parameter in URL
-        document.addEventListener('DOMContentLoaded', () => {
+        // Global variables
+        let currentInvoice = null;
+        
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('PayPal SDK loaded:', typeof paypal !== 'undefined');
+            
             const urlParams = new URLSearchParams(window.location.search);
             const invoiceData = urlParams.get('invoice');
             
             if (invoiceData) {
-                displayInvoice(JSON.parse(decodeURIComponent(invoiceData)));
+                try {
+                    currentInvoice = JSON.parse(decodeURIComponent(invoiceData));
+                    showInvoicePayment();
+                } catch (e) {
+                    console.error('Invalid invoice data:', e);
+                    showCustomPayment();
+                }
             } else {
-                showCustomPaymentForm();
+                showCustomPayment();
             }
-            
-            initializePayPalButton();
         });
-
-        function displayInvoice(invoice) {
+        
+        function showInvoicePayment() {
+            if (!currentInvoice) return;
+            
             document.getElementById('invoice-section').classList.remove('hidden');
             document.getElementById('custom-payment-section').style.display = 'none';
             
-            document.getElementById('invoice-number').textContent = invoice.number;
-            document.getElementById('invoice-service').textContent = invoice.service;
-            document.getElementById('invoice-client').textContent = invoice.client;
-            document.getElementById('invoice-date').textContent = new Date(invoice.date).toLocaleDateString();
-            document.getElementById('invoice-amount').textContent = '$' + parseFloat(invoice.amount).toFixed(2);
+            document.getElementById('invoice-number').textContent = currentInvoice.number;
+            document.getElementById('invoice-service').textContent = currentInvoice.service;
+            document.getElementById('invoice-client').textContent = currentInvoice.client;
+            document.getElementById('invoice-date').textContent = new Date(currentInvoice.date).toLocaleDateString();
+            document.getElementById('invoice-amount').textContent = '$' + parseFloat(currentInvoice.amount).toFixed(2);
             
-            // Store invoice data globally for payment
-            window.currentInvoice = invoice;
+            renderPayPalButtons(parseFloat(currentInvoice.amount), `Invoice ${currentInvoice.number} - ${currentInvoice.service}`);
         }
-
-        function showCustomPaymentForm() {
+        
+        function showCustomPayment() {
             document.getElementById('custom-payment-section').style.display = 'block';
             
-            // Real-time PayPal button updates
-            document.getElementById('payment-amount').addEventListener('input', debounce(initializePayPalButton, 500));
-            document.getElementById('payment-description').addEventListener('input', debounce(initializePayPalButton, 500));
-        }
-
-        function initializePayPalButton() {
-            const container = document.getElementById('paypal-button-container');
-            container.innerHTML = '';
+            // Add event listeners for real-time updates
+            const amountInput = document.getElementById('payment-amount');
+            const descInput = document.getElementById('payment-description');
             
-            let amount, description;
-            
-            if (window.currentInvoice) {
-                // Invoice payment
-                amount = parseFloat(window.currentInvoice.amount);
-                description = `Invoice ${window.currentInvoice.number} - ${window.currentInvoice.service}`;
-            } else {
-                // Custom payment
-                const amountInput = document.getElementById('payment-amount');
-                amount = amountInput ? parseFloat(amountInput.value) : 0;
-                description = document.getElementById('payment-description')?.value || 'Payment to Collymore Consulting';
-                
-                if (!amount || amount < 5) {
-                    // Show PayPal button with disabled state and message
-                    container.innerHTML = `
-                        <div class="text-center py-4">
-                            <p class="text-gray-500 dark:text-gray-400 mb-4">Enter an amount of $5 or more to continue</p>
-                            <div class="opacity-50 pointer-events-none" id="disabled-button"></div>
-                        </div>
-                    `;
-                    
-                    // Still render a disabled button for visual reference
-                    paypal.Buttons({
-                        createOrder: function() {
-                            return Promise.reject('Please enter an amount first');
-                        },
-                        style: {
-                            layout: 'vertical',
-                            color: 'blue',
-                            shape: 'pill',
-                            label: 'paypal',
-                            height: 50
-                        }
-                    }).render('#disabled-button').catch(() => {
-                        // Ignore render errors for disabled button
-                    });
-                    return;
-                }
+            if (amountInput) {
+                amountInput.addEventListener('input', updatePayPalButtons);
             }
-
-            paypal.Buttons({
-                createOrder: function(data, actions) {
-                    return actions.order.create({
-                        purchase_units: [{
-                            amount: {
-                                value: amount.toFixed(2)
-                            },
-                            description: description,
-                            payee: {
-                                email_address: 'cylton@cylton.com'
-                            }
-                        }]
-                    });
-                },
-                onApprove: function(data, actions) {
-                    return actions.order.capture().then(function(details) {
-                        recordTransaction(details, amount, description);
-                        showSuccessModal();
-                    });
-                },
-                onError: function(err) {
-                    console.error('PayPal error:', err);
-                    alert('Payment failed. Please try again or contact support.');
-                },
-                style: {
-                    layout: 'vertical',
-                    color: 'blue',
-                    shape: 'pill',
-                    label: 'paypal',
-                    height: 50
-                }
-            }).render('#paypal-button-container');
+            if (descInput) {
+                descInput.addEventListener('input', updatePayPalButtons);
+            }
+            
+            // Initial render
+            updatePayPalButtons();
+        }
+        
+        function updatePayPalButtons() {
+            const amountInput = document.getElementById('payment-amount');
+            const descInput = document.getElementById('payment-description');
+            
+            const amount = amountInput ? parseFloat(amountInput.value) || 0 : 0;
+            const description = descInput ? descInput.value || 'Payment to SirsiNexus' : 'Payment to SirsiNexus';
+            
+            renderPayPalButtons(amount, description);
+        }
+        
+        function renderPayPalButtons(amount, description) {
+            const container = document.getElementById('paypal-button-container');
+            const messageDiv = document.getElementById('payment-message');
+            
+            if (!container) {
+                console.error('PayPal container not found');
+                return;
+            }
+            
+            // Clear container
+            container.innerHTML = '';
+            messageDiv.innerHTML = '';
+            
+            if (!amount || amount < 1) {
+                messageDiv.innerHTML = '<p class="text-slate-500 dark:text-slate-400">Enter an amount of $1 or more to see payment options</p>';
+                return;
+            }
+            
+            try {
+                paypal.Buttons({
+                    createOrder: function(data, actions) {
+                        return actions.order.create({
+                            purchase_units: [{
+                                amount: {
+                                    value: amount.toFixed(2),
+                                    currency_code: 'USD'
+                                },
+                                description: description
+                            }]
+                        });
+                    },
+                    onApprove: function(data, actions) {
+                        return actions.order.capture().then(function(details) {
+                            console.log('Payment successful:', details);
+                            
+                            // Record transaction
+                            const transaction = {
+                                id: details.id,
+                                payer: details.payer,
+                                amount: amount,
+                                description: description,
+                                timestamp: new Date().toISOString()
+                            };
+                            
+                            localStorage.setItem('last-transaction', JSON.stringify(transaction));
+                            
+                            // Show success
+                            showSuccessMessage(details);
+                        });
+                    },
+                    onError: function(err) {
+                        console.error('PayPal error:', err);
+                        messageDiv.innerHTML = '<p class="text-red-500">Payment failed. Please try again.</p>';
+                    },
+                    onCancel: function(data) {
+                        console.log('Payment cancelled:', data);
+                        messageDiv.innerHTML = '<p class="text-yellow-600">Payment was cancelled.</p>';
+                    },
+                    style: {
+                        layout: 'vertical',
+                        color: 'blue',
+                        shape: 'pill',
+                        label: 'paypal'
+                    }
+                }).render('#paypal-button-container').then(function() {
+                    console.log('PayPal buttons rendered successfully');
+                }).catch(function(err) {
+                    console.error('PayPal render error:', err);
+                    messageDiv.innerHTML = '<p class="text-red-500">Error loading payment buttons. Please refresh the page.</p>';
+                });
+            } catch (error) {
+                console.error('PayPal initialization error:', error);
+                messageDiv.innerHTML = '<p class="text-red-500">Payment system error. Please contact support.</p>';
+            }
+        }
+        
+        function showSuccessMessage(details) {
+            const modal = document.getElementById('success-modal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            } else {
+                alert('Payment successful! Transaction ID: ' + details.id);
+            }
         }
 
         function recordTransaction(details, amount, description) {
