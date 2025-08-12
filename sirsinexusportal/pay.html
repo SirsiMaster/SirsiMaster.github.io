@@ -1887,35 +1887,7 @@
         }
         
         function renderPayPalButtons(amount, description) {
-            // Check if user is registered before showing payment options
-            if (registrationRequired) {
-                // Show a message that registration is required
-                const containers = [
-                    document.getElementById('paypal-button-container'),
-                    document.getElementById('google-pay-button'), 
-                    document.getElementById('apple-pay-button')
-                ];
-                
-                containers.forEach(container => {
-                    if (container) {
-                        container.innerHTML = `
-                            <div class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4 text-center">
-                                <div class="flex items-center justify-center gap-3 mb-3">
-                                    <svg class="w-5 h-5 text-amber-600" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                                    </svg>
-                                    <p class="text-amber-700 dark:text-amber-300 font-medium">Account Required</p>
-                                </div>
-                                <p class="text-amber-600 dark:text-amber-400 text-sm mb-3">Please create an account or continue as guest to proceed with payment.</p>
-                                <button onclick="showRegistrationModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-                                    Create Account
-                                </button>
-                            </div>
-                        `;
-                    }
-                });
-                return;
-            }
+            // Always show payment buttons - check registration only when user tries to pay
             
             const container = document.getElementById('paypal-button-container');
             const messageDiv = document.getElementById('payment-message');
@@ -2360,7 +2332,7 @@
             // Check if user is registered
             if (registrationRequired) {
                 showInlineMessage('Please create an account or continue as a guest to proceed.', 'info');
-                document.getElementById('registration-section').scrollIntoView({ behavior: 'smooth' });
+                document.getElementById('account-section').scrollIntoView({ behavior: 'smooth' });
                 return;
             }
             
@@ -2851,7 +2823,7 @@
             // Check if user is registered
             if (registrationRequired) {
                 showInlineMessage('Please create an account or continue as a guest to proceed.', 'info');
-                document.getElementById('registration-section').scrollIntoView({ behavior: 'smooth' });
+                document.getElementById('account-section').scrollIntoView({ behavior: 'smooth' });
                 return;
             }
             
@@ -3053,7 +3025,7 @@ Note: Your payment intent has been recorded in our system with Transaction ID: $
             // Check if user is registered
             if (registrationRequired) {
                 showInlineMessage('Please create an account or continue as a guest to proceed.', 'info');
-                document.getElementById('registration-section').scrollIntoView({ behavior: 'smooth' });
+                document.getElementById('account-section').scrollIntoView({ behavior: 'smooth' });
                 return;
             }
             
