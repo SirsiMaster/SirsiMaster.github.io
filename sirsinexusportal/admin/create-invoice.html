@@ -278,6 +278,9 @@
               <button onclick="generateQR()" class="w-full bg-orange-600 text-white py-2 px-4 rounded hover:bg-orange-700 transition-colors">
                 📱 Generate QR Code
               </button>
+              <button onclick="showZelleInfo()" class="w-full bg-purple-600 text-white py-2 px-4 rounded hover:bg-purple-700 transition-colors">
+                💜 Show Zelle Payment Info
+              </button>
             </div>
           </div>
 
@@ -286,6 +289,50 @@
             <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100 mb-4">QR Code</h3>
             <div id="qr-code-container" class="mb-4 flex justify-center"></div>
             <p class="text-sm text-slate-600 dark:text-slate-300">Client can scan this QR code to pay</p>
+          </div>
+
+          <!-- Zelle QR Code Section -->
+          <div id="zelle-qr-section" class="hidden mt-6 bg-purple-50 dark:bg-purple-900/20 rounded-xl p-6 border border-purple-200 dark:border-purple-700">
+            <div class="text-center mb-4">
+              <h3 class="text-lg font-bold text-purple-900 dark:text-purple-100 mb-2">💜 Zelle® Payment - No Fees!</h3>
+              <p class="text-sm text-purple-700 dark:text-purple-200">Share this information with your client for instant, fee-free payment</p>
+            </div>
+            
+            <div class="flex items-center justify-center gap-6 mb-6">
+              <div class="flex-shrink-0">
+                <img src="../assets/images/zelle-qr.png" alt="Zelle QR Code" class="w-32 h-32 object-contain rounded-lg border border-purple-300 shadow-lg" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <div class="w-32 h-32 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center text-white shadow-lg" style="display:none;">
+                  <div class="text-center">
+                    <div class="text-3xl font-bold mb-1">Z</div>
+                    <div class="text-sm opacity-90">QR</div>
+                  </div>
+                </div>
+              </div>
+              <div class="flex-1 text-left">
+                <div class="bg-white dark:bg-slate-800/50 rounded-lg p-4 border border-purple-200 dark:border-purple-600">
+                  <h4 class="font-bold text-purple-900 dark:text-purple-100 mb-2">Payment Instructions</h4>
+                  <p class="text-sm text-purple-700 dark:text-purple-200 mb-2">
+                    <strong>Scan QR code</strong> with Zelle® app or send payment to:
+                  </p>
+                  <div class="bg-purple-100 dark:bg-purple-900/50 rounded-lg p-3 mb-2">
+                    <p class="font-mono font-bold text-purple-900 dark:text-purple-100 text-center">cylton@cylton.com</p>
+                  </div>
+                  <div class="text-xs text-green-700 dark:text-green-300 space-y-1">
+                    <div>✓ Instant transfer</div>
+                    <div>✓ Bank-level security</div>
+                    <div>✓ Zero processing fees</div>
+                    <div>✓ Available 24/7</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="text-center">
+              <button onclick="copyZelleInfo()" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-6 rounded-lg transition-colors shadow-lg">
+                📋 Copy Zelle Payment Info
+              </button>
+              <p class="text-xs text-purple-600 dark:text-purple-300 mt-2">Copies payment email and instructions for easy sharing</p>
+            </div>
           </div>
         </div>
       </div>
@@ -644,6 +691,73 @@ Leading AI Infrastructure Solutions`;
         
         // Store all platform links in localStorage for user access
         localStorage.setItem('social-links-' + currentInvoice.number, JSON.stringify(platforms));
+      }
+
+      // Zelle Payment Functions
+      function showZelleInfo() {
+        if (!currentInvoice) {
+          alert('Please create an invoice first.');
+          return;
+        }
+        
+        document.getElementById('zelle-qr-section').classList.remove('hidden');
+        
+        // Scroll to the Zelle section
+        document.getElementById('zelle-qr-section').scrollIntoView({ 
+          behavior: 'smooth',
+          block: 'center'
+        });
+      }
+
+      function copyZelleInfo() {
+        if (!currentInvoice) {
+          alert('Please create an invoice first.');
+          return;
+        }
+        
+        const amount = currentInvoice.amount.toFixed(2);
+        const invoiceNumber = currentInvoice.number;
+        
+        const zelleInfo = `💜 ZELLE PAYMENT - NO FEES!
+
+Payment Details:
+• Amount: $${amount} USD
+• Invoice: ${invoiceNumber}
+• Recipient: cylton@cylton.com
+
+Instructions:
+1. Open your bank's mobile app or Zelle® app
+2. Send money to: cylton@cylton.com
+3. Enter amount: $${amount}
+4. Add note: "Invoice ${invoiceNumber}"
+
+Benefits:
+✓ Instant transfer (usually within minutes)
+✓ Bank-level security and encryption
+✓ Zero processing fees
+✓ Available 24/7
+✓ No account setup required
+
+Questions? Contact: cylton@cylton.com
+
+SirsiNexus - AI Infrastructure Solutions`;
+        
+        navigator.clipboard.writeText(zelleInfo).then(() => {
+          const button = event.target;
+          const originalText = button.innerHTML;
+          button.innerHTML = '✅ Copied!';
+          button.classList.remove('bg-purple-600', 'hover:bg-purple-700');
+          button.classList.add('bg-green-600');
+          
+          setTimeout(() => {
+            button.innerHTML = originalText;
+            button.classList.remove('bg-green-600');
+            button.classList.add('bg-purple-600', 'hover:bg-purple-700');
+          }, 2000);
+        }).catch(err => {
+          console.error('Failed to copy Zelle info: ', err);
+          alert('Failed to copy. Please try again.');
+        });
       }
     </script>
 </body>
