@@ -139,38 +139,56 @@
       </div>
     </header>
 
-    <!-- Main Payment Section -->
+    <!-- Payment Portal Section -->
     <section class="relative py-12 min-h-screen overflow-hidden">
       <!-- Hexagonal Pattern Background -->
       <div class="hex-pattern"></div>
       
       <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        <!-- Payment Portal Header -->
+        <div class="text-center mb-12">
+          <div class="w-20 h-20 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center mx-auto mb-6">
+            <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+            </svg>
+          </div>
+          <h1 class="text-4xl lg:text-5xl font-bold text-slate-900 dark:text-slate-100 mb-4">Payment Portal</h1>
+          <p class="text-xl text-slate-600 dark:text-slate-400 mb-6">Secure payment processing for SirsiNexus services</p>
+        </div>
           
-          <!-- Streamlined Registration & Account Section -->
-          <div id="registration-section" class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl payment-glow border border-slate-200 dark:border-slate-700 mb-12">
-              <div class="p-8 lg:p-12">
-                  <!-- Welcome Back Message (initially hidden) -->
-                  <div id="welcome-back-message" class="hidden">
-                      <div class="flex flex-col sm:flex-row items-start sm:items-center gap-6">
-                          <div class="w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-full flex items-center justify-center flex-shrink-0">
-                              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-                          </div>
-                          <div class="flex-1">
-                              <h3 class="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-slate-100 mb-2">Welcome back, <span id="welcome-back-name"></span>!</h3>
-                              <p class="text-slate-600 dark:text-slate-400 text-lg mb-4">Your account information is ready. You can proceed with your payment below.</p>
-                              <button onclick="logoutAndReload()" class="text-sm text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 hover:underline transition-colors">
-                                  Not you? Switch account
-                              </button>
-                          </div>
-                      </div>
-                  </div>
-          
-                  <!-- Registration Form -->
-                  <form id="registration-form" class="space-y-6">
-                      <div id="registration-form-header" class="text-center mb-8">
-                          <h3 class="text-3xl lg:text-4xl font-bold text-slate-900 dark:text-slate-100 mb-3">Account Information</h3>
-                          <p class="text-slate-600 dark:text-slate-400 text-lg">Create an account to track your payments and manage your transactions securely.</p>
-                      </div>
+        <!-- Step 1: Account Information (Always Visible) -->
+        <div id="account-section" class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl payment-glow border border-slate-200 dark:border-slate-700 mb-8">
+          <div class="p-8 lg:p-12">
+            <div class="flex items-center gap-4 mb-8">
+              <div class="w-10 h-10 bg-emerald-600 text-white rounded-full flex items-center justify-center font-bold text-lg">1</div>
+              <div>
+                <h2 class="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-slate-100">Account Information</h2>
+                <p class="text-slate-600 dark:text-slate-400 text-lg">Required to process your payment and track transactions</p>
+              </div>
+            </div>
+            
+            <!-- Welcome Back Message (conditionally shown) -->
+            <div id="welcome-back-message" class="hidden mb-8 p-6 bg-emerald-50 dark:bg-emerald-900/20 rounded-xl border border-emerald-200 dark:border-emerald-700">
+              <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <div class="w-12 h-12 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-full flex items-center justify-center flex-shrink-0">
+                  <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                </div>
+                <div class="flex-1">
+                  <h3 class="text-lg font-bold text-emerald-900 dark:text-emerald-100 mb-1">Welcome back, <span id="welcome-back-name"></span>!</h3>
+                  <p class="text-emerald-700 dark:text-emerald-200 text-sm mb-2">Your account is linked and ready for payment processing.</p>
+                  <button onclick="logoutAndReload()" class="text-xs text-emerald-600 dark:text-emerald-400 hover:underline transition-colors">
+                    Not you? Switch account
+                  </button>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Registration Form -->
+            <form id="registration-form" class="space-y-6">
+                <div class="mb-8">
+                    <p class="text-slate-600 dark:text-slate-400 text-base">Enter your information to create an account and proceed with payment. Your account will be used to track payments and manage transactions securely.</p>
+                </div>
                       
                       <div class="space-y-6">
                           <div>

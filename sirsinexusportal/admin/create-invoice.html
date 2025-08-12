@@ -52,18 +52,35 @@
     </script>
 
     <style>
+      /* SirsiNexus geometric patterns */
+      .geometric-pattern {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        pointer-events: none;
+      }
+      
       .hex-pattern {
         position: absolute;
         width: 100%;
         height: 100%;
         background-image: 
-          url('data:image/svg+xml,<svg width="100" height="86.6" xmlns="http://www.w3.org/2000/svg"><polygon points="50,0 100,25 100,61.6 50,86.6 0,61.6 0,25" fill="none" stroke="rgba(16,185,129,0.3)" stroke-width="1"/></svg>');
+          url('data:image/svg+xml,<svg width="100" height="86.6" xmlns="http://www.w3.org/2000/svg"><polygon points="50,0 100,25 100,61.6 50,86.6 0,61.6 0,25" fill="none" stroke="rgba(16,185,129,0.1)" stroke-width="1"/></svg>');
         background-size: 100px 86.6px;
-        opacity: 0.6;
+        opacity: 0.3;
+      }
+
+      .invoice-glow {
+        box-shadow: 0 0 40px rgba(16, 185, 129, 0.1);
+      }
+
+      .invoice-glow:hover {
+        box-shadow: 0 0 60px rgba(16, 185, 129, 0.15);
       }
     </style>
 </head>
-<body class="font-inter bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100">
+<body class="font-inter bg-gradient-to-br from-slate-50 via-emerald-50/30 to-slate-50 dark:from-slate-900 dark:via-emerald-900/20 dark:to-slate-900 text-slate-900 dark:text-slate-100 min-h-screen">
     <!-- Header -->
     <header class="bg-white dark:bg-gray-800/95 sticky top-0 z-50 border-b border-slate-200 dark:border-slate-700 backdrop-blur-sm">
       <div class="max-w-7xl mx-auto px-6">
@@ -127,9 +144,12 @@
     </section>
 
     <!-- Invoice Form -->
-    <section class="relative py-12 bg-gradient-to-br from-white via-slate-50 to-emerald-50/20 dark:from-slate-900 dark:via-slate-800 dark:to-emerald-900/20">
-      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700">
+    <section class="relative py-12 min-h-screen overflow-hidden">
+      <!-- Hexagonal Pattern Background -->
+      <div class="hex-pattern"></div>
+      
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl invoice-glow border border-slate-200 dark:border-slate-700">
           <div class="p-8 lg:p-12">
           
             <div class="text-center mb-10">
@@ -336,6 +356,33 @@
             </div>
           </div>
         </div>
+
+        <!-- Support Section -->
+        <div class="mt-12 text-center">
+          <div class="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-700 rounded-2xl p-8 lg:p-10 shadow-lg border border-slate-200 dark:border-slate-600">
+            <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mx-auto mb-6">
+              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <h3 class="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-slate-100 mb-4">Need Help?</h3>
+            <p class="text-slate-600 dark:text-slate-400 text-lg mb-6 max-w-2xl mx-auto">
+              Our support team is here to assist you with invoice creation, distribution setup, or any technical questions.
+            </p>
+            <a href="mailto:cylton@cylton.com" class="inline-flex items-center gap-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-4 px-8 rounded-xl transition-all shadow-lg hover:shadow-xl">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+              </svg>
+              Contact Support
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Background Effects -->
+      <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
+        <div class="absolute top-20 left-20 w-64 h-64 bg-emerald-500/5 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-20 right-20 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
       </div>
     </section>
 
