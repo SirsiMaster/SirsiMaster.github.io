@@ -146,16 +146,20 @@
       
       <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        <!-- Payment Portal Header -->
-        <div class="text-center mb-12">
-          <div class="w-20 h-20 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center mx-auto mb-6">
-            <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-            </svg>
+        <!-- Unified Payment Portal -->
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl payment-glow border border-slate-200 dark:border-slate-700">
+          <!-- Header Section -->
+          <div class="bg-gradient-to-r from-emerald-600 to-emerald-700 text-white p-8 lg:p-12 rounded-t-2xl">
+            <div class="text-center">
+              <div class="w-20 h-20 bg-white bg-opacity-20 rounded-xl flex items-center justify-center mx-auto mb-6">
+                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                </svg>
+              </div>
+              <h1 class="text-4xl lg:text-5xl font-bold text-white mb-4">Secure Payment Portal</h1>
+              <p class="text-xl text-emerald-100">Complete your payment in one simple flow</p>
+            </div>
           </div>
-          <h1 class="text-4xl lg:text-5xl font-bold text-slate-900 dark:text-slate-100 mb-4">Payment Portal</h1>
-          <p class="text-xl text-slate-600 dark:text-slate-400 mb-6">Secure payment processing for SirsiNexus services</p>
-        </div>
           
         <!-- Step 1: Account Information (Always Visible) -->
         <div id="account-section" class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl payment-glow border border-slate-200 dark:border-slate-700 mb-8">
@@ -1431,6 +1435,29 @@
         
         // Initialize account manager
         const accountManager = new SirsiAccountManager();
+        
+        // Force show all payment sections on load
+        window.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                // Force all sections visible
+                const sections = ['custom-payment-card', 'invoice-section', 'account-section'];
+                sections.forEach(id => {
+                    const element = document.getElementById(id);
+                    if (element) {
+                        element.style.display = 'block';
+                        element.style.visibility = 'visible';
+                        element.style.opacity = '1';
+                        element.classList.remove('hidden');
+                    }
+                });
+                
+                // Also make sure no parent is hiding these
+                const mainSection = document.querySelector('section');
+                if (mainSection) {
+                    mainSection.style.overflow = 'visible';
+                }
+            }, 100);
+        });
 
         // Streamlined Registration & Account System
         function initializeRegistration() {
@@ -1750,14 +1777,28 @@
         }
         
         function setupAllPaymentSections() {
-            // Always show custom payment card
-            document.getElementById('custom-payment-card').style.display = 'block';
+            // Force all sections to be visible
+            const customCard = document.getElementById('custom-payment-card');
+            const invoiceSection = document.getElementById('invoice-section');
+            const accountSection = document.getElementById('account-section');
             
-            // Show invoice section if there's an invoice, but never hide custom payment
-            if (currentInvoice) {
-                // document.getElementById('invoice-section').classList.remove('hidden');
-            } else {
-                // document.getElementById('invoice-section').classList.add('hidden');
+            // Make sure all payment sections are visible
+            if (customCard) {
+                customCard.style.display = 'block';
+                customCard.style.visibility = 'visible';
+                customCard.style.opacity = '1';
+            }
+            
+            if (invoiceSection) {
+                invoiceSection.style.display = 'block';
+                invoiceSection.style.visibility = 'visible';
+                invoiceSection.style.opacity = '1';
+            }
+            
+            if (accountSection) {
+                accountSection.style.display = 'block';
+                accountSection.style.visibility = 'visible';
+                accountSection.style.opacity = '1';
             }
             
             // Add event listeners for real-time updates on custom payment
