@@ -359,7 +359,7 @@
           </div>
 
         <!-- Custom Payment Section (when no invoice) -->
-        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl payment-glow border border-slate-200 dark:border-slate-700">
+        <div id="custom-payment-card" class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl payment-glow border border-slate-200 dark:border-slate-700">
           <div class="bg-gradient-to-r from-emerald-600 to-emerald-700 text-white p-8 rounded-t-2xl">
             <div class="text-center">
               <div class="w-16 h-16 bg-white bg-opacity-20 rounded-xl flex items-center justify-center mx-auto mb-4">
@@ -760,9 +760,9 @@
         function showInvoicePayment() {
             if (!currentInvoice) return;
             
-            // Show invoice section and hide custom payment section
+            // Show invoice section and hide entire custom payment card
             document.getElementById('invoice-section').classList.remove('hidden');
-            document.getElementById('custom-payment-section').classList.add('hidden');
+            document.getElementById('custom-payment-card').style.display = 'none';
             
             // Populate invoice details
             const invoiceAmount = parseFloat(currentInvoice.amount);
@@ -798,9 +798,9 @@
         }
         
         function showCustomPayment() {
-            // Hide invoice section and show custom payment section
+            // Hide invoice section and show entire custom payment card
             document.getElementById('invoice-section').classList.add('hidden');
-            document.getElementById('custom-payment-section').classList.remove('hidden');
+            document.getElementById('custom-payment-card').style.display = 'block';
             
             // Add event listeners for real-time updates
             const amountInput = document.getElementById('payment-amount');
