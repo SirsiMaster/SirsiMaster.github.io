@@ -127,28 +127,29 @@
     </section>
 
     <!-- Invoice Form -->
-    <section class="relative py-20 bg-gradient-to-br from-white via-slate-50 to-emerald-50/20 dark:from-slate-900 dark:via-slate-800 dark:to-emerald-900/20">
-      <div class="max-w-4xl mx-auto px-6">
-        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-200 dark:border-slate-700">
+    <section class="relative py-12 bg-gradient-to-br from-white via-slate-50 to-emerald-50/20 dark:from-slate-900 dark:via-slate-800 dark:to-emerald-900/20">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700">
+          <div class="p-8 lg:p-12">
           
-          <div class="text-center mb-8">
-            <h2 class="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-4">Create Professional Invoice</h2>
-            <p class="text-lg text-slate-600 dark:text-slate-400">Fill out the form below to generate your invoice</p>
-          </div>
+            <div class="text-center mb-10">
+              <h2 class="text-3xl lg:text-4xl font-bold text-slate-900 dark:text-slate-100 mb-4">Create Professional Invoice</h2>
+              <p class="text-lg text-slate-600 dark:text-slate-400">Fill out the form below to generate your invoice</p>
+            </div>
 
-          <form id="invoice-form" class="space-y-6">
-            <div class="grid md:grid-cols-2 gap-6">
+            <form id="invoice-form" class="space-y-8">
+              <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                  <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Invoice Number</label>
+                  <input type="text" id="invoice-number" required
+                         class="w-full px-4 py-4 text-base border border-slate-300 dark:border-slate-600 rounded-xl shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 dark:bg-slate-700 dark:text-white transition-all"
+                         placeholder="SIRSI-2025-001">
+                </div>
               <div>
-                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Invoice Number</label>
-                <input type="text" id="invoice-number" required
-                       class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 dark:bg-slate-700 dark:text-white"
-                       placeholder="SIRSI-2025-001">
-              </div>
-            <div>
-              <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Amount ($USD)</label>
-              <input type="number" id="invoice-amount" min="5" max="50000" step="0.01" required
-                     class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 dark:bg-slate-700 dark:text-white"
-                     placeholder="150.00">
+                <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Amount ($USD)</label>
+                <input type="number" id="invoice-amount" min="5" max="50000" step="0.01" required
+                       class="w-full px-4 py-4 text-base border border-slate-300 dark:border-slate-600 rounded-xl shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 dark:bg-slate-700 dark:text-white transition-all"
+                       placeholder="150.00">
               
               <!-- Fee Preview Section -->
               <div id="fee-preview" class="mt-3 p-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg hidden">
@@ -163,40 +164,40 @@
                   *Processing fees will be added to the invoice total when client pays
                 </div>
               </div>
-            </div>
-            </div>
+              </div>
+              </div>
 
-            <div>
-              <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Client Name</label>
-              <input type="text" id="client-name" required
-                     class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 dark:bg-slate-700 dark:text-white"
-                     placeholder="John Smith or ABC Corporation">
-            </div>
+              <div>
+                <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Client Name</label>
+                <input type="text" id="client-name" required
+                       class="w-full px-4 py-4 text-base border border-slate-300 dark:border-slate-600 rounded-xl shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 dark:bg-slate-700 dark:text-white transition-all"
+                       placeholder="John Smith or ABC Corporation">
+              </div>
 
-            <div>
-              <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Client Email</label>
-              <input type="email" id="client-email" required
-                     class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 dark:bg-slate-700 dark:text-white"
-                     placeholder="client@example.com">
-            </div>
+              <div>
+                <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Client Email</label>
+                <input type="email" id="client-email" required
+                       class="w-full px-4 py-4 text-base border border-slate-300 dark:border-slate-600 rounded-xl shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 dark:bg-slate-700 dark:text-white transition-all"
+                       placeholder="client@example.com">
+              </div>
 
-            <div>
-              <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Service Description</label>
-              <textarea id="service-description" rows="3" required
-                        class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 dark:bg-slate-700 dark:text-white"
-                        placeholder="AI Infrastructure Consultation - Strategic planning and implementation guidance"></textarea>
-            </div>
+              <div>
+                <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Service Description</label>
+                <textarea id="service-description" rows="4" required
+                          class="w-full px-4 py-4 text-base border border-slate-300 dark:border-slate-600 rounded-xl shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 dark:bg-slate-700 dark:text-white transition-all"
+                          placeholder="AI Infrastructure Consultation - Strategic planning and implementation guidance"></textarea>
+              </div>
 
-            <div>
-              <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Due Date</label>
-              <input type="date" id="due-date" required
-                     class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 dark:bg-slate-700 dark:text-white">
-            </div>
+              <div>
+                <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Due Date</label>
+                <input type="date" id="due-date" required
+                       class="w-full px-4 py-4 text-base border border-slate-300 dark:border-slate-600 rounded-xl shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 dark:bg-slate-700 dark:text-white transition-all">
+              </div>
 
-            <!-- Distribution Channels -->
-            <div class="border-t border-slate-200 dark:border-slate-600 pt-6 mt-6">
-              <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-4">Distribution Channels</h3>
-              <div class="grid md:grid-cols-2 gap-4">
+              <!-- Distribution Channels -->
+              <div class="border-t border-slate-200 dark:border-slate-600 pt-8 mt-8">
+                <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100 mb-6">Distribution Channels</h3>
+                <div class="grid md:grid-cols-2 gap-6">
                 <label class="flex items-center p-3 border border-slate-200 dark:border-slate-600 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer">
                   <input type="checkbox" id="enable-email" checked class="w-4 h-4 text-emerald-600 border-gray-300 rounded focus:ring-emerald-500">
                   <div class="ml-3">
@@ -231,24 +232,24 @@
               </div>
             </div>
 
-            <div class="flex space-x-4 pt-6">
-              <button type="button" onclick="generateInvoice()" 
-                      class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-4 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
-                <svg class="w-5 h-5 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                </svg>
-                Create Invoice
-              </button>
-              <button type="button" onclick="previewInvoice()" 
-                      class="bg-slate-200 dark:bg-slate-600 text-slate-800 dark:text-slate-200 font-semibold py-4 px-8 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-500 transition-colors">
-                Preview
-              </button>
-            </div>
-          </form>
+              <div class="flex flex-col sm:flex-row gap-4 pt-8">
+                <button type="button" onclick="generateInvoice()" 
+                        class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg">
+                  <svg class="w-5 h-5 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                  </svg>
+                  Create Invoice
+                </button>
+                <button type="button" onclick="previewInvoice()" 
+                        class="bg-slate-200 dark:bg-slate-600 text-slate-800 dark:text-slate-200 font-semibold py-4 px-8 rounded-xl hover:bg-slate-300 dark:hover:bg-slate-500 transition-all">
+                  Preview
+                </button>
+              </div>
+            </form>
 
-          <!-- Results Section -->
-          <div id="results-section" class="hidden mt-8 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg p-6">
-            <h3 class="text-lg font-bold text-emerald-900 dark:text-emerald-100 mb-4">Invoice Created Successfully!</h3>
+            <!-- Results Section -->
+            <div id="results-section" class="hidden mt-10 bg-emerald-50 dark:bg-emerald-900/20 rounded-xl p-8">
+              <h3 class="text-2xl font-bold text-emerald-900 dark:text-emerald-100 mb-6">Invoice Created Successfully!</h3>
             
             <!-- Distribution Status -->
             <div class="mb-4">
@@ -256,43 +257,43 @@
               <div id="distribution-status" class="grid grid-cols-2 gap-2 text-xs">
                 <!-- Status will be populated by JavaScript -->
               </div>
-            </div>
-            
-            <div class="bg-white dark:bg-emerald-800/30 p-4 rounded border mb-4">
-              <p class="text-sm text-slate-600 dark:text-slate-300 mb-2">Payment Link:</p>
-              <div class="flex items-center space-x-2">
-                <input type="text" id="generated-link" readonly
-                       class="flex-1 px-3 py-2 text-sm border border-slate-300 dark:border-slate-600 rounded bg-white dark:bg-slate-700 dark:text-white">
-                <button onclick="copyLink()" class="px-3 py-2 bg-emerald-600 text-white rounded hover:bg-emerald-700 text-sm">
-                  Copy
+              </div>
+              
+              <div class="bg-white dark:bg-emerald-800/30 p-6 rounded-xl border mb-6">
+                <p class="text-base text-slate-600 dark:text-slate-300 mb-3 font-medium">Payment Link:</p>
+                <div class="flex items-center space-x-3">
+                  <input type="text" id="generated-link" readonly
+                         class="flex-1 px-4 py-3 text-base border border-slate-300 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-700 dark:text-white">
+                  <button onclick="copyLink()" class="px-4 py-3 bg-emerald-600 text-white rounded-xl hover:bg-emerald-700 text-base font-medium transition-colors">
+                    Copy
+                  </button>
+                </div>
+              </div>
+              <div class="space-y-4">
+                <button onclick="executeDistribution()" class="w-full bg-emerald-600 text-white py-3 px-6 rounded-xl hover:bg-emerald-700 transition-colors font-semibold">
+                  🚀 Execute Distribution
+                </button>
+                <button onclick="emailInvoice()" class="w-full bg-blue-600 text-white py-3 px-6 rounded-xl hover:bg-blue-700 transition-colors font-medium">
+                  📧 Email to Client
+                </button>
+                <button onclick="generateQR()" class="w-full bg-orange-600 text-white py-3 px-6 rounded-xl hover:bg-orange-700 transition-colors font-medium">
+                  📱 Generate QR Code
+                </button>
+                <button onclick="showZelleInfo()" class="w-full bg-purple-600 text-white py-3 px-6 rounded-xl hover:bg-purple-700 transition-colors font-medium">
+                  💜 Show Zelle Payment Info
                 </button>
               </div>
             </div>
-            <div class="space-y-3">
-              <button onclick="executeDistribution()" class="w-full bg-emerald-600 text-white py-2 px-4 rounded hover:bg-emerald-700 transition-colors font-medium">
-                🚀 Execute Distribution
-              </button>
-              <button onclick="emailInvoice()" class="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors">
-                📧 Email to Client
-              </button>
-              <button onclick="generateQR()" class="w-full bg-orange-600 text-white py-2 px-4 rounded hover:bg-orange-700 transition-colors">
-                📱 Generate QR Code
-              </button>
-              <button onclick="showZelleInfo()" class="w-full bg-purple-600 text-white py-2 px-4 rounded hover:bg-purple-700 transition-colors">
-                💜 Show Zelle Payment Info
-              </button>
+
+            <!-- QR Code Section -->
+            <div id="qr-section" class="hidden mt-8 text-center bg-slate-50 dark:bg-slate-700 rounded-xl p-8">
+              <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100 mb-6">QR Code</h3>
+              <div id="qr-code-container" class="mb-6 flex justify-center"></div>
+              <p class="text-base text-slate-600 dark:text-slate-300">Client can scan this QR code to pay</p>
             </div>
-          </div>
 
-          <!-- QR Code Section -->
-          <div id="qr-section" class="hidden mt-6 text-center bg-slate-50 dark:bg-slate-700 rounded-lg p-6">
-            <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100 mb-4">QR Code</h3>
-            <div id="qr-code-container" class="mb-4 flex justify-center"></div>
-            <p class="text-sm text-slate-600 dark:text-slate-300">Client can scan this QR code to pay</p>
-          </div>
-
-          <!-- Zelle QR Code Section -->
-          <div id="zelle-qr-section" class="hidden mt-6 bg-purple-50 dark:bg-purple-900/20 rounded-xl p-6 border border-purple-200 dark:border-purple-700">
+            <!-- Zelle QR Code Section -->
+            <div id="zelle-qr-section" class="hidden mt-8 bg-purple-50 dark:bg-purple-900/20 rounded-xl p-8 border border-purple-200 dark:border-purple-700">
             <div class="text-center mb-4">
               <h3 class="text-lg font-bold text-purple-900 dark:text-purple-100 mb-2">💜 Zelle® Payment - No Fees!</h3>
               <p class="text-sm text-purple-700 dark:text-purple-200">Share this information with your client for instant, fee-free payment</p>
