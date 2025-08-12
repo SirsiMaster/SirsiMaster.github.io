@@ -760,8 +760,9 @@
         function showInvoicePayment() {
             if (!currentInvoice) return;
             
+            // Show invoice section and hide custom payment section
             document.getElementById('invoice-section').classList.remove('hidden');
-            document.getElementById('custom-payment-section').style.display = 'none';
+            document.getElementById('custom-payment-section').classList.add('hidden');
             
             // Populate invoice details
             const invoiceAmount = parseFloat(currentInvoice.amount);
@@ -797,7 +798,9 @@
         }
         
         function showCustomPayment() {
-            document.getElementById('custom-payment-section').style.display = 'block';
+            // Hide invoice section and show custom payment section
+            document.getElementById('invoice-section').classList.add('hidden');
+            document.getElementById('custom-payment-section').classList.remove('hidden');
             
             // Add event listeners for real-time updates
             const amountInput = document.getElementById('payment-amount');
