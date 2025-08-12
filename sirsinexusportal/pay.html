@@ -1699,23 +1699,80 @@
             if (invoiceData) {
                 try {
                     currentInvoice = JSON.parse(decodeURIComponent(invoiceData));
-                    showInvoicePayment();
+                    setupInvoicePayment();
                 } catch (e) {
                     console.error('Invalid invoice data:', e);
-                    showCustomPayment();
+                    currentInvoice = null;
                 }
-            } else {
-                showCustomPayment();
             }
             
+            // Always show both sections - invoice and custom payment
+            setupAllPaymentSections();
             updateAllPaymentButtons();
         }
         
+        function setupInvoicePayment() {
+            if (!currentInvoice) return;
+            
+            // Show invoice section without hiding custom payment
+            document.getElementById('invoice-section').classList.remove('hidden');
+            
+            // Populate invoice details
+            const invoiceAmount = parseFloat(currentInvoice.amount);
+            document.getElementById('invoice-number').textContent = currentInvoice.number;
+            document.getElementById('invoice-service').textContent = currentInvoice.service;
+            document.getElementById('invoice-client').textContent = currentInvoice.client;
+            document.getElementById('invoice-date').textContent = new Date(currentInvoice.date).toLocaleDateString();
+            document.getElementById('invoice-amount').textContent = '$' + invoiceAmount.toFixed(2);
+            document.getElementById('invoice-minimum').textContent = '$' + invoiceAmount.toFixed(2);
+            
+            // Set up editable payment amount with minimum validation
+            const paymentAmountInput = document.getElementById('invoice-payment-amount');
+            const paymentDescInput = document.getElementById('invoice-payment-description');
+            
+            if (paymentAmountInput) {
+                paymentAmountInput.value = invoiceAmount.toFixed(2);
+                paymentAmountInput.min = invoiceAmount;
+                
+                // Add real-time validation and button updates
+                paymentAmountInput.addEventListener('input', function() {
+                    validateInvoicePayment();
+                    updateInvoicePaymentButtons();
+                });
+            }
+            
+            if (paymentDescInput) {
+                paymentDescInput.value = `Invoice ${currentInvoice.number} - ${currentInvoice.service}`;
+                paymentDescInput.addEventListener('input', updateInvoicePaymentButtons);
+            }
+        }
+        
+        function setupAllPaymentSections() {
+            // Always show custom payment section
+            document.getElementById('custom-payment-card').style.display = 'block';
+            
+            // Show invoice section if we have invoice data
+            if (currentInvoice) {
+                document.getElementById('invoice-section').classList.remove('hidden');
+            }
+            
+            // Add event listeners for real-time updates on custom payment
+            const amountInput = document.getElementById('payment-amount');
+            const descInput = document.getElementById('payment-description');
+            
+            if (amountInput) {
+                amountInput.addEventListener('input', updatePayPalButtons);
+            }
+            if (descInput) {
+                descInput.addEventListener('input', updatePayPalButtons);
+            }
+        }
+        
         function updateAllPaymentButtons() {
+            // Always update both sections
+            updatePayPalButtons();
             if (currentInvoice) {
                 updateInvoicePaymentButtons();
-            } else {
-                updatePayPalButtons();
             }
         }
         
