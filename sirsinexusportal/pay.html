@@ -141,35 +141,54 @@
     </header>
 
     <!-- Payment Portal Section -->
-    <section class="relative py-12 min-h-screen overflow-hidden">
-      <!-- Hexagonal Pattern Background -->
-      <div class="hex-pattern"></div>
+    <section class="relative py-8 min-h-screen bg-slate-50 dark:bg-slate-900">
       
-      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        <!-- Unified Payment Portal - Single Card -->
-        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl payment-glow border border-slate-200 dark:border-slate-700">
-          <!-- Header Section -->
-          <div class="bg-gradient-to-r from-emerald-600 to-emerald-700 text-white p-8 lg:p-10 rounded-t-2xl">
-            <div class="text-center">
-              <div class="w-16 h-16 bg-white bg-opacity-20 rounded-xl flex items-center justify-center mx-auto mb-4">
-                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-                </svg>
+        <!-- Header -->
+        <div class="text-center mb-12">
+          <div class="w-20 h-20 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
+            <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+            </svg>
+          </div>
+          <h1 class="text-4xl lg:text-5xl font-bold text-slate-900 dark:text-slate-100 mb-4">Secure Payment Portal</h1>
+          <p class="text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">Complete your payment in three simple steps</p>
+        </div>
+        
+        <!-- Progress Indicator -->
+        <div class="flex justify-center mb-16">
+          <div class="flex items-center space-x-8">
+            <div class="flex items-center">
+              <div class="w-10 h-10 bg-emerald-600 text-white rounded-full flex items-center justify-center font-semibold text-sm">
+                1
               </div>
-              <h1 class="text-3xl lg:text-4xl font-bold text-white mb-2">Secure Payment Portal</h1>
-              <p class="text-lg text-emerald-100">Complete your payment in one simple flow</p>
+              <span class="ml-3 text-sm font-medium text-slate-900 dark:text-slate-100">Account</span>
+            </div>
+            <div class="w-16 h-0.5 bg-slate-300 dark:bg-slate-600"></div>
+            <div class="flex items-center">
+              <div class="w-10 h-10 bg-emerald-600 text-white rounded-full flex items-center justify-center font-semibold text-sm">
+                2
+              </div>
+              <span class="ml-3 text-sm font-medium text-slate-900 dark:text-slate-100">Details</span>
+            </div>
+            <div class="w-16 h-0.5 bg-slate-300 dark:bg-slate-600"></div>
+            <div class="flex items-center">
+              <div class="w-10 h-10 bg-emerald-600 text-white rounded-full flex items-center justify-center font-semibold text-sm">
+                3
+              </div>
+              <span class="ml-3 text-sm font-medium text-slate-900 dark:text-slate-100">Payment</span>
             </div>
           </div>
-          
-          <!-- Main Content - All in One Section -->
-          <div class="p-6 sm:p-8 lg:p-10">
-            <!-- Step 1: Account Information -->
-            <div class="mb-10">
-              <div class="flex items-center gap-4 mb-6">
-                <div class="w-10 h-10 bg-emerald-600 text-white rounded-full flex items-center justify-center font-semibold text-base">1</div>
-                <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Account Information</h2>
-              </div>
+        </div>
+        
+        <!-- Step 1: Account Information Card -->
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 mb-8">
+          <div class="p-8">
+            <div class="flex items-center gap-4 mb-6">
+              <div class="w-12 h-12 bg-emerald-600 text-white rounded-full flex items-center justify-center font-semibold text-lg">1</div>
+              <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Account Information</h2>
+            </div>
             
               <!-- Welcome Back Message (conditionally shown) -->
               <div id="welcome-back-message" class="mb-6 p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border border-emerald-200 dark:border-emerald-700">
@@ -218,16 +237,16 @@
                 </div>
               </form>
             </div>
-            
-            <!-- Divider -->
-            <div class="border-t border-slate-200 dark:border-slate-700 my-8"></div>
-            
-            <!-- Step 2: Payment Details -->
-            <div class="mb-10">
-              <div class="flex items-center gap-4 mb-6">
-                <div class="w-10 h-10 bg-emerald-600 text-white rounded-full flex items-center justify-center font-semibold text-base">2</div>
-                <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Payment Details</h2>
-              </div>
+          </div>
+        </div>
+        
+        <!-- Step 2: Payment Details Card -->
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 mb-8">
+          <div class="p-8">
+            <div class="flex items-center gap-4 mb-6">
+              <div class="w-12 h-12 bg-emerald-600 text-white rounded-full flex items-center justify-center font-semibold text-lg">2</div>
+              <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Payment Details</h2>
+            </div>
               
               <!-- Invoice Section (only visible when invoice exists) -->
               <div id="invoice-section" class="mb-6" style="display: none;">
@@ -354,15 +373,17 @@
                 </div>
               </div>
               
-              <!-- Divider -->
-              <div class="border-t border-slate-200 dark:border-slate-700 my-8"></div>
-              
-              <!-- Step 3: Choose Payment Method (Unified) -->
-              <div class="mb-10">
-                <div class="flex items-center gap-4 mb-6">
-                  <div class="w-10 h-10 bg-emerald-600 text-white rounded-full flex items-center justify-center font-semibold text-base">3</div>
-                  <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Choose Payment Method</h2>
-                </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Step 3: Choose Payment Method Card -->
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 mb-8">
+          <div class="p-8">
+            <div class="flex items-center gap-4 mb-6">
+              <div class="w-12 h-12 bg-emerald-600 text-white rounded-full flex items-center justify-center font-semibold text-lg">3</div>
+              <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Choose Payment Method</h2>
+            </div>
                 <p class="text-slate-600 dark:text-slate-400 mb-6">Select your preferred way to pay</p>
                 
                 <!-- Zelle Payment Button -->
