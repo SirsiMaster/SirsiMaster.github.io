@@ -1748,14 +1748,13 @@
         }
         
         function setupAllPaymentSections() {
-            // Show appropriate section based on invoice presence
+            // Always show custom payment card
+            document.getElementById('custom-payment-card').style.display = 'block';
+            
+            // Show invoice section if there's an invoice, but never hide custom payment
             if (currentInvoice) {
-                // Invoice mode - show invoice section, hide custom payment
                 document.getElementById('invoice-section').classList.remove('hidden');
-                document.getElementById('custom-payment-card').style.display = 'none';
             } else {
-                // Custom payment mode - show custom payment, keep invoice hidden
-                document.getElementById('custom-payment-card').style.display = 'block';
                 document.getElementById('invoice-section').classList.add('hidden');
             }
             
@@ -1821,65 +1820,7 @@
             }
         }
         
-        function showInvoicePayment() {
-            if (!currentInvoice) return;
-            
-            // Show invoice section and hide entire custom payment card
-            document.getElementById('invoice-section').classList.remove('hidden');
-            document.getElementById('custom-payment-card').style.display = 'none';
-            
-            // Populate invoice details
-            const invoiceAmount = parseFloat(currentInvoice.amount);
-            document.getElementById('invoice-number').textContent = currentInvoice.number;
-            document.getElementById('invoice-service').textContent = currentInvoice.service;
-            document.getElementById('invoice-client').textContent = currentInvoice.client;
-            document.getElementById('invoice-date').textContent = new Date(currentInvoice.date).toLocaleDateString();
-            document.getElementById('invoice-amount').textContent = '$' + invoiceAmount.toFixed(2);
-            document.getElementById('invoice-minimum').textContent = '$' + invoiceAmount.toFixed(2);
-            
-            // Set up editable payment amount with minimum validation
-            const paymentAmountInput = document.getElementById('invoice-payment-amount');
-            const paymentDescInput = document.getElementById('invoice-payment-description');
-            
-            if (paymentAmountInput) {
-                paymentAmountInput.value = invoiceAmount.toFixed(2);
-                paymentAmountInput.min = invoiceAmount;
-                
-                // Add real-time validation and button updates
-                paymentAmountInput.addEventListener('input', function() {
-                    validateInvoicePayment();
-                    updateInvoicePaymentButtons();
-                });
-            }
-            
-            if (paymentDescInput) {
-                paymentDescInput.value = `Invoice ${currentInvoice.number} - ${currentInvoice.service}`;
-                paymentDescInput.addEventListener('input', updateInvoicePaymentButtons);
-            }
-            
-            // Initial button render
-            updateInvoicePaymentButtons();
-        }
-        
-        function showCustomPayment() {
-            // Hide invoice section and show entire custom payment card
-            document.getElementById('invoice-section').classList.add('hidden');
-            document.getElementById('custom-payment-card').style.display = 'block';
-            
-            // Add event listeners for real-time updates
-            const amountInput = document.getElementById('payment-amount');
-            const descInput = document.getElementById('payment-description');
-            
-            if (amountInput) {
-                amountInput.addEventListener('input', updatePayPalButtons);
-            }
-            if (descInput) {
-                descInput.addEventListener('input', updatePayPalButtons);
-            }
-            
-            // Initial render
-            updatePayPalButtons();
-        }
+        // Removed showInvoicePayment and showCustomPayment functions that were hiding elements
         
         function validateInvoicePayment() {
             if (!currentInvoice) return true;
