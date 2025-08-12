@@ -40,6 +40,9 @@
     <!-- Google Pay SDK -->
     <script async src="https://pay.google.com/gp/p/js/pay.js" onload="onGooglePayLoaded()"></script>
     
+    <!-- QR Code Library -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    
     <!-- Security and privacy -->
     <meta name="robots" content="noindex, nofollow">
     <meta name="referrer" content="no-referrer">
@@ -247,7 +250,7 @@
                 <div class="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-3 border border-purple-200 dark:border-purple-700 mb-4">
                   <div class="flex items-center gap-3">
                     <div class="flex-shrink-0">
-                      <img src="./sirsinexusportal/assets/images/zelle-qr.png" alt="Zelle QR Code" class="w-16 h-16 object-contain rounded border border-slate-200" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <img src="assets/images/zelle-qr.png" alt="Zelle QR Code" class="w-16 h-16 object-contain rounded border border-slate-200" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                       <div class="w-16 h-16 bg-purple-600 rounded flex items-center justify-center text-white font-bold text-lg" style="display:none;">Z</div>
                     </div>
                     <div class="flex-1">
@@ -423,7 +426,7 @@
               <div class="mb-6 bg-purple-50 dark:bg-purple-900/20 rounded-lg p-4 border border-purple-200 dark:border-purple-700">
                 <div class="flex items-center gap-4">
                   <div class="flex-shrink-0">
-                    <img src="./sirsinexusportal/assets/images/zelle-qr.png" alt="Zelle QR Code" class="w-20 h-20 object-contain rounded-md border border-slate-200" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <img src="assets/images/zelle-qr.png" alt="Zelle QR Code" class="w-20 h-20 object-contain rounded-md border border-slate-200" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                     <div class="w-20 h-20 bg-purple-600 rounded flex items-center justify-center text-white font-bold text-2xl" style="display:none;">Z</div>
                   </div>
                   <div class="flex-1">
@@ -1472,52 +1475,56 @@
         }
         
         function generateQRCode(text, elementId) {
-            // Simple QR code generation using a placeholder
-            // In production, you'd use a proper QR code library or API
             const qrContainer = document.getElementById(elementId);
             if (!qrContainer) return;
             
-            // For demo purposes, create a simple QR-like pattern
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            const size = 200;
-            canvas.width = size;
-            canvas.height = size;
+            // Clear existing QR code
+            qrContainer.innerHTML = '';
             
-            // Create a simple QR-like pattern
-            ctx.fillStyle = '#000';
-            const moduleSize = size / 25;
-            
-            // Generate a simple pattern based on the text
-            const hash = text.split('').reduce((a, b) => {
-                a = ((a << 5) - a) + b.charCodeAt(0);
-                return a & a;
-            }, 0);
-            
-            for (let x = 0; x < 25; x++) {
-                for (let y = 0; y < 25; y++) {
-                    const shouldFill = ((x + y + hash) % 3 === 0) || 
-                                     (x < 7 && y < 7) || 
-                                     (x > 17 && y < 7) || 
-                                     (x < 7 && y > 17);
-                    if (shouldFill) {
-                        ctx.fillRect(x * moduleSize, y * moduleSize, moduleSize, moduleSize);
-                    }
+            // Check if QRCode library is loaded
+            if (typeof QRCode !== 'undefined') {
+                try {
+                    // Use the QRCode library to generate a proper QR code
+                    QRCode.toCanvas(qrContainer, text, {
+                        width: 200,
+                        height: 200,
+                        color: {
+                            dark: '#000000',
+                            light: '#FFFFFF'
+                        },
+                        margin: 2,
+                        errorCorrectionLevel: 'M'
+                    }, function (error) {
+                        if (error) {
+                            console.error('QR Code generation error:', error);
+                            // Fallback to showing the text as a link
+                            qrContainer.innerHTML = `
+                                <div class="text-center p-4 bg-red-50 rounded-lg border border-red-200">
+                                    <p class="text-red-600 text-sm mb-2">QR Code generation failed</p>
+                                    <a href="${text}" target="_blank" class="text-blue-600 underline text-xs break-all">${text}</a>
+                                </div>
+                            `;
+                        }
+                    });
+                } catch (error) {
+                    console.error('QRCode library error:', error);
+                    // Fallback display
+                    qrContainer.innerHTML = `
+                        <div class="text-center p-4 bg-gray-50 rounded-lg border border-gray-200">
+                            <p class="text-gray-600 text-sm mb-2">QR Code unavailable</p>
+                            <a href="${text}" target="_blank" class="text-blue-600 underline text-xs break-all">${text}</a>
+                        </div>
+                    `;
                 }
+            } else {
+                // QRCode library not loaded, show fallback
+                qrContainer.innerHTML = `
+                    <div class="text-center p-4 bg-amber-50 rounded-lg border border-amber-200">
+                        <p class="text-amber-600 text-sm mb-2">QR Code library loading...</p>
+                        <a href="${text}" target="_blank" class="text-blue-600 underline text-xs break-all">${text}</a>
+                    </div>
+                `;
             }
-            
-            // Add corner markers
-            [0, 18, 0].forEach((x, i) => {
-                const y = i === 2 ? 18 : 0;
-                ctx.fillStyle = '#000';
-                ctx.fillRect(x * moduleSize, y * moduleSize, 7 * moduleSize, 7 * moduleSize);
-                ctx.fillStyle = '#fff';
-                ctx.fillRect((x + 1) * moduleSize, (y + 1) * moduleSize, 5 * moduleSize, 5 * moduleSize);
-                ctx.fillStyle = '#000';
-                ctx.fillRect((x + 2) * moduleSize, (y + 2) * moduleSize, 3 * moduleSize, 3 * moduleSize);
-            });
-            
-            qrContainer.appendChild(canvas);
         }
         
         function simulateQRPaymentSuccess() {
