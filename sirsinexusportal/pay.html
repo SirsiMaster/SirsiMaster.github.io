@@ -228,8 +228,8 @@
                 <h2 class="text-xl font-bold text-slate-900 dark:text-slate-100">Payment Details</h2>
               </div>
               
-              <!-- Invoice Section (if invoice exists) -->
-              <div id="invoice-section" class="mb-6">
+              <!-- Invoice Section (only visible when invoice exists) -->
+              <div id="invoice-section" class="mb-6" style="display: none;">
                 <div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 mb-4 border border-blue-200 dark:border-blue-700">
                   <div class="flex items-start gap-3">
                     <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -328,19 +328,21 @@
                   <p class="text-slate-600 dark:text-slate-400 text-sm">Select your preferred way to pay</p>
                 </div>
                 
-                <!-- Zelle Payment Button - First Choice -->
-                <button id="invoice-zelle-pay-btn" class="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white py-4 px-6 rounded-xl flex items-center justify-center gap-3 hover:from-purple-700 hover:to-purple-800 transition-all duration-300 shadow-lg font-medium text-lg mb-4" onclick="showZelleInvoiceDetails()">
-                  <div class="w-8 h-8 bg-white bg-opacity-20 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <div class="text-center">
-                      <div class="text-sm font-bold leading-none">Z</div>
+                <!-- Invoice Payment Buttons -->
+                <div id="invoice-payment-buttons">
+                  <!-- Zelle Payment Button -->
+                  <button id="invoice-zelle-pay-btn" class="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white py-4 px-6 rounded-xl flex items-center justify-center gap-3 hover:from-purple-700 hover:to-purple-800 transition-all duration-300 shadow-lg font-medium text-lg mb-4" onclick="showZelleInvoiceDetails()">
+                    <div class="w-8 h-8 bg-white bg-opacity-20 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <div class="text-center">
+                        <div class="text-sm font-bold leading-none">Z</div>
+                      </div>
                     </div>
-                  </div>
-                  <span class="flex-1 text-left">Pay with Zelle® - No Fees!</span>
-                  <div class="text-sm opacity-90 text-right">
-                    <div class="leading-tight">✓ Instant</div>
-                    <div class="leading-tight text-xs">✓ Zero fees</div>
-                  </div>
-                </button>
+                    <span class="flex-1 text-left">Pay with Zelle® - No Fees!</span>
+                    <div class="text-sm opacity-90 text-right">
+                      <div class="leading-tight">✓ Instant</div>
+                      <div class="leading-tight text-xs">✓ Zero fees</div>
+                    </div>
+                  </button>
                 
                 <!-- Zelle Payment Details - Initially Hidden -->
                 <div id="invoice-zelle-details" class="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-4 border border-purple-200 dark:border-purple-700 mb-4">
@@ -370,152 +372,137 @@
                   </div>
                 </div>
                 
-                <!-- Apple Pay Button for Invoice -->
-                <div id="invoice-apple-pay-button" style="display: block;">
-                  <button id="invoice-apple-pay-btn" class="w-full bg-black text-white py-4 px-6 rounded-xl flex items-center justify-center gap-3 hover:bg-gray-800 transition-colors shadow-lg font-medium text-lg">
-                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
-                    </svg>
-                    <span>Pay with Apple Pay</span>
-                  </button>
-                </div>
-                
-                <!-- Google Pay Button for Invoice -->
-                <div id="invoice-google-pay-button" style="display: block;"></div>
-                
-                <!-- PayPal Button for Invoice -->
-                <div id="invoice-paypal-button-container"></div>
-              </div>
-              
-            </div>
-          </div>
-        <!-- Custom Payment Section (when no invoice) -->
-        <div id="custom-payment-card" class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl payment-glow border border-slate-200 dark:border-slate-700">
-          <div class="bg-gradient-to-r from-emerald-600 to-emerald-700 text-white p-8 lg:p-12 rounded-t-2xl">
-            <div class="text-center">
-              <div class="w-20 h-20 bg-white bg-opacity-20 rounded-xl flex items-center justify-center mx-auto mb-6">
-                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-                </svg>
-              </div>
-              <h2 class="text-3xl lg:text-4xl font-bold text-white mb-3">Secure Payment Portal</h2>
-              <p class="text-emerald-100 text-lg lg:text-xl">Powered by enterprise-grade security</p>
-            </div>
-          </div>
-          
-          <div class="p-8 lg:p-12">
-            <!-- Simple Payment Form -->
-            <div id="custom-payment-section" class="space-y-10">
-              <div class="text-center mb-10">
-                <h3 class="text-2xl lg:text-3xl font-bold text-slate-800 dark:text-slate-200 mb-4">Make a Payment</h3>
-                <p class="text-slate-600 dark:text-slate-400 text-lg">Enter your payment details and select your preferred method</p>
-              </div>
-              
-              <!-- Payment Details Form - First -->
-              <div class="bg-slate-50 dark:bg-slate-700/50 rounded-xl p-8 mb-10">
-                <h4 class="text-xl font-semibold text-slate-800 dark:text-slate-200 mb-6">Payment Details</h4>
-                <div class="space-y-6">
-                  <div>
-                    <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Payment Amount (USD) *</label>
-                    <div class="relative">
-                      <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-500 text-xl font-medium">$</span>
-                      <input type="number" id="payment-amount" min="1" max="10000" step="0.01" 
-                             class="pl-12 w-full px-4 py-4 text-lg border border-slate-300 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-slate-700 dark:text-white transition-all shadow-sm"
-                             placeholder="0.00">
-                    </div>
+                  <!-- Apple Pay Button for Invoice -->
+                  <div id="invoice-apple-pay-button" style="display: block;">
+                    <button id="invoice-apple-pay-btn" class="w-full bg-black text-white py-4 px-6 rounded-xl flex items-center justify-center gap-3 hover:bg-gray-800 transition-colors shadow-lg font-medium text-lg">
+                      <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                      </svg>
+                      <span>Pay with Apple Pay</span>
+                    </button>
                   </div>
                   
-                  <div>
-                    <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Description (Optional)</label>
-                    <input type="text" id="payment-description" 
-                           class="w-full px-4 py-4 text-base border border-slate-300 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-slate-700 dark:text-white transition-all shadow-sm"
-                           placeholder="What is this payment for?">
-                  </div>
-                </div>
-              </div>
-              </div>
-              
-              <!-- Zelle Payment Button - Custom Payment -->
-              <button id="custom-zelle-pay-btn" class="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white py-4 px-6 rounded-xl flex items-center justify-center gap-3 hover:from-purple-700 hover:to-purple-800 transition-all duration-300 shadow-lg font-medium text-lg mb-6" onclick="showZelleCustomDetails()">
-                <div class="w-8 h-8 bg-white bg-opacity-20 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <div class="text-center">
-                    <div class="text-sm font-bold leading-none">Z</div>
-                  </div>
-                </div>
-                <span class="flex-1 text-left">Pay with Zelle® - No Fees!</span>
-                <div class="text-sm opacity-90 text-right">
-                  <div class="leading-tight">✓ Instant</div>
-                  <div class="leading-tight text-xs">✓ Zero fees</div>
-                </div>
-              </button>
-              
-              <!-- Zelle Payment Details - Custom Payment -->
-              <div id="custom-zelle-details" class="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-4 border border-purple-200 dark:border-purple-700 mb-6">
-                <div class="flex items-center gap-4 mb-3">
-                  <div class="flex-shrink-0">
-                    <img src="assets/images/zelle-qr.png" alt="Zelle QR Code" class="w-20 h-20 object-contain rounded border border-purple-300" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                    <div class="w-20 h-20 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center text-white shadow-lg" style="display:none;">
-                      <div class="text-center">
-                        <div class="text-xl font-bold mb-0.5">Z</div>
-                        <div class="text-xs opacity-90">QR</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="flex-1">
-                    <h4 class="font-bold text-purple-900 dark:text-purple-100 mb-1">Zelle® Payment Instructions</h4>
-                    <p class="text-sm text-purple-700 dark:text-purple-200 mb-2">Scan QR code with your banking app or send payment to:</p>
-                    <div class="bg-purple-100 dark:bg-purple-900/50 rounded-lg p-2 mb-2">
-                      <p class="font-mono font-bold text-purple-900 dark:text-purple-100 text-center">cylton@cylton.com</p>
-                    </div>
-                    <p class="text-xs text-green-700 dark:text-green-300">✓ Instant transfer • ✓ Bank-level security • ✓ Zero processing fees</p>
-                  </div>
-                </div>
-                <div class="text-center">
-                  <button onclick="copyZelleInfoCustom()" class="bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-4 rounded-lg transition-colors text-sm">
-                    📋 Copy Payment Info
-                  </button>
+                  <!-- Google Pay Button for Invoice -->
+                  <div id="invoice-google-pay-button" style="display: block;"></div>
+                  
+                  <!-- PayPal Button for Invoice -->
+                  <div id="invoice-paypal-button-container"></div>
                 </div>
               </div>
               
-              <!-- Fee Breakdown Section -->
-              <div id="fee-breakdown" class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4 mb-6">
-                <div class="flex items-start gap-3">
-                  <div class="bg-amber-600 rounded-lg p-2 flex-shrink-0">
-                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
-                    </svg>
-                  </div>
-                  <div class="flex-1">
-                    <h5 class="font-semibold text-amber-900 dark:text-amber-100 mb-2">Payment Processing Fees</h5>
-                    <p class="text-amber-800 dark:text-amber-200 text-sm mb-3">The following fees will be added to cover payment processing costs:</p>
-                    
-                    <div id="fee-details" class="space-y-2 text-sm">
-                      <!-- Fee breakdown will be populated here -->
-                    </div>
-                    
-                    <div class="border-t border-amber-300 dark:border-amber-700 pt-3 mt-3">
-                      <div class="flex justify-between items-center text-sm font-medium">
-                        <span class="text-amber-900 dark:text-amber-100">Subtotal:</span>
-                        <span id="fee-subtotal" class="text-amber-900 dark:text-amber-100">$0.00</span>
-                      </div>
-                      <div class="flex justify-between items-center text-sm font-medium">
-                        <span class="text-amber-900 dark:text-amber-100">Processing Fee:</span>
-                        <span id="fee-amount" class="text-amber-900 dark:text-amber-100">$0.00</span>
-                      </div>
-                      <div class="flex justify-between items-center text-base font-bold border-t border-amber-400 dark:border-amber-600 pt-2 mt-2">
-                        <span class="text-amber-900 dark:text-amber-100">Total to Pay:</span>
-                        <span id="fee-total" class="text-amber-900 dark:text-amber-100">$0.00</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <!-- Payment Buttons - After Details -->
-              <div class="space-y-4 mb-10">
+              <!-- Custom Payment Section (when no invoice) -->
+              <div id="custom-payment-section" style="display: none;">
                 <div class="text-center mb-8">
-                  <h4 class="text-2xl font-bold text-slate-800 dark:text-slate-200 mb-3">Choose Payment Method</h4>
-                  <p class="text-slate-600 dark:text-slate-400 text-lg">Select your preferred way to pay</p>
+                  <h3 class="text-xl font-bold text-slate-800 dark:text-slate-200 mb-2">Make a Payment</h3>
+                  <p class="text-slate-600 dark:text-slate-400">Enter your payment details below</p>
+                </div>
+                
+                <!-- Payment Details Form -->
+                <div class="bg-slate-50 dark:bg-slate-700/50 rounded-xl p-6 mb-6">
+                  <h4 class="text-lg font-semibold text-slate-800 dark:text-slate-200 mb-4">Payment Details</h4>
+                  <div class="space-y-4">
+                    <div>
+                      <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Payment Amount (USD) *</label>
+                      <div class="relative">
+                        <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-500 text-lg font-medium">$</span>
+                        <input type="number" id="payment-amount" min="1" max="10000" step="0.01" 
+                               class="pl-10 w-full px-4 py-3 text-lg border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-slate-700 dark:text-white transition-all shadow-sm"
+                               placeholder="0.00">
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Description (Optional)</label>
+                      <input type="text" id="payment-description" 
+                             class="w-full px-4 py-3 text-base border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-slate-700 dark:text-white transition-all shadow-sm"
+                             placeholder="What is this payment for?">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Step 3: Choose Payment Method -->
+              <div class="mb-8">
+                <div class="flex items-center gap-3 mb-4">
+                  <div class="w-8 h-8 bg-emerald-600 text-white rounded-full flex items-center justify-center font-semibold text-sm">3</div>
+                  <h2 class="text-xl font-bold text-slate-900 dark:text-slate-100">Choose Payment Method</h2>
+                </div>
+                <p class="text-slate-600 dark:text-slate-400 mb-6">Select your preferred way to pay</p>
+                
+                <!-- Zelle Payment Button -->
+                <button id="zelle-pay-btn" class="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white py-4 px-6 rounded-xl flex items-center justify-center gap-3 hover:from-purple-700 hover:to-purple-800 transition-all duration-300 shadow-lg font-medium text-lg mb-4" onclick="showZelleDetails()">
+                  <div class="w-8 h-8 bg-white bg-opacity-20 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <div class="text-center">
+                      <div class="text-sm font-bold leading-none">Z</div>
+                    </div>
+                  </div>
+                  <span class="flex-1 text-left">Pay with Zelle® - No Fees!</span>
+                  <div class="text-sm opacity-90 text-right">
+                    <div class="leading-tight">✓ Instant</div>
+                    <div class="leading-tight text-xs">✓ Zero fees</div>
+                  </div>
+                </button>
+              
+                <!-- Zelle Payment Details - Unified -->
+                <div id="zelle-details" class="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-4 border border-purple-200 dark:border-purple-700 mb-4" style="display: none;">
+                  <div class="flex items-center gap-4 mb-3">
+                    <div class="flex-shrink-0">
+                      <img src="assets/images/zelle-qr.png" alt="Zelle QR Code" class="w-20 h-20 object-contain rounded border border-purple-300" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                      <div class="w-20 h-20 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center text-white shadow-lg" style="display:none;">
+                        <div class="text-center">
+                          <div class="text-xl font-bold mb-0.5">Z</div>
+                          <div class="text-xs opacity-90">QR</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="flex-1">
+                      <h4 class="font-bold text-purple-900 dark:text-purple-100 mb-1">Zelle® Payment Instructions</h4>
+                      <p class="text-sm text-purple-700 dark:text-purple-200 mb-2">Scan QR code with your banking app or send payment to:</p>
+                      <div class="bg-purple-100 dark:bg-purple-900/50 rounded-lg p-2 mb-2">
+                        <p class="font-mono font-bold text-purple-900 dark:text-purple-100 text-center">cylton@cylton.com</p>
+                      </div>
+                      <p class="text-xs text-green-700 dark:text-green-300">✓ Instant transfer • ✓ Bank-level security • ✓ Zero processing fees</p>
+                    </div>
+                  </div>
+                  <div class="text-center">
+                    <button onclick="copyZelleInfo()" class="bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-4 rounded-lg transition-colors text-sm">
+                      📋 Copy Payment Info
+                    </button>
+                  </div>
+                </div>
+              
+                <!-- Fee Breakdown Section -->
+                <div id="fee-breakdown" class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4 mb-6" style="display: none;">
+                  <div class="flex items-start gap-3">
+                    <div class="bg-amber-600 rounded-lg p-2 flex-shrink-0">
+                      <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                      </svg>
+                    </div>
+                    <div class="flex-1">
+                      <h5 class="font-semibold text-amber-900 dark:text-amber-100 mb-2">Payment Processing Fees</h5>
+                      <p class="text-amber-800 dark:text-amber-200 text-sm mb-3">The following fees will be added to cover payment processing costs:</p>
+                      
+                      <div id="fee-details" class="space-y-2 text-sm">
+                        <!-- Fee breakdown will be populated here -->
+                      </div>
+                      
+                      <div class="border-t border-amber-300 dark:border-amber-700 pt-3 mt-3">
+                        <div class="flex justify-between items-center text-sm font-medium">
+                          <span class="text-amber-900 dark:text-amber-100">Subtotal:</span>
+                          <span id="fee-subtotal" class="text-amber-900 dark:text-amber-100">$0.00</span>
+                        </div>
+                        <div class="flex justify-between items-center text-sm font-medium">
+                          <span class="text-amber-900 dark:text-amber-100">Processing Fee:</span>
+                          <span id="fee-amount" class="text-amber-900 dark:text-amber-100">$0.00</span>
+                        </div>
+                        <div class="flex justify-between items-center text-base font-bold border-t border-amber-400 dark:border-amber-600 pt-2 mt-2">
+                          <span class="text-amber-900 dark:text-amber-100">Total to Pay:</span>
+                          <span id="fee-total" class="text-amber-900 dark:text-amber-100">$0.00</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 
                 <!-- Apple Pay Button -->
@@ -538,7 +525,6 @@
               <!-- Status Messages -->
               <div id="payment-message" class="text-center text-base mt-6"></div>
             </div>
-
           </div>
         </div>
 
@@ -1738,8 +1724,9 @@
         function setupInvoicePayment() {
             if (!currentInvoice) return;
             
-            // Show invoice section without hiding custom payment
-            // document.getElementById('invoice-section').classList.remove('hidden');
+            // Show invoice section and hide custom payment section
+            document.getElementById('invoice-section').style.display = 'block';
+            document.getElementById('custom-payment-section').style.display = 'none';
             
             // Populate invoice details
             const invoiceAmount = parseFloat(currentInvoice.amount);
@@ -1772,47 +1759,31 @@
         }
         
         function setupAllPaymentSections() {
-            // Force all sections to be visible
-            const customCard = document.getElementById('custom-payment-card');
-            const invoiceSection = document.getElementById('invoice-section');
-            const accountSection = document.getElementById('account-section');
-            
-            // Make sure all payment sections are visible
-            if (customCard) {
-                customCard.style.display = 'block';
-                customCard.style.visibility = 'visible';
-                customCard.style.opacity = '1';
-            }
-            
-            if (invoiceSection) {
-                invoiceSection.style.display = 'block';
-                invoiceSection.style.visibility = 'visible';
-                invoiceSection.style.opacity = '1';
-            }
-            
-            if (accountSection) {
-                accountSection.style.display = 'block';
-                accountSection.style.visibility = 'visible';
-                accountSection.style.opacity = '1';
-            }
-            
-            // Add event listeners for real-time updates on custom payment
-            const amountInput = document.getElementById('payment-amount');
-            const descInput = document.getElementById('payment-description');
-            
-            if (amountInput) {
-                amountInput.addEventListener('input', updatePayPalButtons);
-            }
-            if (descInput) {
-                descInput.addEventListener('input', updatePayPalButtons);
+            // Show the appropriate payment section based on invoice availability
+            if (!currentInvoice) {
+                // Show custom payment section, hide invoice section
+                document.getElementById('custom-payment-section').style.display = 'block';
+                document.getElementById('invoice-section').style.display = 'none';
+                
+                // Add event listeners for real-time updates on custom payment
+                const amountInput = document.getElementById('payment-amount');
+                const descInput = document.getElementById('payment-description');
+                
+                if (amountInput) {
+                    amountInput.addEventListener('input', updatePayPalButtons);
+                }
+                if (descInput) {
+                    descInput.addEventListener('input', updatePayPalButtons);
+                }
             }
         }
         
         function updateAllPaymentButtons() {
-            // Always update both sections
-            updatePayPalButtons();
+            // Update appropriate section based on current context
             if (currentInvoice) {
                 updateInvoicePaymentButtons();
+            } else {
+                updatePayPalButtons();
             }
         }
         
@@ -2943,36 +2914,29 @@
                 });
         }
         
-        // Zelle Payment Functions
+        // Unified Zelle Payment Functions
         function showZelleInvoiceDetails() {
             const detailsDiv = document.getElementById('invoice-zelle-details');
             if (detailsDiv) {
-                // Always visible, just scroll to it
-                // if (detailsDiv.classList.contains('hidden')) {
-                //     detailsDiv.classList.remove('hidden');
-                    // Scroll to the details section
-                    setTimeout(() => {
-                        detailsDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }, 100);
-                // } else {
-                //     detailsDiv.classList.add('hidden');
-                // }
+                // Scroll to the details section
+                setTimeout(() => {
+                    detailsDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
             }
         }
         
-        function showZelleCustomDetails() {
-            const detailsDiv = document.getElementById('custom-zelle-details');
+        function showZelleDetails() {
+            const detailsDiv = document.getElementById('zelle-details');
             if (detailsDiv) {
-                // Always visible, just scroll to it
-                // if (detailsDiv.classList.contains('hidden')) {
-                //     detailsDiv.classList.remove('hidden');
+                if (detailsDiv.style.display === 'none') {
+                    detailsDiv.style.display = 'block';
                     // Scroll to the details section
                     setTimeout(() => {
                         detailsDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     }, 100);
-                // } else {
-                //     detailsDiv.classList.add('hidden');
-                // }
+                } else {
+                    detailsDiv.style.display = 'none';
+                }
             }
         }
         
@@ -3058,11 +3022,11 @@ Note: Your payment intent has been recorded in our system with Transaction ID: $
             });
         }
         
-        function copyZelleInfoCustom() {
+        function copyZelleInfo() {
             // Check if user is registered
             if (registrationRequired) {
                 showInlineMessage('Please create an account or continue as a guest to proceed.', 'info');
-                document.getElementById('account-section').scrollIntoView({ behavior: 'smooth' });
+                document.getElementById('registration-form').scrollIntoView({ behavior: 'smooth' });
                 return;
             }
             
@@ -3105,25 +3069,25 @@ Note: Your payment intent has been recorded in our system with Transaction ID: $
             
             console.log('Zelle transaction recorded as pending:', zelleTransaction.transactionId);
             
-            const zelleInfo = `💜 ZELLE PAYMENT - NO FEES!
-
-Payment Details:
-• Amount: $${amount.toFixed(2)} USD
-• Description: ${description}
-• Recipient: cylton@cylton.com
-• Transaction ID: ${zelleTransaction.transactionId}
-
-Payment Instructions:
-1. Open your bank's mobile app or Zelle® app
-2. Send money to: cylton@cylton.com
-3. Enter amount: $${amount.toFixed(2)}
-4. Add note: "${description}"
-
-Benefits:
-✓ Instant transfer (usually within minutes)
-✓ Bank-level security and encryption
-✓ Zero processing fees
-✓ Available 24/7
+            const zelleInfo = `💜 ZELLE PAYMENT - NO FEES!\n\nPayment Details:\n• Amount: $${amount.toFixed(2)} USD\n• Description: ${description}\n• Recipient: cylton@cylton.com\n• Transaction ID: ${zelleTransaction.transactionId}\n\nPayment Instructions:\n1. Open your bank's mobile app or Zelle® app\n2. Send money to: cylton@cylton.com\n3. Enter amount: $${amount.toFixed(2)}\n4. Add note: "${description}"\n\nBenefits:\n✓ Instant transfer (usually within minutes)\n✓ Bank-level security and encryption\n✓ Zero processing fees\n✓ Available 24/7\n✓ No account setup required\n\nQuestions? Contact: cylton@cylton.com\n\nSirsiNexus - AI Infrastructure Solutions\n\nNote: Your payment intent has been recorded in our system with Transaction ID: ${zelleTransaction.transactionId}. Once your Zelle payment is received, we'll update the status automatically.`;
+            
+            navigator.clipboard.writeText(zelleInfo).then(() => {
+                const button = event.target;
+                const originalText = button.innerHTML;
+                button.innerHTML = '✅ Copied!';
+                button.classList.remove('bg-purple-600', 'hover:bg-purple-700');
+                button.classList.add('bg-green-600');
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.classList.remove('bg-green-600');
+                    button.classList.add('bg-purple-600', 'hover:bg-purple-700');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy Zelle info: ', err);
+                alert('Failed to copy. Please try again.');
+            });
+        }
 ✓ No account setup required
 
 Questions? Contact: cylton@cylton.com
