@@ -7,6 +7,7 @@
     <title>SirsiNexus - Secure Payment Portal</title>
     <meta name="description" content="Secure payment processing for SirsiNexus services - Professional AI-powered infrastructure solutions">
     <meta name="theme-color" content="#059669">
+    <link rel="manifest" href="manifest.json">
     
     <!-- Preload critical resources -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,7 +39,7 @@
     <script src="https://www.paypal.com/sdk/js?client-id=ASUI7q4yAs6anh26J6T_7hLyX0UwUbVWQS-8lgngn9z0W6VX4zrt2y7Q_auiXBAUrzxd1ibBrz22KDAr&currency=USD&components=buttons,marks,funding-eligibility&enable-funding=venmo,paylater,card&disable-funding=credit"></script>
     
     <!-- Google Pay SDK -->
-    <script async src="https://pay.google.com/gp/p/js/pay.js" onload="onGooglePayLoaded()"></script>
+    <script async src="https://pay.google.com/gp/p/js/pay.js" onload="typeof onGooglePayLoaded === 'function' && onGooglePayLoaded()"></script>
     
     <!-- QR Code Library -->
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
@@ -131,7 +132,7 @@
             
             <button id="theme-toggle" class="p-2 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors border border-slate-300 dark:border-slate-600" title="Toggle theme">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 818 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
               </svg>
             </button>
           </nav>
@@ -3080,31 +3081,6 @@ Note: Your payment intent has been recorded in our system with Transaction ID: $
             console.log('Zelle transaction recorded as pending:', zelleTransaction.transactionId);
             
             const zelleInfo = `💜 ZELLE PAYMENT - NO FEES!\n\nPayment Details:\n• Amount: $${amount.toFixed(2)} USD\n• Description: ${description}\n• Recipient: cylton@cylton.com\n• Transaction ID: ${zelleTransaction.transactionId}\n\nPayment Instructions:\n1. Open your bank's mobile app or Zelle® app\n2. Send money to: cylton@cylton.com\n3. Enter amount: $${amount.toFixed(2)}\n4. Add note: "${description}"\n\nBenefits:\n✓ Instant transfer (usually within minutes)\n✓ Bank-level security and encryption\n✓ Zero processing fees\n✓ Available 24/7\n✓ No account setup required\n\nQuestions? Contact: cylton@cylton.com\n\nSirsiNexus - AI Infrastructure Solutions\n\nNote: Your payment intent has been recorded in our system with Transaction ID: ${zelleTransaction.transactionId}. Once your Zelle payment is received, we'll update the status automatically.`;
-            
-            navigator.clipboard.writeText(zelleInfo).then(() => {
-                const button = event.target;
-                const originalText = button.innerHTML;
-                button.innerHTML = '✅ Copied!';
-                button.classList.remove('bg-purple-600', 'hover:bg-purple-700');
-                button.classList.add('bg-green-600');
-                
-                setTimeout(() => {
-                    button.innerHTML = originalText;
-                    button.classList.remove('bg-green-600');
-                    button.classList.add('bg-purple-600', 'hover:bg-purple-700');
-                }, 2000);
-            }).catch(err => {
-                console.error('Failed to copy Zelle info: ', err);
-                alert('Failed to copy. Please try again.');
-            });
-        }
-✓ No account setup required
-
-Questions? Contact: cylton@cylton.com
-
-SirsiNexus - AI Infrastructure Solutions
-
-Note: Your payment intent has been recorded in our system with Transaction ID: ${zelleTransaction.transactionId}. Once your Zelle payment is received, we'll update the status automatically.`;
             
             navigator.clipboard.writeText(zelleInfo).then(() => {
                 const button = event.target;
