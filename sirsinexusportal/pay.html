@@ -1716,9 +1716,12 @@
                 }
             }
             
-            // Always show both sections - invoice and custom payment
+            // Setup payment sections based on context
             setupAllPaymentSections();
             updateAllPaymentButtons();
+            
+            // Debug: log current state
+            console.log('Payment system initialized. Invoice present:', !!currentInvoice);
         }
         
         function setupInvoicePayment() {
@@ -1762,8 +1765,15 @@
             // Show the appropriate payment section based on invoice availability
             if (!currentInvoice) {
                 // Show custom payment section, hide invoice section
-                document.getElementById('custom-payment-section').style.display = 'block';
-                document.getElementById('invoice-section').style.display = 'none';
+                const customSection = document.getElementById('custom-payment-section');
+                const invoiceSection = document.getElementById('invoice-section');
+                
+                if (customSection) {
+                    customSection.style.display = 'block';
+                }
+                if (invoiceSection) {
+                    invoiceSection.style.display = 'none';
+                }
                 
                 // Add event listeners for real-time updates on custom payment
                 const amountInput = document.getElementById('payment-amount');
