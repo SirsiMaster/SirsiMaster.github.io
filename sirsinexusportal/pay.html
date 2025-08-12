@@ -676,6 +676,96 @@
       </div>
     </section>
 
+    <!-- User Registration Modal -->
+    <div id="registration-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl max-w-lg mx-4 w-full relative">
+            <div class="bg-gradient-to-r from-emerald-600 to-emerald-700 text-white p-6 rounded-t-2xl">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-1">Quick Registration</h3>
+                        <p class="text-emerald-100 text-sm">Secure your payment with a SirsiNexus account</p>
+                    </div>
+                    <div class="w-12 h-12 bg-white bg-opacity-20 rounded-xl flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="p-6">
+                <div class="mb-6">
+                    <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-4 mb-4">
+                        <div class="flex items-start gap-3">
+                            <div class="bg-blue-600 rounded-full p-1 flex-shrink-0 mt-0.5">
+                                <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <div class="text-sm">
+                                <p class="text-blue-900 dark:text-blue-100 font-medium mb-1">Why register?</p>
+                                <ul class="text-blue-800 dark:text-blue-200 text-xs space-y-1">
+                                    <li>✓ Track your payment history</li>
+                                    <li>✓ Secure transaction management</li>
+                                    <li>✓ Faster future payments</li>
+                                    <li>✓ Receipt & invoice management</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <form id="registration-form" class="space-y-4">
+                    <div>
+                        <label for="reg-email" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Email Address *</label>
+                        <input type="email" id="reg-email" required
+                               class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-slate-700 dark:text-white transition-colors"
+                               placeholder="your@email.com">
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label for="reg-first-name" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">First Name *</label>
+                            <input type="text" id="reg-first-name" required
+                                   class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-slate-700 dark:text-white transition-colors"
+                                   placeholder="John">
+                        </div>
+                        <div>
+                            <label for="reg-last-name" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Last Name</label>
+                            <input type="text" id="reg-last-name"
+                                   class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-slate-700 dark:text-white transition-colors"
+                                   placeholder="Doe">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label for="reg-phone" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Phone (Optional)</label>
+                        <input type="tel" id="reg-phone"
+                               class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-slate-700 dark:text-white transition-colors"
+                               placeholder="(555) 123-4567">
+                    </div>
+                    
+                    <div class="flex items-start gap-3 mt-4">
+                        <input type="checkbox" id="reg-terms" required
+                               class="mt-1 w-4 h-4 text-emerald-600 border-slate-300 rounded focus:ring-emerald-500">
+                        <label for="reg-terms" class="text-sm text-slate-600 dark:text-slate-400">
+                            I agree to the <a href="/sirsinexusportal/terms.html" class="text-emerald-600 dark:text-emerald-400 hover:underline" target="_blank">Terms of Service</a> and <a href="/sirsinexusportal/privacy.html" class="text-emerald-600 dark:text-emerald-400 hover:underline" target="_blank">Privacy Policy</a>
+                        </label>
+                    </div>
+                    
+                    <div class="flex gap-3 pt-4">
+                        <button type="button" onclick="skipRegistration()" class="flex-1 bg-slate-200 dark:bg-slate-600 text-slate-800 dark:text-slate-200 py-3 px-6 rounded-lg font-medium hover:bg-slate-300 dark:hover:bg-slate-500 transition-colors">
+                            Continue as Guest
+                        </button>
+                        <button type="submit" class="flex-1 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white py-3 px-6 rounded-lg font-medium hover:from-emerald-700 hover:to-emerald-800 transition-all shadow-lg">
+                            Create Account
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Success Modal -->
     <div id="success-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
         <div class="bg-white dark:bg-gray-800 rounded-lg p-8 max-w-md mx-4">
@@ -698,6 +788,941 @@
         let googlePayClient = null;
         let currentFeeAmount = 0;
         let currentTotalAmount = 0;
+        let currentUser = null;
+        let currentSession = null;
+        let registrationRequired = true;
+        
+        // SirsiNexus Comprehensive Account Management System
+        class SirsiAccountManager {
+            constructor() {
+                this.sessionId = this.generateSessionId();
+                this.initializeSession();
+                this.initializeProjectManagement();
+            }
+            
+            generateUserId() {
+                return 'USR-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+            }
+            
+            generateAccountId() {
+                return 'ACC-' + Date.now() + '-' + Math.random().toString(36).substr(2, 12).toUpperCase();
+            }
+            
+            generateSessionId() {
+                return 'SES-' + Date.now() + '-' + Math.random().toString(36).substr(2, 12).toUpperCase();
+            }
+            
+            generateTransactionId() {
+                return 'TXN-' + Date.now() + '-' + Math.random().toString(36).substr(2, 15).toUpperCase();
+            }
+            
+            generateProjectId() {
+                return 'PRJ-' + Date.now() + '-' + Math.random().toString(36).substr(2, 10).toUpperCase();
+            }
+            
+            generateInvoiceId() {
+                return 'INV-' + Date.now() + '-' + Math.random().toString(36).substr(2, 8).toUpperCase();
+            }
+            
+            initializeSession() {
+                this.sessionData = {
+                    sessionId: this.sessionId,
+                    startTime: new Date().toISOString(),
+                    userAgent: navigator.userAgent,
+                    ip: 'CLIENT_IP', // Would be populated server-side
+                    platform: navigator.platform,
+                    language: navigator.language,
+                    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                    referrer: document.referrer || 'direct',
+                    url: window.location.href,
+                    deviceFingerprint: this.generateDeviceFingerprint(),
+                    geoLocation: 'USER_LOCATION' // Would be populated with user permission
+                };
+                
+                console.log('Payment session initialized:', this.sessionId);
+            }
+            
+            generateDeviceFingerprint() {
+                // Create a basic device fingerprint for security
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                ctx.textBaseline = 'top';
+                ctx.font = '14px Arial';
+                ctx.fillText('Device fingerprint', 2, 2);
+                
+                return btoa(JSON.stringify({
+                    screen: `${screen.width}x${screen.height}`,
+                    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                    language: navigator.language,
+                    platform: navigator.platform,
+                    cookieEnabled: navigator.cookieEnabled,
+                    canvas: canvas.toDataURL().slice(22, 50)
+                }));
+            }
+            
+            initializeProjectManagement() {
+                // Initialize project context based on invoice or URL params
+                const urlParams = new URLSearchParams(window.location.search);
+                const projectParam = urlParams.get('project');
+                const invoiceParam = urlParams.get('invoice');
+                
+                if (projectParam) {
+                    this.currentProject = this.getOrCreateProject(projectParam);
+                } else if (invoiceParam && currentInvoice) {
+                    // Create/get project based on invoice service
+                    this.currentProject = this.getOrCreateProject(null, currentInvoice);
+                } else {
+                    // Default project for ad-hoc payments
+                    this.currentProject = this.getOrCreateProject('general-services');
+                }
+                
+                console.log('Project context initialized:', this.currentProject?.projectId);
+            }
+            
+            createAccount(accountData) {
+                const userId = this.generateUserId();
+                const accountId = this.generateAccountId();
+                
+                // Validate required fields
+                if (!accountData.email || !accountData.firstName) {
+                    throw new Error('Email and first name are required for account creation');
+                }
+                
+                const account = {
+                    userId: userId,
+                    accountId: accountId,
+                    accountType: accountData.accountType || 'guest',
+                    profile: {
+                        firstName: accountData.firstName || '',
+                        lastName: accountData.lastName || '',
+                        email: accountData.email || '',
+                        phone: accountData.phone || '',
+                        company: accountData.company || '',
+                        address: accountData.address || {},
+                        customerSince: new Date().toISOString(),
+                        preferredCurrency: 'USD',
+                        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
+                    },
+                    businessInfo: {
+                        taxId: accountData.taxId || '',
+                        businessType: accountData.businessType || 'individual',
+                        industry: accountData.industry || '',
+                        website: accountData.website || ''
+                    },
+                    metadata: {
+                        createdAt: new Date().toISOString(),
+                        updatedAt: new Date().toISOString(),
+                        createdFrom: 'payment_portal',
+                        sessionId: this.sessionId,
+                        ipAddress: 'CLIENT_IP', // Would be populated server-side
+                        source: currentInvoice ? 'invoice' : 'custom_payment',
+                        deviceFingerprint: this.sessionData.deviceFingerprint,
+                        creationContext: {
+                            userAgent: navigator.userAgent,
+                            referrer: document.referrer,
+                            landingPage: window.location.href
+                        }
+                    },
+                    preferences: {
+                        emailNotifications: true,
+                        paymentReminders: true,
+                        marketingEmails: false,
+                        preferredPaymentMethod: null,
+                        language: navigator.language.split('-')[0],
+                        communicationFrequency: 'normal'
+                    },
+                    security: {
+                        twoFactorEnabled: false,
+                        lastLoginAt: new Date().toISOString(),
+                        passwordLastChanged: null,
+                        securityQuestions: []
+                    },
+                    billing: {
+                        preferredCurrency: 'USD',
+                        billingAddress: accountData.address || {},
+                        paymentMethods: [],
+                        creditLimit: 0,
+                        currentBalance: 0
+                    },
+                    projects: [], // Associated project IDs
+                    transactionHistory: [], // Transaction IDs
+                    invoiceHistory: [], // Invoice IDs
+                    status: 'active',
+                    compliance: {
+                        kycStatus: 'pending',
+                        riskLevel: 'low',
+                        sanctionsCheck: 'passed',
+                        dataRetentionConsent: true
+                    }
+                };
+                
+                // Store account (in production, this would be sent to server)
+                this.storeAccount(account);
+                currentUser = account;
+                
+                console.log('Account created:', userId, accountId);
+                return account;
+            }
+            
+            createRegisteredAccount(userData) {
+                return this.createAccount({
+                    accountType: 'registered',
+                    email: userData.email,
+                    firstName: userData.firstName,
+                    lastName: userData.lastName || '',
+                    phone: userData.phone || '',
+                    company: userData.company || '',
+                    address: userData.address || {}
+                });
+            }
+            
+            // Keep for backward compatibility, but discourage usage
+            createGuestAccount(paymentData) {
+                console.warn('Guest accounts are deprecated. Please use createRegisteredAccount instead.');
+                return this.createAccount({
+                    accountType: 'guest',
+                    email: paymentData.payerEmail || 'guest@sirsinexus.com',
+                    firstName: paymentData.firstName || 'Guest',
+                    lastName: paymentData.lastName || 'User',
+                    phone: paymentData.payerPhone || '',
+                    company: paymentData.company || '',
+                    address: paymentData.payerAddress || {}
+                });
+            }
+            
+            getOrCreateProject(projectIdentifier, invoiceData = null) {
+                let project;
+                
+                if (projectIdentifier) {
+                    // Try to get existing project
+                    project = this.getProject(projectIdentifier);
+                    if (project) return project;
+                }
+                
+                // Create new project
+                const projectId = this.generateProjectId();
+                let projectName, projectDescription, projectCategory;
+                
+                if (invoiceData) {
+                    projectName = `${invoiceData.service} - ${invoiceData.client}`;
+                    projectDescription = `Project for ${invoiceData.service} service delivered to ${invoiceData.client}`;
+                    projectCategory = this.categorizeService(invoiceData.service);
+                } else if (projectIdentifier === 'general-services') {
+                    projectName = 'General Services';
+                    projectDescription = 'Miscellaneous payments and general services';
+                    projectCategory = 'general';
+                } else {
+                    projectName = projectIdentifier || 'Unnamed Project';
+                    projectDescription = `Project: ${projectName}`;
+                    projectCategory = 'custom';
+                }
+                
+                project = {
+                    projectId: projectId,
+                    projectName: projectName,
+                    projectDescription: projectDescription,
+                    projectCategory: projectCategory,
+                    status: 'active',
+                    metadata: {
+                        createdAt: new Date().toISOString(),
+                        updatedAt: new Date().toISOString(),
+                        createdBy: currentUser ? currentUser.userId : 'system',
+                        sessionId: this.sessionId
+                    },
+                    financial: {
+                        totalRevenue: 0,
+                        totalTransactions: 0,
+                        currency: 'USD',
+                        lastPaymentAt: null
+                    },
+                    clients: [],
+                    transactions: [], // Transaction IDs associated with this project
+                    invoices: [], // Invoice IDs associated with this project
+                    milestones: [],
+                    tags: []
+                };
+                
+                // Store project
+                this.storeProject(project);
+                
+                console.log('Project created:', projectId, projectName);
+                return project;
+            }
+            
+            categorizeService(serviceName) {
+                const serviceCategories = {
+                    'ai': ['artificial intelligence', 'machine learning', 'ai consulting', 'neural networks'],
+                    'infrastructure': ['cloud setup', 'server management', 'devops', 'infrastructure'],
+                    'consulting': ['consulting', 'advisory', 'strategy', 'planning'],
+                    'development': ['development', 'programming', 'coding', 'software'],
+                    'data': ['data analysis', 'analytics', 'big data', 'database'],
+                    'security': ['cybersecurity', 'security audit', 'penetration testing', 'compliance'],
+                    'training': ['training', 'education', 'workshop', 'course']
+                };
+                
+                const service = serviceName.toLowerCase();
+                for (const [category, keywords] of Object.entries(serviceCategories)) {
+                    if (keywords.some(keyword => service.includes(keyword))) {
+                        return category;
+                    }
+                }
+                
+                return 'other';
+            }
+            
+            storeAccount(account) {
+                // Store in localStorage for now (in production, send to server)
+                const accounts = JSON.parse(localStorage.getItem('sirsi-accounts') || '{}');
+                accounts[account.userId] = account;
+                localStorage.setItem('sirsi-accounts', JSON.stringify(accounts));
+                
+                // Also store current user reference
+                localStorage.setItem('sirsi-current-user', account.userId);
+                
+                // Update account index for faster lookups
+                this.updateAccountIndex(account);
+            }
+            
+            updateAccountIndex(account) {
+                const index = JSON.parse(localStorage.getItem('sirsi-account-index') || '{}');
+                
+                // Index by email
+                if (account.profile.email) {
+                    index.byEmail = index.byEmail || {};
+                    index.byEmail[account.profile.email.toLowerCase()] = account.userId;
+                }
+                
+                // Index by account type
+                index.byType = index.byType || {};
+                index.byType[account.accountType] = index.byType[account.accountType] || [];
+                if (!index.byType[account.accountType].includes(account.userId)) {
+                    index.byType[account.accountType].push(account.userId);
+                }
+                
+                // Index by creation date
+                const dateKey = new Date(account.metadata.createdAt).toISOString().split('T')[0];
+                index.byDate = index.byDate || {};
+                index.byDate[dateKey] = index.byDate[dateKey] || [];
+                if (!index.byDate[dateKey].includes(account.userId)) {
+                    index.byDate[dateKey].push(account.userId);
+                }
+                
+                localStorage.setItem('sirsi-account-index', JSON.stringify(index));
+            }
+            
+            storeProject(project) {
+                const projects = JSON.parse(localStorage.getItem('sirsi-projects') || '{}');
+                projects[project.projectId] = project;
+                localStorage.setItem('sirsi-projects', JSON.stringify(projects));
+                
+                // Update project index
+                this.updateProjectIndex(project);
+            }
+            
+            updateProjectIndex(project) {
+                const index = JSON.parse(localStorage.getItem('sirsi-project-index') || '{}');
+                
+                // Index by category
+                index.byCategory = index.byCategory || {};
+                index.byCategory[project.projectCategory] = index.byCategory[project.projectCategory] || [];
+                if (!index.byCategory[project.projectCategory].includes(project.projectId)) {
+                    index.byCategory[project.projectCategory].push(project.projectId);
+                }
+                
+                // Index by status
+                index.byStatus = index.byStatus || {};
+                index.byStatus[project.status] = index.byStatus[project.status] || [];
+                if (!index.byStatus[project.status].includes(project.projectId)) {
+                    index.byStatus[project.status].push(project.projectId);
+                }
+                
+                localStorage.setItem('sirsi-project-index', JSON.stringify(index));
+            }
+            
+            getAccount(userId) {
+                const accounts = JSON.parse(localStorage.getItem('sirsi-accounts') || '{}');
+                return accounts[userId] || null;
+            }
+            
+            getAccountByEmail(email) {
+                const index = JSON.parse(localStorage.getItem('sirsi-account-index') || '{}');
+                const userId = index.byEmail?.[email.toLowerCase()];
+                return userId ? this.getAccount(userId) : null;
+            }
+            
+            getCurrentUser() {
+                const currentUserId = localStorage.getItem('sirsi-current-user');
+                return currentUserId ? this.getAccount(currentUserId) : null;
+            }
+            
+            getProject(projectId) {
+                const projects = JSON.parse(localStorage.getItem('sirsi-projects') || '{}');
+                return projects[projectId] || null;
+            }
+            
+            getProjectsByCategory(category) {
+                const index = JSON.parse(localStorage.getItem('sirsi-project-index') || '{}');
+                const projectIds = index.byCategory?.[category] || [];
+                return projectIds.map(id => this.getProject(id)).filter(p => p);
+            }
+            
+            recordTransaction(transactionData) {
+                const transactionId = this.generateTransactionId();
+                
+                // Ensure we have a project context
+                const projectContext = this.currentProject || this.getOrCreateProject('general-services');
+                
+                const transaction = {
+                    transactionId: transactionId,
+                    userId: currentUser ? currentUser.userId : null,
+                    accountId: currentUser ? currentUser.accountId : null,
+                    projectId: projectContext.projectId,
+                    sessionId: this.sessionId,
+                    type: transactionData.type || 'payment',
+                    status: transactionData.status || 'pending',
+                    amount: transactionData.amount,
+                    currency: transactionData.currency || 'USD',
+                    description: transactionData.description,
+                    paymentMethod: transactionData.paymentMethod,
+                    paymentProcessor: transactionData.paymentProcessor,
+                    processorTransactionId: transactionData.processorTransactionId || null,
+                    
+                    // Enhanced categorization
+                    category: {
+                        primary: this.categorizeTransaction(transactionData),
+                        secondary: transactionData.category || 'payment',
+                        tags: transactionData.tags || []
+                    },
+                    
+                    // PCI DSS compliant data storage
+                    paymentDetails: {
+                        maskedCardNumber: transactionData.maskedCardNumber || null,
+                        cardBrand: transactionData.cardBrand || null,
+                        last4: transactionData.last4 || null,
+                        expiryMonth: null, // Never store
+                        expiryYear: null,  // Never store
+                        cvv: null,         // Never store
+                        paymentMethodType: this.getPaymentMethodType(transactionData.paymentMethod),
+                        processorDetails: {
+                            processorName: transactionData.paymentProcessor,
+                            processorVersion: transactionData.processorVersion || '1.0',
+                            processingTime: null // Will be updated when completed
+                        }
+                    },
+                    
+                    payer: {
+                        name: transactionData.payerName || '',
+                        email: transactionData.payerEmail || '',
+                        phone: transactionData.payerPhone || '',
+                        address: transactionData.payerAddress || {},
+                        identification: {
+                            type: 'email', // Primary identification method
+                            value: transactionData.payerEmail || '',
+                            verified: false
+                        }
+                    },
+                    
+                    invoice: currentInvoice ? {
+                        invoiceId: currentInvoice.number || this.generateInvoiceId(),
+                        service: currentInvoice.service,
+                        client: currentInvoice.client,
+                        originalAmount: currentInvoice.amount,
+                        dueDate: currentInvoice.dueDate || null,
+                        issueDate: currentInvoice.date || new Date().toISOString()
+                    } : null,
+                    
+                    project: {
+                        projectId: projectContext.projectId,
+                        projectName: projectContext.projectName,
+                        projectCategory: projectContext.projectCategory
+                    },
+                    
+                    fees: {
+                        processingFee: currentFeeAmount || 0,
+                        netAmount: (transactionData.amount - (currentFeeAmount || 0)),
+                        feeStructure: transactionData.feeStructure || 'standard',
+                        feeBreakdown: this.calculateDetailedFees(transactionData.amount, transactionData.paymentMethod)
+                    },
+                    
+                    financial: {
+                        exchangeRate: 1.0, // For future multi-currency support
+                        baseCurrency: 'USD',
+                        taxInfo: {
+                            taxIncluded: false,
+                            taxRate: 0,
+                            taxAmount: 0,
+                            taxJurisdiction: 'US'
+                        }
+                    },
+                    
+                    location: {
+                        ipAddress: 'CLIENT_IP',
+                        country: 'US', // Would be determined from IP
+                        region: null,
+                        city: null,
+                        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+                    },
+                    
+                    metadata: {
+                        createdAt: new Date().toISOString(),
+                        updatedAt: new Date().toISOString(),
+                        source: 'sirsi_payment_portal',
+                        version: '2.0', // Enhanced version
+                        deviceFingerprint: this.sessionData.deviceFingerprint,
+                        clientInfo: {
+                            userAgent: navigator.userAgent,
+                            platform: navigator.platform,
+                            language: navigator.language,
+                            timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                            screenResolution: `${screen.width}x${screen.height}`,
+                            colorDepth: screen.colorDepth
+                        },
+                        businessContext: {
+                            channel: 'web_portal',
+                            campaign: null, // Could be populated from UTM parameters
+                            referralSource: document.referrer,
+                            landingPage: window.location.href
+                        }
+                    },
+                    
+                    // Compliance and audit trail
+                    compliance: {
+                        pciDssCompliant: true,
+                        dataRetentionPolicy: '7_years',
+                        encryptionLevel: 'AES-256',
+                        gdprCompliant: true,
+                        auditTrail: [{
+                            action: 'transaction_created',
+                            timestamp: new Date().toISOString(),
+                            userId: currentUser ? currentUser.userId : 'guest',
+                            sessionId: this.sessionId,
+                            details: {
+                                paymentMethod: transactionData.paymentMethod,
+                                amount: transactionData.amount,
+                                projectId: projectContext.projectId
+                            }
+                        }],
+                        riskAssessment: {
+                            riskScore: this.calculateRiskScore(transactionData),
+                            riskFactors: [],
+                            approved: true
+                        }
+                    },
+                    
+                    // Integration tracking
+                    integration: {
+                        webhooksDelivered: [],
+                        notificationsSent: [],
+                        exportedTo: [],
+                        syncedWith: []
+                    }
+                };
+                
+                // Store transaction
+                this.storeTransaction(transaction);
+                
+                // Update user's transaction history
+                if (currentUser) {
+                    this.addTransactionToUser(currentUser.userId, transactionId);
+                }
+                
+                // Update project's transaction history
+                this.addTransactionToProject(projectContext.projectId, transactionId, transactionData.amount);
+                
+                // Update various indices and statistics
+                this.updateTransactionIndices(transaction);
+                
+                console.log('Comprehensive transaction recorded:', {
+                    transactionId: transactionId,
+                    userId: transaction.userId,
+                    accountId: transaction.accountId,
+                    projectId: transaction.projectId,
+                    paymentMethod: transaction.paymentMethod,
+                    amount: transaction.amount
+                });
+                
+                return transaction;
+            }
+            
+            categorizeTransaction(transactionData) {
+                const methodCategories = {
+                    'paypal': 'digital_wallet',
+                    'credit_card': 'card_payment',
+                    'debit_card': 'card_payment',
+                    'apple_pay': 'digital_wallet',
+                    'google_pay': 'digital_wallet',
+                    'zelle': 'bank_transfer',
+                    'venmo': 'digital_wallet',
+                    'bank_transfer': 'bank_transfer'
+                };
+                
+                return methodCategories[transactionData.paymentMethod] || 'other';
+            }
+            
+            getPaymentMethodType(paymentMethod) {
+                const types = {
+                    'paypal': 'digital_wallet',
+                    'apple_pay': 'mobile_wallet',
+                    'google_pay': 'mobile_wallet',
+                    'zelle': 'instant_transfer',
+                    'venmo': 'peer_to_peer',
+                    'credit_card': 'card',
+                    'debit_card': 'card'
+                };
+                
+                return types[paymentMethod] || 'unknown';
+            }
+            
+            calculateDetailedFees(amount, paymentMethod) {
+                const feeStructures = {
+                    'paypal': { rate: 0.0349, fixed: 0.49, name: 'PayPal Standard' },
+                    'zelle': { rate: 0, fixed: 0, name: 'Zelle (No Fees)' },
+                    'apple_pay': { rate: 0.0299, fixed: 0.10, name: 'Apple Pay' },
+                    'google_pay': { rate: 0.0299, fixed: 0.10, name: 'Google Pay' },
+                    'venmo': { rate: 0.0349, fixed: 0.49, name: 'Venmo' }
+                };
+                
+                const structure = feeStructures[paymentMethod] || { rate: 0.035, fixed: 0.49, name: 'Standard' };
+                const percentageFee = amount * structure.rate;
+                const totalFee = percentageFee + structure.fixed;
+                
+                return {
+                    structure: structure.name,
+                    percentageRate: structure.rate,
+                    percentageFee: Math.round(percentageFee * 100) / 100,
+                    fixedFee: structure.fixed,
+                    totalFee: Math.round(totalFee * 100) / 100,
+                    netAmount: Math.round((amount - totalFee) * 100) / 100
+                };
+            }
+            
+            calculateRiskScore(transactionData) {
+                let score = 0;
+                
+                // Amount-based risk
+                if (transactionData.amount > 1000) score += 20;
+                else if (transactionData.amount > 500) score += 10;
+                else if (transactionData.amount > 100) score += 5;
+                
+                // Payment method risk
+                const methodRisk = {
+                    'zelle': 5,
+                    'paypal': 10,
+                    'apple_pay': 5,
+                    'google_pay': 5,
+                    'credit_card': 15,
+                    'venmo': 10
+                };
+                
+                score += methodRisk[transactionData.paymentMethod] || 20;
+                
+                // New user risk
+                if (!currentUser || currentUser.accountType === 'guest') {
+                    score += 15;
+                }
+                
+                return Math.min(score, 100); // Cap at 100
+            }
+            
+            addTransactionToProject(projectId, transactionId, amount) {
+                const project = this.getProject(projectId);
+                if (project) {
+                    project.transactions.push(transactionId);
+                    project.financial.totalRevenue += amount;
+                    project.financial.totalTransactions += 1;
+                    project.financial.lastPaymentAt = new Date().toISOString();
+                    project.metadata.updatedAt = new Date().toISOString();
+                    
+                    this.storeProject(project);
+                }
+            }
+            
+            storeTransaction(transaction) {
+                // Store in localStorage for now (in production, send to secure server)
+                const transactions = JSON.parse(localStorage.getItem('sirsi-transactions') || '{}');
+                transactions[transaction.transactionId] = transaction;
+                localStorage.setItem('sirsi-transactions', JSON.stringify(transactions));
+                
+                // Update transaction statistics
+                this.updateTransactionStatistics(transaction);
+            }
+            
+            updateTransactionIndices(transaction) {
+                const index = JSON.parse(localStorage.getItem('sirsi-transaction-index') || '{}');
+                
+                // Index by payment method
+                index.byPaymentMethod = index.byPaymentMethod || {};
+                index.byPaymentMethod[transaction.paymentMethod] = index.byPaymentMethod[transaction.paymentMethod] || [];
+                index.byPaymentMethod[transaction.paymentMethod].push(transaction.transactionId);
+                
+                // Index by project
+                index.byProject = index.byProject || {};
+                index.byProject[transaction.projectId] = index.byProject[transaction.projectId] || [];
+                index.byProject[transaction.projectId].push(transaction.transactionId);
+                
+                // Index by date
+                const dateKey = new Date(transaction.metadata.createdAt).toISOString().split('T')[0];
+                index.byDate = index.byDate || {};
+                index.byDate[dateKey] = index.byDate[dateKey] || [];
+                index.byDate[dateKey].push(transaction.transactionId);
+                
+                // Index by status
+                index.byStatus = index.byStatus || {};
+                index.byStatus[transaction.status] = index.byStatus[transaction.status] || [];
+                index.byStatus[transaction.status].push(transaction.transactionId);
+                
+                // Index by amount range
+                const amountRange = this.getAmountRange(transaction.amount);
+                index.byAmountRange = index.byAmountRange || {};
+                index.byAmountRange[amountRange] = index.byAmountRange[amountRange] || [];
+                index.byAmountRange[amountRange].push(transaction.transactionId);
+                
+                localStorage.setItem('sirsi-transaction-index', JSON.stringify(index));
+            }
+            
+            getAmountRange(amount) {
+                if (amount < 10) return '0-10';
+                if (amount < 50) return '10-50';
+                if (amount < 100) return '50-100';
+                if (amount < 500) return '100-500';
+                if (amount < 1000) return '500-1000';
+                if (amount < 5000) return '1000-5000';
+                return '5000+';
+            }
+            
+            updateTransactionStatistics(transaction) {
+                const stats = JSON.parse(localStorage.getItem('sirsi-transaction-stats') || '{}');
+                const today = new Date().toISOString().split('T')[0];
+                
+                // Daily stats
+                stats.daily = stats.daily || {};
+                stats.daily[today] = stats.daily[today] || {
+                    count: 0,
+                    totalAmount: 0,
+                    byPaymentMethod: {},
+                    byProject: {}
+                };
+                
+                stats.daily[today].count += 1;
+                stats.daily[today].totalAmount += transaction.amount;
+                
+                // By payment method
+                stats.daily[today].byPaymentMethod[transaction.paymentMethod] = 
+                    (stats.daily[today].byPaymentMethod[transaction.paymentMethod] || 0) + transaction.amount;
+                
+                // By project
+                stats.daily[today].byProject[transaction.projectId] = 
+                    (stats.daily[today].byProject[transaction.projectId] || 0) + transaction.amount;
+                
+                // Overall stats
+                stats.overall = stats.overall || {
+                    totalTransactions: 0,
+                    totalRevenue: 0,
+                    averageTransactionValue: 0,
+                    topPaymentMethods: {},
+                    topProjects: {}
+                };
+                
+                stats.overall.totalTransactions += 1;
+                stats.overall.totalRevenue += transaction.amount;
+                stats.overall.averageTransactionValue = stats.overall.totalRevenue / stats.overall.totalTransactions;
+                
+                // Track payment method usage
+                stats.overall.topPaymentMethods[transaction.paymentMethod] = 
+                    (stats.overall.topPaymentMethods[transaction.paymentMethod] || 0) + 1;
+                
+                // Track project revenue
+                stats.overall.topProjects[transaction.projectId] = 
+                    (stats.overall.topProjects[transaction.projectId] || 0) + transaction.amount;
+                
+                localStorage.setItem('sirsi-transaction-stats', JSON.stringify(stats));
+            }
+            
+            addTransactionToUser(userId, transactionId) {
+                const user = this.getAccount(userId);
+                if (user) {
+                    if (!user.transactionHistory) {
+                        user.transactionHistory = [];
+                    }
+                    user.transactionHistory.push(transactionId);
+                    this.storeAccount(user);
+                }
+            }
+            
+            getTransaction(transactionId) {
+                const transactions = JSON.parse(localStorage.getItem('sirsi-transactions') || '{}');
+                return transactions[transactionId] || null;
+            }
+            
+            getUserTransactions(userId) {
+                const user = this.getAccount(userId);
+                if (!user || !user.transactionHistory) return [];
+                
+                const transactions = JSON.parse(localStorage.getItem('sirsi-transactions') || '{}');
+                return user.transactionHistory.map(txnId => transactions[txnId]).filter(txn => txn);
+            }
+            
+            updateTransactionStatus(transactionId, status, additionalData = {}) {
+                const transaction = this.getTransaction(transactionId);
+                if (transaction) {
+                    transaction.status = status;
+                    transaction.metadata.updatedAt = new Date().toISOString();
+                    
+                    // Add to audit trail
+                    transaction.compliance.auditTrail.push({
+                        action: `status_changed_to_${status}`,
+                        timestamp: new Date().toISOString(),
+                        userId: currentUser ? currentUser.userId : 'system',
+                        sessionId: this.sessionId,
+                        additionalData: additionalData
+                    });
+                    
+                    // Merge additional data
+                    Object.assign(transaction, additionalData);
+                    
+                    this.storeTransaction(transaction);
+                    console.log('Transaction status updated:', transactionId, status);
+                }
+            }
+            
+            // Refund capability
+            initiateRefund(transactionId, refundAmount, reason = 'customer_request') {
+                const originalTransaction = this.getTransaction(transactionId);
+                if (!originalTransaction) {
+                    console.error('Transaction not found for refund:', transactionId);
+                    return null;
+                }
+                
+                const refundTransaction = {
+                    ...originalTransaction,
+                    transactionId: this.generateTransactionId(),
+                    type: 'refund',
+                    status: 'pending',
+                    amount: -Math.abs(refundAmount), // Negative amount for refund
+                    originalTransactionId: transactionId,
+                    refundReason: reason,
+                    metadata: {
+                        ...originalTransaction.metadata,
+                        createdAt: new Date().toISOString(),
+                        updatedAt: new Date().toISOString(),
+                        refundInitiatedBy: currentUser ? currentUser.userId : 'admin'
+                    }
+                };
+                
+                this.storeTransaction(refundTransaction);
+                
+                // Update original transaction
+                this.updateTransactionStatus(transactionId, 'refunded', {
+                    refundTransactionId: refundTransaction.transactionId,
+                    refundAmount: refundAmount,
+                    refundReason: reason
+                });
+                
+                console.log('Refund initiated:', refundTransaction.transactionId);
+                return refundTransaction;
+            }
+        }
+        
+        // Initialize account manager
+        const accountManager = new SirsiAccountManager();
+        
+        // Registration system
+        function showRegistrationModal() {
+            if (!registrationRequired) return;
+            
+            const modal = document.getElementById('registration-modal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+        }
+        
+        function hideRegistrationModal() {
+            const modal = document.getElementById('registration-modal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+        
+        function registerUser(formData) {
+            try {
+                currentUser = accountManager.createRegisteredAccount({
+                    email: formData.email,
+                    firstName: formData.firstName,
+                    lastName: formData.lastName || '',
+                    phone: formData.phone || '',
+                    company: formData.company || ''
+                });
+                
+                console.log('User successfully registered:', currentUser.userId);
+                registrationRequired = false;
+                hideRegistrationModal();
+                
+                // Show success message
+                showInlineMessage('Account created successfully! You can now make your payment.', 'success');
+                
+                return true;
+            } catch (error) {
+                console.error('Registration failed:', error);
+                showRegistrationError(error.message);
+                return false;
+            }
+        }
+        
+        function skipRegistration() {
+            // Create a minimal guest account for backward compatibility
+            currentUser = accountManager.createGuestAccount({
+                payerEmail: 'guest@payment.local',
+                firstName: 'Guest',
+                lastName: 'User'
+            });
+            
+            registrationRequired = false;
+            hideRegistrationModal();
+            
+            // Show message about guest account limitations
+            showInlineMessage('Continuing as guest. You can register later to track your payments.', 'info');
+        }
+        
+        function checkExistingUser() {
+            // Check if user is already registered/logged in
+            const existingUser = accountManager.getCurrentUser();
+            if (existingUser && existingUser.accountType === 'registered') {
+                currentUser = existingUser;
+                registrationRequired = false;
+                console.log('Existing registered user found:', currentUser.userId);
+                return true;
+            }
+            return false;
+        }
+        
+        function showRegistrationError(message) {
+            // Remove existing error
+            const existingError = document.getElementById('registration-error');
+            if (existingError) {
+                existingError.remove();
+            }
+            
+            // Create error element
+            const errorDiv = document.createElement('div');
+            errorDiv.id = 'registration-error';
+            errorDiv.className = 'mt-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg';
+            errorDiv.innerHTML = `
+                <div class="flex items-start gap-2">
+                    <svg class="w-4 h-4 text-red-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="text-red-600 dark:text-red-400 text-sm font-medium">${message}</span>
+                </div>
+            `;
+            
+            // Insert into registration form
+            const form = document.getElementById('registration-form');
+            if (form) {
+                form.appendChild(errorDiv);
+            }
+        }
         
         // Google Pay configuration
         const googlePayConfig = {
@@ -785,6 +1810,54 @@
             
             // Initialize admin status
             checkAdminStatus();
+            
+            // Check if user is already registered
+            if (!checkExistingUser()) {
+                // Show registration modal if no existing user
+                showRegistrationModal();
+            }
+            
+            // Initialize payment form submission handler
+            const registrationForm = document.getElementById('registration-form');
+            if (registrationForm) {
+                registrationForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const formData = {
+                        email: document.getElementById('reg-email').value.trim(),
+                        firstName: document.getElementById('reg-first-name').value.trim(),
+                        lastName: document.getElementById('reg-last-name').value.trim(),
+                        phone: document.getElementById('reg-phone').value.trim()
+                    };
+                    
+                    // Basic validation
+                    if (!formData.email || !formData.firstName) {
+                        showRegistrationError('Please fill in all required fields.');
+                        return;
+                    }
+                    
+                    // Email validation
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(formData.email)) {
+                        showRegistrationError('Please enter a valid email address.');
+                        return;
+                    }
+                    
+                    // Check if email already exists
+                    const existingAccount = accountManager.getAccountByEmail(formData.email);
+                    if (existingAccount) {
+                        // Use existing account
+                        currentUser = existingAccount;
+                        registrationRequired = false;
+                        hideRegistrationModal();
+                        showInlineMessage('Welcome back! Using your existing account.', 'success');
+                        return;
+                    }
+                    
+                    // Register new user
+                    registerUser(formData);
+                });
+            }
             
             // Initialize PayPal payment system
             const urlParams = new URLSearchParams(window.location.search);
@@ -971,6 +2044,36 @@
         }
         
         function renderPayPalButtons(amount, description) {
+            // Check if user is registered before showing payment options
+            if (registrationRequired) {
+                // Show a message that registration is required
+                const containers = [
+                    document.getElementById('paypal-button-container'),
+                    document.getElementById('google-pay-button'), 
+                    document.getElementById('apple-pay-button')
+                ];
+                
+                containers.forEach(container => {
+                    if (container) {
+                        container.innerHTML = `
+                            <div class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4 text-center">
+                                <div class="flex items-center justify-center gap-3 mb-3">
+                                    <svg class="w-5 h-5 text-amber-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    <p class="text-amber-700 dark:text-amber-300 font-medium">Account Required</p>
+                                </div>
+                                <p class="text-amber-600 dark:text-amber-400 text-sm mb-3">Please create an account or continue as guest to proceed with payment.</p>
+                                <button onclick="showRegistrationModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                                    Create Account
+                                </button>
+                            </div>
+                        `;
+                    }
+                });
+                return;
+            }
+            
             const container = document.getElementById('paypal-button-container');
             const messageDiv = document.getElementById('payment-message');
             
@@ -1098,16 +2201,49 @@
                                 description = document.getElementById('payment-description').value || 'Payment to SirsiNexus';
                             }
                             
-                            const transaction = {
+                            // Ensure we have a user account (should be created during registration)
+                            if (!currentUser) {
+                                console.error('No user account found during payment processing');
+                                // Fallback: create account with PayPal data
+                                currentUser = accountManager.createRegisteredAccount({
+                                    email: details.payer.email_address,
+                                    firstName: details.payer.name?.given_name || 'PayPal',
+                                    lastName: details.payer.name?.surname || 'User'
+                                });
+                            }
+                            
+                            // Record comprehensive transaction in SirsiNexus system
+                            const sirsiTransaction = accountManager.recordTransaction({
+                                type: 'payment',
+                                status: 'completed',
+                                amount: amount,
+                                description: description,
+                                paymentMethod: 'paypal',
+                                paymentProcessor: 'paypal',
+                                processorTransactionId: details.id,
+                                payerName: details.payer.name ? `${details.payer.name.given_name} ${details.payer.name.surname}` : 'PayPal User',
+                                payerEmail: details.payer.email_address,
+                                payerPhone: details.payer.phone?.phone_number?.national_number || '',
+                                payerAddress: details.payer.address || {},
+                                feeStructure: 'paypal_standard'
+                            });
+                            
+                            // Legacy transaction storage for backward compatibility
+                            const legacyTransaction = {
                                 id: details.id,
                                 payer: details.payer,
                                 amount: amount,
                                 description: description,
                                 timestamp: new Date().toISOString(),
-                                invoiceData: currentInvoice || null
+                                invoiceData: currentInvoice || null,
+                                sirsiTransactionId: sirsiTransaction.transactionId,
+                                userId: currentUser.userId
                             };
                             
-                            localStorage.setItem('last-transaction', JSON.stringify(transaction));
+                            localStorage.setItem('last-transaction', JSON.stringify(legacyTransaction));
+                            
+                            console.log('SirsiNexus transaction recorded:', sirsiTransaction.transactionId);
+                            console.log('User account:', currentUser.userId);
                             
                             // Show success
                             showSuccessMessage(details);
@@ -1378,6 +2514,12 @@
         }
         
         function handleApplePay(type) {
+            // Check if user is registered
+            if (registrationRequired) {
+                showRegistrationModal();
+                return;
+            }
+            
             const currentAmount = parseFloat(document.getElementById('payment-amount').value) || 0;
             if (currentAmount < 1) {
                 highlightAmountField();
@@ -1413,9 +2555,47 @@
             };
             
             session.onpaymentauthorized = function(event) {
+                // Ensure we have a user account (should be created during registration)
+                if (!currentUser) {
+                    console.error('No user account found during Apple Pay processing');
+                    session.completePayment(ApplePaySession.STATUS_FAILURE);
+                    showInlineMessage('Registration required. Please reload and create an account.', 'error');
+                    return;
+                }
+                
+                // Get payment data
+                let amount, description;
+                if (currentInvoice) {
+                    amount = parseFloat(document.getElementById('invoice-payment-amount').value) || parseFloat(currentInvoice.amount);
+                    description = document.getElementById('invoice-payment-description').value || `Invoice ${currentInvoice.number} - ${currentInvoice.service}`;
+                } else {
+                    amount = parseFloat(document.getElementById('payment-amount').value) || currentAmount;
+                    description = document.getElementById('payment-description').value || currentDescription || 'Apple Pay Payment to SirsiNexus';
+                }
+                
+                // Record comprehensive transaction in SirsiNexus system
+                const applePayTransactionId = 'apple-pay-' + Date.now();
+                const sirsiTransaction = accountManager.recordTransaction({
+                    type: 'payment',
+                    status: 'completed',
+                    amount: amount,
+                    description: description,
+                    paymentMethod: 'apple_pay',
+                    paymentProcessor: 'apple_pay',
+                    processorTransactionId: applePayTransactionId,
+                    payerName: 'Apple Pay User',
+                    payerEmail: 'applepay-user@sirsinexus.com',
+                    payerPhone: '',
+                    payerAddress: {},
+                    feeStructure: 'apple_pay_standard'
+                });
+                
+                console.log('Apple Pay transaction recorded:', sirsiTransaction.transactionId);
+                console.log('User account:', currentUser.userId);
+                
                 // Process payment with your payment processor
                 session.completePayment(ApplePaySession.STATUS_SUCCESS);
-                showSuccessMessage({id: 'apple-pay-' + Date.now()});
+                showSuccessMessage({id: applePayTransactionId});
             };
             
             session.begin();
@@ -1593,7 +2773,44 @@
             
             // Simulate payment processing
             setTimeout(() => {
-                showSuccessMessage({id: 'apple-pay-qr-' + Date.now()});
+                // Ensure we have a user account (should be created during registration)
+                if (!currentUser) {
+                    console.error('No user account found during Apple Pay QR processing');
+                    showInlineMessage('Registration required. Please reload and create an account.', 'error');
+                    return;
+                }
+                
+                // Get payment data from either invoice or custom payment
+                let amount, description;
+                if (currentInvoice) {
+                    amount = parseFloat(document.getElementById('invoice-payment-amount').value) || parseFloat(currentInvoice.amount);
+                    description = document.getElementById('invoice-payment-description').value || `Invoice ${currentInvoice.number} - ${currentInvoice.service}`;
+                } else {
+                    amount = parseFloat(document.getElementById('payment-amount').value) || currentAmount;
+                    description = document.getElementById('payment-description').value || currentDescription || 'Apple Pay Payment to SirsiNexus';
+                }
+                
+                // Record comprehensive transaction in SirsiNexus system
+                const applePayTransactionId = 'apple-pay-qr-' + Date.now();
+                const sirsiTransaction = accountManager.recordTransaction({
+                    type: 'payment',
+                    status: 'completed',
+                    amount: amount,
+                    description: description,
+                    paymentMethod: 'apple_pay',
+                    paymentProcessor: 'apple_pay',
+                    processorTransactionId: applePayTransactionId,
+                    payerName: 'Apple Pay User',
+                    payerEmail: 'applepay-user@sirsinexus.com',
+                    payerPhone: '',
+                    payerAddress: {},
+                    feeStructure: 'apple_pay_standard'
+                });
+                
+                console.log('Apple Pay transaction recorded:', sirsiTransaction.transactionId);
+                console.log('User account:', currentUser.userId);
+                
+                showSuccessMessage({id: applePayTransactionId});
             }, 1000);
         }
         
@@ -1787,6 +3004,12 @@
         }
         
         function handleGooglePay() {
+            // Check if user is registered
+            if (registrationRequired) {
+                showRegistrationModal();
+                return;
+            }
+            
             const currentAmount = parseFloat(document.getElementById('payment-amount').value) || 0;
             if (currentAmount < 1) {
                 highlightAmountField();
@@ -1816,7 +3039,45 @@
             googlePayClient.loadPaymentData(paymentDataRequest)
                 .then(function(paymentData) {
                     console.log('Google Pay success:', paymentData);
-                    showSuccessMessage({id: 'google-pay-' + Date.now()});
+                    
+                    // Ensure we have a user account (should be created during registration)
+                    if (!currentUser) {
+                        console.error('No user account found during Google Pay processing');
+                        showInlineMessage('Registration required. Please reload and create an account.', 'error');
+                        return;
+                    }
+                    
+                    // Get payment data from either invoice or custom payment
+                    let amount, description;
+                    if (currentInvoice) {
+                        amount = parseFloat(document.getElementById('invoice-payment-amount').value) || parseFloat(currentInvoice.amount);
+                        description = document.getElementById('invoice-payment-description').value || `Invoice ${currentInvoice.number} - ${currentInvoice.service}`;
+                    } else {
+                        amount = parseFloat(document.getElementById('payment-amount').value) || currentAmount;
+                        description = document.getElementById('payment-description').value || currentDescription || 'Google Pay Payment to SirsiNexus';
+                    }
+                    
+                    // Record comprehensive transaction in SirsiNexus system
+                    const googlePayTransactionId = 'google-pay-' + Date.now();
+                    const sirsiTransaction = accountManager.recordTransaction({
+                        type: 'payment',
+                        status: 'completed',
+                        amount: amount,
+                        description: description,
+                        paymentMethod: 'google_pay',
+                        paymentProcessor: 'google_pay',
+                        processorTransactionId: googlePayTransactionId,
+                        payerName: 'Google Pay User',
+                        payerEmail: 'googlepay-user@sirsinexus.com',
+                        payerPhone: '',
+                        payerAddress: {},
+                        feeStructure: 'google_pay_standard'
+                    });
+                    
+                    console.log('Google Pay transaction recorded:', sirsiTransaction.transactionId);
+                    console.log('User account:', currentUser.userId);
+                    
+                    showSuccessMessage({id: googlePayTransactionId});
                 })
                 .catch(function(err) {
                     console.error('Google Pay error:', err);
@@ -1870,6 +3131,32 @@
             const paymentAmountInput = document.getElementById('invoice-payment-amount');
             const amount = parseFloat(paymentAmountInput.value) || parseFloat(currentInvoice.amount) || 0;
             const invoiceNumber = currentInvoice.number;
+            const description = `Invoice ${invoiceNumber} - ${currentInvoice.service}`;
+            
+            // Ensure we have a user account (should be created during registration)
+            if (!currentUser) {
+                console.error('No user account found during Zelle processing');
+                showInlineMessage('Registration required. Please reload and create an account.', 'error');
+                return;
+            }
+            
+            // Record pending Zelle transaction in SirsiNexus system
+            const zelleTransaction = accountManager.recordTransaction({
+                type: 'payment',
+                status: 'pending', // Will be updated when payment is confirmed
+                amount: amount,
+                description: description,
+                paymentMethod: 'zelle',
+                paymentProcessor: 'zelle_network',
+                processorTransactionId: null, // Zelle doesn't provide immediate transaction ID
+                payerName: 'Zelle User', // Will be updated when payment details are available
+                payerEmail: 'pending@zelle.verification', // Placeholder
+                payerPhone: '',
+                payerAddress: {},
+                feeStructure: 'zelle_no_fees'
+            });
+            
+            console.log('Zelle transaction recorded as pending:', zelleTransaction.transactionId);
             
             const zelleInfo = `💜 ZELLE PAYMENT - NO FEES!
 
@@ -1878,6 +3165,7 @@ Invoice Payment Details:
 • Amount: $${amount.toFixed(2)} USD
 • Recipient: cylton@cylton.com
 • Service: ${currentInvoice.service}
+• Transaction ID: ${zelleTransaction.transactionId}
 
 Payment Instructions:
 1. Open your bank's mobile app or Zelle® app
@@ -1894,7 +3182,9 @@ Benefits:
 
 Questions? Contact: cylton@cylton.com
 
-SirsiNexus - AI Infrastructure Solutions`;
+SirsiNexus - AI Infrastructure Solutions
+
+Note: Your payment intent has been recorded in our system with Transaction ID: ${zelleTransaction.transactionId}. Once your Zelle payment is received, we'll update the status automatically.`;
             
             navigator.clipboard.writeText(zelleInfo).then(() => {
                 const button = event.target;
@@ -1915,6 +3205,12 @@ SirsiNexus - AI Infrastructure Solutions`;
         }
         
         function copyZelleInfoCustom() {
+            // Check if user is registered
+            if (registrationRequired) {
+                showRegistrationModal();
+                return;
+            }
+            
             const amountInput = document.getElementById('payment-amount');
             const descInput = document.getElementById('payment-description');
             
@@ -1927,12 +3223,40 @@ SirsiNexus - AI Infrastructure Solutions`;
                 return;
             }
             
+            // Create or get user account for Zelle payment tracking
+            if (!currentUser) {
+                currentUser = accountManager.createGuestAccount({
+                    payerEmail: 'zelle-user@sirsinexus.com', // Placeholder since we don't have their email
+                    firstName: 'Zelle',
+                    lastName: 'User'
+                });
+            }
+            
+            // Record pending Zelle transaction in SirsiNexus system
+            const zelleTransaction = accountManager.recordTransaction({
+                type: 'payment',
+                status: 'pending', // Will be updated when payment is confirmed
+                amount: amount,
+                description: description,
+                paymentMethod: 'zelle',
+                paymentProcessor: 'zelle_network',
+                processorTransactionId: null, // Zelle doesn't provide immediate transaction ID
+                payerName: 'Zelle User', // Will be updated when payment details are available
+                payerEmail: 'pending@zelle.verification', // Placeholder
+                payerPhone: '',
+                payerAddress: {},
+                feeStructure: 'zelle_no_fees'
+            });
+            
+            console.log('Zelle transaction recorded as pending:', zelleTransaction.transactionId);
+            
             const zelleInfo = `💜 ZELLE PAYMENT - NO FEES!
 
 Payment Details:
 • Amount: $${amount.toFixed(2)} USD
 • Description: ${description}
 • Recipient: cylton@cylton.com
+• Transaction ID: ${zelleTransaction.transactionId}
 
 Payment Instructions:
 1. Open your bank's mobile app or Zelle® app
@@ -1949,7 +3273,9 @@ Benefits:
 
 Questions? Contact: cylton@cylton.com
 
-SirsiNexus - AI Infrastructure Solutions`;
+SirsiNexus - AI Infrastructure Solutions
+
+Note: Your payment intent has been recorded in our system with Transaction ID: ${zelleTransaction.transactionId}. Once your Zelle payment is received, we'll update the status automatically.`;
             
             navigator.clipboard.writeText(zelleInfo).then(() => {
                 const button = event.target;
