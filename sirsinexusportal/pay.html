@@ -391,7 +391,7 @@
               </div>
               
               <!-- Custom Payment Section (when no invoice) -->
-              <div id="custom-payment-section" style="display: none;">
+              <div id="custom-payment-section" style="display: block;">
                 <div class="text-center mb-8">
                   <h3 class="text-xl font-bold text-slate-800 dark:text-slate-200 mb-2">Make a Payment</h3>
                   <p class="text-slate-600 dark:text-slate-400">Enter your payment details below</p>
@@ -419,29 +419,28 @@
                     </div>
                   </div>
                 </div>
-              </div>
-              
-              <!-- Step 3: Choose Payment Method -->
-              <div class="mb-8">
-                <div class="flex items-center gap-3 mb-4">
-                  <div class="w-8 h-8 bg-emerald-600 text-white rounded-full flex items-center justify-center font-semibold text-sm">3</div>
-                  <h2 class="text-xl font-bold text-slate-900 dark:text-slate-100">Choose Payment Method</h2>
-                </div>
-                <p class="text-slate-600 dark:text-slate-400 mb-6">Select your preferred way to pay</p>
                 
-                <!-- Zelle Payment Button -->
-                <button id="zelle-pay-btn" class="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white py-4 px-6 rounded-xl flex items-center justify-center gap-3 hover:from-purple-700 hover:to-purple-800 transition-all duration-300 shadow-lg font-medium text-lg mb-4" onclick="showZelleDetails()">
-                  <div class="w-8 h-8 bg-white bg-opacity-20 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <div class="text-center">
-                      <div class="text-sm font-bold leading-none">Z</div>
+                <!-- Step 3: Choose Payment Method -->
+                <div class="mb-8">
+                  <div class="flex items-center gap-3 mb-4">
+                    <div class="w-8 h-8 bg-emerald-600 text-white rounded-full flex items-center justify-center font-semibold text-sm">3</div>
+                    <h2 class="text-xl font-bold text-slate-900 dark:text-slate-100">Choose Payment Method</h2>
+                  </div>
+                  <p class="text-slate-600 dark:text-slate-400 mb-6">Select your preferred way to pay</p>
+                  
+                  <!-- Zelle Payment Button -->
+                  <button id="zelle-pay-btn" class="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white py-4 px-6 rounded-xl flex items-center justify-center gap-3 hover:from-purple-700 hover:to-purple-800 transition-all duration-300 shadow-lg font-medium text-lg mb-4" onclick="showZelleDetails()">
+                    <div class="w-8 h-8 bg-white bg-opacity-20 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <div class="text-center">
+                        <div class="text-sm font-bold leading-none">Z</div>
+                      </div>
                     </div>
-                  </div>
-                  <span class="flex-1 text-left">Pay with Zelle® - No Fees!</span>
-                  <div class="text-sm opacity-90 text-right">
-                    <div class="leading-tight">✓ Instant</div>
-                    <div class="leading-tight text-xs">✓ Zero fees</div>
-                  </div>
-                </button>
+                    <span class="flex-1 text-left">Pay with Zelle® - No Fees!</span>
+                    <div class="text-sm opacity-90 text-right">
+                      <div class="leading-tight">✓ Instant</div>
+                      <div class="leading-tight text-xs">✓ Zero fees</div>
+                    </div>
+                  </button>
               
                 <!-- Zelle Payment Details - Unified -->
                 <div id="zelle-details" class="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-4 border border-purple-200 dark:border-purple-700 mb-4" style="display: none;">
@@ -520,6 +519,7 @@
                 
                 <!-- PayPal Button -->
                 <div id="paypal-button-container"></div>
+                </div>
               </div>
               
               <!-- Status Messages -->
