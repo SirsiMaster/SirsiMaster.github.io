@@ -228,7 +228,7 @@
           </div>
 
           <!-- Invoice Display (if invoice parameter exists) -->
-          <div id="invoice-section" class="mb-12">
+          <div id="invoice-section" class="hidden mb-12">
             <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl payment-glow border border-slate-200 dark:border-slate-700">
               <div class="p-8 lg:p-12">
                 <div class="text-center mb-10">
@@ -1748,12 +1748,15 @@
         }
         
         function setupAllPaymentSections() {
-            // Always show custom payment section
-            document.getElementById('custom-payment-card').style.display = 'block';
-            
-            // Show invoice section if we have invoice data
+            // Show appropriate section based on invoice presence
             if (currentInvoice) {
+                // Invoice mode - show invoice section, hide custom payment
                 document.getElementById('invoice-section').classList.remove('hidden');
+                document.getElementById('custom-payment-card').style.display = 'none';
+            } else {
+                // Custom payment mode - show custom payment, keep invoice hidden
+                document.getElementById('custom-payment-card').style.display = 'block';
+                document.getElementById('invoice-section').classList.add('hidden');
             }
             
             // Add event listeners for real-time updates on custom payment
