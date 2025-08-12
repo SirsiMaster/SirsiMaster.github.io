@@ -1533,16 +1533,45 @@
         }
 
         function skipRegistration() {
-            currentUser = accountManager.createGuestAccount({
-                payerEmail: 'guest-' + Date.now() + '@payment.local',
-                firstName: 'Guest',
-                lastName: 'User'
-            });
-            
-            registrationRequired = false;
-            document.getElementById('registration-section').classList.add('hidden');
-            updateAllPaymentButtons();
-            showInlineMessage('Continuing as guest. You can register on your next visit to track payments.', 'info');
+            console.log('Creating guest account...');
+            try {
+                currentUser = accountManager.createGuestAccount({
+                    payerEmail: 'guest-' + Date.now() + '@payment.local',
+                    firstName: 'Guest',
+                    lastName: 'User'
+                });
+                
+                registrationRequired = false;
+                console.log('Guest account created:', currentUser.userId);
+                
+                // Hide the registration form
+                const registrationForm = document.getElementById('registration-form');
+                if (registrationForm) {
+                    registrationForm.classList.add('hidden');
+                }
+                
+                // Show welcome message for guest
+                const welcomeMessage = document.getElementById('welcome-back-message');
+                const welcomeName = document.getElementById('welcome-back-name');
+                if (welcomeMessage && welcomeName) {
+                    welcomeName.textContent = 'Guest';
+                    welcomeMessage.classList.remove('hidden');
+                }
+                
+                updateAllPaymentButtons();
+                showInlineMessage('Continuing as guest. You can register on your next visit to track payments.', 'info');
+                
+                // Scroll to payment section
+                const paymentCard = document.getElementById('custom-payment-card');
+                if (paymentCard) {
+                    setTimeout(() => {
+                        paymentCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 500);
+                }
+            } catch (error) {
+                console.error('Failed to create guest account:', error);
+                showInlineMessage('Failed to create guest account. Please try again.', 'error');
+            }
         }
 
         function logoutAndReload() {
