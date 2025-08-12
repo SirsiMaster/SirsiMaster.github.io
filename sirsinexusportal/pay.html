@@ -236,25 +236,26 @@
                 </div>
               </div>
               
-              <!-- Zelle Payment Option - Streamlined -->
-              <div class="mb-6 bg-purple-50 dark:bg-purple-900/20 rounded-lg p-4 border border-purple-200 dark:border-purple-700">
-                <div class="flex items-center gap-4">
-                  <div class="flex-shrink-0">
-                    <img src="/sirsinexusportal/assets/images/zelle-qr.png" alt="Zelle QR Code" class="w-20 h-20 object-contain rounded-md border border-slate-200">
-                  </div>
-                  <div class="flex-1">
-                    <h3 class="font-bold text-purple-900 dark:text-purple-100 mb-1">Pay with Zelle® - No Fees!</h3>
-                    <p class="text-sm text-purple-700 dark:text-purple-200 mb-2">Scan QR code or send to: <span class="font-mono font-bold">cylton@cylton.com</span></p>
-                    <p class="text-xs text-green-700 dark:text-green-300">✓ Instant • ✓ Secure • ✓ Zero processing fees</p>
-                  </div>
-                </div>
-              </div>
-              
               <!-- Payment Buttons for Invoice -->
               <div class="space-y-3 mt-6">
                 <div class="text-center mb-4">
-                  <h4 class="text-lg font-semibold text-slate-800 dark:text-slate-200 mb-2">Other Payment Methods</h4>
-                  <p class="text-slate-600 dark:text-slate-400 text-sm">Additional payment options (fees apply)</p>
+                  <h4 class="text-lg font-semibold text-slate-800 dark:text-slate-200 mb-2">Choose Payment Method</h4>
+                  <p class="text-slate-600 dark:text-slate-400 text-sm">Select your preferred way to pay</p>
+                </div>
+                
+                <!-- Zelle Payment Option - First Choice -->
+                <div class="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-3 border border-purple-200 dark:border-purple-700 mb-4">
+                  <div class="flex items-center gap-3">
+                    <div class="flex-shrink-0">
+                      <img src="./sirsinexusportal/assets/images/zelle-qr.png" alt="Zelle QR Code" class="w-16 h-16 object-contain rounded border border-slate-200" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                      <div class="w-16 h-16 bg-purple-600 rounded flex items-center justify-center text-white font-bold text-lg" style="display:none;">Z</div>
+                    </div>
+                    <div class="flex-1">
+                      <h3 class="font-bold text-purple-900 dark:text-purple-100 text-sm mb-1">Pay with Zelle® - No Fees!</h3>
+                      <p class="text-xs text-purple-700 dark:text-purple-200 mb-1">Scan QR code or send to: <span class="font-mono font-semibold">cylton@cylton.com</span></p>
+                      <p class="text-xs text-green-700 dark:text-green-300">✓ Instant • ✓ Secure • ✓ Zero fees</p>
+                    </div>
+                  </div>
                 </div>
                 
                 <!-- Apple Pay Button for Invoice -->
@@ -422,7 +423,8 @@
               <div class="mb-6 bg-purple-50 dark:bg-purple-900/20 rounded-lg p-4 border border-purple-200 dark:border-purple-700">
                 <div class="flex items-center gap-4">
                   <div class="flex-shrink-0">
-                    <img src="/sirsinexusportal/assets/images/zelle-qr.png" alt="Zelle QR Code" class="w-20 h-20 object-contain rounded-md border border-slate-200">
+                    <img src="./sirsinexusportal/assets/images/zelle-qr.png" alt="Zelle QR Code" class="w-20 h-20 object-contain rounded-md border border-slate-200" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <div class="w-20 h-20 bg-purple-600 rounded flex items-center justify-center text-white font-bold text-2xl" style="display:none;">Z</div>
                   </div>
                   <div class="flex-1">
                     <h3 class="font-bold text-purple-900 dark:text-purple-100 mb-1">Pay with Zelle® - No Fees!</h3>
