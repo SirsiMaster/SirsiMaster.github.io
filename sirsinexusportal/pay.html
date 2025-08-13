@@ -71,6 +71,8 @@
     </script>
 
     <style>
+      /* Desktop polish: stabilize PayPal area to reduce layout shifts */
+      #paypal-button-container { min-height: 60px; }
       /* SirsiNexus geometric patterns */
       .geometric-pattern {
         position: absolute;
@@ -441,16 +443,16 @@
         
         <!-- Step 3: Choose Payment Method Card -->
         <div class="sirsi-card mb-8">
-          <div class="p-6 lg:p-8">
-            <div class="flex items-center gap-4 mb-6">
+          <div class="p-6 lg:p-8 space-y-6">
+            <div class="flex items-center gap-4">
               <div class="w-12 h-12 bg-emerald-600 text-white rounded-full flex items-center justify-center font-semibold text-lg">3</div>
               <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Choose Payment Method</h2>
             </div>
                 <p class="text-slate-600 dark:text-slate-400 mb-6">Select your preferred way to pay</p>
                 
-                <div class="space-y-3">
-                <!-- Zelle Payment Button -->
-                <button id="zelle-pay-btn" class="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white py-4 px-6 rounded-xl flex items-center justify-center gap-3 hover:from-purple-700 hover:to-purple-800 transition-all duration-300 shadow-lg font-medium text-lg" onclick="showZelleDetails()">
+                <div class="grid gap-3 md:gap-4 md:grid-cols-2">
+                <!-- Zelle Payment Button (full width row) -->
+                <button id="zelle-pay-btn" class="md:col-span-2 w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white py-4 px-6 rounded-xl flex items-center justify-center gap-3 hover:from-purple-700 hover:to-purple-800 transition-all duration-300 shadow-lg font-medium text-lg" onclick="showZelleDetails()">
                   <div class="w-8 h-8 bg-white bg-opacity-20 rounded-lg flex items-center justify-center flex-shrink-0">
                     <div class="text-center">
                       <div class="text-sm font-bold leading-none">Z</div>
@@ -526,7 +528,7 @@
               </div>
               
               <!-- Apple Pay Button -->
-              <div id="apple-pay-button" style="display: block;">
+              <div id="apple-pay-button" class="w-full" style="display: block;">
                 <button id="apple-pay-btn" class="w-full bg-black text-white py-4 px-6 rounded-xl flex items-center justify-center gap-3 hover:bg-gray-800 transition-colors shadow-lg font-medium text-lg">
                   <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
@@ -536,10 +538,10 @@
               </div>
               
               <!-- Google Pay Button -->
-              <div id="google-pay-button" style="display: block;"></div>
+              <div id="google-pay-button" class="w-full" style="display: block;"></div>
               
-              <!-- PayPal Button -->
-              <div id="paypal-button-container" class="w-full"></div>
+              <!-- PayPal Button (full width row) -->
+              <div id="paypal-button-container" class="md:col-span-2 w-full"></div>
               </div>
               
               <!-- Status Messages -->
@@ -1437,22 +1439,9 @@
         // Initialize account manager
         const accountManager = new SirsiAccountManager();
         
-        // Force show all payment sections on load
+        // Ensure parent overflow doesn't hide content, but do not force-show sections
         window.addEventListener('DOMContentLoaded', function() {
             setTimeout(function() {
-                // Force all sections visible
-                const sections = ['custom-payment-section', 'invoice-section', 'account-section', 'registration-section'];
-                sections.forEach(id => {
-                    const element = document.getElementById(id);
-                    if (element) {
-                        element.style.display = 'block';
-                        element.style.visibility = 'visible';
-                        element.style.opacity = '1';
-                        element.classList.remove('hidden');
-                    }
-                });
-                
-                // Also make sure no parent is hiding these
                 const mainSection = document.querySelector('section');
                 if (mainSection) {
                     mainSection.style.overflow = 'visible';
