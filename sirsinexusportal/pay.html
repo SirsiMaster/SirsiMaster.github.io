@@ -84,6 +84,9 @@
       /* Ensure PayPal wrapper spans full width */
       #paypal-button-container { width: 100%; }
       #paypal-button-container > div { width: 100% !important; }
+      #paypal-button-container iframe { width: 100% !important; max-width: 100% !important; }
+      #paypal-button-container > div > div { width: 100% !important; max-width: 100% !important; }
+      .paypal-tile { width: 100%; }
       /* SirsiNexus geometric patterns */
       .geometric-pattern {
         position: absolute;
@@ -541,7 +544,11 @@
               
                 <!-- PayPal Buttons (PayPal, Venmo, Card) -->
                 <div class="payment-row">
-              		<div id="paypal-button-container" class="payment-tile w-full"></div>
+                  <div class="payment-tile w-full">
+                    <div class="paypal-tile bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-4">
+                      <div id="paypal-button-container" class="w-full"></div>
+                    </div>
+                  </div>
                 </div>
               </div>
               
