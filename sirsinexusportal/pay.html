@@ -79,7 +79,8 @@
       .payment-tile \> button, .payment-tile \> div { width: 100%; }
       /* Uniform payment rows to ensure identical widths for all methods */
       .payment-list { display: flex; flex-direction: column; gap: 0.75rem; }
-      .payment-row { width: 100%; }
+      .payment-row { width: 100%; min-width: 0; }
+      .payment-tile { min-width: 0; box-sizing: border-box; }
       /* Ensure PayPal wrapper spans full width */
       #paypal-button-container { width: 100%; }
       #paypal-button-container > div { width: 100% !important; }
@@ -439,50 +440,53 @@
                 		<div class="payment-list">
                 <!-- Zelle Payment Button (uniform row) -->
                 <div class="payment-row">
-                <button id="zelle-pay-btn" class="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white py-4 px-6 rounded-xl flex items-center justify-center gap-3 hover:from-purple-700 hover:to-purple-800 transition-all duration-300 shadow-lg font-medium text-lg" onclick="showZelleDetails()">
-                  <div class="w-8 h-8 bg-white bg-opacity-20 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <div class="text-center">
-                      <div class="text-sm font-bold leading-none">Z</div>
+                  <div class="payment-tile w-full">
+                    <button id="zelle-pay-btn" class="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white py-4 px-6 rounded-xl flex items-center justify-center gap-3 hover:from-purple-700 hover:to-purple-800 transition-all duration-300 shadow-lg font-medium text-lg" onclick="showZelleDetails()">
+                      <div class="w-8 h-8 bg-white bg-opacity-20 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <div class="text-center">
+                          <div class="text-sm font-bold leading-none">Z</div>
+                        </div>
+                      </div>
+                      <span class="text-center">Pay with Zelle® — No Fees!</span>
+                    </button>
+                    <!-- Zelle Benefits Badge -->
+                    <div class="flex justify-center -mt-2 mb-2">
+                      <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-100 text-purple-800 text-xs font-semibold dark:bg-purple-900/30 dark:text-purple-200">
+                        <span class="leading-none">Instant</span>
+                        <span class="opacity-50">•</span>
+                        <span class="leading-none">Zero fees</span>
+                      </span>
                     </div>
-                  </div>
-                  <span class="text-center">Pay with Zelle® — No Fees!</span>
-                </button>
-                <!-- Zelle Benefits Badge -->
-                <div class="flex justify-center -mt-2 mb-2">
-                  <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-100 text-purple-800 text-xs font-semibold dark:bg-purple-900/30 dark:text-purple-200">
-                    <span class="leading-none">Instant</span>
-                    <span class="opacity-50">•</span>
-                    <span class="leading-none">Zero fees</span>
-                  </span>
-                </div>
-              
-              	<!-- Zelle Payment Details - Unified -->
-              	<div id="zelle-details" class="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-4 border border-purple-200 dark:border-purple-700 mb-4 box-border" style="display: none;">
-                <div class="flex items-center gap-4 mb-3">
-                  <div class="flex-shrink-0">
-                    <img src="/sirsinexusportal/assets/images/zelle-qr.png" alt="Zelle QR Code" class="w-32 h-32 object-contain rounded border border-purple-300" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                    <div class="w-32 h-32 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center text-white shadow-lg" style="display:none;">
-                      <div class="text-center">
-                        <div class="text-xl font-bold mb-0.5">Z</div>
-                        <div class="text-xs opacity-90">QR</div>
+                  
+                  	<!-- Zelle Payment Details - Unified -->
+                  	<div id="zelle-details" class="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-4 border border-purple-200 dark:border-purple-700 mb-4 box-border" style="display: none;">
+                    <div class="flex items-center gap-4 mb-3">
+                      <div class="flex-shrink-0">
+                        <img src="/sirsinexusportal/assets/images/zelle-qr.png" alt="Zelle QR Code" class="w-32 h-32 object-contain rounded border border-purple-300" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <div class="w-32 h-32 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center text-white shadow-lg" style="display:none;">
+                          <div class="text-center">
+                            <div class="text-xl font-bold mb-0.5">Z</div>
+                            <div class="text-xs opacity-90">QR</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="flex-1">
+                        <h4 class="font-bold text-purple-900 dark:text-purple-100 mb-1">Zelle® Payment Instructions</h4>
+                        <p class="text-sm text-purple-700 dark:text-purple-200 mb-2">Scan QR code with your banking app or send payment to:</p>
+                        <div class="bg-purple-100 dark:bg-purple-900/50 rounded-lg p-2 mb-2">
+                          <p class="font-mono font-bold text-purple-900 dark:text-purple-100 text-center">cylton@cylton.com</p>
+                        </div>
+                        <p class="text-xs text-green-700 dark:text-green-300">✓ Instant transfer • ✓ Bank-level security • ✓ Zero processing fees</p>
                       </div>
                     </div>
-                  </div>
-                  <div class="flex-1">
-                    <h4 class="font-bold text-purple-900 dark:text-purple-100 mb-1">Zelle® Payment Instructions</h4>
-                    <p class="text-sm text-purple-700 dark:text-purple-200 mb-2">Scan QR code with your banking app or send payment to:</p>
-                    <div class="bg-purple-100 dark:bg-purple-900/50 rounded-lg p-2 mb-2">
-                      <p class="font-mono font-bold text-purple-900 dark:text-purple-100 text-center">cylton@cylton.com</p>
+                    <div class="text-center">
+                      <button onclick="copyZelleInfo()" class="bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-4 rounded-lg transition-colors text-sm">
+                        📋 Copy Payment Info
+                      </button>
                     </div>
-                    <p class="text-xs text-green-700 dark:text-green-300">✓ Instant transfer • ✓ Bank-level security • ✓ Zero processing fees</p>
+                  </div>
                   </div>
                 </div>
-                <div class="text-center">
-                  <button onclick="copyZelleInfo()" class="bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-4 rounded-lg transition-colors text-sm">
-                    📋 Copy Payment Info
-                  </button>
-                </div>
-              </div>
             
               <!-- Fee Breakdown Section -->
               <div id="fee-breakdown" class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4 mb-6 w-full box-border" style="display: none;">
