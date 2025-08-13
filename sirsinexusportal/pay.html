@@ -314,58 +314,51 @@
               
               <!-- Invoice Section (only visible when invoice exists) -->
               <div id="invoice-section" class="mb-6 w-full box-border" style="display: none;">
-                <div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 mb-4 border border-blue-200 dark:border-blue-700 box-border">
-                  <div class="flex items-start gap-3">
-                    <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                      </svg>
-                    </div>
-                    <div class="flex-1">
-                      <h3 class="font-semibold text-blue-900 dark:text-blue-100 mb-1">Invoice Payment</h3>
-                      <p class="text-sm text-blue-700 dark:text-blue-200" id="invoice-number"></p>
-                      <div class="mt-3 space-y-2 text-sm">
-                  <div class="flex justify-between items-center">
-                    <span class="text-slate-600 dark:text-slate-400 font-medium">Service:</span>
-                    <span class="text-slate-900 dark:text-slate-100 font-semibold" id="invoice-service"></span>
-                  </div>
-                  <div class="flex justify-between items-center">
-                    <span class="text-slate-600 dark:text-slate-400 font-medium">Client:</span>
-                    <span class="text-slate-900 dark:text-slate-100 font-semibold" id="invoice-client"></span>
-                  </div>
-                  <div class="flex justify-between items-center">
-                    <span class="text-slate-600 dark:text-slate-400 font-medium">Date:</span>
-                    <span class="text-slate-900 dark:text-slate-100 font-semibold" id="invoice-date"></span>
-                  </div>
-                  <div class="border-t border-slate-200 dark:border-slate-600 pt-4">
-                    <div class="flex justify-between items-center mb-4">
-                      <span class="text-lg font-bold text-slate-900 dark:text-slate-100">Invoice Amount:</span>
-                      <span class="text-lg font-bold text-slate-600 dark:text-slate-400" id="invoice-amount"></span>
-                    </div>
-                    
-                    <!-- Editable Payment Amount -->
-                    <div class="space-y-2">
-                      <label class="block text-sm font-medium text-slate-700 dark:text-slate-300">Payment Amount (minimum: <span id="invoice-minimum"></span>)</label>
-                      <div class="relative">
-                        <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-500 text-lg font-medium">$</span>
-                        <input type="number" id="invoice-payment-amount" step="0.01" 
-                               class="pl-10 w-full px-4 py-3 text-lg border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-slate-700 dark:text-white transition-colors"
-                               placeholder="0.00">
+                <div class="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-6 mb-4 border border-blue-200 dark:border-blue-700 box-border">
+                  <div class="flex flex-col gap-4">
+                    <div class="flex items-start justify-between gap-6">
+                      <div class="flex items-start gap-3">
+                        <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                          </svg>
+                        </div>
+                        <div>
+                          <h3 class="font-semibold text-blue-900 dark:text-blue-100">Invoice Payment</h3>
+                          <div class="text-sm text-blue-700 dark:text-blue-200" id="invoice-number"></div>
+                          <div class="mt-2 grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm">
+                            <div><span class="text-slate-600 dark:text-slate-400 font-medium">Service:</span> <span class="text-slate-900 dark:text-slate-100 font-semibold" id="invoice-service"></span></div>
+                            <div><span class="text-slate-600 dark:text-slate-400 font-medium">Client:</span> <span class="text-slate-900 dark:text-slate-100 font-semibold" id="invoice-client"></span></div>
+                            <div><span class="text-slate-600 dark:text-slate-400 font-medium">Date:</span> <span class="text-slate-900 dark:text-slate-100 font-semibold" id="invoice-date"></span></div>
+                          </div>
+                        </div>
                       </div>
-                      <p class="text-xs text-slate-500 dark:text-slate-400">You can pay more than the invoice amount (tip, overpayment), but not less.</p>
+                      <div class="text-right">
+                        <div class="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400">Invoice Amount</div>
+                        <div class="text-2xl font-extrabold text-slate-900 dark:text-slate-100" id="invoice-amount">$0.00</div>
+                      </div>
                     </div>
-                    
-                    <!-- Optional Description Override -->
-                    <div class="space-y-2 mt-4">
-                      <label class="block text-sm font-medium text-slate-700 dark:text-slate-300">Payment Description (Optional)</label>
-                      <input type="text" id="invoice-payment-description" 
-                             class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-slate-700 dark:text-white"
-                             placeholder="Additional notes for this payment...">
-                      <p class="text-xs text-slate-500 dark:text-slate-400">This will be added to the invoice description in your payment.</p>
+
+                    <div class="border-t border-slate-200 dark:border-slate-600"></div>
+
+                    <div class="grid md:grid-cols-2 gap-4">
+                      <div>
+                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Payment Amount (USD) *</label>
+                        <div class="relative">
+                          <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-lg font-medium">$</span>
+                          <input type="number" id="invoice-payment-amount" step="0.01" class="pl-10 w-full px-4 py-3 text-lg border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-slate-700 dark:text-white transition-colors" placeholder="0.00">
+                        </div>
+                      </div>
+                      <div>
+                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Description (Optional)</label>
+                        <input type="text" id="invoice-payment-description" class="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-slate-700 dark:text-white" placeholder="What is this payment for?">
+                      </div>
                     </div>
-                    
+
+                    <p class="text-xs text-slate-600 dark:text-slate-400">Minimum payment: <span id="invoice-minimum"></span>. You can pay more than the invoice amount (tip, overpayment), but not less.</p>
+
                     <!-- Invoice Fee Breakdown -->
-                    <div id="invoice-fee-breakdown" class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4 mt-4 w-full box-border" style="display: none;">
+                    <div id="invoice-fee-breakdown" class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4 w-full box-border" style="display: none;">
                       <div class="flex items-start gap-3">
                         <div class="bg-amber-600 rounded-lg p-2 flex-shrink-0">
                           <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -374,30 +367,13 @@
                         </div>
                         <div class="flex-1">
                           <h5 class="font-semibold text-amber-900 dark:text-amber-100 mb-2">Payment Processing Fees</h5>
-                          <p class="text-amber-800 dark:text-amber-200 text-sm mb-3">The following fees will be added to cover payment processing costs:</p>
-                          
-                          <div id="invoice-fee-details" class="space-y-2 text-sm">
-                            <!-- Fee breakdown will be populated here -->
-                          </div>
-                          
+                          <div id="invoice-fee-details" class="space-y-2 text-sm"></div>
                           <div class="border-t border-amber-300 dark:border-amber-700 pt-3 mt-3">
-                            <div class="flex justify-between items-center text-sm font-medium">
-                              <span class="text-amber-900 dark:text-amber-100">Subtotal:</span>
-                              <span id="invoice-fee-subtotal" class="text-amber-900 dark:text-amber-100">$0.00</span>
-                            </div>
-                            <div class="flex justify-between items-center text-sm font-medium">
-                              <span class="text-amber-900 dark:text-amber-100">Processing Fee:</span>
-                              <span id="invoice-fee-amount" class="text-amber-900 dark:text-amber-100">$0.00</span>
-                            </div>
-                            <div class="flex justify-between items-center text-xl font-bold border-t border-amber-400 dark:border-amber-600 pt-2 mt-2">
-                              <span class="text-amber-900 dark:text-amber-100">Total to Pay:</span>
-                              <span id="invoice-fee-total" class="text-amber-900 dark:text-amber-100">$0.00</span>
-                            </div>
+                            <div class="flex justify-between items-center text-sm font-medium"><span class="text-amber-900 dark:text-amber-100">Subtotal:</span><span id="invoice-fee-subtotal" class="text-amber-900 dark:text-amber-100">$0.00</span></div>
+                            <div class="flex justify-between items-center text-sm font-medium"><span class="text-amber-900 dark:text-amber-100">Processing Fee:</span><span id="invoice-fee-amount" class="text-amber-900 dark:text-amber-100">$0.00</span></div>
+                            <div class="flex justify-between items-center text-xl font-bold border-t border-amber-400 dark:border-amber-600 pt-2 mt-2"><span class="text-amber-900 dark:text-amber-100">Total to Pay:</span><span id="invoice-fee-total" class="text-amber-900 dark:text-amber-100">$0.00</span></div>
                           </div>
-                          
-                          <div class="mt-3 text-xs text-amber-700 dark:text-amber-300 bg-amber-100 dark:bg-amber-900/30 rounded-lg p-2">
-                            <strong>Note:</strong> This covers most PayPal payment methods including credit cards, PayPal accounts, and alternative payment methods.
-                          </div>
+                          <div class="mt-3 text-xs text-amber-700 dark:text-amber-300 bg-amber-100 dark:bg-amber-900/30 rounded-lg p-2"><strong>Note:</strong> This covers most PayPal payment methods including credit cards, PayPal accounts, and alternative payment methods.</div>
                         </div>
                       </div>
                     </div>
@@ -458,15 +434,19 @@
                       <div class="text-sm font-bold leading-none">Z</div>
                     </div>
                   </div>
-                  <span class="flex-1 text-left">Pay with Zelle® - No Fees!</span>
-                  <div class="text-sm opacity-90 text-right">
-                    <div class="leading-tight">✓ Instant</div>
-                    <div class="leading-tight text-xs">✓ Zero fees</div>
-                  </div>
+                  <span class="text-center">Pay with Zelle® — No Fees!</span>
                 </button>
+                <!-- Zelle Benefits Badge -->
+                <div class="md:col-span-2 flex justify-center -mt-2 mb-2">
+                  <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-100 text-purple-800 text-xs font-semibold dark:bg-purple-900/30 dark:text-purple-200">
+                    <span class="leading-none">Instant</span>
+                    <span class="opacity-50">•</span>
+                    <span class="leading-none">Zero fees</span>
+                  </span>
+                </div>
             
               <!-- Zelle Payment Details - Unified -->
-              <div id="zelle-details" class="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-4 border border-purple-200 dark:border-purple-700 mb-4 box-border" style="display: none;">
+              <div id="zelle-details" class="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-4 border border-purple-200 dark:border-purple-700 mb-4 box-border" style="display: none;"
                 <div class="flex items-center gap-4 mb-3">
                   <div class="flex-shrink-0">
                     <img src="assets/images/zelle-qr.png" alt="Zelle QR Code" class="w-20 h-20 object-contain rounded border border-purple-300" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
