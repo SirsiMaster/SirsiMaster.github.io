@@ -7,7 +7,7 @@
     <title>SirsiNexus - Secure Payment Portal</title>
     <meta name="description" content="Secure payment processing for SirsiNexus services - Professional AI-powered infrastructure solutions">
     <meta name="theme-color" content="#059669">
-    <link rel="manifest" href="manifest.json?v=20250813-1">
+    <link rel="manifest" href="manifest.webmanifest?v=20250813-2">
     
     <!-- Favicons -->
     <link rel="icon" href="/sirsinexusportal/assets/images/sirsi-icon.png" type="image/png" sizes="32x32">
@@ -87,6 +87,23 @@
         width: 100% !important;
         max-width: 100% !important;
         display: block !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        box-sizing: border-box !important;
+      }
+      /* Aggressive normalization for PayPal injected structure */
+      #paypal-button-container [data-funding-source],
+      #paypal-button-container [data-funding-source] > div,
+      #paypal-button-container [data-funding-source] iframe,
+      #paypal-button-container .paypal-button,
+      #paypal-button-container .paypal-button-row,
+      #paypal-button-container .paypal-buttons,
+      #paypal-button-container .paypal-button-container,
+      #paypal-button-container > div[style] {
+        width: 100% !important;
+        max-width: 100% !important;
         margin-left: 0 !important;
         margin-right: 0 !important;
         padding-left: 0 !important;
