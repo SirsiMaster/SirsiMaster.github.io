@@ -1,10 +1,9 @@
-name: GitHub Pages deployment
+name: GitHub Pages deployment (disabled)
 
+# This workflow is intentionally disabled to keep a single active Pages workflow.
+# It can be run manually if needed.
 on:
-  push:
-    branches: 
-      - main            # Production deployment
-      - 'staging/**'    # Any staging branch
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -13,6 +12,7 @@ permissions:
 
 jobs:
   deploy:
+    if: false  # hard-disable jobs to avoid accidental triggers
     runs-on: ubuntu-latest
     environment:
       name: github-pages
