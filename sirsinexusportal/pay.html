@@ -9,39 +9,19 @@
     <meta name="theme-color" content="#059669">
     <link rel="manifest" href="manifest.json?v=20250813-1">
     
+    <!-- Favicons -->
+    <link rel="icon" href="/sirsinexusportal/assets/images/sirsi-icon.png" type="image/png" sizes="32x32">
+    <link rel="icon" href="/sirsinexusportal/assets/images/sirsi-icon-192.png" type="image/png" sizes="192x192">
+    <link rel="icon" href="/sirsinexusportal/assets/images/sirsi-icon-512.png" type="image/png" sizes="512x512">
+    <link rel="apple-touch-icon" href="/sirsinexusportal/assets/images/sirsi-icon-192.png" sizes="192x192">
+    
     <!-- Preload critical resources -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- TailwindCSS CDN - For GitHub Pages static hosting -->
-    <!-- Note: In a full production environment with build tools, use PostCSS or Tailwind CLI -->
-    <!-- The CDN is acceptable for GitHub Pages since we cannot run build processes -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        darkMode: 'class',
-        theme: {
-          extend: {
-            fontFamily: {
-              'inter': ['Inter', 'sans-serif'],
-            },
-            colors: {
-              emerald: {
-                50: '#ecfdf5',
-                100: '#d1fae5', 
-                500: '#10b981',
-                600: '#059669',
-                700: '#047857',
-                800: '#065f46',
-                900: '#064e3b'
-              },
-            },
-          },
-        },
-      }
-    </script>
-    
+    <!-- Compiled Tailwind CSS -->
+    <link rel="stylesheet" href="/sirsinexusportal/assets/css/tailwind.css?v=20250813-2">
     <!-- PayPal SDK with Apple Pay and alternative payment methods -->
     <script src="https://www.paypal.com/sdk/js?client-id=ASUI7q4yAs6anh26J6T_7hLyX0UwUbVWQS-8lgngn9z0W6VX4zrt2y7Q_auiXBAUrzxd1ibBrz22KDAr&currency=USD&components=buttons,marks,funding-eligibility&enable-funding=venmo,paylater,card&disable-funding=credit"></script>
     

@@ -25,6 +25,17 @@ jobs:
         
       - name: Setup Pages
         uses: actions/configure-pages@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies and build Tailwind CSS
+        working-directory: sirsinexusportal
+        run: |
+          npm ci || npm install
+          npx tailwindcss -i ./assets/css/input.css -o ./assets/css/tailwind.css --minify
         
       - name: Create _site directory
         run: mkdir -p _site
