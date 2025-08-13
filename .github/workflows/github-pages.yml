@@ -26,9 +26,9 @@ jobs:
 
       - name: Create deployment structure
         run: |
-          echo "Creating deployment structure with SirsiNexusPortal directory"
+          echo "Creating deployment structure with sirsinexusportal directory"
           mkdir -p _site
-          cp -r SirsiNexusPortal _site/
+          cp -r sirsinexusportal _site/
           echo "Verifying structure:"
           ls -la _site/
           ls -la _site/sirsinexusportal/index*.html
