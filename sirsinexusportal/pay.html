@@ -14,7 +14,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- TailwindCSS with proper configuration -->
+    <!-- TailwindCSS CDN - For GitHub Pages static hosting -->
+    <!-- Note: In a full production environment with build tools, use PostCSS or Tailwind CLI -->
+    <!-- The CDN is acceptable for GitHub Pages since we cannot run build processes -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -121,6 +123,35 @@
         max-width: 100vw;
         overflow-x: hidden;
       }
+
+      /* Shared card utility (works without Tailwind build) */
+      .sirsi-card {
+        background-color: #ffffff; /* light bg */
+        border: 1px solid rgb(226 232 240); /* slate-200 */
+        border-radius: 1rem; /* rounded-2xl (approx) */
+        box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05); /* shadow-xl */
+        overflow: hidden;
+        width: 100%; /* w-full */
+        box-sizing: border-box; /* box-border */
+        margin-left: auto; /* center horizontally */
+        margin-right: auto; /* center horizontally */
+      }
+      .dark .sirsi-card {
+        background-color: rgb(30 41 59); /* slate-800 */
+        border-color: rgb(51 65 85); /* slate-700 */
+        color: inherit;
+      }
+
+      /* Responsive card max-widths for uniform layout */
+      @media (min-width: 640px) { /* sm */
+        .sirsi-card { max-width: 42rem; }
+      }
+      @media (min-width: 768px) { /* md */
+        .sirsi-card { max-width: 48rem; }
+      }
+      @media (min-width: 1024px) { /* lg */
+        .sirsi-card { max-width: 56rem; }
+      }
     </style>
 </head>
 <body class="font-inter bg-gradient-to-br from-slate-50 via-emerald-50/30 to-slate-50 dark:from-slate-900 dark:via-emerald-900/20 dark:to-slate-900 text-slate-900 dark:text-slate-100 min-h-screen">
@@ -174,7 +205,7 @@
     <!-- Payment Portal Section -->
     <section class="relative py-8 min-h-screen bg-slate-50 dark:bg-slate-900">
       
-      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="max-w-5xl lg:max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         <!-- Header -->
         <div class="text-center mb-12">
@@ -214,8 +245,8 @@
         </div>
         
         <!-- Step 1: Account Information Card -->
-        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 mb-8 overflow-hidden">
-          <div class="p-6 lg:p-8">
+        <div id="account-section" class="sirsi-card mb-8">
+          <div id="registration-section" class="p-6 lg:p-8">
             <div class="flex items-center gap-4 mb-6">
               <div class="w-12 h-12 bg-emerald-600 text-white rounded-full flex items-center justify-center font-semibold text-lg">1</div>
               <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Account Information</h2>
@@ -272,7 +303,7 @@
         </div>
         
         <!-- Step 2: Payment Details Card -->
-        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 mb-8 overflow-hidden">
+        <div class="sirsi-card mb-8">
           <div class="p-6 lg:p-8">
             <div class="flex items-center gap-4 mb-6">
               <div class="w-12 h-12 bg-emerald-600 text-white rounded-full flex items-center justify-center font-semibold text-lg">2</div>
@@ -280,8 +311,8 @@
             </div>
               
               <!-- Invoice Section (only visible when invoice exists) -->
-              <div id="invoice-section" class="mb-6" style="display: none;">
-                <div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 mb-4 border border-blue-200 dark:border-blue-700">
+              <div id="invoice-section" class="mb-6 w-full box-border" style="display: none;">
+                <div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 mb-4 border border-blue-200 dark:border-blue-700 box-border">
                   <div class="flex items-start gap-3">
                     <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
                       <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -332,7 +363,7 @@
                     </div>
                     
                     <!-- Invoice Fee Breakdown -->
-                    <div id="invoice-fee-breakdown" class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4 mt-4" style="display: none;">
+                    <div id="invoice-fee-breakdown" class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4 mt-4 w-full box-border" style="display: none;">
                       <div class="flex items-start gap-3">
                         <div class="bg-amber-600 rounded-lg p-2 flex-shrink-0">
                           <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -374,14 +405,14 @@
               
               
               <!-- Custom Payment Section (when no invoice) -->
-              <div id="custom-payment-section" style="display: block;">
+              <div id="custom-payment-section" class="w-full box-border" style="display: block;">
                 <div class="text-center mb-8">
                   <h3 class="text-xl font-bold text-slate-800 dark:text-slate-200 mb-2">Make a Payment</h3>
                   <p class="text-slate-600 dark:text-slate-400">Enter your payment details below</p>
                 </div>
                 
                 <!-- Payment Details Form -->
-                <div class="bg-slate-50 dark:bg-slate-700/50 rounded-xl p-6 mb-6">
+                <div class="bg-slate-50 dark:bg-slate-700/50 rounded-xl p-6 mb-6 box-border">
                   <h4 class="text-lg font-semibold text-slate-800 dark:text-slate-200 mb-4">Payment Details</h4>
                   <div class="space-y-4">
                     <div>
@@ -409,7 +440,7 @@
         </div>
         
         <!-- Step 3: Choose Payment Method Card -->
-        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 mb-8 overflow-hidden">
+        <div class="sirsi-card mb-8">
           <div class="p-6 lg:p-8">
             <div class="flex items-center gap-4 mb-6">
               <div class="w-12 h-12 bg-emerald-600 text-white rounded-full flex items-center justify-center font-semibold text-lg">3</div>
@@ -432,7 +463,7 @@
                 </button>
             
               <!-- Zelle Payment Details - Unified -->
-              <div id="zelle-details" class="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-4 border border-purple-200 dark:border-purple-700 mb-4" style="display: none;">
+              <div id="zelle-details" class="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-4 border border-purple-200 dark:border-purple-700 mb-4 box-border" style="display: none;">
                 <div class="flex items-center gap-4 mb-3">
                   <div class="flex-shrink-0">
                     <img src="assets/images/zelle-qr.png" alt="Zelle QR Code" class="w-20 h-20 object-contain rounded border border-purple-300" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
@@ -460,7 +491,7 @@
               </div>
             
               <!-- Fee Breakdown Section -->
-              <div id="fee-breakdown" class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4 mb-6" style="display: none;">
+              <div id="fee-breakdown" class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4 mb-6 w-full box-border" style="display: none;">
                 <div class="flex items-start gap-3">
                   <div class="bg-amber-600 rounded-lg p-2 flex-shrink-0">
                     <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1409,7 +1440,7 @@
         window.addEventListener('DOMContentLoaded', function() {
             setTimeout(function() {
                 // Force all sections visible
-                const sections = ['custom-payment-card', 'invoice-section', 'account-section'];
+                const sections = ['custom-payment-section', 'invoice-section', 'account-section', 'registration-section'];
                 sections.forEach(id => {
                     const element = document.getElementById(id);
                     if (element) {
