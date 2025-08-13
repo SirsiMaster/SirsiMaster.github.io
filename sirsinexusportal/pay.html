@@ -83,9 +83,27 @@
       .payment-tile { min-width: 0; box-sizing: border-box; }
       /* Ensure PayPal wrapper spans full width */
       #paypal-button-container { width: 100%; }
-      #paypal-button-container > div { width: 100% !important; }
-      #paypal-button-container iframe { width: 100% !important; max-width: 100% !important; }
-      #paypal-button-container > div > div { width: 100% !important; max-width: 100% !important; }
+      #paypal-button-container > div {
+        width: 100% !important;
+        display: block !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        max-width: 100% !important;
+      }
+      #paypal-button-container > div > div {
+        width: 100% !important;
+        display: block !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        max-width: 100% !important;
+      }
+      #paypal-button-container iframe {
+        width: 100% !important;
+        max-width: 100% !important;
+        display: block !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
       .paypal-tile { width: 100%; }
       /* SirsiNexus geometric patterns */
       .geometric-pattern {
