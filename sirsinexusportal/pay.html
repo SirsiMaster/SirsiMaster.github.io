@@ -414,7 +414,7 @@
                 <!-- Payment Details Form -->
                 <div class="bg-slate-50 dark:bg-slate-700/50 rounded-xl p-6 mb-6 box-border">
                   <h4 class="text-lg font-semibold text-slate-800 dark:text-slate-200 mb-4">Payment Details</h4>
-                  <div class="space-y-4">
+                  <div class="space-y-4 md:space-y-0 md:grid md:grid-cols-2 md:gap-4">
                     <div>
                       <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Payment Amount (USD) *</label>
                       <div class="relative">
@@ -448,8 +448,9 @@
             </div>
                 <p class="text-slate-600 dark:text-slate-400 mb-6">Select your preferred way to pay</p>
                 
+                <div class="space-y-3">
                 <!-- Zelle Payment Button -->
-                <button id="zelle-pay-btn" class="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white py-4 px-6 rounded-xl flex items-center justify-center gap-3 hover:from-purple-700 hover:to-purple-800 transition-all duration-300 shadow-lg font-medium text-lg mb-4" onclick="showZelleDetails()">
+                <button id="zelle-pay-btn" class="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white py-4 px-6 rounded-xl flex items-center justify-center gap-3 hover:from-purple-700 hover:to-purple-800 transition-all duration-300 shadow-lg font-medium text-lg" onclick="showZelleDetails()">
                   <div class="w-8 h-8 bg-white bg-opacity-20 rounded-lg flex items-center justify-center flex-shrink-0">
                     <div class="text-center">
                       <div class="text-sm font-bold leading-none">Z</div>
@@ -542,7 +543,7 @@
               </div>
               
               <!-- Status Messages -->
-              <div id="payment-message" class="text-center text-base mt-6"></div>
+              <div id="payment-message" class="text-center text-base mt-6 min-h-[1.25rem]"></div>
             </div>
           </div>
         </div>
