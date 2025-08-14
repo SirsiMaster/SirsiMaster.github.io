@@ -11,20 +11,8 @@
   "categories": ["finance", "business"],
   "icons": [
     {
-      "src": "/sirsinexusportal/assets/images/sirsi-icon-16.png",
-      "sizes": "16x16",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/sirsinexusportal/assets/images/sirsi-icon-32.png",
+      "src": "/sirsinexusportal/assets/images/sirsi-icon.png",
       "sizes": "32x32",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/sirsinexusportal/assets/images/sirsi-icon-180.png",
-      "sizes": "180x180",
       "type": "image/png",
       "purpose": "any"
     },

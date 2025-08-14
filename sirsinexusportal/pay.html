@@ -72,71 +72,14 @@
       .payment-list { display: flex; flex-direction: column; gap: 0.75rem; }
       .payment-row { width: 100%; min-width: 0; }
       .payment-tile { min-width: 0; box-sizing: border-box; }
-      /* Ensure PayPal wrapper spans full width */
+      /* Ensure PayPal wrapper spans full width without fighting SDK layout */
       #paypal-button-container { width: 100%; }
       #paypal-button-container > div {
         width: 100% !important;
-        display: block !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-        padding-left: 0 !important;
-        padding-right: 0 !important;
         max-width: 100% !important;
-        box-sizing: border-box !important;
       }
-      #paypal-button-container > div > div {
-        width: 100% !important;
-        display: block !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-        max-width: 100% !important;
-        box-sizing: border-box !important;
-      }
-      #paypal-button-container iframe {
-        width: 100% !important;
-        max-width: 100% !important;
-        display: block !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-        box-sizing: border-box !important;
-      }
-      /* Aggressive normalization for PayPal injected structure */
-      #paypal-button-container,
-      #paypal-button-container * {
-        box-sizing: border-box !important;
-      }
-      #paypal-button-container [data-funding-source],
-      #paypal-button-container [data-funding-source] > div,
-      #paypal-button-container [data-funding-source] iframe,
-      #paypal-button-container .paypal-button,
-      #paypal-button-container .paypal-button-row,
-      #paypal-button-container .paypal-buttons,
-      #paypal-button-container .paypal-button-container,
-      #paypal-button-container > div[style] {
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: 0 !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-        display: block !important; /* override inline-block */
-      }
-      /* Override any inline max/min width styles injected by SDK */
-      #paypal-button-container [style*="max-width"] { max-width: 100% !important; }
-      #paypal-button-container [style*="min-width"] { min-width: 0 !important; }
-      #paypal-button-container [style*="inline-block"] { display: block !important; }
-      /* Hide or neutralize extra powered-by line for consistent row height */
-      #paypal-button-container ~ div:has(span[class*="Powered by PayPal"]),
-      .powered-by-paypal,
-      #paypal-powered-by,
-      [data-pp-message] {
-        display: none !important;
-      }
+      /* Optionally hide PayPal promotional message to keep rows even */
+      [data-pp-message] { display: none !important; }
       /* SirsiNexus geometric patterns */
       .geometric-pattern {
         position: absolute;
