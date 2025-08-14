@@ -2023,12 +2023,25 @@
         }
         
         function updateAllPaymentButtons() {
+            // Initialize payment buttons based on availability
+            initializePaymentButtons();
+            
             // Update appropriate section based on current context
             if (currentInvoice) {
                 updateInvoicePaymentButtons();
             } else {
                 updatePayPalButtons();
             }
+        }
+        
+        function initializePaymentButtons() {
+            // Show Apple Pay button based on availability
+            showApplePayButton(true);
+            
+            // Show Google Pay button based on availability
+            showGooglePayButton(true);
+            
+            console.log('Payment buttons initialized');
         }
         
         // Smart initialization with multiple triggers
@@ -2596,50 +2609,27 @@
         
         // Apple Pay functions
         function showApplePayButton(show) {
-            const applePayButton = document.getElementById('apple-pay-button');
+            const applePayBtn = document.getElementById('apple-pay-btn');
+            if (!applePayBtn) return;
+
             const availability = checkApplePayAvailability();
             
             if (show && availability.available) {
-                applePayButton.style.display = 'block';
-                
-                // Update button text based on availability type
-                const button = document.getElementById('apple-pay-btn');
-                const buttonText = button.querySelector('span');
+                applePayBtn.style.display = 'flex';
+                const buttonText = applePayBtn.querySelector('span');
                 
                 if (availability.type === 'direct') {
                     buttonText.textContent = 'Pay with Apple Pay';
-                } else if (availability.type === 'qr') {
+                    applePayBtn.onclick = () => handleApplePay('direct');
+                } else {
                     buttonText.textContent = 'Apple Pay (QR Code)';
+                    applePayBtn.onclick = () => handleApplePay('qr');
                 }
-                
-                button.onclick = function() {
-                    handleApplePay(availability.type);
-                };
             } else {
-                applePayButton.style.display = 'none';
+                applePayBtn.style.display = 'none';
             }
         }
         
-        function handleApplePay(type) {
-            // Check if user is registered
-            if (registrationRequired) {
-                showInlineMessage('Please create an account or continue as a guest to proceed.', 'info');
-                document.getElementById('account-section').scrollIntoView({ behavior: 'smooth' });
-                return;
-            }
-            
-            const currentAmount = parseFloat(document.getElementById('payment-amount').value) || 0;
-            if (currentAmount < 1) {
-                highlightAmountField();
-                return;
-            }
-            
-            if (type === 'direct') {
-                handleDirectApplePay();
-            } else if (type === 'qr') {
-                handleApplePayQR();
-            }
-        }
         
         function handleDirectApplePay() {
             const paymentRequest = {
