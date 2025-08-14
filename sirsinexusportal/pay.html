@@ -72,6 +72,13 @@
       .payment-list { display: flex; flex-direction: column; gap: 0.75rem; }
       .payment-row { width: 100%; min-width: 0; }
       .payment-tile { min-width: 0; box-sizing: border-box; }
+      /* Standardize native buttons to PayPal button dimensions */
+      .pp-like-btn { height: 55px; border-radius: 4px; font-weight: 600; font-size: 16px; line-height: 1; display: flex; align-items: center; justify-content: center; }
+      .pp-like-btn span { font-weight: 700; }
+      .pp-like-btn--dark { background-color: #111827; color: #fff; }
+      .pp-like-btn--light { background-color: #ffffff; color: #111827; border: 2px solid #D1D5DB; }
+      .pp-like-btn--brand { background: linear-gradient(90deg, #7c3aed, #6d28d9); color: #fff; }
+      .pp-like-btn--brand:hover { filter: brightness(0.97); }
       /* Ensure PayPal wrapper spans full width without fighting SDK layout */
       #paypal-button-container { width: 100%; }
       #paypal-button-container > div {
@@ -439,7 +446,7 @@
               <div class="payment-row">
                 <div class="payment-tile w-full">
                   <button id="zelle-pay-btn" type="button" aria-controls="zelle-details" aria-expanded="false"
-                          class="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white py-4 px-6 rounded-xl flex items-center justify-center gap-3 hover:from-purple-700 hover:to-purple-800 transition-all duration-300 shadow-lg font-medium text-lg"
+                          class="w-full pp-like-btn pp-like-btn--brand rounded-md flex items-center justify-center gap-3 shadow-lg"
                           onclick="showZelleDetails()">
                     <div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0">
                       <span class="text-sm font-bold leading-none">Z</span>
@@ -504,7 +511,7 @@
               <!-- Apple Pay -->
               <div class="payment-row">
                 <div id="apple-pay-button" class="payment-tile w-full" style="display: block;">
-                  <button id="apple-pay-btn" type="button" class="w-full bg-black text-white py-4 px-6 rounded-xl flex items-center justify-center gap-3 hover:bg-gray-800 transition-colors shadow-lg font-medium text-lg" aria-label="Pay with Apple Pay">
+                  <button id="apple-pay-btn" type="button" class="w-full pp-like-btn pp-like-btn--dark rounded-md hover:bg-gray-800 transition-colors shadow-lg" aria-label="Pay with Apple Pay">
                     <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
                     <span>Apple Pay (QR Code)</span>
                   </button>
@@ -1877,28 +1884,39 @@
             renderPayPalButtons(currentTotalAmount, description);
         }
         
+        let _ppUpdateTimer = null;
         function updatePayPalButtons() {
-            const amountInput = document.getElementById('payment-amount');
-            const descInput = document.getElementById('payment-description');
-            
-            const amount = amountInput ? parseFloat(amountInput.value) || 0 : 0;
-            const description = descInput ? descInput.value || 'Payment to SirsiNexus' : 'Payment to SirsiNexus';
-            
-            // Calculate fees and update display
-            if (amount > 0) {
-                calculateAndDisplayFees(amount, 'custom');
-            } else {
-                hideFeeBreakdown('custom');
-            }
-            
-            renderPayPalButtons(currentTotalAmount, description);
+            // Debounce rapid input changes to avoid re-render thrash
+            clearTimeout(_ppUpdateTimer);
+            _ppUpdateTimer = setTimeout(() => {
+                const amountInput = document.getElementById('payment-amount');
+                const descInput = document.getElementById('payment-description');
+                
+                const amount = amountInput ? parseFloat(amountInput.value) || 0 : 0;
+                const description = descInput ? descInput.value || 'Payment to SirsiNexus' : 'Payment to SirsiNexus';
+                
+                // Calculate fees and update display
+                if (amount > 0) {
+                    calculateAndDisplayFees(amount, 'custom');
+                } else {
+                    hideFeeBreakdown('custom');
+                }
+                
+                renderPayPalButtons(currentTotalAmount, description);
+            }, 250);
         }
         
+        let _lastPPRender = { amount: null, description: null };
         function renderPayPalButtons(amount, description) {
             // Always show payment buttons - check registration only when user tries to pay
             
             const container = document.getElementById('paypal-button-container');
             const messageDiv = document.getElementById('payment-message');
+            // Skip rerender if nothing changed and buttons already exist
+            if (container && container.children && container.children.length > 0 && _lastPPRender.amount === amount && _lastPPRender.description === description) {
+                return;
+            }
+            _lastPPRender = { amount, description };
             
             if (!container) {
                 console.error('PayPal container not found');
