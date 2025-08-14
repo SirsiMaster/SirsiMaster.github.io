@@ -52,7 +52,7 @@
 
     <style>
       /* Desktop polish: stabilize PayPal area to reduce layout shifts */
-      #paypal-button-container { min-height: 60px; }
+      #paypal-sdk-buttons { min-height: 60px; }
       /* Ensure payment method tiles are uniform width */
       .payment-grid \> * { width: 100%; }
       .payment-tile { width: 100%; display: block; border-radius: 0.75rem; overflow: hidden; }
@@ -105,19 +105,19 @@
       .pp-like-btn--brand { background: linear-gradient(90deg, #7c3aed, #6d28d9); color: #fff; }
       .pp-like-btn--brand:hover { filter: brightness(1.05); }
       /* Ensure PayPal wrapper spans full width without fighting SDK layout (modal target) */
-      #paypal-sdk-buttons, #paypal-button-container { width: 100%; }
-      #paypal-sdk-buttons > div, #paypal-button-container > div {
+      #paypal-sdk-buttons { width: 100%; }
+      #paypal-sdk-buttons > div {
         width: 100% !important;
         max-width: 100% !important;
       }
       /* Make PayPal buttons visually match the standardized 55px tiles */
-      #paypal-sdk-buttons, #paypal-button-container { --pp-btn-height: 55px; }
-      #paypal-sdk-buttons [data-funding-source], #paypal-button-container [data-funding-source] { 
+      #paypal-sdk-buttons { --pp-btn-height: 55px; }
+      #paypal-sdk-buttons [data-funding-source] { 
         border-radius: 4px !important; 
         overflow: hidden !important; 
         min-height: var(--pp-btn-height) !important;
       }
-      #paypal-sdk-buttons iframe, #paypal-button-container iframe { 
+      #paypal-sdk-buttons iframe { 
         min-height: var(--pp-btn-height) !important;
         width: 100% !important;
       }
@@ -2191,15 +2191,10 @@
         function renderPayPalButtons(amount, description, targetSelector = '#paypal-sdk-buttons') {
             // Render PayPal buttons into a dedicated container (modal)
             const container = document.querySelector(targetSelector);
-            // Skip rerender if nothing changed and buttons already exist
-            if (container && container.children && container.children.length > 0 && _lastPPRender.amount === amount && _lastPPRender.description === description) {
-                return;
-            }
-            _lastPPRender = { amount, description };
             const messageDiv = document.getElementById('paypal-modal-message');
             
             if (!container) {
-                console.error('PayPal container not found');
+                console.error('PayPal container not found:', targetSelector);
                 return;
             }
             
@@ -2211,50 +2206,32 @@
             currentAmount = amount || 0;
             currentDescription = description || 'Payment to SirsiNexus';
             
-            // Always show buttons, but make them functional based on amount
-            showApplePayButton(true);
-            showGooglePayButton(true);
+            console.log('Rendering PayPal buttons for amount:', amount, 'description:', description);
             
-            // Check if PayPal SDK is loaded with retry mechanism
+            // Check if PayPal SDK is loaded
             if (typeof paypal === 'undefined') {
-                console.warn('PayPal SDK not loaded, showing loading state');
+                console.error('PayPal SDK not loaded');
                 container.innerHTML = `
-                    <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white py-4 px-6 rounded-xl text-center">
-                        <div class="flex items-center justify-center gap-3">
-                            <div class="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
-                            <span class="font-medium">Loading PayPal...</span>
-                        </div>
+                    <div class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-4 text-center">
+                        <p class="text-red-600 dark:text-red-400 font-medium mb-2">PayPal SDK Not Loaded</p>
+                        <p class="text-red-500 dark:text-red-400 text-sm mb-3">Please refresh the page to reload PayPal.</p>
+                        <button onclick="location.reload()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                            Refresh Page
+                        </button>
                     </div>
                 `;
-                
-                // Retry PayPal loading
-                setTimeout(() => {
-                    if (typeof paypal !== 'undefined') {
-                        renderPayPalButtons(amount, description);
-                    } else {
-                        container.innerHTML = `
-                            <div class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4 text-center">
-                                <p class="text-amber-700 dark:text-amber-300 font-medium mb-2">PayPal Loading Issue</p>
-                                <p class="text-amber-600 dark:text-amber-400 text-sm mb-3">PayPal is taking longer than expected to load.</p>
-                                <button onclick="location.reload()" class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-                                    Refresh Page
-                                </button>
-                            </div>
-                        `;
-                    }
-                }, 3000);
                 return;
             }
             
             // Check if paypal.Buttons is available
             if (typeof paypal.Buttons !== 'function') {
-                console.error('PayPal Buttons not available');
+                console.error('PayPal Buttons function not available');
                 container.innerHTML = `
                     <div class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-4 text-center">
-                        <p class="text-red-600 dark:text-red-400 font-medium mb-2">PayPal Service Unavailable</p>
-                        <p class="text-red-500 dark:text-red-400 text-sm mb-3">PayPal payment buttons are temporarily unavailable.</p>
+                        <p class="text-red-600 dark:text-red-400 font-medium mb-2">PayPal Service Issue</p>
+                        <p class="text-red-500 dark:text-red-400 text-sm mb-3">PayPal buttons are not available. Please try again.</p>
                         <button onclick="location.reload()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-                            Try Again
+                            Refresh Page
                         </button>
                     </div>
                 `;
@@ -2386,10 +2363,11 @@
                         height: 55,
                         tagline: false
                     }
-                }).render('#paypal-button-container').then(function() {
-                    console.log('PayPal buttons rendered successfully');
+                }).render(targetSelector).then(function() {
+                    console.log('PayPal buttons rendered successfully to:', targetSelector);
                 }).catch(function(err) {
                     console.error('PayPal render error:', err);
+                    console.log('Failed targetSelector was:', targetSelector);
                     container.innerHTML = '<div class="bg-red-50 dark:bg-red-900/20 rounded-xl p-4 text-center"><p class="text-red-600 text-sm">Error loading PayPal. Please refresh.</p></div>';
                 });
             } catch (error) {
