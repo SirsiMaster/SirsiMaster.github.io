@@ -74,6 +74,16 @@
         width: 100% !important;
         max-width: 100% !important;
       }
+      /* Make PayPal buttons visually match the standardized 55px tiles */
+      #paypal-button-container { --pp-btn-height: 55px; }
+      #paypal-button-container [data-funding-source] { 
+        border-radius: 4px !important; 
+        overflow: hidden !important; 
+        min-height: var(--pp-btn-height) !important;
+      }
+      #paypal-button-container iframe { 
+        min-height: var(--pp-btn-height) !important;
+      }
       /* Optionally hide PayPal promotional message to keep rows even */
       [data-pp-message] { display: none !important; }
       /* SirsiNexus geometric patterns */
