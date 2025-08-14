@@ -61,13 +61,49 @@
       .payment-list { display: flex; flex-direction: column; gap: 0.75rem; }
       .payment-row { width: 100%; min-width: 0; }
       .payment-tile { min-width: 0; box-sizing: border-box; }
-      /* Standardize native buttons to PayPal button dimensions */
-      .pp-like-btn { height: 55px; border-radius: 4px; font-weight: 600; font-size: 16px; line-height: 1; display: flex; align-items: center; justify-content: center; }
+      /* Standardize ALL payment buttons to consistent dimensions and styling */
+      .payment-btn { 
+        height: 55px; 
+        border-radius: 8px; 
+        font-weight: 600; 
+        font-size: 16px; 
+        line-height: 1; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        width: 100%;
+        border: 2px solid transparent;
+        transition: all 0.2s ease;
+        cursor: pointer;
+      }
+      .payment-btn span { font-weight: 700; }
+      .payment-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+      .payment-btn:active { transform: translateY(0); }
+      
+      /* Payment button variants */
+      .payment-btn--zelle { background: linear-gradient(90deg, #7c3aed, #6d28d9); color: #fff; }
+      .payment-btn--zelle:hover { filter: brightness(1.05); }
+      
+      .payment-btn--apple { background-color: #000000; color: #fff; }
+      .payment-btn--apple:hover { background-color: #1a1a1a; }
+      
+      .payment-btn--google { background-color: #ffffff; color: #333333; border-color: #dadce0; }
+      .payment-btn--google:hover { background-color: #f8f9fa; border-color: #bdc1c6; }
+      
+      .payment-btn--paypal { background-color: #ffffff; color: #003087; border-color: #003087; }
+      .payment-btn--paypal:hover { background-color: #f7f9fc; border-color: #0066cc; }
+      
+      /* Legacy support for existing pp-like-btn classes */
+      .pp-like-btn { height: 55px; border-radius: 8px; font-weight: 600; font-size: 16px; line-height: 1; display: flex; align-items: center; justify-content: center; width: 100%; border: 2px solid transparent; transition: all 0.2s ease; cursor: pointer; }
       .pp-like-btn span { font-weight: 700; }
-      .pp-like-btn--dark { background-color: #111827; color: #fff; }
-      .pp-like-btn--light { background-color: #ffffff; color: #111827; border: 2px solid #D1D5DB; }
+      .pp-like-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+      .pp-like-btn:active { transform: translateY(0); }
+      .pp-like-btn--dark { background-color: #000000; color: #fff; }
+      .pp-like-btn--dark:hover { background-color: #1a1a1a; }
+      .pp-like-btn--light { background-color: #ffffff; color: #003087; border-color: #003087; }
+      .pp-like-btn--light:hover { background-color: #f7f9fc; border-color: #0066cc; }
       .pp-like-btn--brand { background: linear-gradient(90deg, #7c3aed, #6d28d9); color: #fff; }
-      .pp-like-btn--brand:hover { filter: brightness(0.97); }
+      .pp-like-btn--brand:hover { filter: brightness(1.05); }
       /* Ensure PayPal wrapper spans full width without fighting SDK layout (modal target) */
       #paypal-sdk-buttons, #paypal-button-container { width: 100%; }
       #paypal-sdk-buttons > div, #paypal-button-container > div {
@@ -446,7 +482,7 @@
               <div class="payment-row">
                 <div class="payment-tile w-full">
                   <button id="zelle-pay-btn" type="button" aria-controls="zelle-details" aria-expanded="false"
-                          class="w-full pp-like-btn pp-like-btn--brand rounded-md flex items-center justify-center gap-3 shadow-lg"
+                          class="payment-btn payment-btn--zelle flex items-center justify-center gap-3 shadow-lg"
                           onclick="showZelleDetails()">
                     <div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0">
                       <span class="text-sm font-bold leading-none">Z</span>
@@ -511,7 +547,7 @@
               <!-- Apple Pay -->
               <div class="payment-row">
                 <div id="apple-pay-button" class="payment-tile w-full" style="display: block;">
-                  <button id="apple-pay-btn" type="button" class="w-full pp-like-btn pp-like-btn--dark rounded-md hover:bg-gray-800 transition-colors shadow-lg" aria-label="Pay with Apple Pay">
+                  <button id="apple-pay-btn" type="button" class="payment-btn payment-btn--apple shadow-lg" aria-label="Pay with Apple Pay">
                     <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
                     <span>Apple Pay (QR Code)</span>
                   </button>
@@ -526,7 +562,7 @@
               				<!-- PayPal / Venmo / Card (launch button opens modal with SDK-rendered buttons) -->
               				<div class="payment-row">
                 	<div class="payment-tile w-full">
-                  	<button id="paypal-launch-btn" type="button" class="w-full pp-like-btn pp-like-btn--light rounded-md shadow-lg flex items-center justify-center gap-3" onclick="openPayPalModal()" aria-label="Checkout with PayPal, Venmo, or Card">
+                  	<button id="paypal-launch-btn" type="button" class="payment-btn payment-btn--paypal shadow-lg flex items-center justify-center gap-3" onclick="openPayPalModal()" aria-label="Checkout with PayPal, Venmo, or Card">
                     	<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                       	<path d="M4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Z" fill="#1f6ae6"/>
                       	<path d="M8 13.5h5.2c1.8 0 2.8-.8 2.8-2.3 0-1.4-1.1-2.2-2.7-2.2H9.3L8 13.5Z" fill="#fff"/>
@@ -2875,7 +2911,7 @@
             
             // Create custom Google Pay button to match our design
             const customButton = document.createElement('button');
-            customButton.className = 'w-full bg-white border-2 border-gray-300 text-gray-800 py-4 px-6 rounded-xl flex items-center justify-center gap-3 hover:bg-gray-50 transition-colors shadow-lg font-medium text-lg';
+            customButton.className = 'payment-btn payment-btn--google flex items-center justify-center gap-3 shadow-lg';
             customButton.innerHTML = `
                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
