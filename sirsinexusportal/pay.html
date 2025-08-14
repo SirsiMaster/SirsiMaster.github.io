@@ -3981,14 +3981,29 @@ Note: Your payment intent has been recorded in our system with Transaction ID: $
             
             // Check registration
             if (!validateRegistrationStatus()) {
+                console.log('Google Pay: Registration validation failed');
+                showInlineMessage('Please complete registration or continue as guest first.', 'error');
+                document.getElementById('registration-form').scrollIntoView({ behavior: 'smooth' });
                 return;
             }
             
             // Validate amount
             const paymentData = getPaymentData();
+            console.log('Google Pay: Payment data:', paymentData);
+            
             if (!validatePaymentAmount(paymentData.amount)) {
+                console.log('Google Pay: Amount validation failed, amount:', paymentData.amount);
+                // Additional visual feedback - highlight the payment section
+                if (currentInvoice) {
+                    document.getElementById('invoice-section').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                } else {
+                    document.getElementById('custom-payment-section').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
                 return;
             }
+            
+            console.log('Google Pay: Validation passed, proceeding with payment');
+            
             
             // Store current payment data globally for Google Pay callbacks
             currentAmount = paymentData.amount;
