@@ -606,7 +606,7 @@
               <div class="w-full">
                 <button id="zelle-pay-btn" type="button" 
                         class="unified-payment-btn unified-payment-btn--zelle"
-                        onclick="showZelleDetails()">
+                        onclick="handleZelle()">
                   <div class="flex items-center gap-3">
                     <div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0">
                       <span class="text-sm font-bold leading-none">Z</span>
@@ -653,7 +653,7 @@
               <div class="w-full">
                 <button id="card-direct-btn" type="button"
                         class="unified-payment-btn unified-payment-btn--card"
-                        onclick="openPayPalModal()">
+                        onclick="handleCreditDebitCard()">
                   <div class="flex items-center gap-3">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
@@ -668,7 +668,7 @@
               <div class="w-full">
                 <button id="paypal-launch-btn" type="button"
                         class="unified-payment-btn unified-payment-btn--paypal"
-                        onclick="openPayPalModal()">
+                        onclick="handlePayPal()">
                   <div class="flex items-center gap-3">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                       <path d="M4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Z" fill="#0070ba"/>
@@ -683,7 +683,7 @@
               <div class="w-full">
                 <button id="venmo-direct-btn" type="button"
                         class="unified-payment-btn unified-payment-btn--venmo"
-                        onclick="openPayPalModal()">
+                        onclick="handleVenmo()">
                   <div class="flex items-center gap-3">
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M19.48 3c.73 3.21.89 6.05-.01 8.82-1.64 5.13-4.51 8.18-8.31 8.18-1.75 0-3.26-1.16-3.26-3.26 0-.89.31-2.06.89-3.54l2.93-9.2h4.28l-2.7 8.51c-.31.99-.47 1.75-.47 2.38 0 .68.31 1.06.84 1.06 1.43 0 2.64-2.33 3.43-5.18.68-2.49.68-4.97.16-7.77H19.48z"/>
@@ -3371,6 +3371,296 @@ Note: Your payment intent has been recorded in our system with Transaction ID: $
                 console.error('Failed to copy Zelle info: ', err);
                 alert('Failed to copy. Please try again.');
             });
+        }
+        
+        // Enhanced Payment Handler Functions with Complete Validation
+        
+        function handleZelle() {
+            console.log('Handling Zelle payment...');
+            
+            // Check registration
+            if (!validateRegistrationStatus()) {
+                return;
+            }
+            
+            // Validate amount
+            const paymentData = getPaymentData();
+            if (!validatePaymentAmount(paymentData.amount)) {
+                return;
+            }
+            
+            // Show Zelle details section
+            showZelleDetails();
+            
+            showInlineMessage('Zelle payment details displayed. Click "Copy Payment Info" to complete your payment.', 'info');
+        }
+        
+        function handleCreditDebitCard() {
+            console.log('Handling Credit/Debit Card payment...');
+            
+            // Check registration
+            if (!validateRegistrationStatus()) {
+                return;
+            }
+            
+            // Validate amount
+            const paymentData = getPaymentData();
+            if (!validatePaymentAmount(paymentData.amount)) {
+                return;
+            }
+            
+            // Calculate fees and show breakdown
+            calculateAndDisplayFees(paymentData.amount, currentInvoice ? 'invoice' : 'custom');
+            
+            // Open PayPal modal with card-specific messaging
+            openPayPalModal();
+            
+            showInlineMessage('Redirecting to secure card payment processing...', 'info');
+        }
+        
+        function handlePayPal() {
+            console.log('Handling PayPal payment...');
+            
+            // Check registration
+            if (!validateRegistrationStatus()) {
+                return;
+            }
+            
+            // Validate amount
+            const paymentData = getPaymentData();
+            if (!validatePaymentAmount(paymentData.amount)) {
+                return;
+            }
+            
+            // Calculate fees and show breakdown
+            calculateAndDisplayFees(paymentData.amount, currentInvoice ? 'invoice' : 'custom');
+            
+            // Open PayPal modal
+            openPayPalModal();
+            
+            showInlineMessage('Opening PayPal payment options...', 'info');
+        }
+        
+        function handleVenmo() {
+            console.log('Handling Venmo payment...');
+            
+            // Check registration
+            if (!validateRegistrationStatus()) {
+                return;
+            }
+            
+            // Validate amount
+            const paymentData = getPaymentData();
+            if (!validatePaymentAmount(paymentData.amount)) {
+                return;
+            }
+            
+            // Calculate fees and show breakdown
+            calculateAndDisplayFees(paymentData.amount, currentInvoice ? 'invoice' : 'custom');
+            
+            // Open PayPal modal (Venmo is supported through PayPal)
+            openPayPalModal();
+            
+            showInlineMessage('Opening Venmo payment via PayPal...', 'info');
+        }
+        
+        // Enhanced Apple Pay handler with validation
+        function handleApplePay(type = 'qr') {
+            console.log('Handling Apple Pay payment...', type);
+            
+            // Check registration
+            if (!validateRegistrationStatus()) {
+                return;
+            }
+            
+            // Validate amount
+            const paymentData = getPaymentData();
+            if (!validatePaymentAmount(paymentData.amount)) {
+                return;
+            }
+            
+            // Store current payment data globally for Apple Pay callbacks
+            currentAmount = paymentData.amount;
+            currentDescription = paymentData.description;
+            
+            // Check Apple Pay availability
+            const availability = checkApplePayAvailability();
+            if (!availability.available) {
+                showInlineMessage('Apple Pay is not available on this device/browser. Please use another payment method.', 'error');
+                return;
+            }
+            
+            // Proceed based on type
+            if (type === 'direct' && availability.type === 'direct') {
+                handleDirectApplePay();
+            } else {
+                handleApplePayQR();
+            }
+        }
+        
+        // Enhanced Google Pay handler with validation
+        function handleGooglePay() {
+            console.log('Handling Google Pay payment...');
+            
+            // Check registration
+            if (!validateRegistrationStatus()) {
+                return;
+            }
+            
+            // Validate amount
+            const paymentData = getPaymentData();
+            if (!validatePaymentAmount(paymentData.amount)) {
+                return;
+            }
+            
+            // Store current payment data globally for Google Pay callbacks
+            currentAmount = paymentData.amount;
+            currentDescription = paymentData.description;
+            
+            // Check if Google Pay is available
+            if (!googlePayClient) {
+                showInlineMessage('Google Pay is not available on this browser. Please try Chrome or use another payment method.', 'error');
+                return;
+            }
+            
+            const paymentDataRequest = {
+                apiVersion: googlePayConfig.apiVersion,
+                apiVersionMinor: googlePayConfig.apiVersionMinor,
+                allowedPaymentMethods: googlePayConfig.allowedPaymentMethods,
+                transactionInfo: {
+                    totalPriceStatus: 'FINAL',
+                    totalPrice: paymentData.amount.toFixed(2),
+                    currencyCode: 'USD'
+                },
+                merchantInfo: {
+                    merchantName: 'SirsiNexus'
+                }
+            };
+            
+            googlePayClient.loadPaymentData(paymentDataRequest)
+                .then(function(paymentData) {
+                    console.log('Google Pay success:', paymentData);
+                    
+                    // Ensure we have a user account (should be created during registration)
+                    if (!currentUser) {
+                        console.error('No user account found during Google Pay processing');
+                        showInlineMessage('Registration required. Please reload and create an account.', 'error');
+                        return;
+                    }
+                    
+                    // Get current payment data
+                    const currentPaymentData = getPaymentData();
+                    
+                    // Record comprehensive transaction in SirsiNexus system
+                    const googlePayTransactionId = 'google-pay-' + Date.now();
+                    const sirsiTransaction = accountManager.recordTransaction({
+                        type: 'payment',
+                        status: 'completed',
+                        amount: currentPaymentData.amount,
+                        description: currentPaymentData.description,
+                        paymentMethod: 'google_pay',
+                        paymentProcessor: 'google_pay',
+                        processorTransactionId: googlePayTransactionId,
+                        payerName: 'Google Pay User',
+                        payerEmail: 'googlepay-user@sirsinexus.com',
+                        payerPhone: '',
+                        payerAddress: {},
+                        feeStructure: 'google_pay_standard'
+                    });
+                    
+                    console.log('Google Pay transaction recorded:', sirsiTransaction.transactionId);
+                    console.log('User account:', currentUser.userId);
+                    
+                    showSuccessMessage({id: googlePayTransactionId});
+                })
+                .catch(function(err) {
+                    console.error('Google Pay error:', err);
+                    if (err.statusCode === 'CANCELED') {
+                        showInlineMessage('Google Pay payment was cancelled.', 'error');
+                    } else {
+                        showInlineMessage('Google Pay is not available on this device/browser. Please use another payment method.', 'error');
+                    }
+                });
+        }
+        
+        // Utility Functions for Enhanced Payment Handling
+        
+        function validateRegistrationStatus() {
+            // Skip registration check temporarily since we're allowing guest accounts
+            if (!currentUser) {
+                // Auto-create guest account for seamless experience
+                try {
+                    currentUser = accountManager.createGuestAccount({
+                        payerEmail: 'guest-' + Date.now() + '@payment.local',
+                        firstName: 'Guest',
+                        lastName: 'User'
+                    });
+                    console.log('Auto-created guest account for payment:', currentUser.userId);
+                } catch (error) {
+                    console.error('Failed to create guest account:', error);
+                    showInlineMessage('Unable to process payment. Please refresh and try again.', 'error');
+                    return false;
+                }
+            }
+            return true;
+        }
+        
+        function getPaymentData() {
+            let amount, description;
+            
+            if (currentInvoice) {
+                // Invoice payment mode
+                const paymentAmountInput = document.getElementById('invoice-payment-amount');
+                const paymentDescInput = document.getElementById('invoice-payment-description');
+                
+                amount = parseFloat(paymentAmountInput?.value) || parseFloat(currentInvoice.amount) || 0;
+                description = paymentDescInput?.value || `Invoice ${currentInvoice.number} - ${currentInvoice.service}`;
+                
+                // For invoice payments, check minimum amount
+                const invoiceAmount = parseFloat(currentInvoice.amount);
+                if (amount < invoiceAmount) {
+                    return { amount: 0, description, isValid: false, error: 'amount_below_minimum' };
+                }
+            } else {
+                // Custom payment mode
+                const amountInput = document.getElementById('payment-amount');
+                const descInput = document.getElementById('payment-description');
+                
+                amount = parseFloat(amountInput?.value) || 0;
+                description = descInput?.value || 'Payment to SirsiNexus';
+            }
+            
+            return {
+                amount,
+                description,
+                isValid: amount >= 1,
+                error: amount < 1 ? 'amount_too_low' : null
+            };
+        }
+        
+        function validatePaymentAmount(amount) {
+            if (amount < 1) {
+                if (currentInvoice) {
+                    highlightInvoiceAmountField();
+                    const invoiceAmount = parseFloat(currentInvoice.amount);
+                    showInlineMessage(`Payment amount must be at least $${invoiceAmount.toFixed(2)}`, 'error');
+                } else {
+                    highlightAmountField();
+                    showInlineMessage('Payment amount must be $1.00 or more', 'error');
+                }
+                return false;
+            }
+            
+            if (currentInvoice) {
+                const invoiceAmount = parseFloat(currentInvoice.amount);
+                if (amount < invoiceAmount) {
+                    highlightInvoiceAmountField();
+                    showInlineMessage(`Payment amount must be at least $${invoiceAmount.toFixed(2)}`, 'error');
+                    return false;
+                }
+            }
+            
+            return true;
         }
     </script>
 </body>
