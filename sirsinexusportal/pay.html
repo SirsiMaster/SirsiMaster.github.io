@@ -2655,9 +2655,23 @@
         
         // Apple Pay Modal - Following PayPal modal pattern
         function openApplePayModal() {
+            console.log('openApplePayModal called');
+            
             // Validate amount first
             const paymentData = getPaymentData();
-            if (!validatePaymentAmount(paymentData.amount)) {
+            console.log('Payment data:', paymentData);
+            
+            if (!paymentData.isValid || paymentData.amount < 1) {
+                console.log('Payment amount validation failed:', paymentData.amount);
+                
+                if (currentInvoice) {
+                    highlightInvoiceAmountField();
+                    const invoiceAmount = parseFloat(currentInvoice.amount);
+                    showInlineMessage(`Payment amount must be at least $${invoiceAmount.toFixed(2)}`, 'error');
+                } else {
+                    highlightAmountField();
+                    showInlineMessage('Please enter a payment amount of $1.00 or more', 'error');
+                }
                 return;
             }
             
@@ -2665,11 +2679,15 @@
             currentAmount = paymentData.amount;
             currentDescription = paymentData.description;
             
+            console.log('Creating Apple Pay modal with amount:', currentAmount);
+            
             // Create and show Apple Pay modal
             const modal = createApplePayModal();
             document.body.appendChild(modal);
             modal.classList.remove('hidden');
             modal.classList.add('flex');
+            
+            console.log('Apple Pay modal should be visible now');
             
             // Initialize Apple Pay in the modal
             initializeApplePayInModal();
