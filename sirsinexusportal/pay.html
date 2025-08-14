@@ -1846,9 +1846,9 @@
             }
         }
         
-        // Google Pay configuration
+        // Google Pay configuration - LIVE PRODUCTION MODE
         const googlePayConfig = {
-            environment: 'TEST', // Change to 'PRODUCTION' for live
+            environment: 'PRODUCTION', // LIVE PRODUCTION ENVIRONMENT
             apiVersion: 2,
             apiVersionMinor: 0,
             allowedPaymentMethods: [{
@@ -1860,8 +1860,8 @@
                 tokenizationSpecification: {
                     type: 'PAYMENT_GATEWAY',
                     parameters: {
-                        'gateway': 'example',
-                        'gatewayMerchantId': 'exampleGatewayMerchantId'
+                        'gateway': 'paypal',
+                        'gatewayMerchantId': 'ASUI7q4yAs6anh26J6T_7hLyX0UwUbVWQS-8lgngn9z0W6VX4zrt2y7Q_auiXBAUrzxd1ibBrz22KDAr'
                     }
                 }
             }]
