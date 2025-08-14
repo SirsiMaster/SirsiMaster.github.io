@@ -2606,7 +2606,7 @@
             showInlineMessage('Logged out of admin mode', 'info');
         }
         
-        // Apple Pay functions
+        // Apple Pay functions - Following PayPal SDK pattern
         function showApplePayButton(show) {
             const applePayBtn = document.getElementById('apple-pay-btn');
             if (!applePayBtn) {
@@ -2636,13 +2636,13 @@
                     freshButtonText.textContent = 'Pay with Apple Pay';
                     freshButton.addEventListener('click', () => {
                         console.log('Apple Pay direct clicked');
-                        handleApplePay('direct');
+                        handleApplePayDirect();
                     });
                 } else {
-                    freshButtonText.textContent = 'Apple Pay (QR Code)';
+                    freshButtonText.textContent = 'Apple Pay';
                     freshButton.addEventListener('click', () => {
-                        console.log('Apple Pay QR clicked');
-                        handleApplePay('qr');
+                        console.log('Apple Pay clicked - opening payment modal');
+                        openApplePayModal();
                     });
                 }
                 
@@ -2651,6 +2651,278 @@
                 applePayBtn.style.display = 'none';
                 console.log('Apple Pay button hidden - not available');
             }
+        }
+        
+        // Apple Pay Modal - Following PayPal modal pattern
+        function openApplePayModal() {
+            // Validate amount first
+            const paymentData = getPaymentData();
+            if (!validatePaymentAmount(paymentData.amount)) {
+                return;
+            }
+            
+            // Store current payment data
+            currentAmount = paymentData.amount;
+            currentDescription = paymentData.description;
+            
+            // Create and show Apple Pay modal
+            const modal = createApplePayModal();
+            document.body.appendChild(modal);
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            // Initialize Apple Pay in the modal
+            initializeApplePayInModal();
+        }
+        
+        function createApplePayModal() {
+            const modal = document.createElement('div');
+            modal.id = 'apple-pay-modal';
+            modal.className = 'fixed inset-0 bg-black/60 hidden items-center justify-center z-50';
+            modal.innerHTML = `
+                <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 w-full max-w-md mx-4 shadow-2xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100">Apple Pay</h3>
+                        <button class="text-slate-500 hover:text-slate-700 text-xl" onclick="closeApplePayModal()" aria-label="Close">✕</button>
+                    </div>
+                    <div id="apple-pay-container" class="w-full mb-4">
+                        <!-- Apple Pay button will be rendered here -->
+                    </div>
+                    <div id="apple-pay-message" class="mt-3 text-center text-sm"></div>
+                </div>
+            `;
+            
+            // Close modal when clicking outside
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeApplePayModal();
+                }
+            });
+            
+            return modal;
+        }
+        
+        function closeApplePayModal() {
+            const modal = document.getElementById('apple-pay-modal');
+            if (modal) {
+                modal.remove();
+            }
+        }
+        
+        function initializeApplePayInModal() {
+            const container = document.getElementById('apple-pay-container');
+            const messageDiv = document.getElementById('apple-pay-message');
+            
+            if (!container) {
+                console.error('Apple Pay container not found');
+                return;
+            }
+            
+            const availability = checkApplePayAvailability();
+            
+            if (availability.type === 'direct' && window.ApplePaySession) {
+                // Native Apple Pay available
+                renderNativeApplePayButton(container);
+            } else {
+                // Fallback to QR code or simulation
+                renderApplePayFallback(container);
+            }
+        }
+        
+        function renderNativeApplePayButton(container) {
+            container.innerHTML = `
+                <div class="text-center mb-4">
+                    <div class="bg-slate-50 dark:bg-slate-700 rounded-xl p-4 mb-4">
+                        <div class="text-sm text-slate-700 dark:text-slate-300">
+                            <div class="flex justify-between items-center mb-2">
+                                <span>Amount:</span>
+                                <span class="font-semibold">$${currentAmount.toFixed(2)}</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span>Description:</span>
+                                <span class="font-semibold">${currentDescription}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="native-apple-pay-btn" class="w-full bg-black text-white py-4 px-6 rounded-xl font-semibold text-lg hover:bg-gray-800 transition-colors flex items-center justify-center gap-3">
+                        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                        </svg>
+                        Pay with Apple Pay
+                    </button>
+                </div>
+            `;
+            
+            // Add event listener for native Apple Pay
+            document.getElementById('native-apple-pay-btn').addEventListener('click', () => {
+                processNativeApplePay();
+            });
+        }
+        
+        function renderApplePayFallback(container) {
+            container.innerHTML = `
+                <div class="text-center">
+                    <div class="bg-slate-50 dark:bg-slate-700 rounded-xl p-4 mb-4">
+                        <div class="text-sm text-slate-700 dark:text-slate-300">
+                            <div class="flex justify-between items-center mb-2">
+                                <span>Amount:</span>
+                                <span class="font-semibold">$${currentAmount.toFixed(2)}</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span>Description:</span>
+                                <span class="font-semibold">${currentDescription}</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-4 mb-4">
+                        <div class="flex items-start gap-3">
+                            <div class="bg-blue-600 rounded-full p-1 flex-shrink-0 mt-0.5">
+                                <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <div class="text-left">
+                                <p class="text-sm font-medium text-blue-900 dark:text-blue-100 mb-1">Apple Pay (Simulation Mode)</p>
+                                <p class="text-xs text-blue-800 dark:text-blue-200">This will simulate an Apple Pay transaction for testing purposes.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button id="simulate-apple-pay-btn" class="w-full bg-black text-white py-4 px-6 rounded-xl font-semibold text-lg hover:bg-gray-800 transition-colors flex items-center justify-center gap-3">
+                        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                        </svg>
+                        Simulate Apple Pay
+                    </button>
+                </div>
+            `;
+            
+            // Add event listener for simulated Apple Pay
+            document.getElementById('simulate-apple-pay-btn').addEventListener('click', () => {
+                processSimulatedApplePay();
+            });
+        }
+        
+        function processNativeApplePay() {
+            if (!window.ApplePaySession || !ApplePaySession.canMakePayments()) {
+                showApplePayMessage('Apple Pay is not available on this device.', 'error');
+                return;
+            }
+            
+            const paymentRequest = {
+                countryCode: 'US',
+                currencyCode: 'USD',
+                supportedNetworks: ['visa', 'masterCard', 'amex', 'discover'],
+                merchantCapabilities: ['supports3DS'],
+                total: {
+                    label: currentDescription || 'Payment to SirsiNexus',
+                    amount: currentAmount.toFixed(2)
+                }
+            };
+            
+            try {
+                const session = new ApplePaySession(3, paymentRequest);
+                
+                session.onvalidatemerchant = function(event) {
+                    // In production, you'd validate with your server
+                    // For now, we'll simulate this
+                    console.log('Apple Pay merchant validation needed');
+                    session.abort();
+                    showApplePayMessage('Apple Pay setup required. Please contact support for merchant configuration.', 'error');
+                };
+                
+                session.onpaymentauthorized = function(event) {
+                    console.log('Apple Pay payment authorized:', event.payment);
+                    
+                    // Process the payment (in production, send to your payment processor)
+                    setTimeout(() => {
+                        // Simulate successful payment processing
+                        session.completePayment(ApplePaySession.STATUS_SUCCESS);
+                        
+                        // Record the transaction
+                        recordApplePayTransaction();
+                        
+                        // Close modal and show success
+                        closeApplePayModal();
+                        showSuccessMessage({id: 'apple-pay-' + Date.now()});
+                    }, 1000);
+                };
+                
+                session.oncancel = function() {
+                    showApplePayMessage('Apple Pay was cancelled.', 'info');
+                };
+                
+                session.begin();
+                
+            } catch (error) {
+                console.error('Apple Pay error:', error);
+                showApplePayMessage('Apple Pay error: ' + error.message, 'error');
+            }
+        }
+        
+        function processSimulatedApplePay() {
+            showApplePayMessage('Processing Apple Pay payment...', 'info');
+            
+            // Simulate payment processing
+            setTimeout(() => {
+                // Record the transaction
+                recordApplePayTransaction();
+                
+                // Close modal and show success
+                closeApplePayModal();
+                showSuccessMessage({id: 'apple-pay-sim-' + Date.now()});
+            }, 2000);
+        }
+        
+        function recordApplePayTransaction() {
+            // Ensure we have a user account
+            if (!currentUser) {
+                console.error('No user account found during Apple Pay processing');
+                currentUser = accountManager.createGuestAccount({
+                    payerEmail: 'applepay-user@sirsinexus.com',
+                    firstName: 'Apple Pay',
+                    lastName: 'User'
+                });
+            }
+            
+            // Record comprehensive transaction in SirsiNexus system
+            const applePayTransactionId = 'apple-pay-' + Date.now();
+            const sirsiTransaction = accountManager.recordTransaction({
+                type: 'payment',
+                status: 'completed',
+                amount: currentAmount,
+                description: currentDescription,
+                paymentMethod: 'apple_pay',
+                paymentProcessor: 'apple_pay',
+                processorTransactionId: applePayTransactionId,
+                payerName: 'Apple Pay User',
+                payerEmail: 'applepay-user@sirsinexus.com',
+                payerPhone: '',
+                payerAddress: {},
+                feeStructure: 'apple_pay_standard'
+            });
+            
+            console.log('Apple Pay transaction recorded:', sirsiTransaction.transactionId);
+            console.log('User account:', currentUser.userId);
+        }
+        
+        function showApplePayMessage(message, type = 'info') {
+            const messageDiv = document.getElementById('apple-pay-message');
+            if (messageDiv) {
+                const colorClass = type === 'error' ? 'text-red-600' : type === 'success' ? 'text-green-600' : 'text-blue-600';
+                messageDiv.innerHTML = `<p class="${colorClass} text-sm font-medium">${message}</p>`;
+                
+                // Auto-clear after 3 seconds
+                setTimeout(() => {
+                    if (messageDiv) messageDiv.innerHTML = '';
+                }, 3000);
+            }
+        }
+        
+        // Legacy function for backward compatibility
+        function handleApplePayDirect() {
+            openApplePayModal();
         }
         
         
@@ -3094,12 +3366,19 @@
         
         // Google Pay functions
         function showGooglePayButton(show) {
-            const googlePayButton = document.getElementById('google-pay-button');
+            const googlePayButton = document.getElementById('google-pay-btn');
+            if (!googlePayButton) {
+                console.log('Google Pay button element not found');
+                return;
+            }
+            
             if (show) {
-                googlePayButton.style.display = 'block';
-                createGooglePayButton();
+                googlePayButton.style.display = 'flex';
+                // Google Pay button is already styled via unified-payment-btn class
+                console.log('Google Pay button shown');
             } else {
                 googlePayButton.style.display = 'none';
+                console.log('Google Pay button hidden');
             }
         }
         
