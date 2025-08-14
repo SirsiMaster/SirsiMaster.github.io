@@ -68,21 +68,22 @@
       .pp-like-btn--light { background-color: #ffffff; color: #111827; border: 2px solid #D1D5DB; }
       .pp-like-btn--brand { background: linear-gradient(90deg, #7c3aed, #6d28d9); color: #fff; }
       .pp-like-btn--brand:hover { filter: brightness(0.97); }
-      /* Ensure PayPal wrapper spans full width without fighting SDK layout */
-      #paypal-button-container { width: 100%; }
-      #paypal-button-container > div {
+      /* Ensure PayPal wrapper spans full width without fighting SDK layout (modal target) */
+      #paypal-sdk-buttons, #paypal-button-container { width: 100%; }
+      #paypal-sdk-buttons > div, #paypal-button-container > div {
         width: 100% !important;
         max-width: 100% !important;
       }
       /* Make PayPal buttons visually match the standardized 55px tiles */
-      #paypal-button-container { --pp-btn-height: 55px; }
-      #paypal-button-container [data-funding-source] { 
+      #paypal-sdk-buttons, #paypal-button-container { --pp-btn-height: 55px; }
+      #paypal-sdk-buttons [data-funding-source], #paypal-button-container [data-funding-source] { 
         border-radius: 4px !important; 
         overflow: hidden !important; 
         min-height: var(--pp-btn-height) !important;
       }
-      #paypal-button-container iframe { 
+      #paypal-sdk-buttons iframe, #paypal-button-container iframe { 
         min-height: var(--pp-btn-height) !important;
+        width: 100% !important;
       }
       /* Optionally hide PayPal promotional message to keep rows even */
       [data-pp-message] { display: none !important; }
@@ -521,19 +522,37 @@
               <div class="payment-row">
                 <div id="google-pay-button" class="payment-tile w-full" style="display: block;"></div>
               </div>
+              
+              				<!-- PayPal / Venmo / Card (launch button opens modal with SDK-rendered buttons) -->
+              				<div class="payment-row">
+                	<div class="payment-tile w-full">
+                  	<button id="paypal-launch-btn" type="button" class="w-full pp-like-btn pp-like-btn--light rounded-md shadow-lg flex items-center justify-center gap-3" onclick="openPayPalModal()" aria-label="Checkout with PayPal, Venmo, or Card">
+                    	<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                      	<path d="M4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Z" fill="#1f6ae6"/>
+                      	<path d="M8 13.5h5.2c1.8 0 2.8-.8 2.8-2.3 0-1.4-1.1-2.2-2.7-2.2H9.3L8 13.5Z" fill="#fff"/>
+                    	</svg>
+                    	<span>Checkout with PayPal</span>
+                  	</button>
+                	</div>
+              	</div>
+            	</div>
 
-              <!-- PayPal / Venmo / Card (rendered by SDK) -->
-              <div class="payment-row">
-                <div class="payment-tile w-full">
-                  <div id="paypal-button-container" class="w-full" aria-label="Pay with PayPal, Venmo, or Card"></div>
-                </div>
-              </div>
-            </div>
+            	<!-- Status area -->
+            	<div id="payment-message" class="text-center text-base mt-6 min-h-[1.25rem]"></div>
 
-            <!-- Status area -->
-            <div id="payment-message" class="text-center text-base mt-6 min-h-[1.25rem]"></div>
-          </div>
-        </div>
+            	<!-- PayPal Modal -->
+            	<div id="paypal-modal" class="fixed inset-0 bg-black/60 hidden items-center justify-center z-50">
+              	<div class="bg-white dark:bg-slate-800 rounded-2xl p-6 w-full max-w-md mx-4">
+                	<div class="flex items-center justify-between mb-4">
+                  	<h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100">Pay with PayPal, Venmo, or Card</h3>
+                  	<button class="text-slate-500 hover:text-slate-700" onclick="closePayPalModal()" aria-label="Close">✕</button>
+                	</div>
+                	<div id="paypal-sdk-buttons" class="w-full"></div>
+                	<div id="paypal-modal-message" class="mt-3 text-center text-sm"></div>
+              	</div>
+            	</div>
+          	</div>
+        	</div>
 
         <!-- Support Section -->
         <div class="mt-12 text-center">
@@ -1880,7 +1899,7 @@
                 hideFeeBreakdown('invoice');
             }
             
-            renderPayPalButtons(currentTotalAmount, description);
+            updatePayPalState(currentTotalAmount, description);
         }
         
         let _ppUpdateTimer = null;
@@ -1901,21 +1920,50 @@
                     hideFeeBreakdown('custom');
                 }
                 
-                renderPayPalButtons(currentTotalAmount, description);
+                updatePayPalState(currentTotalAmount, description);
             }, 250);
         }
         
         let _lastPPRender = { amount: null, description: null };
-        function renderPayPalButtons(amount, description) {
-            // Always show payment buttons - check registration only when user tries to pay
-            
-            const container = document.getElementById('paypal-button-container');
-            const messageDiv = document.getElementById('payment-message');
+        function updatePayPalState(amount, description) {
+            _lastPPRender = { amount, description };
+        }
+        function openPayPalModal() {
+            // Validate amount
+            const amtInput = document.getElementById('payment-amount');
+            const descInput = document.getElementById('payment-description');
+            let amount = 0;
+            let description = 'Payment to SirsiNexus';
+            if (currentInvoice) {
+                const paymentAmountInput = document.getElementById('invoice-payment-amount');
+                const paymentDescInput = document.getElementById('invoice-payment-description');
+                amount = parseFloat(paymentAmountInput?.value) || parseFloat(currentInvoice.amount) || 0;
+                description = paymentDescInput?.value || `Invoice ${currentInvoice.number} - ${currentInvoice.service}`;
+            } else {
+                amount = parseFloat(amtInput?.value) || 0;
+                description = descInput?.value || 'Payment to SirsiNexus';
+            }
+            if (amount < 1) { highlightAmountField(); return; }
+            // Ensure fees/total are up to date
+            if (currentInvoice) { calculateAndDisplayFees(amount, 'invoice'); } else { calculateAndDisplayFees(amount, 'custom'); }
+            updatePayPalState(currentTotalAmount, description);
+            const modal = document.getElementById('paypal-modal');
+            if (modal) { modal.classList.remove('hidden'); modal.classList.add('flex'); }
+            renderPayPalButtons(_lastPPRender.amount, _lastPPRender.description, '#paypal-sdk-buttons');
+        }
+        function closePayPalModal() {
+            const modal = document.getElementById('paypal-modal');
+            if (modal) { modal.classList.add('hidden'); modal.classList.remove('flex'); }
+        }
+        function renderPayPalButtons(amount, description, targetSelector = '#paypal-sdk-buttons') {
+            // Render PayPal buttons into a dedicated container (modal)
+            const container = document.querySelector(targetSelector);
             // Skip rerender if nothing changed and buttons already exist
             if (container && container.children && container.children.length > 0 && _lastPPRender.amount === amount && _lastPPRender.description === description) {
                 return;
             }
             _lastPPRender = { amount, description };
+            const messageDiv = document.getElementById('paypal-modal-message');
             
             if (!container) {
                 console.error('PayPal container not found');
