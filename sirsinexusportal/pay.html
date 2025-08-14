@@ -204,6 +204,129 @@
       @media (min-width: 1024px) { /* lg */
         .sirsi-card { max-width: 56rem; }
       }
+      
+      /* Unified Payment Button System - All buttons have identical dimensions */
+      .unified-payment-btn {
+        height: 60px;
+        width: 100%;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px;
+        border: 2px solid transparent;
+        transition: all 0.15s ease;
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+      
+      .unified-payment-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      }
+      
+      .unified-payment-btn:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+      
+      /* Payment method specific colors */
+      .unified-payment-btn--zelle {
+        background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+        color: white;
+      }
+      
+      .unified-payment-btn--zelle:hover {
+        background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+      }
+      
+      .unified-payment-btn--apple {
+        background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+        color: white;
+      }
+      
+      .unified-payment-btn--apple:hover {
+        background: linear-gradient(135deg, #1a1a1a 0%, #333333 100%);
+      }
+      
+      .unified-payment-btn--google {
+        background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        color: #333333;
+        border-color: #dadce0;
+      }
+      
+      .unified-payment-btn--google:hover {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e8eaed 100%);
+        border-color: #bdc1c6;
+      }
+      
+      .unified-payment-btn--paypal {
+        background: linear-gradient(135deg, #ffffff 0%, #f7f9fc 100%);
+        color: #0070ba;
+        border-color: #0070ba;
+      }
+      
+      .unified-payment-btn--paypal:hover {
+        background: linear-gradient(135deg, #f7f9fc 0%, #e6f4ff 100%);
+        border-color: #0066cc;
+      }
+      
+      .unified-payment-btn--card {
+        background: linear-gradient(135deg, #ffffff 0%, #f5f5f7 100%);
+        color: #1d1d1f;
+        border-color: #d2d2d7;
+      }
+      
+      .unified-payment-btn--card:hover {
+        background: linear-gradient(135deg, #f5f5f7 0%, #ebebef 100%);
+        border-color: #a1a1aa;
+      }
+      
+      .unified-payment-btn--venmo {
+        background: linear-gradient(135deg, #3d95ce 0%, #1e3a8a 100%);
+        color: white;
+      }
+      
+      .unified-payment-btn--venmo:hover {
+        background: linear-gradient(135deg, #60a5fa 0%, #3d95ce 100%);
+      }
+      
+      /* Dark mode adjustments */
+      .dark .unified-payment-btn--google {
+        background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+        color: #f3f4f6;
+        border-color: #6b7280;
+      }
+      
+      .dark .unified-payment-btn--google:hover {
+        background: linear-gradient(135deg, #4b5563 0%, #6b7280 100%);
+        border-color: #9ca3af;
+      }
+      
+      .dark .unified-payment-btn--paypal {
+        background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+        color: #60a5fa;
+        border-color: #60a5fa;
+      }
+      
+      .dark .unified-payment-btn--paypal:hover {
+        background: linear-gradient(135deg, #4b5563 0%, #374151 100%);
+        border-color: #3b82f6;
+      }
+      
+      .dark .unified-payment-btn--card {
+        background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+        color: #f3f4f6;
+        border-color: #6b7280;
+      }
+      
+      .dark .unified-payment-btn--card:hover {
+        background: linear-gradient(135deg, #4b5563 0%, #6b7280 100%);
+        border-color: #9ca3af;
+      }
     </style>
 </head>
 <body class="font-inter bg-gradient-to-br from-slate-50 via-emerald-50/30 to-slate-50 dark:from-slate-900 dark:via-emerald-900/20 dark:to-slate-900 text-slate-900 dark:text-slate-100 min-h-screen">
@@ -476,119 +599,171 @@
             </div>
             <p class="text-slate-600 dark:text-slate-400 mb-6">Select your preferred way to pay</p>
 
-            <!-- Unified vertical list of payment methods -->
-            <div class="payment-list">
-              <!-- Zelle -->
-              <div class="payment-row">
-                <div class="payment-tile w-full">
-                  <button id="zelle-pay-btn" type="button" aria-controls="zelle-details" aria-expanded="false"
-                          class="payment-btn payment-btn--zelle flex items-center justify-center gap-3 shadow-lg"
-                          onclick="showZelleDetails()">
-                    <div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <span class="text-sm font-bold leading-none">Z</span>
-                    </div>
-                    <span class="text-center">Pay with Zelle® — No Fees!</span>
-                  </button>
-                  <div class="flex justify-center -mt-2 mb-2" aria-hidden="true">
-                    <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-100 text-purple-800 text-xs font-semibold dark:bg-purple-900/30 dark:text-purple-200">
-                      <span class="leading-none">Instant</span>
-                      <span class="opacity-50">•</span>
-                      <span class="leading-none">Zero fees</span>
-                    </span>
-                  </div>
-
-                  <!-- Zelle details (collapsible) -->
-                  <div id="zelle-details" class="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-4 border border-purple-200 dark:border-purple-700 mb-4 box-border" style="display: none;">
-                    <div class="flex items-center gap-4 mb-3">
-                      <div class="flex-shrink-0">
-                        <img src="/sirsinexusportal/assets/images/zelle-qr.png" alt="Zelle QR Code" class="w-32 h-32 object-contain rounded border border-purple-300" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <div class="w-32 h-32 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center text-white shadow-lg" style="display:none;">
-                          <div class="text-center">
-                            <div class="text-xl font-bold mb-0.5">Z</div>
-                            <div class="text-xs opacity-90">QR</div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="flex-1">
-                        <h3 class="font-bold text-purple-900 dark:text-purple-100 mb-1">Zelle® Payment Instructions</h3>
-                        <p class="text-sm text-purple-700 dark:text-purple-200 mb-2">Scan the QR code with your banking app or send payment to:</p>
-                        <div class="bg-purple-100 dark:bg-purple-900/50 rounded-lg p-2 mb-2">
-                          <p class="font-mono font-bold text-purple-900 dark:text-purple-100 text-center">cylton@cylton.com</p>
-                        </div>
-                        <p class="text-xs text-green-700 dark:text-green-300">✓ Instant transfer • ✓ Bank-level security • ✓ Zero processing fees</p>
-                      </div>
-                    </div>
-                    <div class="text-center">
-                      <button type="button" onclick="copyZelleInfo()" class="bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-4 rounded-lg transition-colors text-sm">📋 Copy Payment Info</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Dynamic fee breakdown (shown when applicable) -->
-              <div id="fee-breakdown" class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4 mb-2 w-full box-border" style="display: none;">
-                <div class="flex items-start gap-3">
-                  <div class="bg-amber-600 rounded-lg p-2 flex-shrink-0">
-                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/></svg>
-                  </div>
-                  <div class="flex-1">
-                    <h4 class="font-semibold text-amber-900 dark:text-amber-100 mb-2">Payment Processing Fees</h4>
-                    <p class="text-amber-800 dark:text-amber-200 text-sm mb-3">The following fees will be added to cover payment processing costs:</p>
-                    <div id="fee-details" class="space-y-2 text-sm"></div>
-                    <div class="border-t border-amber-300 dark:border-amber-700 pt-3 mt-3">
-                      <div class="flex justify-between items-center text-sm font-medium"><span class="text-amber-900 dark:text-amber-100">Subtotal:</span><span id="fee-subtotal" class="text-amber-900 dark:text-amber-100">$0.00</span></div>
-                      <div class="flex justify-between items-center text-sm font-medium"><span class="text-amber-900 dark:text-amber-100">Processing Fee:</span><span id="fee-amount" class="text-amber-900 dark:text-amber-100">$0.00</span></div>
-                      <div class="flex justify-between items-center text-base font-bold border-t border-amber-400 dark:border-amber-600 pt-2 mt-2"><span class="text-amber-900 dark:text-amber-100">Total to Pay:</span><span id="fee-total" class="text-amber-900 dark:text-amber-100">$0.00</span></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Apple Pay -->
-              <div class="payment-row">
-                <div id="apple-pay-button" class="payment-tile w-full" style="display: block;">
-                  <button id="apple-pay-btn" type="button" class="payment-btn payment-btn--apple shadow-lg" aria-label="Pay with Apple Pay">
-                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-                    <span>Apple Pay (QR Code)</span>
-                  </button>
-                </div>
-              </div>
-
-              <!-- Google Pay (rendered by SDK) -->
-              <div class="payment-row">
-                <div id="google-pay-button" class="payment-tile w-full" style="display: block;"></div>
-              </div>
+            <!-- Clean Payment Methods Grid -->
+            <div class="space-y-3">
               
-              				<!-- PayPal / Venmo / Card (launch button opens modal with SDK-rendered buttons) -->
-              				<div class="payment-row">
-                	<div class="payment-tile w-full">
-                  	<button id="paypal-launch-btn" type="button" class="payment-btn payment-btn--paypal shadow-lg flex items-center justify-center gap-3" onclick="openPayPalModal()" aria-label="Checkout with PayPal, Venmo, or Card">
-                    	<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                      	<path d="M4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Z" fill="#1f6ae6"/>
-                      	<path d="M8 13.5h5.2c1.8 0 2.8-.8 2.8-2.3 0-1.4-1.1-2.2-2.7-2.2H9.3L8 13.5Z" fill="#fff"/>
-                    	</svg>
-                    	<span>Checkout with PayPal</span>
-                  	</button>
-                	</div>
-              	</div>
-            	</div>
+              <!-- Zelle Payment Button -->
+              <div class="w-full">
+                <button id="zelle-pay-btn" type="button" 
+                        class="unified-payment-btn unified-payment-btn--zelle w-full flex items-center justify-center gap-3"
+                        onclick="showZelleDetails()">
+                  <div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <span class="text-sm font-bold leading-none">Z</span>
+                  </div>
+                  <span class="font-semibold">Pay with Zelle® — No Fees!</span>
+                  <div class="ml-auto px-2 py-1 bg-white/20 rounded text-xs font-medium">Instant</div>
+                </button>
+              </div>
 
-            	<!-- Status area -->
-            	<div id="payment-message" class="text-center text-base mt-6 min-h-[1.25rem]"></div>
+              <!-- Apple Pay Button -->
+              <div class="w-full">
+                <button id="apple-pay-btn" type="button"
+                        class="unified-payment-btn unified-payment-btn--apple w-full flex items-center justify-center gap-3"
+                        onclick="handleApplePay('qr')">
+                  <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                  </svg>
+                  <span class="font-semibold">Pay with Apple Pay</span>
+                  <div class="ml-auto px-2 py-1 bg-white/20 rounded text-xs font-medium">QR Code</div>
+                </button>
+              </div>
 
-            	<!-- PayPal Modal -->
-            	<div id="paypal-modal" class="fixed inset-0 bg-black/60 hidden items-center justify-center z-50">
-              	<div class="bg-white dark:bg-slate-800 rounded-2xl p-6 w-full max-w-md mx-4">
-                	<div class="flex items-center justify-between mb-4">
-                  	<h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100">Pay with PayPal, Venmo, or Card</h3>
-                  	<button class="text-slate-500 hover:text-slate-700" onclick="closePayPalModal()" aria-label="Close">✕</button>
-                	</div>
-                	<div id="paypal-sdk-buttons" class="w-full"></div>
-                	<div id="paypal-modal-message" class="mt-3 text-center text-sm"></div>
-              	</div>
-            	</div>
-          	</div>
-        	</div>
+              <!-- Google Pay Button -->
+              <div class="w-full">
+                <button id="google-pay-btn" type="button"
+                        class="unified-payment-btn unified-payment-btn--google w-full flex items-center justify-center gap-3"
+                        onclick="handleGooglePay()">
+                  <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                  </svg>
+                  <span class="font-semibold">Pay with Google Pay</span>
+                  <div class="ml-auto px-2 py-1 bg-slate-600/10 rounded text-xs font-medium">Cards</div>
+                </button>
+              </div>
+
+              <!-- PayPal Button -->
+              <div class="w-full">
+                <button id="paypal-launch-btn" type="button"
+                        class="unified-payment-btn unified-payment-btn--paypal w-full flex items-center justify-center gap-3"
+                        onclick="openPayPalModal()">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0Z" fill="#0070ba"/>
+                    <path d="M8 13.5h5.2c1.8 0 2.8-.8 2.8-2.3 0-1.4-1.1-2.2-2.7-2.2H9.3L8 13.5Z" fill="#fff"/>
+                  </svg>
+                  <span class="font-semibold">PayPal, Venmo & Cards</span>
+                  <div class="ml-auto px-2 py-1 bg-blue-600/10 rounded text-xs font-medium">All Cards</div>
+                </button>
+              </div>
+
+              <!-- Credit/Debit Card Button -->
+              <div class="w-full">
+                <button id="card-direct-btn" type="button"
+                        class="unified-payment-btn unified-payment-btn--card w-full flex items-center justify-center gap-3"
+                        onclick="openPayPalModal()">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+                  </svg>
+                  <span class="font-semibold">Credit or Debit Card</span>
+                  <div class="ml-auto px-2 py-1 bg-gray-600/10 rounded text-xs font-medium">Direct</div>
+                </button>
+              </div>
+
+              <!-- Venmo Button -->
+              <div class="w-full">
+                <button id="venmo-direct-btn" type="button"
+                        class="unified-payment-btn unified-payment-btn--venmo w-full flex items-center justify-center gap-3"
+                        onclick="openPayPalModal()">
+                  <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M19.48 3c.73 3.21.89 6.05-.01 8.82-1.64 5.13-4.51 8.18-8.31 8.18-1.75 0-3.26-1.16-3.26-3.26 0-.89.31-2.06.89-3.54l2.93-9.2h4.28l-2.7 8.51c-.31.99-.47 1.75-.47 2.38 0 .68.31 1.06.84 1.06 1.43 0 2.64-2.33 3.43-5.18.68-2.49.68-4.97.16-7.77H19.48z"/>
+                  </svg>
+                  <span class="font-semibold">Pay with Venmo</span>
+                  <div class="ml-auto px-2 py-1 bg-blue-600/10 rounded text-xs font-medium">Social</div>
+                </button>
+              </div>
+
+            </div>
+
+            <!-- Fee Breakdown (shown when applicable) -->
+            <div id="fee-breakdown" class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4 mt-4 w-full" style="display: none;">
+              <div class="flex items-start gap-3">
+                <div class="bg-amber-600 rounded-lg p-2 flex-shrink-0">
+                  <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/>
+                  </svg>
+                </div>
+                <div class="flex-1">
+                  <h4 class="font-semibold text-amber-900 dark:text-amber-100 mb-2">Payment Processing Fees</h4>
+                  <p class="text-amber-800 dark:text-amber-200 text-sm mb-3">The following fees will be added to cover payment processing costs:</p>
+                  <div id="fee-details" class="space-y-2 text-sm"></div>
+                  <div class="border-t border-amber-300 dark:border-amber-700 pt-3 mt-3">
+                    <div class="flex justify-between items-center text-sm font-medium">
+                      <span class="text-amber-900 dark:text-amber-100">Subtotal:</span>
+                      <span id="fee-subtotal" class="text-amber-900 dark:text-amber-100">$0.00</span>
+                    </div>
+                    <div class="flex justify-between items-center text-sm font-medium">
+                      <span class="text-amber-900 dark:text-amber-100">Processing Fee:</span>
+                      <span id="fee-amount" class="text-amber-900 dark:text-amber-100">$0.00</span>
+                    </div>
+                    <div class="flex justify-between items-center text-base font-bold border-t border-amber-400 dark:border-amber-600 pt-2 mt-2">
+                      <span class="text-amber-900 dark:text-amber-100">Total to Pay:</span>
+                      <span id="fee-total" class="text-amber-900 dark:text-amber-100">$0.00</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Zelle Details (collapsible) -->
+            <div id="zelle-details" class="bg-purple-50 dark:bg-purple-900/20 rounded-xl p-6 mt-4 border border-purple-200 dark:border-purple-700" style="display: none;">
+              <div class="flex items-center gap-6 mb-4">
+                <div class="flex-shrink-0">
+                  <img src="/sirsinexusportal/assets/images/zelle-qr.png" alt="Zelle QR Code" class="w-32 h-32 object-contain rounded-lg border border-purple-300 shadow-sm" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                  <div class="w-32 h-32 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center text-white shadow-lg" style="display:none;">
+                    <div class="text-center">
+                      <div class="text-2xl font-bold mb-1">Z</div>
+                      <div class="text-sm opacity-90">QR Code</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex-1">
+                  <h3 class="text-lg font-bold text-purple-900 dark:text-purple-100 mb-2">Zelle® Payment Instructions</h3>
+                  <p class="text-sm text-purple-700 dark:text-purple-200 mb-3">Scan the QR code with your banking app or send payment to:</p>
+                  <div class="bg-purple-100 dark:bg-purple-900/50 rounded-lg p-3 mb-3">
+                    <p class="font-mono font-bold text-purple-900 dark:text-purple-100 text-center text-lg">cylton@cylton.com</p>
+                  </div>
+                  <div class="grid grid-cols-3 gap-2 text-xs">
+                    <div class="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 px-2 py-1 rounded text-center font-medium">✓ Instant</div>
+                    <div class="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 px-2 py-1 rounded text-center font-medium">✓ Secure</div>
+                    <div class="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 px-2 py-1 rounded text-center font-medium">✓ No Fees</div>
+                  </div>
+                </div>
+              </div>
+              <div class="text-center">
+                <button type="button" onclick="copyZelleInfo()" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-xl transition-all shadow-lg hover:shadow-xl">
+                  📋 Copy Payment Info
+                </button>
+              </div>
+            </div>
+
+            <!-- Status area -->
+            <div id="payment-message" class="text-center text-base mt-6 min-h-[1.25rem]"></div>
+
+            <!-- PayPal Modal -->
+            <div id="paypal-modal" class="fixed inset-0 bg-black/60 hidden items-center justify-center z-50">
+              <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 w-full max-w-md mx-4 shadow-2xl">
+                <div class="flex items-center justify-between mb-4">
+                  <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100">Complete Your Payment</h3>
+                  <button class="text-slate-500 hover:text-slate-700 text-xl" onclick="closePayPalModal()" aria-label="Close">✕</button>
+                </div>
+                <div id="paypal-sdk-buttons" class="w-full"></div>
+                <div id="paypal-modal-message" class="mt-3 text-center text-sm"></div>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <!-- Support Section -->
         <div class="mt-12 text-center">
