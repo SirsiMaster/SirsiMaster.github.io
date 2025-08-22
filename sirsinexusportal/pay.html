@@ -1846,51 +1846,34 @@
             }
         }
         
-        // Google Pay configuration - PRODUCTION MODE with PayPal Gateway
+        // Google Pay configuration - PRODUCTION READY via PayPal SDK
+        // Using PayPal's Google Pay integration for reliable processing
         const googlePayConfig = {
-            environment: 'PRODUCTION', // LIVE PRODUCTION ENVIRONMENT
-            apiVersion: 2,
-            apiVersionMinor: 0,
-            allowedPaymentMethods: [{
-                type: 'CARD',
-                parameters: {
-                    allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
-                    allowedCardNetworks: ['AMEX', 'DISCOVER', 'JCB', 'MASTERCARD', 'VISA']
-                },
-                tokenizationSpecification: {
-                    type: 'PAYMENT_GATEWAY',
-                    parameters: {
-                        'gateway': 'paypal',
-                        'gatewayMerchantId': 'ASUI7q4yAs6anh26J6T_7hLyX0UwUbVWQS-8lgngn9z0W6VX4zrt2y7Q_auiXBAUrzxd1ibBrz22KDAr'
-                    }
-                }
-            }]
+            enabled: true,
+            provider: 'paypal', // Use PayPal SDK for Google Pay processing
+            supportedNetworks: ['VISA', 'MASTERCARD', 'AMEX', 'DISCOVER'],
+            merchantInfo: {
+                merchantName: 'SirsiNexus',
+                merchantId: 'merchant.sirsinexus.com'
+            }
         };
         
-        // Google Pay callback
+        // Google Pay callback - Using PayPal SDK Integration
         function onGooglePayLoaded() {
             console.log('Google Pay SDK loaded');
-            if (typeof google !== 'undefined' && google.payments) {
-                googlePayClient = new google.payments.api.PaymentsClient(googlePayConfig);
-                checkGooglePayAvailability();
-            }
+            // Google Pay will be handled through PayPal SDK integration
+            // No direct Google Pay client initialization needed
+            console.log('Google Pay is available through PayPal integration');
         }
         
         function checkGooglePayAvailability() {
-            if (!googlePayClient) return;
-            
-            googlePayClient.isReadyToPay({
-                apiVersion: googlePayConfig.apiVersion,
-                apiVersionMinor: googlePayConfig.apiVersionMinor,
-                allowedPaymentMethods: googlePayConfig.allowedPaymentMethods
-            }).then(function(response) {
-                if (response.result) {
-                    console.log('Google Pay is available');
-                    // Will show button when amount is entered
-                }
-            }).catch(function(err) {
-                console.log('Google Pay not available:', err);
-            });
+            // Check if PayPal SDK supports Google Pay
+            if (typeof paypal !== 'undefined' && paypal.Buttons) {
+                console.log('Google Pay available through PayPal SDK');
+                return true;
+            }
+            console.log('Google Pay not available - PayPal SDK required');
+            return false;
         }
         
         function checkApplePayAvailability() {
@@ -3975,9 +3958,9 @@ Note: Your payment intent has been recorded in our system with Transaction ID: $
             }
         }
         
-        // Enhanced Google Pay handler with validation - PRODUCTION IMPLEMENTATION
+        // Enhanced Google Pay handler - PRODUCTION via PayPal SDK
         function handleGooglePay() {
-            console.log('Handling Google Pay payment...');
+            console.log('Handling Google Pay payment via PayPal SDK...');
             
             // Check registration
             if (!validateRegistrationStatus()) {
@@ -4002,121 +3985,251 @@ Note: Your payment intent has been recorded in our system with Transaction ID: $
                 return;
             }
             
-            console.log('Google Pay: Validation passed, proceeding with payment');
+            console.log('Google Pay: Validation passed, proceeding with PayPal Google Pay integration');
             
-            
-            // Store current payment data globally for Google Pay callbacks
+            // Store current payment data globally
             currentAmount = paymentData.amount;
             currentDescription = paymentData.description;
             
-            // Check if Google Pay is available
-            if (!googlePayClient) {
-                showInlineMessage('Google Pay is not available on this browser. Please try Chrome or use another payment method.', 'error');
+            // Calculate fees and show breakdown
+            calculateAndDisplayFees(paymentData.amount, currentInvoice ? 'invoice' : 'custom');
+            
+            // Open Google Pay modal with PayPal integration
+            openGooglePayModal();
+            
+            showInlineMessage('Opening Google Pay via PayPal...', 'info');
+        }
+        
+        // Google Pay Modal - Using PayPal SDK Integration
+        function openGooglePayModal() {
+            console.log('Opening Google Pay modal with PayPal integration');
+            
+            // Create and show Google Pay modal
+            const modal = createGooglePayModal();
+            document.body.appendChild(modal);
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            // Initialize PayPal Google Pay integration in the modal
+            initializePayPalGooglePayInModal();
+        }
+        
+        function createGooglePayModal() {
+            const modal = document.createElement('div');
+            modal.id = 'google-pay-modal';
+            modal.className = 'fixed inset-0 bg-black/60 hidden items-center justify-center z-50';
+            modal.innerHTML = `
+                <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 w-full max-w-md mx-4 shadow-2xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100 flex items-center gap-3">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                            </svg>
+                            Google Pay
+                        </h3>
+                        <button class="text-slate-500 hover:text-slate-700 text-xl" onclick="closeGooglePayModal()" aria-label="Close">✕</button>
+                    </div>
+                    
+                    <div class="bg-slate-50 dark:bg-slate-700 rounded-xl p-4 mb-4">
+                        <div class="text-sm text-slate-700 dark:text-slate-300">
+                            <div class="flex justify-between items-center mb-2">
+                                <span>Amount:</span>
+                                <span class="font-semibold">$${currentAmount.toFixed(2)}</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span>Description:</span>
+                                <span class="font-semibold">${currentDescription}</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="google-pay-paypal-container" class="w-full mb-4">
+                        <!-- PayPal Google Pay integration will be rendered here -->
+                    </div>
+                    
+                    <div id="google-pay-message" class="mt-3 text-center text-sm"></div>
+                    
+                    <div class="mt-4 text-xs text-slate-500 dark:text-slate-400 text-center">
+                        <p>Powered by PayPal's secure Google Pay integration</p>
+                    </div>
+                </div>
+            `;
+            
+            // Close modal when clicking outside
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeGooglePayModal();
+                }
+            });
+            
+            return modal;
+        }
+        
+        function closeGooglePayModal() {
+            const modal = document.getElementById('google-pay-modal');
+            if (modal) {
+                modal.remove();
+            }
+        }
+        
+        function initializePayPalGooglePayInModal() {
+            const container = document.getElementById('google-pay-paypal-container');
+            const messageDiv = document.getElementById('google-pay-message');
+            
+            if (!container) {
+                console.error('Google Pay PayPal container not found');
                 return;
             }
             
-            const paymentDataRequest = {
-                apiVersion: googlePayConfig.apiVersion,
-                apiVersionMinor: googlePayConfig.apiVersionMinor,
-                allowedPaymentMethods: googlePayConfig.allowedPaymentMethods,
-                transactionInfo: {
-                    totalPriceStatus: 'FINAL',
-                    totalPrice: paymentData.amount.toFixed(2),
-                    currencyCode: 'USD'
-                },
-                merchantInfo: {
-                    merchantName: 'SirsiNexus',
-                    merchantId: '01234567890123456789' // Your actual Google Pay merchant ID
-                }
-            };
+            // Check if PayPal SDK is loaded
+            if (typeof paypal === 'undefined') {
+                console.error('PayPal SDK not loaded for Google Pay');
+                container.innerHTML = `
+                    <div class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-4 text-center">
+                        <p class="text-red-600 dark:text-red-400 font-medium mb-2">PayPal SDK Not Loaded</p>
+                        <p class="text-red-500 dark:text-red-400 text-sm mb-3">Please refresh the page to reload PayPal.</p>
+                        <button onclick="location.reload()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                            Refresh Page
+                        </button>
+                    </div>
+                `;
+                return;
+            }
             
-            showInlineMessage('Opening Google Pay...', 'info');
+            console.log('Rendering PayPal Google Pay buttons for amount:', currentAmount);
             
-            googlePayClient.loadPaymentData(paymentDataRequest)
-                .then(function(googlePayData) {
-                    console.log('Google Pay success:', googlePayData);
+            try {
+                paypal.Buttons({
+                    fundingSource: paypal.FUNDING.GOOGLEPAY,
                     
-                    // Process the Google Pay token through PayPal
-                    processGooglePayPayment(googlePayData, paymentData.amount, paymentData.description);
-                })
-                .catch(function(err) {
-                    console.error('Google Pay error:', err);
-                    if (err.statusCode === 'CANCELED') {
-                        showInlineMessage('Google Pay payment was cancelled.', 'info');
-                    } else if (err.statusCode === 'DEVELOPER_ERROR') {
-                        console.error('Google Pay Developer Error:', err.statusMessage);
-                        showInlineMessage('Google Pay configuration error. Please use another payment method.', 'error');
-                    } else {
-                        showInlineMessage('Google Pay is not available on this device/browser. Please use another payment method.', 'error');
-                    }
-                });
-        }
-        
-        // Google Pay Payment Processing Function
-        function processGooglePayPayment(googlePayData, amount, description) {
-            console.log('Processing Google Pay payment through PayPal gateway...');
-            
-            showInlineMessage('Processing Google Pay payment...', 'info');
-            
-            // Extract payment token from Google Pay response
-            const paymentToken = googlePayData.paymentMethodData.tokenizationData.token;
-            
-            // In a production environment, you would send this token to your server
-            // which would then process it through PayPal's Google Pay integration
-            
-            // For now, we'll simulate the successful processing
-            setTimeout(() => {
-                // Ensure we have a user account
-                if (!currentUser) {
-                    console.error('No user account found during Google Pay processing');
-                    currentUser = accountManager.createRegisteredAccount({
-                        email: 'googlepay-user@sirsinexus.com',
-                        firstName: 'Google Pay',
-                        lastName: 'User'
-                    });
-                }
-                
-                // Record comprehensive transaction in SirsiNexus system
-                const googlePayTransactionId = 'google-pay-' + Date.now();
-                const sirsiTransaction = accountManager.recordTransaction({
-                    type: 'payment',
-                    status: 'completed',
-                    amount: amount,
-                    description: description,
-                    paymentMethod: 'google_pay',
-                    paymentProcessor: 'paypal_googlepay_gateway',
-                    processorTransactionId: googlePayTransactionId,
-                    payerName: 'Google Pay User',
-                    payerEmail: 'googlepay-user@sirsinexus.com',
-                    payerPhone: '',
-                    payerAddress: {},
-                    feeStructure: 'google_pay_via_paypal'
-                });
-                
-                // Legacy transaction storage for backward compatibility
-                const legacyTransaction = {
-                    id: googlePayTransactionId,
-                    payer: { 
-                        name: { given_name: 'Google Pay', surname: 'User' }, 
-                        email_address: 'googlepay-user@sirsinexus.com' 
+                    createOrder: function(data, actions) {
+                        console.log('Creating PayPal order for Google Pay:', currentAmount);
+                        return actions.order.create({
+                            purchase_units: [{
+                                amount: {
+                                    value: currentAmount.toFixed(2),
+                                    currency_code: 'USD'
+                                },
+                                description: currentDescription + ' (via Google Pay)'
+                            }],
+                            payment_source: {
+                                googlepay: {
+                                    experience_context: {
+                                        brand_name: 'SirsiNexus',
+                                        locale: 'en-US',
+                                        landing_page: 'NO_PREFERENCE',
+                                        shipping_preference: 'NO_SHIPPING',
+                                        user_action: 'PAY_NOW'
+                                    }
+                                }
+                            }
+                        });
                     },
-                    amount: amount,
-                    description: description + ' (Google Pay)',
-                    timestamp: new Date().toISOString(),
-                    invoiceData: currentInvoice || null,
-                    sirsiTransactionId: sirsiTransaction.transactionId,
-                    userId: currentUser.userId,
-                    paymentMethod: 'google_pay'
-                };
-                
-                localStorage.setItem('last-transaction', JSON.stringify(legacyTransaction));
-                
-                console.log('Google Pay transaction completed:', sirsiTransaction.transactionId);
-                console.log('User account:', currentUser.userId);
-                
-                // Show success
-                showSuccessMessage({ id: googlePayTransactionId });
-            }, 1500);
+                    
+                    onApprove: function(data, actions) {
+                        console.log('Google Pay via PayPal approved, capturing...');
+                        messageDiv.innerHTML = '<p class="text-blue-600 text-sm font-medium">Processing Google Pay payment...</p>';
+                        
+                        return actions.order.capture().then(function(details) {
+                            console.log('Google Pay via PayPal successful:', details);
+                            
+                            // Ensure we have a user account
+                            if (!currentUser) {
+                                console.error('No user account found during Google Pay processing');
+                                currentUser = accountManager.createRegisteredAccount({
+                                    email: details.payer?.email_address || 'googlepay-user@sirsinexus.com',
+                                    firstName: details.payer?.name?.given_name || 'Google Pay',
+                                    lastName: details.payer?.name?.surname || 'User'
+                                });
+                            }
+                            
+                            // Record comprehensive transaction in SirsiNexus system
+                            const sirsiTransaction = accountManager.recordTransaction({
+                                type: 'payment',
+                                status: 'completed',
+                                amount: currentAmount,
+                                description: currentDescription,
+                                paymentMethod: 'google_pay',
+                                paymentProcessor: 'paypal_googlepay',
+                                processorTransactionId: details.id,
+                                payerName: details.payer?.name ? `${details.payer.name.given_name} ${details.payer.name.surname}` : 'Google Pay User',
+                                payerEmail: details.payer?.email_address || 'googlepay-user@sirsinexus.com',
+                                payerPhone: details.payer?.phone?.phone_number?.national_number || '',
+                                payerAddress: details.payer?.address || {},
+                                feeStructure: 'google_pay_via_paypal'
+                            });
+                            
+                            // Legacy transaction storage for backward compatibility
+                            const legacyTransaction = {
+                                id: details.id,
+                                payer: details.payer || { name: { given_name: 'Google Pay', surname: 'User' }, email_address: 'googlepay-user@sirsinexus.com' },
+                                amount: currentAmount,
+                                description: currentDescription + ' (Google Pay)',
+                                timestamp: new Date().toISOString(),
+                                invoiceData: currentInvoice || null,
+                                sirsiTransactionId: sirsiTransaction.transactionId,
+                                userId: currentUser.userId,
+                                paymentMethod: 'google_pay'
+                            };
+                            
+                            localStorage.setItem('last-transaction', JSON.stringify(legacyTransaction));
+                            
+                            console.log('Google Pay transaction completed:', sirsiTransaction.transactionId);
+                            console.log('User account:', currentUser.userId);
+                            
+                            // Close modal and show success
+                            closeGooglePayModal();
+                            showSuccessMessage(details);
+                        });
+                    },
+                    
+                    onError: function(err) {
+                        console.error('Google Pay via PayPal error:', err);
+                        messageDiv.innerHTML = '<p class="text-red-500 text-sm">Google Pay payment failed. Please try again.</p>';
+                    },
+                    
+                    onCancel: function(data) {
+                        console.log('Google Pay via PayPal cancelled:', data);
+                        messageDiv.innerHTML = '<p class="text-amber-600 text-sm">Google Pay payment was cancelled.</p>';
+                    },
+                    
+                    style: {
+                        layout: 'vertical',
+                        color: 'white',
+                        shape: 'rect',
+                        label: 'pay',
+                        height: 55
+                    }
+                }).render('#google-pay-paypal-container').then(function() {
+                    console.log('PayPal Google Pay button rendered successfully');
+                    messageDiv.innerHTML = '<p class="text-slate-600 dark:text-slate-400 text-sm">Click the button above to pay with Google Pay</p>';
+                }).catch(function(err) {
+                    console.error('PayPal Google Pay render error:', err);
+                    container.innerHTML = `
+                        <div class="bg-amber-50 dark:bg-amber-900/20 rounded-xl p-4 text-center">
+                            <p class="text-amber-600 dark:text-amber-400 text-sm font-medium mb-2">Google Pay Unavailable</p>
+                            <p class="text-amber-700 dark:text-amber-300 text-xs mb-3">Google Pay is not supported in this configuration. Please use another payment method.</p>
+                            <button onclick="closeGooglePayModal(); openPayPalModal();" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                                Use Regular PayPal
+                            </button>
+                        </div>
+                    `;
+                });
+            } catch (error) {
+                console.error('PayPal Google Pay initialization error:', error);
+                container.innerHTML = `
+                    <div class="bg-red-50 dark:bg-red-900/20 rounded-xl p-4 text-center">
+                        <p class="text-red-600 dark:text-red-400 text-sm font-medium mb-2">Google Pay Error</p>
+                        <p class="text-red-500 dark:text-red-400 text-xs mb-3">Unable to initialize Google Pay. Please try another payment method.</p>
+                        <button onclick="closeGooglePayModal(); openPayPalModal();" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                            Use Regular PayPal
+                        </button>
+                    </div>
+                `;
+            }
         }
         
         // Utility Functions for Enhanced Payment Handling
