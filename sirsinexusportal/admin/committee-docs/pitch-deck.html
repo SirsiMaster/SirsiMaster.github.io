@@ -48,9 +48,10 @@
         }
 
         h2 {
-            font-size: clamp(3.2rem, 5.5vw, 4.5rem);
-            margin-bottom: 0;
-            text-shadow: 0 3px 6px rgba(0,0,0,0.15);
+            font-size: clamp(3.4rem, 5.8vw, 4.8rem);
+            margin-bottom: 20px;
+            margin-top: 0;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.18);
             line-height: 1.1;
             letter-spacing: -0.03em;
         }
@@ -284,18 +285,19 @@
             justify-content: flex-start;
             min-height: 100vh;
             position: relative;
+            padding-top: 20px;
         }
         
         /* Slide Header */
         .slide-header {
             text-align: center;
-            margin-bottom: 60px;
-            padding-top: 40px;
-            min-height: 200px;
+            margin-bottom: 40px;
+            padding-top: 180px;
+            position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
         }
         
         /* Compact header for table slides */
@@ -418,20 +420,26 @@
         /* Badges */
         .badge { 
             display: inline-block; 
-            padding: 20px 80px; 
+            padding: 35px 120px; 
             background: var(--gradient); 
             color: white; 
             border-radius: 100px; 
-            font-size: 32px; 
-            font-weight: 800; 
-            letter-spacing: 0.2em;
+            font-size: 48px; 
+            font-weight: 900; 
+            letter-spacing: 0.3em;
             text-transform: uppercase;
-            margin-bottom: 30px;
-            box-shadow: 0 8px 30px rgba(16, 185, 129, 0.4),
-                        0 2px 10px rgba(16, 185, 129, 0.3);
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            position: relative;
-            overflow: hidden;
+            margin: 0;
+            box-shadow: 0 12px 40px rgba(16, 185, 129, 0.5),
+                        0 4px 20px rgba(16, 185, 129, 0.4),
+                        inset 0 2px 10px rgba(255, 255, 255, 0.3);
+            border: 4px solid rgba(255, 255, 255, 0.4);
+            position: absolute;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            min-width: 600px;
+            text-align: center;
         }
         
         .badge::before {
@@ -441,7 +449,7 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
             transform: rotate(45deg);
             animation: shimmer 3s infinite;
         }
@@ -777,11 +785,12 @@
     </div>
 
     <div class="slide" data-slide="2">
-        <div class="content" style="display: flex; flex-direction: column; justify-content: center; height: 100%;">
-            <div class="slide-header" style="margin-bottom: 40px;">
-                <div class="badge">THE PROBLEM</div>
+        <div class="content">
+            <div class="badge">THE PROBLEM</div>
+            <div class="slide-header">
                 <h2>Code Complexity Kills Innovation</h2>
             </div>
+            <div style="flex: 1; display: flex; align-items: center; justify-content: center;">
             <div class="grid" style="grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1000px; margin: 0 auto;">
                 <div class="problem-card" style="min-height: 200px; padding: 40px 30px;">
                     <div class="number" style="font-size: 3.5rem; margin-bottom: 20px;">$250K+</div>
@@ -803,11 +812,12 @@
     </div>
 
     <div class="slide" data-slide="3">
-        <div class="content" style="display: flex; flex-direction: column; justify-content: center; height: 100%;">
-            <div class="slide-header" style="margin-bottom: 35px;">
-                <div class="badge">THE SOLUTION</div>
+        <div class="content">
+            <div class="badge">THE SOLUTION</div>
+            <div class="slide-header">
                 <h2>Simple, Powerful, Proven</h2>
             </div>
+            <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;">
             <div class="grid grid-3" style="gap: 30px; max-width: 1100px; margin: 0 auto;">
                 <div class="card" style="text-align: center; min-height: 200px; display: flex; flex-direction: column; justify-content: center; padding: 35px 25px;">
                     <div class="stat-number" style="font-size: 3.5rem;">Zero</div>
@@ -829,15 +839,17 @@
                 <p style="font-style: italic; font-size: 1.3rem; line-height: 1.5; color: var(--text-secondary); margin-bottom: 15px; font-weight: 500;">"Sirsi let us build our AI platform with one developer, saving us months and thousands."</p>
                 <p style="font-weight: 800; font-size: 1.1rem;" class="text-green">— CEO, Assiduous Realty</p>
             </div>
+            </div>
         </div>
     </div>
 
     <div class="slide" data-slide="4">
         <div class="content">
-            <div class="slide-header-compact">
-                <div class="badge">COMPETITIVE LANDSCAPE</div>
-                <h2 style="margin-bottom: 5px;">Why We Win</h2>
+            <div class="badge">COMPETITIVE LANDSCAPE</div>
+            <div class="slide-header">
+                <h2>Why We Win</h2>
             </div>
+            <div style="flex: 1; display: flex; align-items: center; justify-content: center;">
             <table class="comparison-table card" style="padding: 12px; max-width: 800px; margin: 0 auto;">
                 <thead>
                     <tr>
@@ -858,15 +870,17 @@
                     <tr><td class="feature" style="font-size: 15px; padding: 6px 12px;">Enterprise Ready</td><td style="font-size: 20px; padding: 6px;">✅</td><td style="font-size: 20px; padding: 6px;">✅</td><td style="font-size: 20px; padding: 6px;">❌</td><td class="sirsi-col" style="font-size: 20px; padding: 6px;">✅</td></tr>
                 </tbody>
             </table>
+            </div>
         </div>
     </div>
 
     <div class="slide" data-slide="5">
-        <div class="content" style="display: flex; flex-direction: column; justify-content: center; height: 100%;">
-            <div class="slide-header" style="margin-bottom: 35px;">
-                <div class="badge">MARKET OPPORTUNITY</div>
+        <div class="content">
+            <div class="badge">MARKET OPPORTUNITY</div>
+            <div class="slide-header">
                 <h2>Massive & Untapped</h2>
             </div>
+            <div style="flex: 1; display: flex; align-items: center; justify-content: center;">
             <div class="grid grid-3" style="gap: 30px; max-width: 1100px; margin: 0 auto;">
                 <div class="card" style="text-align: center; min-height: 200px; display: flex; flex-direction: column; justify-content: center; padding: 35px 25px;">
                     <div class="stat-number" style="font-size: 3.5rem;">$547B</div>
@@ -884,15 +898,17 @@
                     <p style="font-size: 16px; color: var(--text-secondary); margin-top: 5px;">AI-Driven Infrastructure</p>
                 </div>
             </div>
+            </div>
         </div>
     </div>
 
     <div class="slide" data-slide="6">
         <div class="content">
-            <div class="slide-header" style="margin-bottom: 15px; padding-top: 0;">
-                <div class="badge" style="margin-bottom: 15px; padding: 10px 35px; font-size: 18px;">THE FOUNDER</div>
-                <h2 style="margin-bottom: 5px; font-size: 2.8rem;">Cylton Collymore</h2>
+            <div class="badge">THE FOUNDER</div>
+            <div class="slide-header">
+                <h2>Cylton Collymore</h2>
             </div>
+            <div style="flex: 1; display: flex; align-items: center; justify-content: center;">
             <div class="founder-card card" style="max-width: 1200px; margin: 0 auto; padding: 25px 35px;">
                 <div class="founder-avatar" style="width: 180px; height: 180px; font-size: 70px;">CC</div>
                 <div>
@@ -926,15 +942,17 @@
                     </div>
                 </div>
             </div>
+            </div>
         </div>
     </div>
 
     <div class="slide" data-slide="7">
         <div class="content">
+            <div class="badge">TRACTION & PARTNERSHIPS</div>
             <div class="slide-header">
-                <div class="badge">TRACTION & PARTNERSHIPS</div>
                 <h2>Strong Momentum Building</h2>
             </div>
+            <div style="flex: 1; display: flex; align-items: center; justify-content: center;">
             <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 30px; max-width: 1100px; margin: 0 auto;">
                 <div>
                     <h3 style="color: var(--primary); margin-bottom: 15px; font-size: 1.4rem;">Key Milestones</h3>
@@ -1008,15 +1026,17 @@
                     </div>
                 </div>
             </div>
+            </div>
         </div>
     </div>
 
     <div class="slide" data-slide="8">
         <div class="content">
-            <div class="slide-header" style="margin-bottom: 20px;">
-                <div class="badge">FINANCIALS</div>
-                <h2 style="font-size: 2.9rem;">Path to $73M ARR</h2>
+            <div class="badge">FINANCIALS</div>
+            <div class="slide-header">
+                <h2>Path to $73M ARR</h2>
             </div>
+            <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
             
             <!-- Key Metrics Row -->
             <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; max-width: 900px; margin: 0 auto 30px;">
@@ -1080,15 +1100,17 @@
                     </div>
                 </div>
             </div>
+            </div>
         </div>
     </div>
 
     <div class="slide" data-slide="9">
         <div class="content">
-            <div class="slide-header" style="margin-bottom: 12px; padding-top: 0;">
-                <div class="badge" style="margin-bottom: 8px; padding: 8px 30px; font-size: 16px;">INVESTMENT OPPORTUNITY</div>
-                <h2 style="font-size: 2.2rem; margin-bottom: 0;">Join the AI Infrastructure Revolution</h2>
+            <div class="badge">INVESTMENT</div>
+            <div class="slide-header">
+                <h2>Join the AI Infrastructure Revolution</h2>
             </div>
+            <div style="flex: 1; display: flex; align-items: center; justify-content: center;">
             <div class="card" style="max-width: 780px; margin: 0 auto; text-align: center; background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(0, 255, 136, 0.02)); border: 2px solid var(--primary); padding: 20px;">
                 <h2 style="font-size: 2.3rem; margin-bottom: 10px;">Raising <span class="text-green">$1.5M</span> Pre-Seed</h2>
                 <p style="font-size: 1rem; color: var(--text-secondary); margin-bottom: 15px;">Early investor interest: <strong>$200K+ in discussions</strong></p>
@@ -1125,16 +1147,17 @@
                     </div>
                 </div>
             </div>
+            </div>
         </div>
     </div>
 
     <div class="slide" data-slide="10">
         <div class="content">
+            <div class="badge">CONTACT</div>
             <div class="slide-header">
-                <div class="badge">CONTACT</div>
-                <h1 style="font-size: 3rem;">Let's Build Together</h1>
+                <h1 style="font-size: 3.8rem; margin: 0;">Let's Build Together</h1>
             </div>
-            <div class="text-center">
+            <div class="text-center" style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
                 <p style="font-size: 1.3rem; color: var(--text-secondary); margin: 20px 0 30px;">Cylton Collymore</p>
                 <a href="mailto:cylton@sirsi.ai" class="btn-primary" style="margin-bottom: 40px;">cylton@sirsi.ai</a>
                 
