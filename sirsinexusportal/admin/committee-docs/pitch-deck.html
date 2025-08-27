@@ -416,20 +416,17 @@
         /* Badges */
         .badge { 
             display: inline-block; 
-            padding: 10px 24px; 
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05)); 
-            color: var(--primary); 
+            padding: 20px 60px; 
+            background: var(--gradient); 
+            color: white; 
             border-radius: 100px; 
-            font-size: 13px; 
-            font-weight: 600; 
-            letter-spacing: 0.1em;
+            font-size: 38px; 
+            font-weight: 800; 
+            letter-spacing: 0.15em;
             text-transform: uppercase;
-            margin: 0 auto 8px;
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            position: absolute;
-            top: 30px;
-            left: 50%;
-            transform: translateX(-50%);
+            margin: 0;
+            border: none;
+            box-shadow: 0 10px 40px rgba(16, 185, 129, 0.4);
             white-space: nowrap;
         }
         
@@ -776,10 +773,16 @@
     </div>
 
     <div class="slide" data-slide="2">
-        <div class="content" style="justify-content: flex-start; padding-top: 80px;">
-            <div class="badge" style="position: relative; transform: none; left: auto; top: auto; display: block; margin: 0 auto 15px;">THE PROBLEM</div>
-            <h2 style="text-align: center; margin-bottom: 50px;">Code Complexity Kills Innovation</h2>
-            <div class="grid" style="grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1000px; margin: 0 auto;">
+        <div class="content" style="display: flex; flex-direction: column; justify-content: space-between; padding: 60px 40px; height: 100vh;">
+            <!-- Badge Container -->
+            <div style="text-align: center; margin-bottom: 40px;">
+                <div class="badge">THE PROBLEM</div>
+            </div>
+            
+            <!-- Main Content Container -->
+            <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                <h2 style="text-align: center; margin-bottom: 40px;">Code Complexity Kills Innovation</h2>
+                <div class="grid" style="grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1000px; margin: 0 auto;">
                 <div class="problem-card" style="min-height: 200px; padding: 40px 30px;">
                     <div class="number" style="font-size: 3.5rem; margin-bottom: 20px;">$250K+</div>
                     <p class="label" style="font-size: 18px;">Annual DevOps cost</p>
@@ -800,10 +803,16 @@
     </div>
 
     <div class="slide" data-slide="3">
-        <div class="content" style="justify-content: flex-start; padding-top: 80px;">
-            <div class="badge" style="position: relative; transform: none; left: auto; top: auto; display: block; margin: 0 auto 15px;">THE SOLUTION</div>
-            <h2 style="text-align: center; margin-bottom: 50px;">Simple, Powerful, Proven</h2>
-            <div class="grid grid-3" style="gap: 30px; max-width: 1100px; margin: 0 auto;">
+        <div class="content" style="display: flex; flex-direction: column; justify-content: space-between; padding: 60px 40px; height: 100vh;">
+            <!-- Badge Container -->
+            <div style="text-align: center; margin-bottom: 40px;">
+                <div class="badge">THE SOLUTION</div>
+            </div>
+            
+            <!-- Main Content Container -->
+            <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                <h2 style="text-align: center; margin-bottom: 40px;">Simple, Powerful, Proven</h2>
+                <div class="grid grid-3" style="gap: 30px; max-width: 1100px; margin: 0 auto;">
                 <div class="card" style="text-align: center; min-height: 200px; display: flex; flex-direction: column; justify-content: center; padding: 35px 25px;">
                     <div class="stat-number" style="font-size: 3.5rem;">Zero</div>
                     <p style="font-size: 20px; font-weight: 700; margin-top: 15px;">Code Required</p>
