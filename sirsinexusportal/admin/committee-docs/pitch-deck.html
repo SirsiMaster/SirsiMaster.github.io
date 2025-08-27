@@ -48,12 +48,12 @@
         }
 
         h2 {
-            font-size: clamp(3.4rem, 5.8vw, 4.8rem);
-            margin-bottom: 20px;
+            font-size: clamp(2.8rem, 4.5vw, 3.8rem);
+            margin-bottom: 0;
             margin-top: 0;
-            text-shadow: 0 4px 8px rgba(0,0,0,0.18);
             line-height: 1.1;
             letter-spacing: -0.03em;
+            font-weight: 800;
         }
 
         h3 {
@@ -282,22 +282,18 @@
             margin: 0 auto;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
+            justify-content: center;
             min-height: 100vh;
             position: relative;
-            padding-top: 20px;
+            padding: 60px 40px;
         }
         
         /* Slide Header */
         .slide-header {
             text-align: center;
-            margin-bottom: 30px;
-            margin-top: 10px;
+            margin-bottom: 40px;
+            margin-top: 90px;
             position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
         }
         
         /* Compact header for table slides */
@@ -420,24 +416,21 @@
         /* Badges */
         .badge { 
             display: inline-block; 
-            padding: 18px 48px; 
-            background: var(--gradient); 
-            color: white; 
+            padding: 10px 24px; 
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05)); 
+            color: var(--primary); 
             border-radius: 100px; 
-            font-size: 22px; 
-            font-weight: 800; 
-            letter-spacing: 0.2em;
+            font-size: 13px; 
+            font-weight: 600; 
+            letter-spacing: 0.1em;
             text-transform: uppercase;
-            margin: 15px auto 25px;
-            box-shadow: 0 12px 40px rgba(16, 185, 129, 0.4),
-                        0 4px 12px rgba(16, 185, 129, 0.3),
-                        inset 0 2px 6px rgba(255, 255, 255, 0.3);
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            position: relative;
-            text-align: center;
+            margin: 0 auto 8px;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
             white-space: nowrap;
-            transform: scale(1);
-            transition: transform 0.3s ease;
         }
         
         .badge::before {
@@ -783,12 +776,9 @@
     </div>
 
     <div class="slide" data-slide="2">
-        <div class="content">
-            <div class="badge">THE PROBLEM</div>
-            <div class="slide-header">
-                <h2>Code Complexity Kills Innovation</h2>
-            </div>
-            <div style="flex: 1; display: flex; align-items: center; justify-content: center;">
+        <div class="content" style="justify-content: flex-start; padding-top: 80px;">
+            <div class="badge" style="position: relative; transform: none; left: auto; top: auto; display: block; margin: 0 auto 15px;">THE PROBLEM</div>
+            <h2 style="text-align: center; margin-bottom: 50px;">Code Complexity Kills Innovation</h2>
             <div class="grid" style="grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1000px; margin: 0 auto;">
                 <div class="problem-card" style="min-height: 200px; padding: 40px 30px;">
                     <div class="number" style="font-size: 3.5rem; margin-bottom: 20px;">$250K+</div>
@@ -806,17 +796,13 @@
                     <p style="font-size: 13px; color: var(--text-secondary); margin-top: 8px; line-height: 1.4;">Small teams locked out</p>
                 </div>
             </div>
-            </div>
         </div>
     </div>
 
     <div class="slide" data-slide="3">
-        <div class="content">
-            <div class="badge">THE SOLUTION</div>
-            <div class="slide-header">
-                <h2>Simple, Powerful, Proven</h2>
-            </div>
-            <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        <div class="content" style="justify-content: flex-start; padding-top: 80px;">
+            <div class="badge" style="position: relative; transform: none; left: auto; top: auto; display: block; margin: 0 auto 15px;">THE SOLUTION</div>
+            <h2 style="text-align: center; margin-bottom: 50px;">Simple, Powerful, Proven</h2>
             <div class="grid grid-3" style="gap: 30px; max-width: 1100px; margin: 0 auto;">
                 <div class="card" style="text-align: center; min-height: 200px; display: flex; flex-direction: column; justify-content: center; padding: 35px 25px;">
                     <div class="stat-number" style="font-size: 3.5rem;">Zero</div>
@@ -869,7 +855,6 @@
                     <tr><td class="feature" style="font-size: 15px; padding: 6px 12px;">Enterprise Ready</td><td style="font-size: 20px; padding: 6px;">✅</td><td style="font-size: 20px; padding: 6px;">✅</td><td style="font-size: 20px; padding: 6px;">❌</td><td class="sirsi-col" style="font-size: 20px; padding: 6px;">✅</td></tr>
                 </tbody>
             </table>
-            </div>
             </div>
         </div>
     </div>
