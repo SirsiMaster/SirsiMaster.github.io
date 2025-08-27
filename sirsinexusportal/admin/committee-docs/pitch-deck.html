@@ -48,9 +48,11 @@
         }
 
         h2 {
-            font-size: clamp(2.6rem, 4.2vw, 3.4rem);
+            font-size: clamp(3.2rem, 5.5vw, 4.5rem);
             margin-bottom: 0;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-shadow: 0 3px 6px rgba(0,0,0,0.15);
+            line-height: 1.1;
+            letter-spacing: -0.03em;
         }
 
         h3 {
@@ -64,14 +66,14 @@
             width: 100%;
             height: 100vh;
             display: flex;
-            align-items: center; /* Center vertically */
+            align-items: flex-start;
             justify-content: center;
             opacity: 0;
             transform: translateX(100%) scale(0.95);
             transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             background: var(--bg-light);
             overflow-y: auto;
-            padding: 80px 40px;
+            padding: 40px;
         }
 
         .slide.active { 
@@ -279,15 +281,21 @@
             margin: 0 auto;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            min-height: fit-content;
+            justify-content: flex-start;
+            min-height: 100vh;
+            position: relative;
         }
         
         /* Slide Header */
         .slide-header {
             text-align: center;
-            margin-bottom: 20px;
-            padding-top: 0;
+            margin-bottom: 60px;
+            padding-top: 40px;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
         
         /* Compact header for table slides */
@@ -410,16 +418,32 @@
         /* Badges */
         .badge { 
             display: inline-block; 
-            padding: 12px 42px; 
+            padding: 20px 80px; 
             background: var(--gradient); 
             color: white; 
             border-radius: 100px; 
-            font-size: 22px; 
-            font-weight: 700; 
-            letter-spacing: 0.1em;
+            font-size: 32px; 
+            font-weight: 800; 
+            letter-spacing: 0.2em;
             text-transform: uppercase;
-            margin-bottom: 18px;
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.25);
+            margin-bottom: 30px;
+            box-shadow: 0 8px 30px rgba(16, 185, 129, 0.4),
+                        0 2px 10px rgba(16, 185, 129, 0.3);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .badge::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite;
         }
 
         /* Stats */
