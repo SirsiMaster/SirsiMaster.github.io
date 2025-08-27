@@ -521,11 +521,25 @@
                         uploaded: '2024-01-11',
                         downloads: 23,
                         description: 'Executive committee meeting index and summaries'
+                    },
+                    {
+                        id: 9,
+                        name: 'Sirsi Investor Pitch Deck',
+                        path: 'communications',
+                        size: '60 KB',
+                        type: 'presentation',
+                        access: 'restricted',
+                        uploaded: '2024-08-27',
+                        downloads: 0,
+                        description: 'Interactive investor pitch deck for Sirsi - view online',
+                        isLink: true,
+                        link: 'committee-docs/pitch-deck.html'
                     }
                 ],
                 folders: [
                     { name: 'Board Meetings', path: 'communications/board-meetings' },
-                    { name: 'Investor Updates', path: 'communications/investor-updates' }
+                    { name: 'Investor Updates', path: 'communications/investor-updates' },
+                    { name: 'Committee Docs', path: 'communications/committee-docs' }
                 ]
             },
             'investment-terms': {
@@ -809,34 +823,63 @@
                 return '<p class="text-center text-gray-500 dark:text-gray-400 py-8">No files in this folder</p>';
             }
             
-            return files.map(file => `
-                <div class="flex items-center justify-between p-4 bg-white dark:bg-slate-800 rounded-lg border border-gray-200 dark:border-slate-600 hover:shadow-md transition-shadow">
-                    <div class="flex items-center">
-                        <i class="${getFileIcon(file.type)} text-2xl mr-4"></i>
-                        <div>
-                            <h6 class="font-medium text-gray-900 dark:text-white">${file.name}</h6>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">${file.size} • Uploaded ${file.uploaded} • ${file.downloads} downloads</p>
+            return files.map(file => {
+                // Special handling for linked presentations
+                if (file.isLink && file.link) {
+                    return `
+                        <div class="flex items-center justify-between p-4 bg-white dark:bg-slate-800 rounded-lg border border-gray-200 dark:border-slate-600 hover:shadow-md transition-shadow">
+                            <div class="flex items-center">
+                                <i class="fas fa-presentation-screen text-2xl text-emerald-500 mr-4"></i>
+                                <div>
+                                    <h6 class="font-medium text-gray-900 dark:text-white">${file.name}</h6>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">${file.description}</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <span class="px-3 py-1 rounded-full text-xs font-medium ${getAccessBadgeClass(file.access)}">${file.access}</span>
+                                <div class="flex gap-2">
+                                    <button class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium transition-colors" onclick="window.open('${file.link}', '_blank')">
+                                        <i class="fas fa-external-link-alt mr-2"></i>View Deck
+                                    </button>
+                                    <button class="p-2 hover:bg-gray-100 dark:hover:bg-slate-700 rounded transition-colors" onclick="shareSectionFile(${file.id}, '${sectionId}')" title="Share">
+                                        <i class="fas fa-share text-gray-600 dark:text-gray-300"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                // Regular file rendering
+                return `
+                    <div class="flex items-center justify-between p-4 bg-white dark:bg-slate-800 rounded-lg border border-gray-200 dark:border-slate-600 hover:shadow-md transition-shadow">
+                        <div class="flex items-center">
+                            <i class="${getFileIcon(file.type)} text-2xl mr-4"></i>
+                            <div>
+                                <h6 class="font-medium text-gray-900 dark:text-white">${file.name}</h6>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">${file.size} • Uploaded ${file.uploaded} • ${file.downloads} downloads</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="px-3 py-1 rounded-full text-xs font-medium ${getAccessBadgeClass(file.access)}">${file.access}</span>
+                            <div class="flex gap-2">
+                                <button class="p-2 hover:bg-gray-100 dark:hover:bg-slate-700 rounded transition-colors" onclick="editSectionFile(${file.id}, '${sectionId}')" title="Edit">
+                                    <i class="fas fa-edit text-gray-600 dark:text-gray-300"></i>
+                                </button>
+                                <button class="p-2 hover:bg-gray-100 dark:hover:bg-slate-700 rounded transition-colors" onclick="downloadSectionFile(${file.id}, '${sectionId}')" title="Download">
+                                    <i class="fas fa-download text-gray-600 dark:text-gray-300"></i>
+                                </button>
+                                <button class="p-2 hover:bg-gray-100 dark:hover:bg-slate-700 rounded transition-colors" onclick="shareSectionFile(${file.id}, '${sectionId}')" title="Share">
+                                    <i class="fas fa-share text-gray-600 dark:text-gray-300"></i>
+                                </button>
+                                <button class="p-2 hover:bg-gray-100 dark:hover:bg-slate-700 rounded transition-colors" onclick="deleteSectionFile(${file.id}, '${sectionId}')" title="Delete">
+                                    <i class="fas fa-trash text-gray-600 dark:text-gray-300"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                    <div class="flex items-center gap-4">
-                        <span class="px-3 py-1 rounded-full text-xs font-medium ${getAccessBadgeClass(file.access)}">${file.access}</span>
-                        <div class="flex gap-2">
-                            <button class="p-2 hover:bg-gray-100 dark:hover:bg-slate-700 rounded transition-colors" onclick="editSectionFile(${file.id}, '${sectionId}')" title="Edit">
-                                <i class="fas fa-edit text-gray-600 dark:text-gray-300"></i>
-                            </button>
-                            <button class="p-2 hover:bg-gray-100 dark:hover:bg-slate-700 rounded transition-colors" onclick="downloadSectionFile(${file.id}, '${sectionId}')" title="Download">
-                                <i class="fas fa-download text-gray-600 dark:text-gray-300"></i>
-                            </button>
-                            <button class="p-2 hover:bg-gray-100 dark:hover:bg-slate-700 rounded transition-colors" onclick="shareSectionFile(${file.id}, '${sectionId}')" title="Share">
-                                <i class="fas fa-share text-gray-600 dark:text-gray-300"></i>
-                            </button>
-                            <button class="p-2 hover:bg-gray-100 dark:hover:bg-slate-700 rounded transition-colors" onclick="deleteSectionFile(${file.id}, '${sectionId}')" title="Delete">
-                                <i class="fas fa-trash text-gray-600 dark:text-gray-300"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
         }
 
         function navigateToFolder(sectionId, folderPath) {
