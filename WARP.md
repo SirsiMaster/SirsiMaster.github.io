@@ -186,9 +186,76 @@ window.securityInit.forceLogout()
 window.securityInit.clearAllData()
 ```
 
+## Important: Repository Merge Plan
+
+**⚠️ FUTURE ARCHITECTURE CHANGE:**
+This repository (SirsiMaster.github.io) will be merging with the main application repository (SirsiNexusPortal) to create a single unified frontend and backend solution. This will:
+- Consolidate all code into one repository
+- Simplify deployment and CI/CD
+- Enable better integration between frontend and backend
+- Create a monorepo structure for the entire Sirsi platform
+
+### Migration Timeline
+- Current: Two separate repositories (Pages + App)
+- Future: Single unified repository with modular architecture
+- Migration path: Will be documented in `/docs/MIGRATION_PLAN.md`
+
+## Developer Platform Innovation
+
+### New GitHub-Integrated Development Platform
+A comprehensive developer platform has been created that allows external developers to build on Sirsi using their GitHub accounts, mirroring our internal development environment.
+
+#### Key Features:
+1. **GitHub OAuth Integration**
+   - Full repository management capabilities
+   - Automatic project-to-repo synchronization
+   - CI/CD pipeline integration
+
+2. **Sirsi SDK**
+   - Location: `/sirsinexusportal/sdk/sirsi-sdk.js`
+   - Modules: Infrastructure, AI, Deployment, Monitoring, Collaboration
+   - Real-time WebSocket support
+   - Full TypeScript definitions
+
+3. **Developer Portal**
+   - Location: `/sirsinexusportal/developer-portal.html`
+   - Project management dashboard
+   - API key generation and management
+   - Usage analytics and monitoring
+
+4. **Firebase Integration**
+   - Developer profiles in Firestore
+   - Project metadata synchronization
+   - Real-time collaboration features
+
+### Developer Workflow:
+```javascript
+// Example SDK Usage
+import SirsiSDK from '@sirsi/sdk';
+
+const sirsi = new SirsiSDK({
+    apiKey: 'developer-api-key',
+    githubToken: 'github-pat'
+});
+
+// Create project with auto GitHub repo
+await sirsi.createProject({
+    name: 'my-app',
+    createRepo: true
+});
+
+// Deploy from GitHub
+await sirsi.deployment.deploy(projectId);
+
+// Monitor in real-time
+await sirsi.monitoring.getMetrics(resourceId);
+```
+
 ## Related Resources
 
 - Main Application Repository: https://github.com/SirsiMaster/SirsiNexusPortal
 - Live Site: https://sirsimaster.github.io/sirsinexusportal/
+- Developer Portal: `/sirsinexusportal/developer-portal.html`
+- Sirsi SDK: `/sirsinexusportal/sdk/sirsi-sdk.js`
 - Admin Security Dashboard: `/admin/security/index.html`
 - System Logs: `/admin/dashboard/system-logs.html`
