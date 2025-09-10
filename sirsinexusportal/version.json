@@ -1,10 +1,10 @@
 {
-  "version": "0.7.9-alpha",
-  "build": "20250717",
+  "version": "1.0.0",
+  "build": "20250910",
   "status": "Live",
-  "release_date": "2025-07-17",
-  "release_notes": "Enhanced investor portal with dynamic version system and improved UI consistency",
-  "environment": "production",
+  "release_date": "2025-09-10",
+  "release_notes": "Version 1.0.0 - Enhanced investor portal with dynamic version system and improved UI consistency",
+  "environment": "LIVE",
   "commit_hash": "latest",
   "features": {
     "investor_portal": true,
@@ -15,8 +15,8 @@
     "market_analysis": true
   },
   "metadata": {
-    "last_updated": "2025-07-17T02:21:00Z",
+    "last_updated": "2025-09-10T00:52:38.096Z",
     "auto_update": true,
-    "cache_duration": 60
+    "cache_duration": 300
   }
 }
