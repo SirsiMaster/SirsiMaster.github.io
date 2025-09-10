@@ -186,19 +186,29 @@ window.securityInit.forceLogout()
 window.securityInit.clearAllData()
 ```
 
-## Important: Repository Merge Plan
+## 🚨 CRITICAL: Repository Merge Plan - ONE NIGHT OPERATION
 
-**⚠️ FUTURE ARCHITECTURE CHANGE:**
-This repository (SirsiMaster.github.io) will be merging with the main application repository (SirsiNexusPortal) to create a single unified frontend and backend solution. This will:
-- Consolidate all code into one repository
-- Simplify deployment and CI/CD
-- Enable better integration between frontend and backend
-- Create a monorepo structure for the entire Sirsi platform
+**⚠️ URGENT ARCHITECTURE CHANGE:**
+This repository (SirsiMaster.github.io) will be merging with the main application repository (**SirsiNexusApp**) to create a single unified frontend and backend solution. 
+
+**THIS IS A COMPLEX OPERATION THAT MUST BE COMPLETED IN ONE NIGHT.**
+
+### What This Involves:
+- Merging SirsiMaster.github.io (Frontend/Portal) with SirsiNexusApp (Backend/Core)
+- Consolidating all code into one repository
+- Preserving Git history from both repositories
+- Maintaining all GitHub Pages functionality
+- Ensuring zero downtime for sirsi.ai
+- Updating all CI/CD pipelines
+- Redirecting all references and links
 
 ### Migration Timeline
-- Current: Two separate repositories (Pages + App)
-- Future: Single unified repository with modular architecture
-- Migration path: Will be documented in `/docs/MIGRATION_PLAN.md`
+- **Current State**: Two separate repositories
+  - `SirsiMaster.github.io` - Frontend, Portal, Documentation
+  - `SirsiNexusApp` - Backend, API, Core Services
+- **Target State**: Single unified repository with modular architecture
+- **Execution Window**: ONE NIGHT (8-hour window)
+- **Migration Plan**: See `/docs/CRITICAL_MIGRATION_PLAN.md`
 
 ## Developer Platform Innovation
 

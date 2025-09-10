@@ -353,12 +353,12 @@ jobs:
 
 ### Current Architecture
 ```
-SirsiMaster.github.io (Frontend)
+SirsiMaster.github.io (Frontend/Portal)
     └── sirsinexusportal/
         ├── developer-portal.html
         └── sdk/
 
-SirsiNexusPortal (Backend)
+SirsiNexusApp (Backend/Core Services)
     └── api/
         └── services/
 ```
