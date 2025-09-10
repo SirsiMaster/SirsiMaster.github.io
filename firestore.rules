@@ -1,0 +1,98 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function isAdmin() {
+      return isSignedIn() && 
+        (request.auth.token.admin == true || 
+         request.auth.token.role == 'admin');
+    }
+    
+    function isInvestor() {
+      return isSignedIn() && 
+        (request.auth.token.role == 'investor' || 
+         request.auth.token.role == 'committee' ||
+         isAdmin());
+    }
+    
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+    
+    // Users collection - Admin only for write, users can read their own
+    match /users/{userId} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow write: if isAdmin();
+      allow create: if isOwner(userId) && request.auth.token.email_verified == true;
+      allow update: if isOwner(userId) && 
+        (!request.resource.data.diff(resource.data).affectedKeys()
+          .hasAny(['role', 'admin', 'verified']));
+    }
+    
+    // Investor metrics - Investors and above can read
+    match /investorMetrics/{document} {
+      allow read: if isInvestor();
+      allow write: if isAdmin();
+    }
+    
+    // KPIs - Public read, admin write
+    match /kpis/{document} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    
+    // Dashboards - Authenticated users can read
+    match /dashboards/{document} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+    
+    // Audit logs - Admin only
+    match /auditLogs/{document} {
+      allow read: if isAdmin();
+      allow create: if isSignedIn(); // Any authenticated user can create audit logs
+      allow update, delete: if false; // Audit logs are immutable
+    }
+    
+    // Documents - Investor access
+    match /documents/{document} {
+      allow read: if isInvestor() && 
+        (resource.data.visibility == 'public' || 
+         resource.data.visibility == 'investor' ||
+         (resource.data.visibility == 'committee' && 
+          request.auth.token.role == 'committee'));
+      allow write: if isAdmin();
+    }
+    
+    // Transactions - Users can read their own, admin can read all
+    match /transactions/{transactionId} {
+      allow read: if isAdmin() || 
+        (isSignedIn() && resource.data.userId == request.auth.uid);
+      allow create: if isSignedIn() && 
+        request.resource.data.userId == request.auth.uid;
+      allow update: if isAdmin();
+      allow delete: if false; // Transactions cannot be deleted
+    }
+    
+    // Sessions - Users manage their own sessions
+    match /sessions/{sessionId} {
+      allow read, write: if isOwner(resource.data.userId);
+      allow create: if isSignedIn() && 
+        request.resource.data.userId == request.auth.uid;
+      allow delete: if isOwner(resource.data.userId) || isAdmin();
+    }
+    
+    // Notifications - Users read their own
+    match /notifications/{userId}/messages/{messageId} {
+      allow read: if isOwner(userId);
+      allow write: if isAdmin();
+      allow update: if isOwner(userId) && 
+        request.resource.data.diff(resource.data).affectedKeys()
+          .hasOnly(['read', 'readAt']);
+    }
+  }
+}

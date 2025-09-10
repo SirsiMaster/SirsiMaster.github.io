@@ -4,16 +4,15 @@
  * Last Updated: 2025-09-10
  */
 
-// Firebase configuration object
+// Firebase configuration object - PRODUCTION
 const firebaseConfig = {
-    apiKey: window.__SIRSI_CONFIG__?.FIREBASE_API_KEY || "AIzaSyBqK4E8yXQ_zH3kR9mNcV7Pw8xJ5QmZ3Ks",
-    authDomain: "sirsi-live.firebaseapp.com",
-    projectId: "sirsi-live",
-    storageBucket: "sirsi-live.appspot.com",
-    messagingSenderId: "485729361842",
-    appId: "1:485729361842:web:8e7f3a9b5c2d1f4e6g7h8i",
-    measurementId: "G-9XYZABC123",
-    databaseURL: "https://sirsi-live-default-rtdb.firebaseio.com"
+    apiKey: window.__SIRSI_CONFIG__?.FIREBASE_API_KEY || "AIzaSyDFd4RAvVZWy3G1geLudrq4KgDDsGr-jb8",
+    authDomain: "sirsi-nexus-live.firebaseapp.com",
+    projectId: "sirsi-nexus-live",
+    storageBucket: "sirsi-nexus-live.firebasestorage.app",
+    messagingSenderId: "210890802638",
+    appId: "1:210890802638:web:9b721753a295620422179f",
+    databaseURL: "https://sirsi-nexus-live-default-rtdb.firebaseio.com"
 };
 
 // Initialize Firebase SDK v9
