@@ -210,6 +210,25 @@ This repository (SirsiMaster.github.io) will be merging with the main applicatio
 - **Execution Window**: ONE NIGHT (8-hour window)
 - **Migration Plan**: See `/docs/CRITICAL_MIGRATION_PLAN.md`
 
+## IMPORTANT DEVELOPMENT GUIDELINES
+
+### ⚠️ CRITICAL: Check Existing Workflows First
+**DO NOT CREATE NEW INDEPENDENT WORKFLOWS** without first:
+1. Checking all existing documentation and workflows
+2. Reviewing the workflow assessment report
+3. Examining existing admin panels, dashboards, and systems
+4. Verifying no duplicate functionality exists
+
+**Existing Major Systems:**
+- Admin Dashboard: `/sirsinexusportal/admin/`
+- User Dashboard: `/sirsinexusportal/dashboard/`
+- Developer Portal: `/sirsinexusportal/developer-portal.html`
+- Investor Portal: `/sirsinexusportal/investor-portal/`
+- Security Management: `/sirsinexusportal/admin/security/`
+- Revenue Dashboard: `/sirsinexusportal/admin/revenue-dashboard.html`
+- System Monitoring: `/sirsinexusportal/admin/monitoring.html`
+- User Management: `/sirsinexusportal/admin/users/`
+
 ## Developer Platform Innovation
 
 ### New GitHub-Integrated Development Platform

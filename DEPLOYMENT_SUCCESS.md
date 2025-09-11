@@ -11,6 +11,7 @@
 ## 🌐 Live URLs
 
 ### Production Site
+- **Primary Domain**: https://sirsi.ai ✅
 - **Firebase Hosting**: https://sirsi-ai.web.app ✅
 - **Custom Domain**: https://sirsi.ai (pending DNS configuration)
 
@@ -196,7 +197,7 @@ The SirsiNexus platform is now running on Firebase infrastructure with:
 - Performance monitoring
 - Production-ready architecture
 
-The platform is accessible at https://sirsi-ai.web.app and ready for production traffic.
+The platform is accessible at https://sirsi.ai and ready for production traffic.
 
 ---
 
