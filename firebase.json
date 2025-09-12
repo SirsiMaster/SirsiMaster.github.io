@@ -11,7 +11,7 @@
   },
   "hosting": {
     "site": "sirsi-ai",
-    "public": "sirsinexusportal",
+    "public": ".",
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -59,12 +59,12 @@
         ]
       }
     ],
-    "redirects": [
-      { "source": "/sirsinexusportal", "destination": "/", "type": 301 },
-      { "source": "/sirsinexusportal/**", "destination": "/:splat", "type": 301 }
-    ],
     "cleanUrls": true,
-    "trailingSlash": false
+    "trailingSlash": false,
+    "redirects": [
+      { "source": "/investor-login", "destination": "/sirsinexusportal/investor-login.html", "type": 301 },
+      { "source": "/investor-login.html", "destination": "/sirsinexusportal/investor-login.html", "type": 301 }
+    ]
   },
   "emulators": {
     "auth": {

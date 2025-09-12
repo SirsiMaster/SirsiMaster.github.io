@@ -159,7 +159,7 @@
         </div>
         
         <div class="text-center">
-            <a href="/sirsinexusportal/index.html" class="text-emerald-600 hover:text-emerald-800 transition-colors text-sm font-medium">
+            <a href="/" class="text-emerald-600 hover:text-emerald-800 transition-colors text-sm font-medium" aria-label="Back to Sirsi.ai home">
                 ← Back to Home
             </a>
         </div>
@@ -585,7 +585,7 @@
                     } else {
                         successDiv.innerHTML = `
                             <strong>✅ Login Successful!</strong><br>
-                            Redirecting to <a href="/sirsinexusportal/investor-portal/index.html" class="underline" target="_blank">Investor Portal</a><br>
+                            Redirecting to <a href="/investor-portal/index.html" class="underline" target="_blank">Investor Portal</a><br>
                             <em>If redirect fails, click the link above</em>
                         `;
                     }
@@ -598,7 +598,7 @@
                             if (validCredential.role === 'admin') {
                                 window.location.href = 'admin/';
                             } else {
-                                window.location.href = 'investor-portal/index.html';
+                                window.location.href = '/investor-portal/index.html';
                             }
                         } catch (error) {
                             console.error('Redirect failed:', error);

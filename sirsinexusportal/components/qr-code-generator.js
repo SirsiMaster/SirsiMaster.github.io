@@ -5,7 +5,7 @@
 
 class QRCodeGenerator {
     constructor() {
-        this.baseUrl = window.location.origin + '/sirsinexusportal/';
+        this.baseUrl = window.location.origin + '/';
         this.defaultOptions = {
             width: 256,
             height: 256,
