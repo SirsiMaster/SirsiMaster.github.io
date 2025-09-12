@@ -61,10 +61,7 @@
     ],
     "cleanUrls": true,
     "trailingSlash": false,
-    "redirects": [
-      { "source": "/investor-login", "destination": "/sirsinexusportal/investor-login.html", "type": 301 },
-      { "source": "/investor-login.html", "destination": "/sirsinexusportal/investor-login.html", "type": 301 }
-    ]
+    "redirects": []
   },
   "emulators": {
     "auth": {
