@@ -1,32 +1,37 @@
-# SirsiNexus GitHub Pages
+# SirsiNexus Portal (sirsi.ai)
 
-This repository contains the GitHub Pages content for SirsiNexus platform documentation and public-facing content.
+This directory contains the production portal content served at https://sirsi.ai via Firebase Hosting.
 
-## Repository Purpose
-- Public documentation
-- Investor portal
-- Marketing content
-- User guides
+## Live URLs
+- Root: https://sirsi.ai/
+- Investor Login: https://sirsi.ai/investor-login.html
+- Investor Portal: https://sirsi.ai/investor-portal/
+- Admin Dashboard: https://sirsi.ai/admin/
 
-## Repository Details
-- Remote: https://github.com/SirsiMaster/SirsiMaster.github.io.git
-- Branch: main
-- Live URL: https://sirsimaster.github.io/sirsinexusportal/
-- Last Updated: $(date +"%Y-%m-%d %H:%M:%S")
+## Hosting
+- Firebase project: `sirsi-nexus-live`
+- Site: `sirsi-ai`
+- public: this `sirsinexusportal/` directory
+- Redirects:
+  - `/sirsinexusportal` -> `/` (301)
+  - `/sirsinexusportal/**` -> `/**` (301)
 
-## Quick Start
-For detailed setup information, maintenance procedures, and troubleshooting, see [MAINTENANCE.md](MAINTENANCE.md).
+## Authentication
+- Registration requires email + password; email verification sent
+- Users must set a unique username immediately after registration
+  - Backend callable: `setUsername`
+  - Username rules: 3-30 chars, letters, numbers, `_` or `-`
+- Investor ID flow remains supported for demo/testing
 
-## Deployment Process
-1. Changes should be tested locally first
-2. Use feature branches for development
-3. Main branch automatically deploys to GitHub Pages
-4. Always verify changes on live site after deployment
+### Seeded Demo Accounts
+- ADMIN / ADMIN2025 (admin)
+- INV001 / DEMO2025 (investor)
+- INV002 / BETA2025 (investor)
+- GUEST / GUEST2025 (guest)
 
-## Related Repositories
-- Main Application: https://github.com/SirsiMaster/SirsiNexusPortal
+## Deploy
+- Hosting: `firebase deploy --only hosting`
+- Functions: `firebase deploy --only functions`
 
-## Documentation
-- [MAINTENANCE.md](MAINTENANCE.md) - Complete setup and maintenance guide
-- [VERSION_SYSTEM.md](VERSION_SYSTEM.md) - Version control documentation
-- [WARP_TEAM_SETUP.md](WARP_TEAM_SETUP.md) - Team setup instructions
+## Notes
+- GitHub Pages is deprecated. Use https://sirsi.ai

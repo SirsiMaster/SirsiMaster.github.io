@@ -129,3 +129,6 @@ backups/
 .DS_Store
 Thumbs.db
 .env.local
+
+# Firebase local cache
+.firebase/

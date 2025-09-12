@@ -1,32 +1,48 @@
-# SirsiNexus GitHub Pages
+# SirsiNexus Portal (sirsi.ai)
 
-This repository contains the GitHub Pages content for SirsiNexus platform documentation and public-facing content.
+This repository contains the live SirsiNexus portal served via Firebase Hosting at https://sirsi.ai. GitHub Pages is now deprecated and only used for history.
 
-## Repository Purpose
-- Public documentation
-- Investor portal
-- Marketing content
-- User guides
+## Current Production Hosting
+- Host: Firebase Hosting (project: `sirsi-nexus-live`, site: `sirsi-ai`)
+- Live Root: https://sirsi.ai
+- Legacy Redirects:
+  - `/sirsinexusportal` -> `/` (301)
+  - `/sirsinexusportal/**` -> `/**` (301)
 
-## Repository Details
-- Remote: https://github.com/SirsiMaster/SirsiMaster.github.io.git
-- Branch: main
-- Live URL: https://sirsimaster.github.io/sirsinexusportal/
-- Last Updated: $(date +"%Y-%m-%d %H:%M:%S")
+## Key Changes (September 2025)
+- Firebase Hosting now serves from `sirsinexusportal/` directory at the site root
+- Removed SPA catch-all rewrite so deep links resolve to actual static pages
+- Investor/Admin demo accounts migrated to Firebase Auth and Firestore (seeded and locked)
+- Username requirement added to registration (users must set a unique username after email signup)
+- Temporary unlock function removed; seeding endpoint remains locked and key-protected
 
-## Quick Start
-For detailed setup information, maintenance procedures, and troubleshooting, see [MAINTENANCE.md](MAINTENANCE.md).
+## Auth Model
+- Registration: email + password (email verification required)
+- Username: required and unique; set immediately after registration
+  - Backend callable: `setUsername`
+  - Firestore mapping: `usernames/{username}` -> `{ uid, reservedAt }`
+- Investor ID flow remains supported (e.g., `INV001/DEMO2025`)
 
-## Deployment Process
-1. Changes should be tested locally first
-2. Use feature branches for development
-3. Main branch automatically deploys to GitHub Pages
-4. Always verify changes on live site after deployment
+### Seeded Demo Accounts (Firebase Auth)
+- Admin: `ADMIN / ADMIN2025`
+- Investors: `INV001 / DEMO2025`, `INV002 / BETA2025`
+- Guest: `GUEST / GUEST2025`
+
+## Deployment
+- Hosting: `firebase deploy --only hosting`
+- Functions: `firebase deploy --only functions`
+
+### firebase.json (hosting)
+- `public: "sirsinexusportal"`
+- Redirects from legacy `/sirsinexusportal` paths to root
+- Headers for cache and security
+
+## Local Development
+- Optional local preview: `firebase emulators:start` or `python3 -m http.server 8000`
 
 ## Related Repositories
 - Main Application: https://github.com/SirsiMaster/SirsiNexusPortal
 
-## Documentation
-- [MAINTENANCE.md](MAINTENANCE.md) - Complete setup and maintenance guide
-- [VERSION_SYSTEM.md](VERSION_SYSTEM.md) - Version control documentation
-- [WARP_TEAM_SETUP.md](WARP_TEAM_SETUP.md) - Team setup instructions
+## Notes
+- GitHub Pages URL (legacy): https://sirsimaster.github.io/sirsinexusportal/ (deprecated)
+- Do not introduce new auth flows/pages without explicit approval (see WARP.md)

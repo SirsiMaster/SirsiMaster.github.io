@@ -201,6 +201,175 @@ export const grantInvestorAccess = onCall(async (request) => {
 });
 
 /**
+ * One-time seeding of legacy hardcoded accounts into Firebase Auth and Firestore.
+ * IMPORTANT: This endpoint is idempotent. It will skip users that already exist.
+ * Security: Requires a shared key via query param ?key=... that you provide at call time.
+ */
+export const seedHardcodedAccounts = onRequest(async (req, res) => {
+  // Security: Prefer env var key. If absent, allow a single run using a Firestore lock.
+  const providedKey = (req.query.key as string) || "";
+  const REQUIRED_KEY = process.env.SEED_KEY || "";
+
+  if (REQUIRED_KEY && providedKey !== REQUIRED_KEY) {
+    res.status(403).json({ success: false, error: "forbidden" });
+    return;
+  }
+
+  // Fallback single-run guard when no key configured
+  if (!REQUIRED_KEY) {
+    const lockRef = db.doc("admin/seed_lock");
+    const lockSnap = await lockRef.get();
+    if (lockSnap.exists) {
+      res.status(403).json({ success: false, error: "locked" });
+      return;
+    }
+    await lockRef.set({ createdAt: admin.firestore.FieldValue.serverTimestamp() });
+  }
+
+  type SeedUser = {
+    uid: string;
+    email: string;
+    password: string;
+    role: "admin" | "investor" | "guest";
+    displayName: string;
+  };
+
+  const users: SeedUser[] = [
+    {
+      uid: "ADMIN",
+      email: "admin@sirsi.local",
+      password: "ADMIN2025",
+      role: "admin",
+      displayName: "Administrator",
+    },
+    {
+      uid: "INV001",
+      email: "inv001@sirsi.local",
+      password: "DEMO2025",
+      role: "investor",
+      displayName: "Demo Investor",
+    },
+    {
+      uid: "INV002",
+      email: "inv002@sirsi.local",
+      password: "BETA2025",
+      role: "investor",
+      displayName: "Beta Investor",
+    },
+    {
+      uid: "GUEST",
+      email: "guest@sirsi.local",
+      password: "GUEST2025",
+      role: "guest",
+      displayName: "Guest Access",
+    },
+  ];
+
+  const results: any[] = [];
+
+  for (const u of users) {
+    try {
+      // Check if user exists
+      let userRecord: admin.auth.UserRecord | null = null;
+      try {
+        userRecord = await auth.getUser(u.uid);
+      } catch (e) {
+        userRecord = null;
+      }
+
+      if (!userRecord) {
+        // Create user with fixed UID
+        userRecord = await auth.createUser({
+          uid: u.uid,
+          email: u.email,
+          password: u.password,
+          displayName: u.displayName,
+          emailVerified: true,
+          disabled: false,
+        });
+      }
+
+      // Set custom claims
+      await auth.setCustomUserClaims(u.uid, { role: u.role });
+
+      // Upsert Firestore profile
+      const profileRef = db.doc(`users/${u.uid}`);
+      const profile: any = {
+        uid: u.uid,
+        email: u.email,
+        displayName: u.displayName,
+        role: u.role,
+        emailVerified: true,
+        provider: "email",
+        createdAt: admin.firestore.FieldValue.serverTimestamp(),
+        lastLogin: null,
+      };
+      if (u.role === "investor") {
+        profile.investorAccess = {
+          level: "standard",
+          grantedAt: admin.firestore.FieldValue.serverTimestamp(),
+          grantedBy: "seed",
+        };
+      }
+      await profileRef.set(profile, { merge: true });
+
+      results.push({ uid: u.uid, status: "ok" });
+    } catch (error: any) {
+      console.error(`Seed error for ${u.uid}:`, error);
+      results.push({ uid: u.uid, status: "error", message: error?.message });
+    }
+  }
+
+  res.json({ success: true, results });
+});
+
+/**
+ * Set a unique username for the authenticated user.
+ * - Ensures uniqueness via a usernames/{username} mapping doc
+ * - Updates users/{uid}.username
+ */
+export const setUsername = onCall(async (request) => {
+  if (!request.auth?.uid) {
+    throw new HttpsError("unauthenticated", "Authentication required");
+  }
+  const uid = request.auth.uid;
+  const { username } = request.data as { username: string };
+
+  // Basic validation: 3-30 chars, letters, numbers, underscore, hyphen
+  const USERNAME_REGEX = /^[a-zA-Z0-9_-]{3,30}$/;
+  if (!username || !USERNAME_REGEX.test(username)) {
+    throw new HttpsError("invalid-argument", "Invalid username format");
+  }
+
+  // Use a transaction to ensure uniqueness
+  const usernameRef = db.doc(`usernames/${username}`);
+  const userRef = db.doc(`users/${uid}`);
+
+  try {
+    await db.runTransaction(async (tx) => {
+      const snap = await tx.get(usernameRef);
+      if (snap.exists && snap.data()?.uid !== uid) {
+        throw new HttpsError("already-exists", "Username already taken");
+      }
+      tx.set(usernameRef, { uid, reservedAt: admin.firestore.FieldValue.serverTimestamp() });
+      tx.set(userRef, { username, updatedAt: admin.firestore.FieldValue.serverTimestamp() }, { merge: true });
+    });
+
+    // Optional: store username in custom claims for convenience
+    await auth.setCustomUserClaims(uid, {
+      ...(request.auth.token as any),
+      username,
+    });
+
+    return { success: true, message: "Username set", username };
+  } catch (error: any) {
+    if (error instanceof HttpsError) throw error;
+    console.error("setUsername error:", error);
+    throw new HttpsError("internal", "Failed to set username");
+  }
+});
+
+/**
  * Log document access for compliance
  */
 export const logDocumentAccess = onCall(async (request) => {

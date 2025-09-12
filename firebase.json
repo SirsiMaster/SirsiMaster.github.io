@@ -11,7 +11,7 @@
   },
   "hosting": {
     "site": "sirsi-ai",
-    "public": ".",
+    "public": "sirsinexusportal",
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -59,11 +59,9 @@
         ]
       }
     ],
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
+    "redirects": [
+      { "source": "/sirsinexusportal", "destination": "/", "type": 301 },
+      { "source": "/sirsinexusportal/**", "destination": "/:splat", "type": 301 }
     ],
     "cleanUrls": true,
     "trailingSlash": false
