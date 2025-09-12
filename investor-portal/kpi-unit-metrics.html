@@ -175,16 +175,16 @@
 <div id="unified-header"></div>
 
 <!-- Page Scripts -->
-<script src="/sirsinexusportal/components/universal-navigation.js"></script>
-<script src="/sirsinexusportal/components/navigation-customizer.js"></script>
-<script src="/sirsinexusportal/assets/js/shared-theme-toggle.js"></script>
+<script src="/components/universal-navigation.js"></script>
+<script src="/components/navigation-customizer.js"></script>
+<script src="/assets/js/shared-theme-toggle.js"></script>
 
 <!-- Authentication Check -->
 <script>
     (function() {
         const auth = sessionStorage.getItem('investorAuth');
         if (!auth) {
-            window.location.href = '/sirsinexusportal/investor-login.html';
+            window.location.href = '/investor-login.html';
             return;
         }
         
@@ -196,13 +196,13 @@
             
             if (hoursSinceLogin > 24) {
                 sessionStorage.removeItem('investorAuth');
-                window.location.href = '/sirsinexusportal/investor-login.html';
+                window.location.href = '/investor-login.html';
                 return;
             }
         } catch (error) {
             console.error('Authentication error:', error);
             sessionStorage.removeItem('investorAuth');
-            window.location.href = '/sirsinexusportal/investor-login.html';
+            window.location.href = '/investor-login.html';
             return;
         }
     })();
@@ -864,7 +864,7 @@
             <div class="grid md:grid-cols-3 gap-8">
                 <div>
                     <div class="flex items-center gap-3 mb-4">
-                        <img src="/sirsinexusportal/assets/images/Sirsi_Logo_300ppi_Inverted_lt7asx.png" alt="Sirsi Logo" class="w-10 h-10 object-contain">
+                        <img src="/assets/images/Sirsi_Logo_300ppi_Inverted_lt7asx.png" alt="Sirsi Logo" class="w-10 h-10 object-contain">
                         <div>
                             <h3 class="text-lg font-semibold">SirsiNexus</h3>
                             <p class="text-sm text-slate-400">AI-Powered Cloud Infrastructure</p>
@@ -877,16 +877,16 @@
                 <div>
                     <h4 class="font-semibold mb-4">Investor Resources</h4>
                     <ul class="space-y-2 text-sm text-slate-400">
-                        <li><a href="/sirsinexusportal/index.html" class="hover:text-white transition-colors">Investor Portal</a></li>
+                        <li><a href="/index.html" class="hover:text-white transition-colors">Investor Portal</a></li>
                         <li><a href="data-room.html" class="hover:text-white transition-colors">Data Room</a></li>
-                        <li><a href="/sirsinexusportal/investor-portal/committee/market-analysis.html" class="hover:text-white transition-colors">Market Analysis</a></li>
-                        <li><a href="/sirsinexusportal/investor-portal/committee/product-roadmap.html" class="hover:text-white transition-colors">Product Roadmap</a></li>
+                        <li><a href="/investor-portal/committee/market-analysis.html" class="hover:text-white transition-colors">Market Analysis</a></li>
+                        <li><a href="/investor-portal/committee/product-roadmap.html" class="hover:text-white transition-colors">Product Roadmap</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="font-semibold mb-4">Committee Access</h4>
                     <ul class="space-y-2 text-sm text-slate-400">
-                        <li><a href="/sirsinexusportal/investor-portal/committee/index.html" class="hover:text-white transition-colors">Committee Dashboard</a></li>
+                        <li><a href="/investor-portal/committee/index.html" class="hover:text-white transition-colors">Committee Dashboard</a></li>
                         <li><a href="../contact.html" class="hover:text-white transition-colors">Contact Support</a></li>
                         <li><a href="../privacy.html" class="hover:text-white transition-colors">Privacy Policy</a></li>
                         <li><a href="../terms.html" class="hover:text-white transition-colors">Terms of Service</a></li>

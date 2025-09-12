@@ -137,8 +137,8 @@ class StripeService {
                 body: JSON.stringify({
                     priceId: plan.priceId,
                     customerEmail: userEmail,
-                    successUrl: `${window.location.origin}/sirsinexusportal/dashboard/subscription-success.html`,
-                    cancelUrl: `${window.location.origin}/sirsinexusportal/dashboard/subscription.html`
+                    successUrl: `${window.location.origin}/dashboard/subscription-success.html`,
+                    cancelUrl: `${window.location.origin}/dashboard/subscription.html`
                 })
             });
 
@@ -377,13 +377,13 @@ class StripeService {
         }
 
         if (planId === 'enterprise') {
-            window.location.href = '/sirsinexusportal/contact.html?subject=enterprise';
+            window.location.href = '/contact.html?subject=enterprise';
             return;
         }
 
         // Check if user is authenticated
         if (!window.authService || !window.authService.isAuthenticated()) {
-            window.location.href = `/sirsinexusportal/auth/login.html?redirect=/sirsinexusportal/dashboard/subscription.html&plan=${planId}`;
+            window.location.href = `/auth/login.html?redirect=/dashboard/subscription.html&plan=${planId}`;
             return;
         }
 

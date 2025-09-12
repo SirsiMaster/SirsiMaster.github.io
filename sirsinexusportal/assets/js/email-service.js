@@ -56,8 +56,8 @@ class EmailService {
             data: {
                 userName: user.displayName || user.email.split('@')[0],
                 userEmail: user.email,
-                loginUrl: `${window.location.origin}/sirsinexusportal/auth/login.html`,
-                dashboardUrl: `${window.location.origin}/sirsinexusportal/dashboard/`,
+                loginUrl: `${window.location.origin}/auth/login.html`,
+                dashboardUrl: `${window.location.origin}/dashboard/`,
                 supportEmail: this.config.supportEmail,
                 year: new Date().getFullYear()
             },
@@ -120,7 +120,7 @@ class EmailService {
                 paymentId: payment.id,
                 paymentDate: new Date(payment.created * 1000).toLocaleDateString(),
                 description: payment.description,
-                invoiceUrl: `${window.location.origin}/sirsinexusportal/invoices/${payment.id}`,
+                invoiceUrl: `${window.location.origin}/invoices/${payment.id}`,
                 supportEmail: this.config.supportEmail,
                 year: new Date().getFullYear()
             },
@@ -142,7 +142,7 @@ class EmailService {
                 amount: payment.amount,
                 currency: payment.currency || 'USD',
                 errorMessage: error.message || 'Payment processing failed',
-                retryUrl: `${window.location.origin}/sirsinexusportal/billing/`,
+                retryUrl: `${window.location.origin}/billing/`,
                 supportEmail: this.config.supportEmail,
                 year: new Date().getFullYear()
             },
@@ -166,7 +166,7 @@ class EmailService {
                 planName: subscription.planName,
                 expirationDate: new Date(subscription.endDate).toLocaleDateString(),
                 daysRemaining: daysRemaining,
-                renewUrl: `${window.location.origin}/sirsinexusportal/billing/renew`,
+                renewUrl: `${window.location.origin}/billing/renew`,
                 supportEmail: this.config.supportEmail,
                 year: new Date().getFullYear()
             },
@@ -191,8 +191,8 @@ class EmailService {
                 amount: invoice.amount,
                 currency: invoice.currency || 'USD',
                 items: invoice.items,
-                invoiceUrl: `${window.location.origin}/sirsinexusportal/invoices/${invoice.id}`,
-                paymentUrl: `${window.location.origin}/sirsinexusportal/billing/pay/${invoice.id}`,
+                invoiceUrl: `${window.location.origin}/invoices/${invoice.id}`,
+                paymentUrl: `${window.location.origin}/billing/pay/${invoice.id}`,
                 supportEmail: this.config.supportEmail,
                 year: new Date().getFullYear()
             },
@@ -213,8 +213,8 @@ class EmailService {
                 data: {
                     userName: recipient.name || recipient.email.split('@')[0],
                     content: content,
-                    unsubscribeUrl: `${window.location.origin}/sirsinexusportal/unsubscribe?token=${this.generateUnsubscribeToken(recipient.email)}`,
-                    preferencesUrl: `${window.location.origin}/sirsinexusportal/preferences`,
+                    unsubscribeUrl: `${window.location.origin}/unsubscribe?token=${this.generateUnsubscribeToken(recipient.email)}`,
+                    preferencesUrl: `${window.location.origin}/preferences`,
                     supportEmail: this.config.supportEmail,
                     year: new Date().getFullYear()
                 },

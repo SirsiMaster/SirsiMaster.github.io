@@ -576,7 +576,7 @@ class SessionManager {
         
         sessionStorage.setItem('redirect_after_login', window.location.href);
         
-        window.location.href = '/sirsinexusportal/investor-login.html';
+        window.location.href = '/investor-login.html';
     }
 
     getSessionDuration() {

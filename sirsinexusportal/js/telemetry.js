@@ -6,7 +6,7 @@
 
     // Configuration
     const TELEMETRY_CONFIG = {
-        endpoint: '/sirsinexusportal/api/telemetry', // Backend endpoint for telemetry data
+        endpoint: '/api/telemetry', // Backend endpoint for telemetry data
         batchSize: 50, // Number of events to batch before sending
         flushInterval: 30000, // Send data every 30 seconds
         sessionTimeout: 1800000, // 30 minutes

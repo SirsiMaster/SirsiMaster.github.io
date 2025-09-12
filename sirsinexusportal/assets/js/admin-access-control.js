@@ -38,7 +38,7 @@
     // Redirect to login page
     function redirectToLogin() {
         const currentPath = encodeURIComponent(window.location.pathname + window.location.search);
-        window.location.href = `/sirsinexusportal/auth/login.html?redirect=${currentPath}&admin=true`;
+        window.location.href = `/auth/login.html?redirect=${currentPath}&admin=true`;
     }
 
     // Check admin access
@@ -85,7 +85,7 @@
                     <h2 class="text-2xl font-bold text-gray-900 mb-2">Access Denied</h2>
                     <p class="text-gray-600 mb-6">You do not have permission to access the admin dashboard.</p>
                     <div class="space-y-3">
-                        <button onclick="window.location.href='/sirsinexusportal/dashboard/'" 
+                        <button onclick="window.location.href='/dashboard/'" 
                             class="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
                             Go to User Dashboard
                         </button>
@@ -190,7 +190,7 @@
             // Load auth service if not already loaded
             if (!window.authService) {
                 const script = document.createElement('script');
-                script.src = '/sirsinexusportal/assets/js/auth-service.js';
+                script.src = '/assets/js/auth-service.js';
                 script.async = false;
                 document.head.appendChild(script);
                 
@@ -223,7 +223,7 @@
                 
                 // Load Firebase config
                 const configScript = document.createElement('script');
-                configScript.src = '/sirsinexusportal/assets/js/firebase-config.js';
+                configScript.src = '/assets/js/firebase-config.js';
                 configScript.async = false;
                 document.head.appendChild(configScript);
                 

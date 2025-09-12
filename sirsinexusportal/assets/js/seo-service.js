@@ -12,7 +12,7 @@ class SEOService {
             description: 'Build, deploy, and scale applications with Sirsi Nexus. Enterprise-grade cloud infrastructure with AI-powered optimization and seamless developer experience.',
             keywords: 'cloud platform, AI infrastructure, serverless, deployment, scaling, developer tools, cloud computing, SaaS, PaaS',
             author: 'Sirsi Nexus',
-            image: 'https://sirsi.ai/sirsinexusportal/assets/images/og-image.png',
+            image: 'https://sirsi.ai/assets/images/og-image.png',
             url: 'https://sirsi.ai',
             type: 'website',
             siteName: 'Sirsi Nexus',
@@ -192,7 +192,7 @@ class SEOService {
             "@type": "Organization",
             "name": "Sirsi Nexus",
             "url": "https://sirsi.ai",
-            "logo": "https://sirsi.ai/sirsinexusportal/assets/images/logo.png",
+            "logo": "https://sirsi.ai/assets/images/logo.png",
             "description": "AI-Powered Cloud Infrastructure Platform",
             "founder": {
                 "@type": "Person",
@@ -355,7 +355,7 @@ class SEOService {
                 "name": "Sirsi Nexus",
                 "logo": {
                     "@type": "ImageObject",
-                    "url": "https://sirsi.ai/sirsinexusportal/assets/images/logo.png"
+                    "url": "https://sirsi.ai/assets/images/logo.png"
                 }
             },
             "datePublished": new Date().toISOString(),
@@ -650,7 +650,7 @@ class SEOService {
                 "name": "Sirsi Nexus",
                 "logo": {
                     "@type": "ImageObject",
-                    "url": "https://sirsi.ai/sirsinexusportal/assets/images/logo.png"
+                    "url": "https://sirsi.ai/assets/images/logo.png"
                 }
             }
         });
@@ -662,13 +662,13 @@ class SEOService {
      */
     preloadResources() {
         // Preload fonts
-        this.preloadResource('/sirsinexusportal/assets/fonts/inter.woff2', 'font');
+        this.preloadResource('/assets/fonts/inter.woff2', 'font');
         
         // Preload critical CSS
-        this.preloadResource('/sirsinexusportal/assets/css/critical.css', 'style');
+        this.preloadResource('/assets/css/critical.css', 'style');
         
         // Preload hero image
-        this.preloadResource('/sirsinexusportal/assets/images/hero-bg.webp', 'image');
+        this.preloadResource('/assets/images/hero-bg.webp', 'image');
     }
 
     /**

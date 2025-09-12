@@ -6,7 +6,7 @@
 - **Local Repository**: `/Users/thekryptodragon/SirsiMaster.github.io`
 - **Remote Repository**: `https://github.com/SirsiMaster/SirsiMaster.github.io.git`
 - **Current Branch**: `main`
-- **GitHub Pages URL**: `https://sirsimaster.github.io/sirsinexusportal/`
+- **GitHub Pages URL**: `https://sirsimaster.github.io/`
 
 ### Backup Location
 - **Single Backup Directory**: `/Users/thekryptodragon/SirsiMaster.github.io-backup-20250718_004847`
@@ -64,7 +64,7 @@ git push origin main
 
 ### Step 6: Verify Deployment
 1. Wait 1-2 minutes for GitHub Pages to rebuild
-2. Check the live site: https://sirsimaster.github.io/sirsinexusportal/
+2. Check the live site: https://sirsimaster.github.io/
 3. Verify your changes are visible and working correctly
 
 ## Best Practices for Content Management

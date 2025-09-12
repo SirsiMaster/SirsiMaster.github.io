@@ -177,7 +177,7 @@
 ### Monitoring
 - [Firebase Console](https://console.firebase.google.com/project/sirsi-nexus-live)
 - [Google Cloud Console](https://console.cloud.google.com)
-- [Monitoring Dashboard](https://sirsi-ai.web.app/sirsinexusportal/admin/monitoring.html)
+- [Monitoring Dashboard](https://sirsi-ai.web.app/admin/monitoring.html)
 
 ### Issues & Support
 - GitHub Issues: [Create Issue](https://github.com/SirsiMaster/SirsiNexusApp/issues)

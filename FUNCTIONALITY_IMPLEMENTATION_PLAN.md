@@ -10,10 +10,10 @@ This document outlines a step-by-step plan to make every button, link, and inter
 ### 1.1 Current Element Inventory
 
 #### Navigation Bar Elements
-- [x] Home link → `/sirsinexusportal/index.html`
+- [x] Home link → `/index.html`
 - [ ] App Repository → GitHub link (external)
 - [ ] Documentation → Wiki link (external)
-- [x] Investor Portal → `/sirsinexusportal/investor-portal/index.html`
+- [x] Investor Portal → `/investor-portal/index.html`
 - [x] Theme Toggle → Working
 
 #### Hero Section
@@ -101,7 +101,7 @@ UserRoles:
 
 1. **Create Firebase Auth Service**
 ```javascript
-// /sirsinexusportal/services/auth-service.js
+// /services/auth-service.js
 class AuthService {
   async signUp(email, password, role)
   async signIn(email, password)
@@ -154,7 +154,7 @@ function requireAuth(requiredRole) {
 
 ### 3.1 Sign Up Page
 ```html
-<!-- /sirsinexusportal/signup.html -->
+<!-- /signup.html -->
 Features:
 - Email/password registration
 - OAuth (Google, GitHub)
@@ -165,8 +165,8 @@ Features:
 
 ### 3.2 Login Pages
 ```html
-<!-- /sirsinexusportal/investor-login.html -->
-<!-- /sirsinexusportal/developer-login.html -->
+<!-- /investor-login.html -->
+<!-- /developer-login.html -->
 Features:
 - Secure authentication
 - Remember me option
@@ -177,7 +177,7 @@ Features:
 
 ### 3.3 Contact Page
 ```html
-<!-- /sirsinexusportal/contact.html -->
+<!-- /contact.html -->
 Components:
 - Contact form (Name, Email, Subject, Message)
 - Department selection (Sales, Support, Investor Relations)
@@ -189,7 +189,7 @@ Components:
 
 ### 3.4 Documentation Hub
 ```html
-<!-- /sirsinexusportal/documentation.html -->
+<!-- /documentation.html -->
 Sections:
 - Getting Started
 - API Reference
@@ -203,7 +203,7 @@ Sections:
 
 ### 3.5 Pricing Page
 ```html
-<!-- /sirsinexusportal/pricing.html -->
+<!-- /pricing.html -->
 Plans:
 - Free Tier (Developers)
   - 5 projects
@@ -273,7 +273,7 @@ Metrics:
 
 ### 5.1 Developer Portal
 ```html
-<!-- /sirsinexusportal/developer-portal.html -->
+<!-- /developer-portal.html -->
 Features:
 - Project dashboard
 - API key management
@@ -431,7 +431,7 @@ Strict-Transport-Security
 ## File Structure
 
 ```
-/sirsinexusportal/
+/
 ├── pages/
 │   ├── signup.html
 │   ├── login.html

@@ -154,8 +154,8 @@ jobs:
 ## 4. Replace Mock Data
 
 ### Current Mock Data Locations:
-- `/sirsinexusportal/assets/js/mock-backend.js` - Remove
-- `/sirsinexusportal/assets/js/mock-websocket.js` - Remove
+- `/assets/js/mock-backend.js` - Remove
+- `/assets/js/mock-websocket.js` - Remove
 - Demo credentials in `investor-login.html` - Replace with Firebase Auth
 - Static metrics in dashboard pages - Replace with metricsProvider calls
 
@@ -168,7 +168,7 @@ const metrics = {
 };
 
 // New (Live)
-import metricsProvider from '/sirsinexusportal/providers/metricsProvider.js';
+import metricsProvider from '/providers/metricsProvider.js';
 
 const metrics = await metricsProvider.getKPIMetrics();
 // Subscribe to updates
@@ -189,7 +189,7 @@ const VALID_CREDENTIALS = [
 ];
 
 // New
-import { getFirebaseAuth } from '/sirsinexusportal/config/firebase.config.js';
+import { getFirebaseAuth } from '/config/firebase.config.js';
 
 async function login(email, password) {
   const auth = await getFirebaseAuth();

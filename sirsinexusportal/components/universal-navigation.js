@@ -26,28 +26,28 @@ class UniversalNavigation {
         const pathSegments = path.split('/').filter(segment => segment && segment !== 'index.html');
         
         // Root level - no back button needed
-        if (pathSegments.length === 0 || path === '/sirsinexusportal/index.html') {
+        if (pathSegments.length === 0 || path === '/index.html') {
             return null;
         }
         
-        // First level (e.g., /sirsinexusportal/investor-portal/index.html)
+        // First level (e.g., /investor-portal/index.html)
         if (pathSegments.length === 1 || 
             (pathSegments.length === 2 && pathSegments[1] === 'index.html')) {
-            return '/sirsinexusportal/index.html';
+            return '/index.html';
         }
         
-        // Second level (e.g., /sirsinexusportal/investor-portal/committee/index.html)
+        // Second level (e.g., /investor-portal/committee/index.html)
         if (pathSegments.length === 2 || 
             (pathSegments.length === 3 && pathSegments[2] === 'index.html')) {
-            return `/sirsinexusportal/${pathSegments[0]}/index.html`;
+            return `/${pathSegments[0]}/index.html`;
         }
         
-        // Third level and beyond (e.g., /sirsinexusportal/investor-portal/committee/kpi-metrics.html)
+        // Third level and beyond (e.g., /investor-portal/committee/kpi-metrics.html)
         if (pathSegments.length >= 3) {
-            return `/sirsinexusportal/${pathSegments[0]}/${pathSegments[1]}/index.html`;
+            return `/${pathSegments[0]}/${pathSegments[1]}/index.html`;
         }
         
-        return '/sirsinexusportal/index.html';
+        return '/index.html';
     }
 
     /**
@@ -60,17 +60,17 @@ class UniversalNavigation {
         const breadcrumb = [];
         
         // Always include home
-        breadcrumb.push({ name: 'Home', url: '/sirsinexusportal/index.html' });
+        breadcrumb.push({ name: 'Home', url: '/index.html' });
         
         // Add intermediate segments
         if (pathSegments.length >= 1) {
             if (pathSegments[0] === 'investor-portal') {
-                breadcrumb.push({ name: 'Investor Portal', url: '/sirsinexusportal/investor-portal/index.html' });
+                breadcrumb.push({ name: 'Investor Portal', url: '/investor-portal/index.html' });
             }
             
             if (pathSegments.length >= 2) {
                 if (pathSegments[1] === 'committee') {
-                    breadcrumb.push({ name: 'Committee', url: '/sirsinexusportal/investor-portal/committee/index.html' });
+                    breadcrumb.push({ name: 'Committee', url: '/investor-portal/committee/index.html' });
                 }
             }
         }
@@ -102,8 +102,8 @@ renderNavigation() {
                       <!-- Left Section: Logo and Site Name (Fixed Position) -->
                       <div class="flex-none w-64 flex items-center gap-3">
                           <div class="w-10 h-10 flex items-center justify-center">
-                            <img src="/sirsinexusportal/assets/images/Sirsi_Logo_300ppi_cguiyg.png" alt="Sirsi Logo" class="w-10 h-10 object-contain dark:hidden">
-                            <img src="/sirsinexusportal/assets/images/Sirsi_Logo_300ppi_Inverted_lt7asx.png" alt="Sirsi Logo" class="w-10 h-10 object-contain hidden dark:block">
+                            <img src="/assets/images/Sirsi_Logo_300ppi_cguiyg.png" alt="Sirsi Logo" class="w-10 h-10 object-contain dark:hidden">
+                            <img src="/assets/images/Sirsi_Logo_300ppi_Inverted_lt7asx.png" alt="Sirsi Logo" class="w-10 h-10 object-contain hidden dark:block">
                           </div>
                           <div>
                             <h1 class="text-base font-semibold text-slate-900 dark:text-slate-100">SirsiNexus</h1>
@@ -248,7 +248,7 @@ renderNavigation() {
         localStorage.removeItem('investor-authenticated');
         localStorage.removeItem('investor-id');
         localStorage.removeItem('user-role');
-        window.location.href = '/sirsinexusportal/investor-login.html';
+        window.location.href = '/investor-login.html';
     }
 
     /**

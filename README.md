@@ -7,7 +7,7 @@ This repository contains the live SirsiNexus portal served via Firebase Hosting 
 - Live Root: https://sirsi.ai
 - Legacy Redirects:
   - `/sirsinexusportal` -> `/` (301)
-  - `/sirsinexusportal/**` -> `/**` (301)
+  - `/**` -> `/**` (301)
 
 ## Key Changes (September 2025)
 - Firebase Hosting now serves from `sirsinexusportal/` directory at the site root
@@ -44,5 +44,5 @@ This repository contains the live SirsiNexus portal served via Firebase Hosting 
 - Main Application: https://github.com/SirsiMaster/SirsiNexusPortal
 
 ## Notes
-- GitHub Pages URL (legacy): https://sirsimaster.github.io/sirsinexusportal/ (deprecated)
+- GitHub Pages URL (legacy): https://sirsimaster.github.io/ (deprecated)
 - Do not introduce new auth flows/pages without explicit approval (see WARP.md)

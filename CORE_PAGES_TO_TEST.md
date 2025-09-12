@@ -4,51 +4,51 @@
 
 ### 1. Main Entry Points
 ```
-http://localhost:8000/sirsinexusportal/index.html
-http://localhost:8000/sirsinexusportal/about.html
-http://localhost:8000/sirsinexusportal/business-case.html
+http://localhost:8000/index.html
+http://localhost:8000/about.html
+http://localhost:8000/business-case.html
 ```
 
 ### 2. Authentication Flow
 ```
-http://localhost:8000/sirsinexusportal/auth/login.html
-http://localhost:8000/sirsinexusportal/auth/register.html
-http://localhost:8000/sirsinexusportal/dashboard/index.html
+http://localhost:8000/auth/login.html
+http://localhost:8000/auth/register.html
+http://localhost:8000/dashboard/index.html
 ```
 
 ### 3. Admin Dashboard
 ```
-http://localhost:8000/sirsinexusportal/admin/index.html
-http://localhost:8000/sirsinexusportal/admin/analytics-dashboard.html
-http://localhost:8000/sirsinexusportal/admin/revenue-dashboard.html
+http://localhost:8000/admin/index.html
+http://localhost:8000/admin/analytics-dashboard.html
+http://localhost:8000/admin/revenue-dashboard.html
 ```
 
 ### 4. Documentation
 ```
-http://localhost:8000/sirsinexusportal/docs/api-documentation.html
-http://localhost:8000/sirsinexusportal/developer-portal.html
+http://localhost:8000/docs/api-documentation.html
+http://localhost:8000/developer-portal.html
 ```
 
 ## 🔍 Priority 2: Business Features
 
 ### 5. Investor Portal
 ```
-http://localhost:8000/sirsinexusportal/investor-portal/index.html
-http://localhost:8000/sirsinexusportal/investor-portal/data-room.html
-http://localhost:8000/sirsinexusportal/investor-portal/committee/index.html
+http://localhost:8000/investor-portal/index.html
+http://localhost:8000/investor-portal/data-room.html
+http://localhost:8000/investor-portal/committee/index.html
 ```
 
 ### 6. Payment & Pricing
 ```
-http://localhost:8000/sirsinexusportal/pricing.html
-http://localhost:8000/sirsinexusportal/payments.html
+http://localhost:8000/pricing.html
+http://localhost:8000/payments.html
 ```
 
 ### 7. Contact & Legal
 ```
-http://localhost:8000/sirsinexusportal/contact.html
-http://localhost:8000/sirsinexusportal/legal/privacy-policy.html
-http://localhost:8000/sirsinexusportal/legal/terms-of-service.html
+http://localhost:8000/contact.html
+http://localhost:8000/legal/privacy-policy.html
+http://localhost:8000/legal/terms-of-service.html
 ```
 
 ## 🧪 Testing Steps for Each Page

@@ -14,7 +14,7 @@ This directory contains the production portal content served at https://sirsi.ai
 - public: this `sirsinexusportal/` directory
 - Redirects:
   - `/sirsinexusportal` -> `/` (301)
-  - `/sirsinexusportal/**` -> `/**` (301)
+  - `/**` -> `/**` (301)
 
 ## Authentication
 - Registration requires email + password; email verification sent

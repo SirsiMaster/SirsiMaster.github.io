@@ -97,7 +97,7 @@
     },
     {
       "source": "/portal",
-      "destination": "/sirsinexusportal/index.html",
+      "destination": "/index.html",
       "type": 301
     }
   ],

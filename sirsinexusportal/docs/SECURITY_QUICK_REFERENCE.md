@@ -6,7 +6,7 @@
 
 ```html
 <!-- Add this line to enable security -->
-<script src="/sirsinexusportal/assets/js/security-init.js"></script>
+<script src="/assets/js/security-init.js"></script>
 ```
 
 That's it! Security features are now active.

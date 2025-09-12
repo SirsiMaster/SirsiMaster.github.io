@@ -17,9 +17,9 @@
 - [ ] User profile creation in Firestore
 
 **Test URLs:**
-- `/sirsinexusportal/auth/login.html`
-- `/sirsinexusportal/auth/register.html`
-- `/sirsinexusportal/firebase-auth-debug.html`
+- `/auth/login.html`
+- `/auth/register.html`
+- `/firebase-auth-debug.html`
 
 #### 1.2 Database Operations
 - [ ] Firestore connection established
@@ -121,7 +121,7 @@
 - [ ] Export functionality works
 - [ ] Date range filters work
 
-**URL:** `/sirsinexusportal/admin/analytics-dashboard.html`
+**URL:** `/admin/analytics-dashboard.html`
 
 #### 3.2 User Dashboard
 - [ ] Dashboard loads
@@ -129,7 +129,7 @@
 - [ ] Profile management works
 - [ ] Settings save correctly
 
-**URL:** `/sirsinexusportal/dashboard/`
+**URL:** `/dashboard/`
 
 #### 3.3 Content Pages
 - [ ] Homepage loads correctly
@@ -138,7 +138,7 @@
 - [ ] Blog/documentation renders
 - [ ] API documentation accessible
 
-**URL:** `/sirsinexusportal/docs/api-documentation.html`
+**URL:** `/docs/api-documentation.html`
 
 ### Phase 4: Deployment & Infrastructure
 
@@ -191,7 +191,7 @@ firebase projects:list
 firebase hosting:sites:list
 
 # Check GitHub Pages
-curl -I https://sirsimaster.github.io/sirsinexusportal/
+curl -I https://sirsimaster.github.io/
 ```
 
 ### Browser Console Tests

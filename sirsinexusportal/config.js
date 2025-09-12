@@ -6,11 +6,11 @@ const SIRSI_CONFIG = {
     
     // Asset paths
     paths: {
-        components: '/sirsinexusportal/components',
-        assets: '/sirsinexusportal/assets',
-        styles: '/sirsinexusportal/assets/css',
-        images: '/sirsinexusportal/assets/images',
-        js: '/sirsinexusportal/assets/js'
+        components: '/components',
+        assets: '/assets',
+        styles: '/assets/css',
+        images: '/assets/images',
+        js: '/assets/js'
     },
     
     // Theme configuration

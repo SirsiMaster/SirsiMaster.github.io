@@ -148,7 +148,7 @@ class AuthService {
 
             // Send email verification
             await user.sendEmailVerification({
-                url: `${window.location.origin}/sirsinexusportal/auth/verify-email.html`
+                url: `${window.location.origin}/auth/verify-email.html`
             });
 
             // Create user profile
@@ -284,7 +284,7 @@ class AuthService {
             this.userProfile = null;
             
             // Redirect to home
-            window.location.href = '/sirsinexusportal/';
+            window.location.href = '/';
             
             return { success: true };
         } catch (error) {
@@ -299,7 +299,7 @@ class AuthService {
     async sendPasswordResetEmail(email) {
         try {
             await this.auth.sendPasswordResetEmail(email, {
-                url: `${window.location.origin}/sirsinexusportal/auth/login.html`
+                url: `${window.location.origin}/auth/login.html`
             });
 
             // Track password reset request

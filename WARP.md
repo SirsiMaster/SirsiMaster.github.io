@@ -4,7 +4,7 @@ This file provides guidance to WARP (warp.dev) when working with code in this re
 
 ## Repository Overview
 
-This is the GitHub Pages repository for SirsiNexus, hosting the public documentation, investor portal, and marketing content. The repository auto-deploys to https://sirsimaster.github.io/sirsinexusportal/ when changes are pushed to the main branch.
+This is the GitHub Pages repository for SirsiNexus, hosting the public documentation, investor portal, and marketing content. The repository auto-deploys to https://sirsimaster.github.io/ when changes are pushed to the main branch.
 
 ## Common Development Commands
 
@@ -29,7 +29,7 @@ cd sirsinexusportal
 npm run build-css
 
 # Validate site for merge conflicts and accessibility
-./sirsinexusportal/validate-site.sh
+./validate-site.sh
 
 # Update version across all pages
 cd sirsinexusportal
@@ -44,11 +44,11 @@ git commit -m "Your descriptive message"
 git push origin main
 
 # Safe deployment with cooldown protection
-./sirsinexusportal/deploy-safeguard.sh
+./deploy-safeguard.sh
 
 # Switch development context
-./sirsinexusportal/dev-context.sh pages  # For GitHub Pages work
-./sirsinexusportal/dev-context.sh app    # For application work
+./dev-context.sh pages  # For GitHub Pages work
+./dev-context.sh app    # For application work
 ```
 
 ### Git Workflow
@@ -151,7 +151,7 @@ window.securityInit.getAuditLogs()
 
 ### Validate Site Health
 ```bash
-./sirsinexusportal/validate-site.sh
+./validate-site.sh
 ```
 
 ### Test Loading States
@@ -166,7 +166,7 @@ window.SirsiState.showInactivityWarning()
 - Main branch auto-deploys to GitHub Pages (1-2 minute delay)
 - Use feature branches for development to avoid accidental deployment
 - Deploy safeguard script enforces 5-minute cooldown between deployments
-- Always verify changes on live site after deployment: https://sirsimaster.github.io/sirsinexusportal/
+- Always verify changes on live site after deployment: https://sirsimaster.github.io/
 
 ## Emergency Procedures
 
@@ -220,14 +220,14 @@ This repository (SirsiMaster.github.io) will be merging with the main applicatio
 4. Verifying no duplicate functionality exists
 
 **Existing Major Systems:**
-- Admin Dashboard: `/sirsinexusportal/admin/`
-- User Dashboard: `/sirsinexusportal/dashboard/`
-- Developer Portal: `/sirsinexusportal/developer-portal.html`
-- Investor Portal: `/sirsinexusportal/investor-portal/`
-- Security Management: `/sirsinexusportal/admin/security/`
-- Revenue Dashboard: `/sirsinexusportal/admin/revenue-dashboard.html`
-- System Monitoring: `/sirsinexusportal/admin/monitoring.html`
-- User Management: `/sirsinexusportal/admin/users/`
+- Admin Dashboard: `/admin/`
+- User Dashboard: `/dashboard/`
+- Developer Portal: `/developer-portal.html`
+- Investor Portal: `/investor-portal/`
+- Security Management: `/admin/security/`
+- Revenue Dashboard: `/admin/revenue-dashboard.html`
+- System Monitoring: `/admin/monitoring.html`
+- User Management: `/admin/users/`
 
 ## Developer Platform Innovation
 
@@ -241,13 +241,13 @@ A comprehensive developer platform has been created that allows external develop
    - CI/CD pipeline integration
 
 2. **Sirsi SDK**
-   - Location: `/sirsinexusportal/sdk/sirsi-sdk.js`
+   - Location: `/sdk/sirsi-sdk.js`
    - Modules: Infrastructure, AI, Deployment, Monitoring, Collaboration
    - Real-time WebSocket support
    - Full TypeScript definitions
 
 3. **Developer Portal**
-   - Location: `/sirsinexusportal/developer-portal.html`
+   - Location: `/developer-portal.html`
    - Project management dashboard
    - API key generation and management
    - Usage analytics and monitoring
@@ -283,8 +283,8 @@ await sirsi.monitoring.getMetrics(resourceId);
 ## Related Resources
 
 - Main Application Repository: https://github.com/SirsiMaster/SirsiNexusPortal
-- Live Site: https://sirsimaster.github.io/sirsinexusportal/
-- Developer Portal: `/sirsinexusportal/developer-portal.html`
-- Sirsi SDK: `/sirsinexusportal/sdk/sirsi-sdk.js`
+- Live Site: https://sirsimaster.github.io/
+- Developer Portal: `/developer-portal.html`
+- Sirsi SDK: `/sdk/sirsi-sdk.js`
 - Admin Security Dashboard: `/admin/security/index.html`
 - System Logs: `/admin/dashboard/system-logs.html`

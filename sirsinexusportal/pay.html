@@ -10,10 +10,10 @@
     <link rel="manifest" href="manifest.webmanifest?v=20250813-2">
     
     <!-- Favicons -->
-    <link rel="icon" href="/sirsinexusportal/assets/images/sirsi-icon.png" type="image/png" sizes="32x32">
-    <link rel="icon" href="/sirsinexusportal/assets/images/sirsi-icon-192.png" type="image/png" sizes="192x192">
-    <link rel="icon" href="/sirsinexusportal/assets/images/sirsi-icon-512.png" type="image/png" sizes="512x512">
-    <link rel="apple-touch-icon" href="/sirsinexusportal/assets/images/sirsi-icon-192.png" sizes="192x192">
+    <link rel="icon" href="/assets/images/sirsi-icon.png" type="image/png" sizes="32x32">
+    <link rel="icon" href="/assets/images/sirsi-icon-192.png" type="image/png" sizes="192x192">
+    <link rel="icon" href="/assets/images/sirsi-icon-512.png" type="image/png" sizes="512x512">
+    <link rel="apple-touch-icon" href="/assets/images/sirsi-icon-192.png" sizes="192x192">
     
     <!-- Preload critical resources -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,7 +21,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Compiled Tailwind CSS -->
-    <link rel="stylesheet" href="/sirsinexusportal/assets/css/tailwind.css?v=20250813-2">
+    <link rel="stylesheet" href="/assets/css/tailwind.css?v=20250813-2">
     <!-- PayPal SDK with Apple Pay and alternative payment methods -->
     <script src="https://www.paypal.com/sdk/js?client-id=ASUI7q4yAs6anh26J6T_7hLyX0UwUbVWQS-8lgngn9z0W6VX4zrt2y7Q_auiXBAUrzxd1ibBrz22KDAr&currency=USD&components=buttons,marks,funding-eligibility&enable-funding=venmo,paylater,card&disable-funding=credit"></script>
     
@@ -337,8 +337,8 @@
           <div class="flex items-center gap-6">
             <div class="flex items-center gap-3">
               <div class="w-12 h-12 flex items-center justify-center">
-                <img src="/sirsinexusportal/assets/images/Sirsi_Logo_300ppi_cguiyg.png" alt="Sirsi Logo" class="w-12 h-12 object-contain dark:hidden">
-                <img src="/sirsinexusportal/assets/images/Sirsi_Logo_300ppi_Inverted_lt7asx.png" alt="Sirsi Logo" class="w-12 h-12 object-contain hidden dark:block">
+                <img src="/assets/images/Sirsi_Logo_300ppi_cguiyg.png" alt="Sirsi Logo" class="w-12 h-12 object-contain dark:hidden">
+                <img src="/assets/images/Sirsi_Logo_300ppi_Inverted_lt7asx.png" alt="Sirsi Logo" class="w-12 h-12 object-contain hidden dark:block">
               </div>
               <div>
                 <h1 class="text-lg font-semibold text-slate-900 dark:text-slate-100">
@@ -357,13 +357,13 @@
             </div>
           </div>
           <nav class="flex items-center gap-4">
-            <a href="/sirsinexusportal/index.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">Home</a>
+            <a href="/index.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">Home</a>
             
             <!-- Admin Navigation - Only visible when accessing from admin portal -->
             <div id="admin-nav" class="flex items-center gap-4">
-              <a href="/sirsinexusportal/admin/create-invoice.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">Invoice Creator</a>
-              <a href="/sirsinexusportal/admin/revenue-dashboard.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">Revenue Dashboard</a>
-              <a href="/sirsinexusportal/admin/index.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">Admin Dashboard</a>
+              <a href="/admin/create-invoice.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">Invoice Creator</a>
+              <a href="/admin/revenue-dashboard.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">Revenue Dashboard</a>
+              <a href="/admin/index.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">Admin Dashboard</a>
               <button id="admin-logout-btn" class="text-sm text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 transition-colors" onclick="adminLogout()">Logout</button>
             </div>
             
@@ -460,7 +460,7 @@
                 <div class="flex items-start gap-3 pt-2">
                   <input type="checkbox" id="reg-terms" required class="mt-1 w-4 h-4 text-emerald-600 border-slate-300 rounded focus:ring-emerald-500">
                   <label for="reg-terms" class="text-sm text-slate-600 dark:text-slate-400">
-                    I agree to the <a href="/sirsinexusportal/terms.html" class="text-emerald-600 dark:text-emerald-400 hover:underline" target="_blank">Terms</a> and <a href="/sirsinexusportal/privacy.html" class="text-emerald-600 dark:text-emerald-400 hover:underline" target="_blank">Privacy Policy</a>
+                    I agree to the <a href="/terms.html" class="text-emerald-600 dark:text-emerald-400 hover:underline" target="_blank">Terms</a> and <a href="/privacy.html" class="text-emerald-600 dark:text-emerald-400 hover:underline" target="_blank">Privacy Policy</a>
                   </label>
                 </div>
                 
@@ -729,7 +729,7 @@
             <div id="zelle-details" class="bg-purple-50 dark:bg-purple-900/20 rounded-xl p-6 mt-4 border border-purple-200 dark:border-purple-700" style="display: none;">
               <div class="flex items-center gap-6 mb-4">
                 <div class="flex-shrink-0">
-                  <img src="/sirsinexusportal/assets/images/zelle-qr.png" alt="Zelle QR Code" class="w-32 h-32 object-contain rounded-lg border border-purple-300 shadow-sm" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                  <img src="/assets/images/zelle-qr.png" alt="Zelle QR Code" class="w-32 h-32 object-contain rounded-lg border border-purple-300 shadow-sm" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                   <div class="w-32 h-32 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center text-white shadow-lg" style="display:none;">
                     <div class="text-center">
                       <div class="text-2xl font-bold mb-1">Z</div>

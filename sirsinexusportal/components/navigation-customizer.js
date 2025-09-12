@@ -14,12 +14,12 @@ class NavigationCustomizer {
         if (!this.customElements) return;
         
         const pages = [
-            { id: 'dashboard', title: 'Committee Dashboard', path: '/sirsinexusportal/investor-portal/committee/index.html' },
-            { id: 'market', title: 'Market Analysis', path: '/sirsinexusportal/investor-portal/committee/market-analysis.html' },
-            { id: 'roadmap', title: 'Product Roadmap', path: '/sirsinexusportal/investor-portal/committee/product-roadmap.html' },
-            { id: 'sales', title: 'Sales Strategy', path: '/sirsinexusportal/investor-portal/committee/sales-strategy.html' },
-            { id: 'metrics', title: 'KPI & Metrics', path: '/sirsinexusportal/investor-portal/committee/kpi-metrics.html' },
-            { id: 'gtm', title: 'Go-to-Market', path: '/sirsinexusportal/investor-portal/committee/go-to-market.html' }
+            { id: 'dashboard', title: 'Committee Dashboard', path: '/investor-portal/committee/index.html' },
+            { id: 'market', title: 'Market Analysis', path: '/investor-portal/committee/market-analysis.html' },
+            { id: 'roadmap', title: 'Product Roadmap', path: '/investor-portal/committee/product-roadmap.html' },
+            { id: 'sales', title: 'Sales Strategy', path: '/investor-portal/committee/sales-strategy.html' },
+            { id: 'metrics', title: 'KPI & Metrics', path: '/investor-portal/committee/kpi-metrics.html' },
+            { id: 'gtm', title: 'Go-to-Market', path: '/investor-portal/committee/go-to-market.html' }
         ];
 
         const dropdown = document.createElement('div');

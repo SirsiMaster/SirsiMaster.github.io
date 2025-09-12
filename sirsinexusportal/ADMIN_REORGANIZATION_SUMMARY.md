@@ -18,10 +18,10 @@ Moved the following duplicate/unnecessary files to backup:
 - `data-room-test.html`
 
 ### 2. Created Uniform Structure
-All admin pages are now under `/sirsinexusportal/admin/`:
+All admin pages are now under `/admin/`:
 
 ```
-/sirsinexusportal/admin/
+/admin/
 ├── index.html (main admin dashboard) ✓
 ├── data-room.html (data room management) ✓
 ├── dashboard/
@@ -57,7 +57,7 @@ All admin pages are now under `/sirsinexusportal/admin/`:
 ### 4. Benefits
 - **No more duplicates**: Removed 11 duplicate/unnecessary files
 - **Clear organization**: Admin pages grouped by function
-- **Consistent paths**: All admin pages under `/sirsinexusportal/admin/`
+- **Consistent paths**: All admin pages under `/admin/`
 - **Easy maintenance**: Clear directory structure makes updates easier
 
 ### 5. Backup Location

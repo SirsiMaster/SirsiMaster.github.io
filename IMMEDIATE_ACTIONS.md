@@ -15,11 +15,11 @@
    - SSL/HTTPS is working perfectly
    - All pages are accessible (clean URLs):
      - https://sirsi.ai/
-     - https://sirsi.ai/sirsinexusportal/about
-     - https://sirsi.ai/sirsinexusportal/pricing
-     - https://sirsi.ai/sirsinexusportal/careers
-     - https://sirsi.ai/sirsinexusportal/blog
-     - https://sirsi.ai/sirsinexusportal/business-case
+     - https://sirsi.ai/about
+     - https://sirsi.ai/pricing
+     - https://sirsi.ai/careers
+     - https://sirsi.ai/blog
+     - https://sirsi.ai/business-case
 
 2. **Backend Services**
    - 13 Cloud Functions are deployed

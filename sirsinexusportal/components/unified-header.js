@@ -13,8 +13,8 @@ class UnifiedHeader {
                         <div class="flex items-center">
                             <div class="flex items-center space-x-3">
                                 <div class="w-12 h-12 flex items-center justify-center">
-                                    <img src="/sirsinexusportal/assets/images/Sirsi_Logo_300ppi_cguiyg.png" alt="Sirsi Logo" class="w-12 h-12 object-contain dark:hidden">
-                                    <img src="/sirsinexusportal/assets/images/Sirsi_Logo_300ppi_Inverted_lt7asx.png" alt="Sirsi Logo" class="w-12 h-12 object-contain hidden dark:block">
+                                    <img src="/assets/images/Sirsi_Logo_300ppi_cguiyg.png" alt="Sirsi Logo" class="w-12 h-12 object-contain dark:hidden">
+                                    <img src="/assets/images/Sirsi_Logo_300ppi_Inverted_lt7asx.png" alt="Sirsi Logo" class="w-12 h-12 object-contain hidden dark:block">
                                 </div>
                                 <div>
                                     <h1 class="text-xl font-semibold text-gray-900 dark:text-white">
@@ -35,8 +35,8 @@ class UnifiedHeader {
                         <!-- Navigation and Actions -->
                         <nav class="flex items-center space-x-6">
                             <!-- Navigation Links -->
-                            <a href="/sirsinexusportal/index.html" class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">Home</a>
-                            <a href="/sirsinexusportal/investor-portal/index.html" class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">Dashboard</a>
+                            <a href="/index.html" class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">Home</a>
+                            <a href="/investor-portal/index.html" class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">Dashboard</a>
                             
                             <!-- Search (Desktop Only) -->
                             <div class="hidden lg:block">
@@ -130,7 +130,7 @@ window.toggleTheme = function() {
 window.logout = function() {
     if (confirm('Are you sure you want to logout?')) {
         sessionStorage.removeItem('investorAuth');
-        window.location.href = '/sirsinexusportal/investor-login.html';
+        window.location.href = '/investor-login.html';
     }
 };
 

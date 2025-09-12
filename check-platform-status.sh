@@ -122,11 +122,11 @@ echo "------------------------"
 # Check key pages
 PAGES=(
     "https://sirsi.ai/"
-    "https://sirsi.ai/sirsinexusportal/about.html"
-    "https://sirsi.ai/sirsinexusportal/pricing.html"
-    "https://sirsi.ai/sirsinexusportal/careers.html"
-    "https://sirsi.ai/sirsinexusportal/blog.html"
-    "https://sirsi.ai/sirsinexusportal/business-case.html"
+    "https://sirsi.ai/about.html"
+    "https://sirsi.ai/pricing.html"
+    "https://sirsi.ai/careers.html"
+    "https://sirsi.ai/blog.html"
+    "https://sirsi.ai/business-case.html"
 )
 
 for page in "${PAGES[@]}"; do

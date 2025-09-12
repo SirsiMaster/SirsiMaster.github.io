@@ -2,8 +2,8 @@
   "name": "SirsiNexus Payment Portal",
   "short_name": "SirsiPay",
   "description": "Secure payment processing for SirsiNexus AI infrastructure services",
-  "start_url": "/sirsinexusportal/pay.html",
-  "scope": "/sirsinexusportal/",
+  "start_url": "/pay.html",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#059669",
   "theme_color": "#059669",
@@ -11,19 +11,19 @@
   "categories": ["finance", "business"],
   "icons": [
     {
-      "src": "/sirsinexusportal/assets/images/sirsi-icon.png",
+      "src": "/assets/images/sirsi-icon.png",
       "sizes": "32x32",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/sirsinexusportal/assets/images/sirsi-icon-192.png",
+      "src": "/assets/images/sirsi-icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/sirsinexusportal/assets/images/sirsi-icon-512.png",
+      "src": "/assets/images/sirsi-icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"

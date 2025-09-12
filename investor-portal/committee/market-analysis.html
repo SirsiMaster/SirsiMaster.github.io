@@ -14,7 +14,7 @@
       (function() {
         const auth = sessionStorage.getItem('investorAuth');
         if (!auth) {
-          window.location.href = '/sirsinexusportal/investor-login.html';
+          window.location.href = '/investor-login.html';
           return;
         }
         
@@ -27,7 +27,7 @@
           // Check if session expired (24 hours)
           if (hoursSinceLogin > 24) {
             sessionStorage.removeItem('investorAuth');
-            window.location.href = '/sirsinexusportal/investor-login.html';
+            window.location.href = '/investor-login.html';
             return;
           }
           
@@ -35,7 +35,7 @@
         } catch (error) {
           console.error('❌ Authentication error:', error);
           sessionStorage.removeItem('investorAuth');
-          window.location.href = '/sirsinexusportal/investor-login.html';
+          window.location.href = '/investor-login.html';
           return;
         }
       })();
@@ -79,7 +79,7 @@
         }
       })();
     </script>
-    <link rel="stylesheet" href="/sirsinexusportal/assets/css/shared.css">
+    <link rel="stylesheet" href="/assets/css/shared.css">
     
     <!-- Cache buster: v1752628042 WORKFLOW TEST -->
     <meta http-equiv="cache-control" content="max-age=0" />
@@ -156,16 +156,16 @@
 <div id="unified-header"></div>
 
 <!-- Page Scripts -->
-<script src="/sirsinexusportal/components/universal-navigation.js"></script>
-<script src="/sirsinexusportal/components/navigation-customizer.js"></script>
-<script src="/sirsinexusportal/assets/js/shared-theme-toggle.js"></script>
+<script src="/components/universal-navigation.js"></script>
+<script src="/components/navigation-customizer.js"></script>
+<script src="/assets/js/shared-theme-toggle.js"></script>
 
 <!-- Authentication Check -->
 <script>
     (function() {
         const auth = sessionStorage.getItem('investorAuth');
         if (!auth) {
-            window.location.href = '/sirsinexusportal/investor-login.html';
+            window.location.href = '/investor-login.html';
             return;
         }
         
@@ -177,13 +177,13 @@
             
             if (hoursSinceLogin > 24) {
                 sessionStorage.removeItem('investorAuth');
-                window.location.href = '/sirsinexusportal/investor-login.html';
+                window.location.href = '/investor-login.html';
                 return;
             }
         } catch (error) {
             console.error('Authentication error:', error);
             sessionStorage.removeItem('investorAuth');
-            window.location.href = '/sirsinexusportal/investor-login.html';
+            window.location.href = '/investor-login.html';
             return;
         }
     })();
@@ -877,8 +877,8 @@
                 <!-- Brand -->
                 <div>
                     <div class="flex items-center gap-3 mb-4">
-                        <img src="/sirsinexusportal/assets/images/Sirsi_Logo_300ppi_cguiyg.png" alt="Sirsi Logo" class="w-8 h-8 object-contain dark:hidden">
-                        <img src="/sirsinexusportal/assets/images/Sirsi_Logo_300ppi_Inverted_lt7asx.png" alt="Sirsi Logo" class="w-8 h-8 object-contain hidden dark:block">
+                        <img src="/assets/images/Sirsi_Logo_300ppi_cguiyg.png" alt="Sirsi Logo" class="w-8 h-8 object-contain dark:hidden">
+                        <img src="/assets/images/Sirsi_Logo_300ppi_Inverted_lt7asx.png" alt="Sirsi Logo" class="w-8 h-8 object-contain hidden dark:block">
                         <span class="text-xl font-bold text-slate-900 dark:text-slate-100">SirsiNexus</span>
                     </div>
                     <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
@@ -890,11 +890,11 @@
                 <div>
                     <h3 class="text-sm font-semibold text-slate-900 dark:text-slate-100 mb-4">Platform</h3>
                     <ul class="space-y-3">
-                        <li><a href="/sirsinexusportal/index.html" class="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 text-sm transition-colors">Home</a></li>
-                        <li><a href="/sirsinexusportal/features.html" class="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 text-sm transition-colors">Features</a></li>
-                        <li><a href="/sirsinexusportal/pricing.html" class="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 text-sm transition-colors">Pricing</a></li>
-                        <li><a href="/sirsinexusportal/about.html" class="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 text-sm transition-colors">About</a></li>
-                        <li><a href="/sirsinexusportal/contact.html" class="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 text-sm transition-colors">Contact</a></li>
+                        <li><a href="/index.html" class="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 text-sm transition-colors">Home</a></li>
+                        <li><a href="/features.html" class="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 text-sm transition-colors">Features</a></li>
+                        <li><a href="/pricing.html" class="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 text-sm transition-colors">Pricing</a></li>
+                        <li><a href="/about.html" class="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 text-sm transition-colors">About</a></li>
+                        <li><a href="/contact.html" class="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 text-sm transition-colors">Contact</a></li>
                     </ul>
                 </div>
 
@@ -902,11 +902,11 @@
                 <div>
                     <h3 class="text-sm font-semibold text-slate-900 dark:text-slate-100 mb-4">Investor Resources</h3>
                     <ul class="space-y-3">
-                        <li><a href="/sirsinexusportal/investor-portal/index.html" class="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 text-sm transition-colors">Investor Portal</a></li>
-                        <li><a href="/sirsinexusportal/investor-portal/committee/index.html" class="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 text-sm transition-colors">Committee</a></li>
+                        <li><a href="/investor-portal/index.html" class="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 text-sm transition-colors">Investor Portal</a></li>
+                        <li><a href="/investor-portal/committee/index.html" class="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 text-sm transition-colors">Committee</a></li>
                         <li><span class="text-emerald-600 dark:text-emerald-400 text-sm font-medium">Market Analysis</span></li>
-                        <li><a href="/sirsinexusportal/investor-portal/documents.html" class="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 text-sm transition-colors">Documents</a></li>
-                        <li><a href="/sirsinexusportal/investor-portal/reports.html" class="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 text-sm transition-colors">Reports</a></li>
+                        <li><a href="/investor-portal/documents.html" class="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 text-sm transition-colors">Documents</a></li>
+                        <li><a href="/investor-portal/reports.html" class="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 text-sm transition-colors">Reports</a></li>
                     </ul>
                 </div>
             </div>
@@ -919,9 +919,9 @@
                             &copy; 2025 SirsiNexus. All rights reserved.
                         </p>
                         <div class="flex items-center gap-4 text-xs text-slate-400 dark:text-slate-500">
-                            <a href="/sirsinexusportal/privacy.html" class="hover:text-slate-600 dark:hover:text-slate-300 transition-colors">Privacy Policy</a>
-                            <a href="/sirsinexusportal/terms.html" class="hover:text-slate-600 dark:hover:text-slate-300 transition-colors">Terms of Service</a>
-                            <a href="/sirsinexusportal/legal.html" class="hover:text-slate-600 dark:hover:text-slate-300 transition-colors">Legal</a>
+                            <a href="/privacy.html" class="hover:text-slate-600 dark:hover:text-slate-300 transition-colors">Privacy Policy</a>
+                            <a href="/terms.html" class="hover:text-slate-600 dark:hover:text-slate-300 transition-colors">Terms of Service</a>
+                            <a href="/legal.html" class="hover:text-slate-600 dark:hover:text-slate-300 transition-colors">Legal</a>
                         </div>
                     </div>
                     <div class="flex items-center gap-2 text-xs text-slate-400 dark:text-slate-500">

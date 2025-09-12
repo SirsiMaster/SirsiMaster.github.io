@@ -103,12 +103,12 @@ test_json() {
 echo "1. Testing Firebase Hosting"
 echo "----------------------------"
 test_endpoint "$HOSTING_URL" "Main site" 200
-test_endpoint "$HOSTING_URL/sirsinexusportal/index.html" "Portal index" 200
-test_endpoint "$HOSTING_URL/sirsinexusportal/about.html" "About page" 200
-test_endpoint "$HOSTING_URL/sirsinexusportal/pricing.html" "Pricing page" 200
-test_endpoint "$HOSTING_URL/sirsinexusportal/careers.html" "Careers page" 200
-test_endpoint "$HOSTING_URL/sirsinexusportal/blog.html" "Blog page" 200
-test_endpoint "$HOSTING_URL/sirsinexusportal/business-case.html" "Business Case page" 200
+test_endpoint "$HOSTING_URL/index.html" "Portal index" 200
+test_endpoint "$HOSTING_URL/about.html" "About page" 200
+test_endpoint "$HOSTING_URL/pricing.html" "Pricing page" 200
+test_endpoint "$HOSTING_URL/careers.html" "Careers page" 200
+test_endpoint "$HOSTING_URL/blog.html" "Blog page" 200
+test_endpoint "$HOSTING_URL/business-case.html" "Business Case page" 200
 test_content "$HOSTING_URL" "Firebase SDK" "firebase"
 test_content "$HOSTING_URL" "SirsiNexus branding" "SirsiNexus"
 echo ""
@@ -123,9 +123,9 @@ echo ""
 
 echo "3. Testing Static Assets"
 echo "------------------------"
-test_endpoint "$HOSTING_URL/sirsinexusportal/assets/js/firebase-config.js" "Firebase config" 200
-test_endpoint "$HOSTING_URL/sirsinexusportal/assets/js/firebase-monitoring.js" "Monitoring module" 200
-test_endpoint "$HOSTING_URL/sirsinexusportal/assets/css/output.css" "CSS file" 200
+test_endpoint "$HOSTING_URL/assets/js/firebase-config.js" "Firebase config" 200
+test_endpoint "$HOSTING_URL/assets/js/firebase-monitoring.js" "Monitoring module" 200
+test_endpoint "$HOSTING_URL/assets/css/output.css" "CSS file" 200
 echo ""
 
 echo "4. Testing Security Headers"

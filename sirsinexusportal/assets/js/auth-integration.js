@@ -14,7 +14,7 @@
     // Initialize secure auth if not already loaded
     if (!window.secureAuth) {
         const script = document.createElement('script');
-        script.src = '/sirsinexusportal/assets/js/secure-auth.js';
+        script.src = '/assets/js/secure-auth.js';
         script.onload = () => {
             authReady = true;
             // Process queued operations
@@ -269,7 +269,7 @@
                     
                     // Redirect after delay
                     setTimeout(() => {
-                        window.location.href = '/sirsinexusportal/verify-email-sent.html';
+                        window.location.href = '/verify-email-sent.html';
                     }, 2000);
                 }
             } catch (error) {
@@ -294,7 +294,7 @@
                     // Try secure auth first
                     const result = await window.enhancedLogin(investorId, accessCode, {
                         type: 'investor',
-                        redirect: '/sirsinexusportal/investor-portal/index.html'
+                        redirect: '/investor-portal/index.html'
                     });
                     return result;
                 } catch (error) {
@@ -364,14 +364,14 @@
         const path = window.location.pathname;
         
         if (path.includes('investor')) {
-            return '/sirsinexusportal/investor-portal/index.html';
+            return '/investor-portal/index.html';
         } else if (path.includes('admin')) {
-            return '/sirsinexusportal/admin/index.html';
+            return '/admin/index.html';
         } else if (path.includes('developer')) {
-            return '/sirsinexusportal/developer-portal/index.html';
+            return '/developer-portal/index.html';
         }
         
-        return '/sirsinexusportal/dashboard.html';
+        return '/dashboard.html';
     }
 
     function showError(form, message) {

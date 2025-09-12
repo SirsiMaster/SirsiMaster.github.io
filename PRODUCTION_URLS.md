@@ -53,19 +53,19 @@ openssl s_client -connect sirsi.ai:443 -servername sirsi.ai
 
 ### Public Pages
 - https://sirsi.ai/ - Home
-- https://sirsi.ai/sirsinexusportal/about.html - About
-- https://sirsi.ai/sirsinexusportal/pricing.html - Pricing
-- https://sirsi.ai/sirsinexusportal/careers.html - Careers
-- https://sirsi.ai/sirsinexusportal/blog.html - Blog
-- https://sirsi.ai/sirsinexusportal/business-case.html - Business Case
+- https://sirsi.ai/about.html - About
+- https://sirsi.ai/pricing.html - Pricing
+- https://sirsi.ai/careers.html - Careers
+- https://sirsi.ai/blog.html - Blog
+- https://sirsi.ai/business-case.html - Business Case
 
 ### Portal Access
-- https://sirsi.ai/sirsinexusportal/investor-portal/ - Investor Portal
-- https://sirsi.ai/sirsinexusportal/admin/monitoring.html - Admin Dashboard
+- https://sirsi.ai/investor-portal/ - Investor Portal
+- https://sirsi.ai/admin/monitoring.html - Admin Dashboard
 
 ### Developer Resources
-- https://sirsi.ai/sirsinexusportal/documentation.html - Documentation
-- https://sirsi.ai/sirsinexusportal/developer-portal.html - Developer Portal
+- https://sirsi.ai/documentation.html - Documentation
+- https://sirsi.ai/developer-portal.html - Developer Portal
 
 ---
 

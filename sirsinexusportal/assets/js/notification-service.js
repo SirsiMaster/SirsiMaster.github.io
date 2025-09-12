@@ -400,8 +400,8 @@ class NotificationService {
         
         const desktopNotification = new Notification(notification.title, {
             body: notification.body,
-            icon: '/sirsinexusportal/assets/images/Sirsi_Logo_300ppi_cguiyg.png',
-            badge: '/sirsinexusportal/assets/images/badge.png',
+            icon: '/assets/images/Sirsi_Logo_300ppi_cguiyg.png',
+            badge: '/assets/images/badge.png',
             tag: notification.id,
             requireInteraction: false,
             data: notification.data

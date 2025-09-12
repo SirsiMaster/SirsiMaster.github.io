@@ -84,10 +84,10 @@ Include the RBAC system in your HTML:
 <html>
 <head>
     <!-- RBAC System -->
-    <script src="/sirsinexusportal/assets/js/rbac-system.js"></script>
+    <script src="/assets/js/rbac-system.js"></script>
     
     <!-- Optional: RBAC UI Component for visual feedback -->
-    <script src="/sirsinexusportal/components/rbac-ui.js"></script>
+    <script src="/components/rbac-ui.js"></script>
 </head>
 <body>
     <!-- Optional: Add RBAC UI indicator -->

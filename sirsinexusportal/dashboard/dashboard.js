@@ -18,7 +18,7 @@ class DashboardController {
         
         // Check authentication
         if (!authService.isAuthenticated()) {
-            window.location.href = '/sirsinexusportal/auth/login.html?redirect=' + encodeURIComponent(window.location.pathname);
+            window.location.href = '/auth/login.html?redirect=' + encodeURIComponent(window.location.pathname);
             return;
         }
 

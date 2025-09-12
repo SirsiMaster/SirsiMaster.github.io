@@ -6,7 +6,7 @@
     <title>Sign In - Sirsi Nexus</title>
     
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/sirsinexusportal/assets/images/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -43,7 +43,7 @@
     <div class="glass-effect rounded-2xl shadow-2xl max-w-md w-full p-8">
         <!-- Logo -->
         <div class="text-center mb-8">
-            <a href="/sirsinexusportal/">
+            <a href="/">
                 <h1 class="text-3xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
                     Sirsi Nexus
                 </h1>
@@ -179,10 +179,10 @@
     </div>
 
     <!-- Firebase Config -->
-    <script src="/sirsinexusportal/assets/js/firebase-config.js"></script>
+    <script src="/assets/js/firebase-config.js"></script>
     
     <!-- Auth Service -->
-    <script src="/sirsinexusportal/assets/js/auth-service.js"></script>
+    <script src="/assets/js/auth-service.js"></script>
     
     <!-- Page Script -->
     <script>
@@ -256,7 +256,7 @@
                     }
                     
                     // Redirect to dashboard or intended page
-                    const redirect = new URLSearchParams(window.location.search).get('redirect') || '/sirsinexusportal/dashboard/';
+                    const redirect = new URLSearchParams(window.location.search).get('redirect') || '/dashboard/';
                     window.location.href = redirect;
                 } else {
                     showAlert(result.error);
@@ -279,8 +279,8 @@
                 if (result.success) {
                     // Redirect to dashboard or welcome page
                     const redirect = result.isNewUser 
-                        ? '/sirsinexusportal/dashboard/welcome.html' 
-                        : '/sirsinexusportal/dashboard/';
+                        ? '/dashboard/welcome.html' 
+                        : '/dashboard/';
                     window.location.href = redirect;
                 } else {
                     showAlert(result.error);
@@ -303,8 +303,8 @@
                 if (result.success) {
                     // Redirect to developer portal or dashboard
                     const redirect = result.isNewUser 
-                        ? '/sirsinexusportal/developer-portal.html' 
-                        : '/sirsinexusportal/dashboard/';
+                        ? '/developer-portal.html' 
+                        : '/dashboard/';
                     window.location.href = redirect;
                 } else {
                     showAlert(result.error);
@@ -321,7 +321,7 @@
         window.addEventListener('load', () => {
             setTimeout(() => {
                 if (authService.isAuthenticated()) {
-                    window.location.href = '/sirsinexusportal/dashboard/';
+                    window.location.href = '/dashboard/';
                 }
             }, 1000);
         });

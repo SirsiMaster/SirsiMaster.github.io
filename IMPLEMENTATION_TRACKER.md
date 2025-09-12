@@ -34,7 +34,7 @@
   - [ ] Blog Posts
   - [ ] Job Listings
   - [ ] Pricing Tiers
-  - URL: https://sirsi.ai/sirsinexusportal/admin/seed-content-simple.html
+  - URL: https://sirsi.ai/admin/seed-content-simple.html
 
 - [x] **Configure GitHub Secrets for CI/CD** ✅
   - [x] FIREBASE_TOKEN

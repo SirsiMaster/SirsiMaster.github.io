@@ -103,7 +103,7 @@ class DocumentationSearch {
                 category: 'documentation',
                 subcategory: 'reports',
                 content: 'Detailed workflow assessment with critical pages, links, and user flow verification',
-                url: '/sirsinexusportal/docs/workflow-assessment.html',
+                url: '/docs/workflow-assessment.html',
                 keywords: ['workflow', 'report', 'assessment', 'critical paths', 'verification', 'testing', 'quality']
             },
             {

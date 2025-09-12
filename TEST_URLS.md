@@ -5,29 +5,29 @@ Open these in your browser to test the live production site:
 
 ### Main Application
 - https://sirsi.ai
-- https://sirsi.ai/sirsinexusportal/
-- https://sirsi.ai/sirsinexusportal/index.html
+- https://sirsi.ai/
+- https://sirsi.ai/index.html
 
 ### Authentication Pages
-- https://sirsi.ai/sirsinexusportal/auth/login.html
-- https://sirsi.ai/sirsinexusportal/auth/register.html
+- https://sirsi.ai/auth/login.html
+- https://sirsi.ai/auth/register.html
 
 ### User Dashboard
-- https://sirsi.ai/sirsinexusportal/dashboard/
-- https://sirsi.ai/sirsinexusportal/dashboard/index.html
+- https://sirsi.ai/dashboard/
+- https://sirsi.ai/dashboard/index.html
 
 ### Admin Pages
-- https://sirsi.ai/sirsinexusportal/admin/analytics-dashboard.html
-- https://sirsi.ai/sirsinexusportal/admin/
-- https://sirsi.ai/sirsinexusportal/admin/seed-content.html
+- https://sirsi.ai/admin/analytics-dashboard.html
+- https://sirsi.ai/admin/
+- https://sirsi.ai/admin/seed-content.html
 
 ### Documentation
-- https://sirsi.ai/sirsinexusportal/docs/api-documentation.html
+- https://sirsi.ai/docs/api-documentation.html
 
 ### Business Pages
-- https://sirsi.ai/sirsinexusportal/about.html
-- https://sirsi.ai/sirsinexusportal/contact.html
-- https://sirsi.ai/sirsinexusportal/business-case.html
+- https://sirsi.ai/about.html
+- https://sirsi.ai/contact.html
+- https://sirsi.ai/business-case.html
 
 ---
 
@@ -35,29 +35,29 @@ Open these in your browser to test the live production site:
 Open these to test your local development version:
 
 ### Main Application
-- http://localhost:8000/sirsinexusportal/
-- http://localhost:8000/sirsinexusportal/index.html
+- http://localhost:8000/
+- http://localhost:8000/index.html
 
 ### Authentication Pages
-- http://localhost:8000/sirsinexusportal/auth/login.html
-- http://localhost:8000/sirsinexusportal/auth/register.html
+- http://localhost:8000/auth/login.html
+- http://localhost:8000/auth/register.html
 
 ### User Dashboard
-- http://localhost:8000/sirsinexusportal/dashboard/
-- http://localhost:8000/sirsinexusportal/dashboard/index.html
+- http://localhost:8000/dashboard/
+- http://localhost:8000/dashboard/index.html
 
 ### Admin Pages
-- http://localhost:8000/sirsinexusportal/admin/analytics-dashboard.html
-- http://localhost:8000/sirsinexusportal/admin/
-- http://localhost:8000/sirsinexusportal/admin/seed-content.html
+- http://localhost:8000/admin/analytics-dashboard.html
+- http://localhost:8000/admin/
+- http://localhost:8000/admin/seed-content.html
 
 ### Documentation
-- http://localhost:8000/sirsinexusportal/docs/api-documentation.html
+- http://localhost:8000/docs/api-documentation.html
 
 ### Business Pages
-- http://localhost:8000/sirsinexusportal/about.html
-- http://localhost:8000/sirsinexusportal/contact.html
-- http://localhost:8000/sirsinexusportal/business-case.html
+- http://localhost:8000/about.html
+- http://localhost:8000/contact.html
+- http://localhost:8000/business-case.html
 
 ---
 

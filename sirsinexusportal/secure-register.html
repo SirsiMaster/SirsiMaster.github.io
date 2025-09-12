@@ -6,7 +6,7 @@
     <title>Secure Registration - SirsiNexus</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="/sirsinexusportal/assets/js/secure-auth.js"></script>
+    <script src="/assets/js/secure-auth.js"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -25,12 +25,12 @@
     <header class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border-b border-slate-200 dark:border-slate-700">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex h-16 items-center justify-between">
-                <a href="/sirsinexusportal/index.html" class="flex items-center gap-3">
+                <a href="/index.html" class="flex items-center gap-3">
                     <span class="text-xl font-semibold text-slate-900 dark:text-slate-100">SirsiNexus</span>
                 </a>
                 <nav class="flex items-center gap-6">
-                    <a href="/sirsinexusportal/index.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">Home</a>
-                    <a href="/sirsinexusportal/login.html" class="text-sm text-emerald-600 dark:text-emerald-400 font-medium hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors">Login</a>
+                    <a href="/index.html" class="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">Home</a>
+                    <a href="/login.html" class="text-sm text-emerald-600 dark:text-emerald-400 font-medium hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors">Login</a>
                 </nav>
             </div>
         </div>
@@ -146,8 +146,8 @@
                         <input type="checkbox" id="terms" name="terms" required
                             class="mt-1 w-4 h-4 text-emerald-600 border-slate-300 rounded focus:ring-emerald-500">
                         <label for="terms" class="text-sm text-slate-600 dark:text-slate-400">
-                            I agree to the <a href="/sirsinexusportal/terms-of-service.html" class="text-emerald-600 hover:text-emerald-700">Terms of Service</a> 
-                            and <a href="/sirsinexusportal/privacy-policy.html" class="text-emerald-600 hover:text-emerald-700">Privacy Policy</a>
+                            I agree to the <a href="/terms-of-service.html" class="text-emerald-600 hover:text-emerald-700">Terms of Service</a> 
+                            and <a href="/privacy-policy.html" class="text-emerald-600 hover:text-emerald-700">Privacy Policy</a>
                         </label>
                     </div>
 
@@ -165,7 +165,7 @@
                 <div class="mt-6 text-center">
                     <p class="text-sm text-slate-600 dark:text-slate-400">
                         Already have an account? 
-                        <a href="/sirsinexusportal/login.html" class="font-medium text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors">
+                        <a href="/login.html" class="font-medium text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors">
                             Sign in
                         </a>
                     </p>
@@ -285,7 +285,7 @@
                     
                     // Redirect to email verification page after 3 seconds
                     setTimeout(() => {
-                        window.location.href = '/sirsinexusportal/verify-email-sent.html';
+                        window.location.href = '/verify-email-sent.html';
                     }, 3000);
                 }
             } catch (error) {

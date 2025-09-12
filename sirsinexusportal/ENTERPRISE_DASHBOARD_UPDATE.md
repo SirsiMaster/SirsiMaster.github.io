@@ -139,7 +139,7 @@ sirsinexusportal/
 
 2. **Open the admin dashboard**:
    - Navigate to `admin-dashboard.html`
-   - Or visit: https://sirsimaster.github.io/sirsinexusportal/admin-dashboard.html
+   - Or visit: https://sirsimaster.github.io/admin-dashboard.html
 
 3. **Login credentials** (demo):
    - Username: `admin@sirsinexus.com`

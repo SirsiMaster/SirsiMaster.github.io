@@ -43,7 +43,7 @@ security-init.js (Global Initializer)
 ### File Structure
 
 ```
-/sirsinexusportal/
+/
 ├── assets/
 │   └── js/
 │       ├── security-init.js      # Global security initializer
@@ -162,7 +162,7 @@ Add to your HTML pages:
 
 ```html
 <!-- Add after TailwindCSS, before page-specific scripts -->
-<script src="/sirsinexusportal/assets/js/security-init.js"></script>
+<script src="/assets/js/security-init.js"></script>
 ```
 
 ### 2. Automatic Integration
@@ -397,7 +397,7 @@ const config = {
 **Solution**:
 ```html
 <!-- Ensure script is loaded after DOM -->
-<script src="/sirsinexusportal/assets/js/security-init.js"></script>
+<script src="/assets/js/security-init.js"></script>
 ```
 
 #### 2. CSRF Token Missing

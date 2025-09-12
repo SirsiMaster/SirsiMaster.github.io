@@ -24,7 +24,7 @@
 
         // Create script element for monitoring module
         const script = document.createElement('script');
-        script.src = '/sirsinexusportal/assets/js/firebase-monitoring.js';
+        script.src = '/assets/js/firebase-monitoring.js';
         script.async = true;
         
         script.onload = function() {

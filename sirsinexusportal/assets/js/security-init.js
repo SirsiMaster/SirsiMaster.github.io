@@ -30,8 +30,8 @@
     // Load required scripts
     function loadSecurityScripts() {
         const scripts = [
-            { src: '/sirsinexusportal/assets/js/secure-auth.js', id: 'secure-auth' },
-            { src: '/sirsinexusportal/assets/js/auth-integration.js', id: 'auth-integration' }
+            { src: '/assets/js/secure-auth.js', id: 'secure-auth' },
+            { src: '/assets/js/auth-integration.js', id: 'auth-integration' }
         ];
 
         scripts.forEach(script => {
@@ -121,7 +121,7 @@
                 <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
                     Your session has expired for security reasons. Please log in again.
                 </p>
-                <button onclick="window.location.href='/sirsinexusportal/login.html'" 
+                <button onclick="window.location.href='/login.html'" 
                     class="w-full px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700">
                     Go to Login
                 </button>
@@ -273,7 +273,7 @@
                 }
                 sessionStorage.clear();
                 localStorage.removeItem('authenticated');
-                window.location.href = '/sirsinexusportal/login.html';
+                window.location.href = '/login.html';
             },
             getSecurityStatus: () => ({
                 authLoaded: !!window.secureAuth,
@@ -310,7 +310,7 @@
         const observer = new MutationObserver((mutations) => {
             mutations.forEach((mutation) => {
                 mutation.addedNodes.forEach((node) => {
-                    if (node.tagName === 'SCRIPT' && !node.src.includes('/sirsinexusportal/')) {
+                    if (node.tagName === 'SCRIPT' && !node.src.includes('/')) {
                         auditLog('SUSPICIOUS_SCRIPT', {
                             src: node.src,
                             content: node.textContent.substring(0, 100)

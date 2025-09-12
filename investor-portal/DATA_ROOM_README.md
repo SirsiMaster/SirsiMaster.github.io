@@ -50,7 +50,7 @@ investor-portal/
 ### 1. File Placement
 Place all files in your web server directory maintaining the folder structure:
 ```bash
-/sirsinexusportal/investor-portal/
+/investor-portal/
 ```
 
 ### 2. Dependencies

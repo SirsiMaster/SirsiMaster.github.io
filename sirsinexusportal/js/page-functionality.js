@@ -253,17 +253,17 @@ window.watchVideoDemo = function() {
 
 window.scheduleLiveDemo = function() {
     closeDemoModal();
-    window.location.href = '/sirsinexusportal/contact.html';
+    window.location.href = '/contact.html';
 };
 
 // Handle action buttons
 function handleActionButton(buttonText) {
     const actions = {
         'Get Started': () => {
-            window.location.href = '/sirsinexusportal/signup.html';
+            window.location.href = '/signup.html';
         },
         'Sign In': () => {
-            window.location.href = '/sirsinexusportal/investor-login.html';
+            window.location.href = '/investor-login.html';
         },
         'Try Demo': () => {
             document.getElementById('hero-demo-button').click();

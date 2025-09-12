@@ -1,14 +1,16 @@
 # Clean URLs
-/sirsinexusportal/investor-portal/index.html  /sirsinexusportal/investor-portal/  301
-/sirsinexusportal/investor-portal/data-room.html  /sirsinexusportal/investor-portal/data-room/  301
+/sirsinexusportal/investor-portal/index.html  /investor-portal/  301
+/sirsinexusportal/investor-portal/data-room.html  /investor-portal/data-room/  301
 
 # Handle trailing slashes
-/sirsinexusportal/investor-portal  /sirsinexusportal/investor-portal/  301
-/sirsinexusportal/investor-portal/data-room  /sirsinexusportal/investor-portal/data-room/  301
+/sirsinexusportal/investor-portal  /investor-portal/  301
+/sirsinexusportal/investor-portal/data-room  /investor-portal/data-room/  301
 
 # Redirect old URLs to new structure
-/investor-portal/  /sirsinexusportal/investor-portal/  301
-/investor-login.html  /sirsinexusportal/investor-login/  301
+/investor-portal/  /investor-portal/  301
+/investor-login.html  /investor-login/  301
 
 # Redirect from old uppercase directory to new lowercase
-/SirsiNexusPortal/*  /sirsinexusportal/:splat  301
+/SirsiNexusPortal/*  /:splat  301
+
+/sirsinexusportal/*  /:splat  301

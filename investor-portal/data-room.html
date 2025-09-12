@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Data Room Management - SirsiNexus
-permalink: /sirsinexusportal/investor-portal/data-room/
+permalink: /investor-portal/data-room/
 base_url: /SirsiNexusPortal
 ---
 <!DOCTYPE html>
@@ -115,16 +115,16 @@ base_url: /SirsiNexusPortal
 <div id="unified-header"></div>
 
 <!-- Page Scripts -->
-<script src="/sirsinexusportal/components/universal-navigation.js"></script>
-<script src="/sirsinexusportal/components/navigation-customizer.js"></script>
-<script src="/sirsinexusportal/assets/js/shared-theme-toggle.js"></script>
+<script src="/components/universal-navigation.js"></script>
+<script src="/components/navigation-customizer.js"></script>
+<script src="/assets/js/shared-theme-toggle.js"></script>
 
 <!-- Authentication Check -->
 <script>
     (function() {
         const auth = sessionStorage.getItem('investorAuth');
         if (!auth) {
-            window.location.href = '/sirsinexusportal/investor-login.html';
+            window.location.href = '/investor-login.html';
             return;
         }
         
@@ -136,13 +136,13 @@ base_url: /SirsiNexusPortal
             
             if (hoursSinceLogin > 24) {
                 sessionStorage.removeItem('investorAuth');
-                window.location.href = '/sirsinexusportal/investor-login.html';
+                window.location.href = '/investor-login.html';
                 return;
             }
         } catch (error) {
             console.error('Authentication error:', error);
             sessionStorage.removeItem('investorAuth');
-            window.location.href = '/sirsinexusportal/investor-login.html';
+            window.location.href = '/investor-login.html';
             return;
         }
     })();

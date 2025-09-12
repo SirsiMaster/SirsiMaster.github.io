@@ -181,7 +181,7 @@ firebase functions:list
 - **First Input Delay**: < 100ms
 
 ### Monitoring Dashboard
-Access the monitoring dashboard at: `/sirsinexusportal/admin/monitoring.html`
+Access the monitoring dashboard at: `/admin/monitoring.html`
 
 ---
 
